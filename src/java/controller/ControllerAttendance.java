@@ -11,8 +11,6 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,45 +42,69 @@ public class ControllerAttendance extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String time = request.getParameter("time");
             String[] info = time.split(" ");
+            String button = "in";
+            if (info[2].equals("in")) {
+                button = "out";
+            }
+
             DAOAttendance dao = new DAOAttendance();
-            String date = info[1];
-            String time_in = info[2];
+            String date = "";
+            String time_in = "";
             String time_out = "";
             String production_time = "";
-            String employee_id = info[0];
+            String employee_id = "";
             if (time.contains("in")) {
-                time_in = info[2];
+                date = info[0];
+                time_in = info[1];
                 dao.add(date, time_in, time_out, production_time, employee_id);
                 attendance temp = dao.getLastest();
+                request.setAttribute("button", button);
                 request.setAttribute("att", temp);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                 dispath.forward(request, response);
             } else if (time.contains("out")) {
-                time_out = info[2];
+                time_out = info[1];
                 attendance temp = dao.getLastest();
-                SimpleDateFormat fm = new SimpleDateFormat("hh/mm");
-                try {
-                    Date t_out = fm.parse(time_out);
-                    Date t_in = fm.parse(temp.getTime_in());
-                    production_time = fm.format(t_out.getTime() - t_in.getTime());
-                    dao.update(temp.getId(), time_out, production_time);
-                    attendance list = dao.getLastest();
-                    request.setAttribute("list_attendance", list);
-                    RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
-                    dispath.forward(request, response);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+                int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
+                int t_out_min = Integer.parseInt(time_out.split(":")[1]);
+                int t_in_hr = Integer.parseInt(temp.getTime_in().split(":")[0]);
+                int t_in_min = Integer.parseInt(temp.getTime_in().split(":")[1]);
+                int proc_hr = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) / 60;
+                int proc_min = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) % 60;
+                String proc_time_hr = "";
+                if (proc_hr < 10) {
+                    proc_time_hr = "0" + Integer.toString(proc_hr);
+                } else {
+                    proc_time_hr = Integer.toString(proc_hr);
                 }
+                String proc_time_min = "";
+                if (proc_min < 10) {
+                    proc_time_min = "0" + Integer.toString(proc_min);
+                } else {
+                    proc_time_hr = Integer.toString(proc_min);
+                }
+                production_time = proc_time_hr + ":" + proc_time_min;
+                dao.update(temp.getId(), time_out, production_time);
+                attendance list = dao.getLastest();
+                request.setAttribute("button", button);
+                request.setAttribute("list_attendance", list);
+                RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
+                dispath.forward(request, response);
             }
-
+//            response.sendRedirect("attendance.jsp");
+//           
+//            
+//            RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
+//            dispath.forward(request, response);
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
 //            out.println("<head>");
 //            out.println("<title>Servlet ControllerAttendance</title>");
 //            out.println("</head>");
 //            out.println("<body>");
-//            out.println("<h1>Servlet ControllerAttendance at " + date[0] + " st" + date[1] + " st" + date[2] + "</h1>");
-//            out.println("<h1>Servlet ControllerAttendance at " + time + "</h1>");
+//            out.println("<h1>Servlet ControllerAttendance at " + info[0] + "</h1>");
+//            out.println("<h1>Servlet ControllerAttendance at " + info[1] + "</h1>");
+//            out.println("<h1>Servlet ControllerAttendance at " + info[2] + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
         }

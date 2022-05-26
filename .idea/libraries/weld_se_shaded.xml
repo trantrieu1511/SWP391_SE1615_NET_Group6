@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="weld-se-shaded">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/glassfish-5.0/glassfish5/glassfish/lib/appclient/weld-se-shaded.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

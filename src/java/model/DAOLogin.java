@@ -12,6 +12,6 @@ import java.sql.ResultSet;
  *
  * @author Khanh
  */
-public class DAOLogin extends ConnectDB {
+public class DAOLogin extends DBConnent {
 
 }

@@ -10,6 +10,7 @@
     String hour = hf.format(new java.util.Date());
     String str = date + " " + hour;
 %>
+var id = ${button.toString()};
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,18 +77,25 @@
                             <div class="col-md-6">
                                 <div class="card punch-status">
                                     <div class="card-body">
-                                        <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5>
-                                    <div class="punch-det">
-                                        <h6 id="punch-det-text" name="text"></h6>
-                                        <p id="inat"></p>
-                                    </div>
-                                    <div class="punch-info">
+                                        <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5>                           
+                                    <div class="punch-info"onload="initClock()">
                                         <div class="punch-hours">
-                                            <p id="time"><span id="second">00</span>:<span id="tens">00</span></p>            
+                                            <jsp:include page="clock.jsp"></jsp:include>                                       
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="punch-btn-section">
-                                        <a href="#" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
+                                        <div class="punch-btn-section">
+                                        <%String bt = (String) request.getAttribute("button");%>
+
+                                        <c:if test="${button == null}">
+                                            <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
+                                        </c:if>
+                                        <c:if test="${button == 'out'}">
+                                            <a href="attendance" button id="out" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch Out</button></a>
+                                        </c:if>
+                                        <c:if test="${button == 'in'}">
+                                            <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
+                                        </c:if>
+                                        <!--                                        <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>-->
                                         <script type="text/javascript">
                                             function punch(id)
                                             {
@@ -97,119 +105,19 @@
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch In";
                                                     document.getElementById(id).id = "in";
-                                                    document.getElementById("punch-det-text").innerHTML = "Punch Out At";
-                                                    document.getElementById("inat").innerHTML = time;
                                                 } else {
                                                     document.getElementById(id).href = "attendance?time=<%=str%> in";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch Out";
                                                     document.getElementById(id).id = "out";
-                                                    document.getElementById("punch-det-text").innerHTML = "Punch In At";
-                                                    document.getElementById("inat").innerHTML = time;
                                                 }
                                             }
-//                                            window.onload = function () {
-//                                                var seconds = 00;
-//                                                var tens = 00;
-//                                                var OutputSeconds = document.getElementById("second");
-//                                                var OutputTens = document.getElementById("tens");
-//                                                var buttonStart = document.getElementById("in");
-//                                                var buttonReset = document.getElementById("out");
-//                                                var Interval;
-//
-//                                                buttonStart.addEventListener('click', () => {
-//                                                    clearInterval(Interval);
-//                                                    Interval = setInterval(startTimer, 10);
-//                                                });
-//
-//                                                buttonReset.addEventListener('click', () => {
-//                                                    clearInterval(Interval);
-//                                                    tens = "00";
-//                                                    seconds = "00";
-//                                                    OutputSeconds.innerHTML = seconds;
-//                                                    OutputTens.innerHTML = tens;
-//                                                });
-//
-//                                                function startTimer() {
-//                                                    tens++;
-//                                                    if (tens <= 9) {
-//                                                        OutputTens.innerHTML = "0" + tens;
-//                                                    }
-//                                                    if (tens > 9) {
-//                                                        OutputTens.innerHTML = tens;
-//                                                    }
-//                                                    if (tens > 99) {
-//                                                        seconds++;
-//                                                        OutputSeconds.innerHTML = "0" + seconds;
-//                                                        tens = 0;
-//                                                        OutputTens.innerHTML = "0" + 0;
-//                                                    }
-//                                                    if (seconds > 9) {
-//                                                        OutputSeconds.innerHTML = seconds;
-//                                                    }
-//                                                }
-//                                            }
                                         </script>
-                                    </div>
-                                    <div class="statistics">
-                                        <div class="row">
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Break</p>
-                                                    <h6>1.21 hrs</h6>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Overtime</p>
-                                                    <h6>3 hrs</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                 </div>
                             </div>
-                        </div>
-                        <!--                        <div class="col-md-4">
-                                                    <div class="card att-statistics">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">Statistics</h5>
-                                                            <div class="stats-list">
-                                                                <div class="stats-info">
-                                                                    <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="stats-info">
-                                                                    <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="stats-info">
-                                                                    <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="stats-info">
-                                                                    <p>Remaining <strong>90 <small>/ 160 hrs</small></strong></p>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 62%" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="stats-info">
-                                                                    <p>Overtime <strong>4</strong></p>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
+                        </div>                      
                         <div class="col-md-6">
                             <div class="card recent-activity">
                                 <div class="card-body">
@@ -327,12 +235,12 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${list_attendance}" var="o">
-                                            <td>${o.id}</td>
-                                            <td>${o.date}</td>
-                                            <td>${o.time_in}</td>
-                                            <td>${o.time_out}</td>
-                                            <td>${o.production_time}</td>
-                                        </c:forEach>
+                                        <td>${o.id}</td>
+                                        <td>${o.date}</td>
+                                        <td>${o.time_in}</td>
+                                        <td>${o.time_out}</td>
+                                        <td>${o.production_time}</td>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

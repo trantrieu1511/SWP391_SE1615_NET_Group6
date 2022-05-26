@@ -17,13 +17,14 @@ import java.util.List;
  *
  * @author Khanh
  */
-public class DAOAttendance extends ConnectDB {
+public class DAOAttendance extends DBConnent{
     
     public void add(String date, String time_in, String time_out, String production_time,
             String employee_id) {
-        String sql = "insert into attendance(date, time_in, time_out, production_time,"
-                + "employee_id) values(" + date + ", " + time_in + ", "
-                + time_out + ", " + production_time + ", " + employee_id + ")";
+        String sql = "insert into attendance(date, time_in, time_out,"
+                + " production_time, employee_id) values('" + date + "', '" + time_in 
+                + "', '" + time_out + "', '" + production_time + "', '" + employee_id 
+                + "')";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
@@ -33,7 +34,8 @@ public class DAOAttendance extends ConnectDB {
     }
     
     public attendance getLastest() {
-        String sql = "select top 1 from attendance order by shift_id desc";
+        String sql = "select top 1 [shift_id], [date], [time_in], [time_out],"
+                + "[production_time], [employee_id] from attendance order by shift_id desc ";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
@@ -52,12 +54,13 @@ public class DAOAttendance extends ConnectDB {
     }
     
     public void update(int id, String time_out, String production_time) {
-        String sql = "update attendance set [time_out]=?, [production_time]=?,"
+        String sql = "update attendance set [time_out]=?, [production_time]=?"
                 + " where [shift_id]=?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(4, time_out);
-            pre.setString(5, production_time);            
+            pre.setString(1, time_out);
+            pre.setString(2, production_time);  
+            pre.setInt(3, id);
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

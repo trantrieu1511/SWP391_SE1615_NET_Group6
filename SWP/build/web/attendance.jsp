@@ -81,9 +81,9 @@
                                         <h6 id="punch-det-text" name="text"></h6>
                                         <p id="inat"></p>
                                     </div>
-                                    <div class="punch-info">
+                                    <div class="punch-info"onload="initClock()">
                                         <div class="punch-hours">
-                                            <p id="time"><span id="second">00</span>:<span id="tens">00</span></p>            
+                                            <jsp:include page="clock.jsp"></jsp:include>                                       
                                         </div>
                                     </div>
                                     <div class="punch-btn-section">
@@ -109,65 +109,8 @@
                                                     document.getElementById("inat").innerHTML = time;
                                                 }
                                             }
-//                                            window.onload = function () {
-//                                                var seconds = 00;
-//                                                var tens = 00;
-//                                                var OutputSeconds = document.getElementById("second");
-//                                                var OutputTens = document.getElementById("tens");
-//                                                var buttonStart = document.getElementById("in");
-//                                                var buttonReset = document.getElementById("out");
-//                                                var Interval;
-//
-//                                                buttonStart.addEventListener('click', () => {
-//                                                    clearInterval(Interval);
-//                                                    Interval = setInterval(startTimer, 10);
-//                                                });
-//
-//                                                buttonReset.addEventListener('click', () => {
-//                                                    clearInterval(Interval);
-//                                                    tens = "00";
-//                                                    seconds = "00";
-//                                                    OutputSeconds.innerHTML = seconds;
-//                                                    OutputTens.innerHTML = tens;
-//                                                });
-//
-//                                                function startTimer() {
-//                                                    tens++;
-//                                                    if (tens <= 9) {
-//                                                        OutputTens.innerHTML = "0" + tens;
-//                                                    }
-//                                                    if (tens > 9) {
-//                                                        OutputTens.innerHTML = tens;
-//                                                    }
-//                                                    if (tens > 99) {
-//                                                        seconds++;
-//                                                        OutputSeconds.innerHTML = "0" + seconds;
-//                                                        tens = 0;
-//                                                        OutputTens.innerHTML = "0" + 0;
-//                                                    }
-//                                                    if (seconds > 9) {
-//                                                        OutputSeconds.innerHTML = seconds;
-//                                                    }
-//                                                }
-//                                            }
                                         </script>
-                                    </div>
-                                    <div class="statistics">
-                                        <div class="row">
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Break</p>
-                                                    <h6>1.21 hrs</h6>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Overtime</p>
-                                                    <h6>3 hrs</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>
@@ -327,12 +270,12 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${list_attendance}" var="o">
-                                            <td>${o.id}</td>
-                                            <td>${o.date}</td>
-                                            <td>${o.time_in}</td>
-                                            <td>${o.time_out}</td>
-                                            <td>${o.production_time}</td>
-                                        </c:forEach>
+                                        <td>${o.id}</td>
+                                        <td>${o.date}</td>
+                                        <td>${o.time_in}</td>
+                                        <td>${o.time_out}</td>
+                                        <td>${o.production_time}</td>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

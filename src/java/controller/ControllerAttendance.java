@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -85,7 +86,7 @@ public class ControllerAttendance extends HttpServlet {
                 }
                 production_time = proc_time_hr + ":" + proc_time_min;
                 dao.update(temp.getId(), time_out, production_time);
-                attendance list = dao.getLastest();
+                List<attendance> list = dao.listAll();
                 request.setAttribute("button", button);
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");

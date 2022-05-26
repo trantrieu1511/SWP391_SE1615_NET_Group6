@@ -235,12 +235,14 @@ var id = ${button.toString()};
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${list_attendance}" var="o">
-                                        <td>${o.id}</td>
-                                        <td>${o.date}</td>
-                                        <td>${o.time_in}</td>
-                                        <td>${o.time_out}</td>
-                                        <td>${o.production_time}</td>
-                                    </c:forEach>
+                                            <tr>
+                                                <td>${o.id}</td>
+                                                <td>${o.date}</td>
+                                                <td>${o.time_in}</td>
+                                                <td>${o.time_out}</td>
+                                                <td>${o.production_time}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

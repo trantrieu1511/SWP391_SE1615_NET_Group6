@@ -74,7 +74,8 @@ var id = ${button.toString()};
                         <!-- /Page Header -->
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
                                 <div class="card punch-status">
                                     <div class="card-body">
                                         <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5>                           
@@ -117,38 +118,8 @@ var id = ${button.toString()};
                                 </div>
                             </div>
                         </div>                      
-                        <div class="col-md-6">
-                            <div class="card recent-activity">
-                                <div class="card-body">
-                                    <h5 class="card-title">Today Activity</h5>
-                                    <ul class="res-activity-list" onload="display()">
-                                        <c:forEach items="${today}" var="o">
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    ${o.time_in}
-                                                </p>
-                                            </li>
-                                            <li id="li_out">
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    <span id="t_dis">${o.time_out}</span>
-                                                </p>
-                                            </li>
-                                        </c:forEach> 
-                                        <script type="text/javascript">
-                                            function display() {
-                                                if (document.getElementById("t_dis").innerHTML == null) {
-                                                    document.getElementById("li_out").style.display = "none";
-                                                }
-                                            }
-
-                                        </script>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            
                         </div>
                     </div>
 

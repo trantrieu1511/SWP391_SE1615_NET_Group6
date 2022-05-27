@@ -40,61 +40,77 @@ public class ControllerAttendance extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String time = request.getParameter("time");
-            String[] info = time.split(" ");
-            String button = "in";
-            if (info[2].equals("in")) {
-                button = "out";
-            }
-
+            String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
-            String date = "";
-            String time_in = "";
-            String time_out = "";
-            String production_time = "";
-            String employee_id = "";
-            if (time.contains("in")) {
-                date = info[0];
-                time_in = info[1];
-                dao.add(date, time_in, time_out, production_time, employee_id);
-                attendance temp = dao.getLastest();
-                request.setAttribute("button", button);
-                request.setAttribute("att", temp);
-                RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
-                dispath.forward(request, response);
-            } else if (time.contains("out")) {
-                time_out = info[1];
-                attendance temp = dao.getLastest();
-                int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
-                int t_out_min = Integer.parseInt(time_out.split(":")[1]);
-                int t_in_hr = Integer.parseInt(temp.getTime_in().split(":")[0]);
-                int t_in_min = Integer.parseInt(temp.getTime_in().split(":")[1]);
-                int proc_hr = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) / 60;
-                int proc_min = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) % 60;
-                String proc_time_hr = "";
-                if (proc_hr < 10) {
-                    proc_time_hr = "0" + Integer.toString(proc_hr);
-                } else {
-                    proc_time_hr = Integer.toString(proc_hr);
-                }
-                String proc_time_min = "";
-                if (proc_min < 10) {
-                    proc_time_min = "0" + Integer.toString(proc_min);
-                } else {
-                    proc_time_hr = Integer.toString(proc_min);
-                }
-                production_time = proc_time_hr + ":" + proc_time_min;
-                dao.update(temp.getId(), time_out, production_time);
+            if (service == null) {
                 List<attendance> list = dao.listAll();
-                request.setAttribute("button", button);
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                 dispath.forward(request, response);
+            } else {
+                String time = request.getParameter("time");
+                String[] info = time.split(" ");
+                String button = "in";
+                if (info[2].equals("in")) {
+                    button = "out";
+                }
+
+                String date = "";
+                String time_in = "";
+                String time_out = "";
+                String production_time = "";
+                String employee_id = "";
+
+                if (time.contains("in")) {
+                    date = info[0];
+                    time_in = info[1];
+                    dao.add(date, time_in, time_out, production_time, employee_id);
+                    attendance temp = dao.getLastest();
+
+                    List<attendance> listToday = dao.listAllToday(temp.getDate());
+                    List<attendance> list = dao.listAll();
+                    request.setAttribute("list_attendance", list);
+                    request.setAttribute("today", listToday);
+                    request.setAttribute("button", button);
+                    request.setAttribute("att", temp);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
+                    dispath.forward(request, response);
+                } else if (time.contains("out")) {
+                    time_out = info[1];
+                    attendance temp = dao.getLastest();
+
+                    int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
+                    int t_out_min = Integer.parseInt(time_out.split(":")[1]);
+                    int t_in_hr = Integer.parseInt(temp.getTime_in().split(":")[0]);
+                    int t_in_min = Integer.parseInt(temp.getTime_in().split(":")[1]);
+                    int proc_hr = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) / 60;
+                    int proc_min = (Math.abs(t_in_hr - t_out_hr) * 60 + Math.abs(t_in_min - t_out_min)) % 60;
+
+                    String proc_time_hr = "";
+                    if (proc_hr < 10) {
+                        proc_time_hr = "0" + Integer.toString(proc_hr);
+                    } else {
+                        proc_time_hr = Integer.toString(proc_hr);
+                    }
+                    String proc_time_min = "";
+                    if (proc_min < 10) {
+                        proc_time_min = "0" + Integer.toString(proc_min);
+                    } else {
+                        proc_time_hr = Integer.toString(proc_min);
+                    }
+
+                    production_time = proc_time_hr + ":" + proc_time_min;
+                    dao.update(temp.getId(), time_out, production_time);
+                    List<attendance> list = dao.listAll();
+                    List<attendance> listToday = dao.listAllToday(temp.getDate());
+                    request.setAttribute("today", listToday);
+                    request.setAttribute("button", button);
+                    request.setAttribute("list_attendance", list);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
+                    dispath.forward(request, response);
+                }
             }
-//            response.sendRedirect("attendance.jsp");
-//           
-//            
+
 //            RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
 //            dispath.forward(request, response);
 //            out.println("<!DOCTYPE html>");

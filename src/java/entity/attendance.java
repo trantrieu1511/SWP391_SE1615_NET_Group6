@@ -77,4 +77,9 @@ public class attendance {
         this.employee_id = employee_id;
     }
 
+    @Override
+    public String toString() {
+        return "attendance{" + "id=" + id + ", date=" + date + ", time_in=" + time_in + ", time_out=" + time_out + ", production_time=" + production_time + ", employee_id=" + employee_id + '}';
+    }
+
 }

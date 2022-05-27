@@ -94,19 +94,18 @@ var id = ${button.toString()};
                                         </c:if>
                                         <c:if test="${button == 'in'}">
                                             <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
-                                        </c:if>
-                                        <!--                                        <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>-->
+                                        </c:if>                                      
                                         <script type="text/javascript">
                                             function punch(id)
                                             {
                                                 if (id == "out") {
-                                                    document.getElementById(id).href = "attendance?time=<%=str%> out";
+                                                    document.getElementById(id).href = "attendance?do=punch&&time=<%=str%> out";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch In";
                                                     document.getElementById(id).id = "in";
                                                 } else {
-                                                    document.getElementById(id).href = "attendance?time=<%=str%> in";
+                                                    document.getElementById(id).href = "attendance?do=punch&&time=<%=str%> in";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch Out";
@@ -122,49 +121,31 @@ var id = ${button.toString()};
                             <div class="card recent-activity">
                                 <div class="card-body">
                                     <h5 class="card-title">Today Activity</h5>
-                                    <ul class="res-activity-list">
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                10.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.15 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                1.30 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                2.00 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                7.30 PM.
-                                            </p>
-                                        </li>
+                                    <ul class="res-activity-list" onload="display()">
+                                        <c:forEach items="${today}" var="o">
+                                            <li>
+                                                <p class="mb-0">Punch In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    ${o.time_in}
+                                                </p>
+                                            </li>
+                                            <li id="li_out">
+                                                <p class="mb-0">Punch Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <span id="t_dis">${o.time_out}</span>
+                                                </p>
+                                            </li>
+                                        </c:forEach> 
+                                        <script type="text/javascript">
+                                            function display() {
+                                                if (document.getElementById("t_dis").innerHTML == null) {
+                                                    document.getElementById("li_out").style.display = "none";
+                                                }
+                                            }
+
+                                        </script>
                                     </ul>
                                 </div>
                             </div>

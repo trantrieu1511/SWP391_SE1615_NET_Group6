@@ -328,10 +328,9 @@
                             <li class="submenu">
                                 <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-                                    <c:if test="${sessionScope.acc.role == 0}">
+                                    <c:if test="${sessionScope.acc.role == null}">
                                         <li><a href="employee_dashboard.jsp">Dashboard</a></li>
                                     </c:if>                               
-                                    <li><a href="attendance.jsp">Attendance</a></li>
                                     <li><a href="calender.jsp">Calender</a></li>
                                 </ul>
                             </li>
@@ -365,8 +364,8 @@
                                     <li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
                                     <li><a href="leaves-employee.html">Leaves (Employee)</a></li>
                                     <li><a href="leave-settings.html">Leave Settings</a></li>
-                                    <li><a href="attendance.html">Attendance (Admin)</a></li>
-                                    <li><a href="attendance-employee.html">Attendance (Employee)</a></li>
+                                    <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
+                                    <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
                                     <li><a href="departments.html">Departments</a></li>
                                     <li><a href="designations.html">Designations</a></li>
                                     <li><a href="timesheet.html">Timesheet</a></li>
@@ -610,6 +609,7 @@
             </div>
         </div>
         <!-- /Sidebar -->
+        
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 

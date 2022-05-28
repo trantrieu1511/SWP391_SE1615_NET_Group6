@@ -5,12 +5,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    DateFormat hf = new SimpleDateFormat("hh:mm");
     String date = df.format(new java.util.Date());
-    String hour = hf.format(new java.util.Date());
-    String str = date + " " + hour;
 %>
-var id = ${button.toString()};
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -88,25 +84,25 @@ var id = ${button.toString()};
                                         <%String bt = (String) request.getAttribute("button");%>
 
                                         <c:if test="${button == null}">
-                                            <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
+                                            <a href="employee" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
                                         </c:if>
                                         <c:if test="${button == 'out'}">
-                                            <a href="attendance" button id="out" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch Out</button></a>
+                                            <a href="employee" button id="out" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch Out</button></a>
                                         </c:if>
                                         <c:if test="${button == 'in'}">
-                                            <a href="attendance" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
+                                            <a href="employee" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
                                         </c:if>                                      
                                         <script type="text/javascript">
                                             function punch(id)
                                             {
                                                 if (id == "out") {
-                                                    document.getElementById(id).href = "attendance?do=punch&&time=<%=str%> out";
+                                                    document.getElementById(id).href = "employee?do=punchout";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch In";
                                                     document.getElementById(id).id = "in";
                                                 } else {
-                                                    document.getElementById(id).href = "attendance?do=punch&&time=<%=str%> in";
+                                                    document.getElementById(id).href = "employee?do=punchin";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch Out";

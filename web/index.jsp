@@ -336,7 +336,7 @@
                                     </c:if>  
                                 </ul>
                             </li>
-                            <li class="submenu">
+<!--                            <li class="submenu">
                                 <a href="#"><i class="la la-cube"></i> <span> Apps</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a href="chat.html">Chat</a></li>
@@ -354,28 +354,28 @@
                                     <li><a href="inbox.html">Email</a></li>
                                     <li><a href="file-manager.html">File Manager</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li class="menu-title"> 
                                 <span>Employees</span>
                             </li>
                             <li class="submenu">
                                 <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-                                    <li><a href="employees.html">All Employees</a></li>
+<!--                                    <li><a href="employees.html">All Employees</a></li>
                                     <li><a href="holidays.html">Holidays</a></li>
                                     <li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
                                     <li><a href="leaves-employee.html">Leaves (Employee)</a></li>
-                                    <li><a href="leave-settings.html">Leave Settings</a></li>
+                                    <li><a href="leave-settings.html">Leave Settings</a></li>-->
                                     <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                     <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
-                                    <li><a href="departments.html">Departments</a></li>
+<!--                                    <li><a href="departments.html">Departments</a></li>
                                     <li><a href="designations.html">Designations</a></li>
                                     <li><a href="timesheet.html">Timesheet</a></li>
                                     <li><a href="shift-scheduling.html">Shift & Schedule</a></li>
-                                    <li><a href="overtime.html">Overtime</a></li>
+                                    <li><a href="overtime.html">Overtime</a></li>-->
                                 </ul>
                             </li>
-                            <li> 
+<!--                            <li> 
                                 <a href="clients.html"><i class="la la-users"></i> <span>Clients</span></a>
                             </li>
                             <li class="submenu">
@@ -604,7 +604,7 @@
                                         <a href="javascript:void(0);"> <span>Level 1</span></a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>

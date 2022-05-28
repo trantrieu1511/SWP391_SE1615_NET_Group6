@@ -1,3 +1,8 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.Date"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -121,7 +126,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${list-all-attendance}" var="o">
+                                        <c:forEach items="${list_attendance}" var="o">
                                             <tr>
                                                 <td>${o.id}</td>
                                                 <td>${o.date}</td>

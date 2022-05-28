@@ -40,22 +40,23 @@ public class ControllerManager extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
-            
+
             if (service.equals("attendance")) {
                 List<attendance> list = dao.listAll();
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                 dispath.forward(request, response);
+//                out.println("<!DOCTYPE html>");
+//                out.println("<html>");
+//                out.println("<head>");
+//                out.println("<title>Servlet ControllerManager</title>");
+//                out.println("</head>");
+//                out.println("<body>");
+//                out.println("<h1>" + list + "</h1>");
+//                out.println("</body>");
+//                out.println("</html>");
             }
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ControllerManager</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ControllerManager at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
+
         }
     }
 

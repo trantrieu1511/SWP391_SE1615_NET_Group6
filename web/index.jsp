@@ -329,9 +329,11 @@
                                 <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <c:if test="${sessionScope.acc.role == null}">
-                                        <li><a href="employee_dashboard.jsp">Dashboard</a></li>
+                                        <li><a href="employee-dashboard.jsp">Dashboard (Employee)</a></li>
                                     </c:if>                               
-                                    <li><a href="calender.jsp">Calender</a></li>
+                                    <c:if test="${sessionScope.acc.role == null}">
+                                        <li><a href="manager-dashboard.jsp">Dashboard (Manager)</a></li>
+                                    </c:if>  
                                 </ul>
                             </li>
                             <li class="submenu">

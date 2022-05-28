@@ -37,6 +37,7 @@ CREATE TABLE departments (
 	FOREIGN KEY (location_id) REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- note: những profile mà không cần phải ReportsTo thì được coi là manager
 CREATE TABLE [Profile] (
 	profile_id CHAR(5) PRIMARY KEY,
 	first_name VARCHAR (20) NOT NULL,

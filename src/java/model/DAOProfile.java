@@ -1,0 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import entity.Employees;
+import entity.Profile;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author DELL
+ */
+public class DAOProfile extends ConnectDB {
+
+    //INSERT
+    public int addManager(Profile pro) {
+        int n = 0;
+        String sql = "insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,department_id,username,[password])\n"
+                + "values ("
+                + "'"+pro.getProfile_id()+"', "
+                + "'"+pro.getFirst_name()+"', "
+                + "'"+pro.getLast_name()+"', "
+                + "'"+pro.getEmail()+"', "
+                + "'"+pro.getPhone_number()+"', "
+                + "'"+pro.getHire_date()+"', "
+                + ""+pro.getJob_id()+", "
+                + ""+pro.getSalary()+", "
+                + ""+pro.getDepartment_id()+", "
+                + "'"+pro.getUsername()+"', "
+                + "'"+pro.getPassword()+"' "
+                + ")";
+        try {
+            Statement state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+    public int addStaff(Profile pro) {
+        int n = 0;
+        String sql = "insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,ReportsTo,department_id,username,[password])\n"
+                + "values ("
+                + "'"+pro.getProfile_id()+"', "
+                + "'"+pro.getFirst_name()+"', "
+                + "'"+pro.getLast_name()+"', "
+                + "'"+pro.getEmail()+"', "
+                + "'"+pro.getPhone_number()+"', "
+                + "'"+pro.getHire_date()+"', "
+                + ""+pro.getJob_id()+", "
+                + ""+pro.getSalary()+", "
+                + "'"+pro.getReportsTo()+"', "
+                + ""+pro.getDepartment_id()+", "
+                + "'"+pro.getUsername()+"', "
+                + "'"+pro.getPassword()+"' "
+                + ")";
+        try {
+            Statement state = conn.createStatement();
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+    
+    //SELECT
+    public Vector<Profile> listAllProfile(){
+        String sql="select * from [Profile]";
+        Vector<Profile> vector = new Vector<>();
+        ResultSet rs = getData(sql);
+        try {
+            while(rs.next()){
+                vector.add(new Profile(        
+                        rs.getString(1), //employee_id
+                        rs.getString(2), //first_name
+                        rs.getString(3), //last_name
+                        rs.getString(4), //email
+                        rs.getString(5), //phone_number
+                        rs.getString(6), //hire_date
+                        rs.getInt(7), //job_id
+                        rs.getDouble(8), //salary
+                        rs.getString(9), //ReportsTo
+                        rs.getBoolean(10), //isadmin
+                        rs.getInt(11), //department_id
+                        rs.getString(12), //username
+                        rs.getString(13) //password
+                ));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vector;
+    }
+    
+}

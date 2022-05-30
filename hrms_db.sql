@@ -39,7 +39,7 @@ CREATE TABLE departments (
 
 -- note: những profile mà không cần phải ReportsTo thì được coi là manager
 -- cột isadmin = 1 thì là admin, = 0 thì là 2 loại profile còn lại (Manager or Staff tùy vào ReportsTo)
-CREATE TABLE [Profile] (
+CREATE TABLE [profile] (
 	profile_id CHAR(5) PRIMARY KEY,
 	first_name VARCHAR (20) NOT NULL,
 	last_name VARCHAR (25) NULL,

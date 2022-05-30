@@ -361,7 +361,7 @@
                             <li class="submenu">
                                 <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-<!--                                    <li><a href="employees.html">All Employees</a></li>
+                                    <li><a href="manager?do=listAllProfile">All Employees</a></li><!--
                                     <li><a href="holidays.html">Holidays</a></li>
                                     <li><a href="leaves.html">Leaves (Admin) <span class="badge badge-pill bg-primary float-right">1</span></a></li>
                                     <li><a href="leaves-employee.html">Leaves (Employee)</a></li>

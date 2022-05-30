@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="__ds_jdbc_ra">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/glassfish-5.0/glassfish5/glassfish/lib/install/applications/__ds_jdbc_ra/__ds_jdbc_ra.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

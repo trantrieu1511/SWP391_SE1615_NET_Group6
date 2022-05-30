@@ -40,13 +40,13 @@
 
     <body>
         <jsp:include page="index.jsp"></jsp:include>
-        <c:if test="${sessionScope.acc.role == 0}">
+        <c:if test="${sessionScope.acc.report_to != null}">
             <jsp:include page="employee_dashboard.jsp"></jsp:include>
         </c:if>
-        <c:if test="${sessionScope.acc.role == 1}">
+        <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
             <jsp:include page="manager_dashboard.jsp"></jsp:include>
         </c:if>
-        <c:if test="${sessionScope.acc.role == 2}">
+        <c:if test="${sessionScope.acc.isAdmin == true}">
             <jsp:include page="admin_dashboard.jsp"></jsp:include>
         </c:if>
     </body>

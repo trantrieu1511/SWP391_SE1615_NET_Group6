@@ -12,15 +12,17 @@ package entity;
 public class account {
     private String user;
     private String pass;
-    private int role;
+    String report_to;
+    boolean isAdmin;
 
     public account() {
     }
 
-    public account(String user, String pass, int role) {
+    public account(String user, String pass, String report_to, boolean isAdmin) {
         this.user = user;
         this.pass = pass;
-        this.role = role;
+        this.report_to = report_to;
+        this.isAdmin = isAdmin;
     }
 
     public String getUser() {
@@ -39,12 +41,20 @@ public class account {
         this.pass = pass;
     }
 
-    public int getRole() {
-        return role;
+    public String getReport_to() {
+        return report_to;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setReport_to(String report_to) {
+        this.report_to = report_to;
     }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }   
     
 }

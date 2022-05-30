@@ -96,13 +96,13 @@
                                             function punch(id)
                                             {
                                                 if (id == "out") {
-                                                    document.getElementById(id).href = "employee?do=punchout";
+                                                    document.getElementById(id).href = "employee?do=punchout&&id=${sessionScope.acc.user}";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch In";
                                                     document.getElementById(id).id = "in";
                                                 } else {
-                                                    document.getElementById(id).href = "employee?do=punchin";
+                                                    document.getElementById(id).href = "employee?do=punchinid=${sessionScope.acc.user}";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch Out";

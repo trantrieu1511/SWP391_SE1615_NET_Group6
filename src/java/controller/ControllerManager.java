@@ -6,9 +6,11 @@
 package controller;
 
 import entity.attendance;
+import entity.profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DAOAttendance;
+import model.DAOProfile;
 
 /**
  *
@@ -40,23 +43,48 @@ public class ControllerManager extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
+            DAOProfile dao2 = new DAOProfile();
 
             if (service.equals("attendance")) {
                 List<attendance> list = dao.listAll();
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                 dispath.forward(request, response);
-//                out.println("<!DOCTYPE html>");
-//                out.println("<html>");
-//                out.println("<head>");
-//                out.println("<title>Servlet ControllerManager</title>");
-//                out.println("</head>");
-//                out.println("<body>");
-//                out.println("<h1>" + list + "</h1>");
-//                out.println("</body>");
-//                out.println("</html>");
             }
 
+            if (service.equals("listAllProfile")) {
+                Vector<profile> vector = dao2.listAllProfile();
+                request.setAttribute("list", vector);
+                RequestDispatcher dispatch = request.getRequestDispatcher("employees-list.jsp");
+                dispatch.forward(request, response);
+            }
+            if (service.equals("addStaff")) {
+                //get data
+                String profile_id = request.getParameter("profile_id");
+                String first_name = request.getParameter("first_name");
+                String last_name = request.getParameter("last_name");
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                String email = request.getParameter("email");
+                String phone_number = request.getParameter("phone_number");
+                String hire_date = request.getParameter("hire_date");
+                int job_id = Integer.parseInt(request.getParameter("job_id"));
+                String ReportsTo = request.getParameter("ReportsTo");
+                String department_id = request.getParameter("department_id");
+                double salary = 0;
+
+                profile pro = new profile(profile_id, first_name, last_name,
+                        email, phone_number, hire_date, job_id, salary,
+                        ReportsTo, job_id, username, password);
+                int state = dao2.addStaff(pro);
+                if (state > 0) {
+                    System.out.println("Added new Staff with employee_id = "
+                            + profile_id);
+                } else {
+                    System.out.println("Add failed!");
+                }
+                response.sendRedirect("ControllerProfile");
+            }
         }
     }
 

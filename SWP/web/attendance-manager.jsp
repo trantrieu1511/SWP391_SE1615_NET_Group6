@@ -47,85 +47,82 @@
 
             <jsp:include page="index.jsp"></jsp:include>
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
-                <div class="content container-fluid">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
+                    <div class="content container-fluid">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="page-title">Attendance</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Attendance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Page Header -->
+
+                        <!-- Search Filter -->
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-4">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" id="myInput" onkeyup="filter()">
+                                    <label class="focus-label">Employee Name</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4"> 
+                                <div class="form-group form-focus select-focus">
+                                    <select class="select floating" id="month" onchange="filter()"> 
+                                        <option>-</option>
+                                        <option>Jan</option>
+                                        <option>Feb</option>
+                                        <option>Mar</option>
+                                        <option>Apr</option>
+                                        <option>May</option>
+                                        <option>Jun</option>
+                                        <option>Jul</option>
+                                        <option>Aug</option>
+                                        <option>Sep</option>
+                                        <option>Oct</option>
+                                        <option>Nov</option>
+                                        <option>Dec</option>
+                                    </select>
+                                    <label class="focus-label">Select Month</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4"> 
+                                <div class="form-group form-focus select-focus">
+                                    <select class="select floating" id="year" onchange="filter()"> 
+                                        <option>-</option>
+                                        <option>2019</option>
+                                        <option>2018</option>
+                                        <option>2017</option>
+                                        <option>2016</option>
+                                        <option>2015</option>
+                                    </select>
+                                    <label class="focus-label">Select Year</label>
+                                </div>
+                            </div>                          
+                        </div>
+                        <!-- /Search Filter -->
+
                         <div class="row">
-                            <div class="col-sm-12">
-                                <h3 class="page-title">Attendance</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Attendance</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Page Header -->
-
-                    <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Employee Name</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>-</option>
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                    <option>Mar</option>
-                                    <option>Apr</option>
-                                    <option>May</option>
-                                    <option>Jun</option>
-                                    <option>Jul</option>
-                                    <option>Aug</option>
-                                    <option>Sep</option>
-                                    <option>Oct</option>
-                                    <option>Nov</option>
-                                    <option>Dec</option>
-                                </select>
-                                <label class="focus-label">Select Month</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>-</option>
-                                    <option>2019</option>
-                                    <option>2018</option>
-                                    <option>2017</option>
-                                    <option>2016</option>
-                                    <option>2015</option>
-                                </select>
-                                <label class="focus-label">Select Year</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
-                    </div>
-                    <!-- /Search Filter -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table class="table table-striped custom-table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Date </th>
-                                            <th>Punch In</th>
-                                            <th>Punch Out</th>
-                                            <th>Production</th>                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped custom-table mb-0" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Date </th>
+                                                <th>Punch In</th>
+                                                <th>Punch Out</th>
+                                                <th>Production</th>                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         <c:forEach items="${list_attendance}" var="o">
                                             <tr>
                                                 <td>${o.employee_id}</td>
@@ -140,6 +137,29 @@
                             </div>
                         </div>
                     </div>
+                    <script type="text/javascript">
+                        function filter() {
+                            var input, filter, table, tr, td, i, txtValue;
+                            input = document.getElementById("myInput");   
+                            table = document.getElementById("table");
+                            tr = table.getElementsByTagName("tr");
+                            filter = input.value.toUpperCase();
+
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[0];
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                                
+                            }
+                        }
+                    </script> 
+
                 </div>
                 <!-- /Page Content -->
 
@@ -148,7 +168,7 @@
 
         </div>
         <!-- /Main Wrapper -->
-        
+
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 

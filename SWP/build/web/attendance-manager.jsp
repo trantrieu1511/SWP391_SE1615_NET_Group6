@@ -26,6 +26,9 @@
         <!-- Lineawesome CSS -->
         <link rel="stylesheet" href="css/line-awesome.min.css">
 
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">
 
@@ -112,7 +115,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table mb-0" id="table">
+                                    <table class="table table-striped custom-table datatable" id="table">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -140,7 +143,7 @@
                     <script type="text/javascript">
                         function filter() {
                             var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("myInput");   
+                            input = document.getElementById("myInput");
                             table = document.getElementById("table");
                             tr = table.getElementsByTagName("tr");
                             filter = input.value.toUpperCase();
@@ -155,7 +158,7 @@
                                         tr[i].style.display = "none";
                                     }
                                 }
-                                
+
                             }
                         }
                     </script> 
@@ -193,6 +196,10 @@
         <!-- Datetimepicker JS -->
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
 
     </body>
 </html>

@@ -44,19 +44,18 @@ public class ControllerEmployee extends HttpServlet {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
-            String user = request.getParameter("user");
+            request.getSession(false);
             DAOAttendance dao = new DAOAttendance();
-            DAOProfile dao2 = new DAOProfile();
-            profile profile = dao2.getByUser(user);
             String date = "";
             String time_in = "";
             String time_out = "";
             String production_time = "";
-            String employee_id = profile.getProfile_id();
+            String employee_id = "";
             String button = "in";
 
             if (service.equals("attendance")) {
                 List<attendance> list = dao.listEmployeeAll(employee_id);
+                request.getSession(false);
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                 dispath.forward(request, response);
@@ -66,9 +65,12 @@ public class ControllerEmployee extends HttpServlet {
                 date = df.format(new java.util.Date());
                 time_in = hf.format(new java.util.Date());
                 button = "out";
+                DAOProfile dao2 = new DAOProfile();
+                profile pf = dao2.getByUser(request.getParameter("user"));
+                employee_id = pf.getProfile_id();
 
                 dao.add(date, time_in, time_out, production_time, employee_id);
-                attendance temp = dao.getLastest(employee_id);
+                attendance temp = dao.getLastest(pf.getProfile_id());
 
                 List<attendance> listToday = dao.listAllToday(temp.getDate(), employee_id);
                 List<attendance> list = dao.listAll();
@@ -82,6 +84,9 @@ public class ControllerEmployee extends HttpServlet {
 
             if (service.equals("punchout")) {
                 time_out = hf.format(new java.util.Date());
+                DAOProfile dao2 = new DAOProfile();
+                profile pf = dao2.getByUser(request.getParameter("user"));
+                employee_id = pf.getProfile_id();
                 attendance temp = dao.getLastest(employee_id);
 
                 int t_out_hr = Integer.parseInt(time_out.split(":")[0]);

@@ -44,8 +44,15 @@ public class ControllerManager extends HttpServlet {
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
             DAOProfile dao2 = new DAOProfile();
+            
+            if (service.equals("dashboard")){
+                request.getSession(false);
+                RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
+                dispath.forward(request, response);
+            }
 
             if (service.equals("attendance")) {
+                request.getSession(false);
                 List<attendance> list = dao.listAll();
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");

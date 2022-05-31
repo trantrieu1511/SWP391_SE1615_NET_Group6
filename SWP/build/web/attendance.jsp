@@ -96,13 +96,13 @@
                                             function punch(id)
                                             {
                                                 if (id == "out") {
-                                                    document.getElementById(id).href = "employee?do=punchout&&id=${sessionScope.acc.user}";
+                                                    document.getElementById(id).href = "employee?do=punchout&&user=${sessionScope.acc.user}";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch In";
                                                     document.getElementById(id).id = "in";
                                                 } else {
-                                                    document.getElementById(id).href = "employee?do=punchinid=${sessionScope.acc.user}";
+                                                    document.getElementById(id).href = "employee?do=punchin&&user=${sessionScope.acc.user}";
                                                     var today = new Date();
                                                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                                                     document.getElementById(id).innerHTML = "Punch Out";
@@ -204,6 +204,24 @@
 
         </div>
         <!-- /Main Wrapper -->
+        
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Chart JS -->
+        <script src="plugins/morris/morris.min.js"></script>
+        <script src="plugins/raphael/raphael.min.js"></script>
+        <script src="js/chart.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
 
         <!-- Select2 JS -->
         <script src="js/select2.min.js"></script>

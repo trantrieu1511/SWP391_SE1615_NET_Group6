@@ -35,7 +35,7 @@ public class DBConnent {
     }
 
     public DBConnent() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6", "sa", "12345678");
+        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_2", "sa", "12345678");
     }
 
     public ResultSet getData(String sql) {

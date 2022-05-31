@@ -45,9 +45,9 @@
                         <div class="account-wrapper">
                             <h3 class="account-title">Login</h3>
                             <p class="account-subtitle">Access to our dashboard</p>
-                            <div class="alert-danger" role="alert">
+                            <p class="alert-danger">
                                 ${mess}
-                            </div>
+                            </p>
                             <!-- Account Form -->
                             <form action="login" method="post">
                                 <div class="form-group">

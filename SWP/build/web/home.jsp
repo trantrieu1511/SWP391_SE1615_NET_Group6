@@ -40,13 +40,26 @@
 
     <body>
         <jsp:include page="index.jsp"></jsp:include>
-        <c:if test="${sessionScope.acc.report_to != null}">
-            <jsp:include page="employee_dashboard.jsp"></jsp:include>
-        </c:if>
+
         <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
-            <jsp:include page="manager_dashboard.jsp"></jsp:include>
+            <jsp:include page="manager-dashboard.jsp"></jsp:include>
         </c:if>
-        <c:if test="${sessionScope.acc.isAdmin == true}">
-            <jsp:include page="admin_dashboard.jsp"></jsp:include>
-        </c:if>
+        
+<!--         jQuery 
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+         Bootstrap Core JS 
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+         Slimscroll JS 
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+         Chart JS 
+        <script src="plugins/morris/morris.min.js"></script>
+        <script src="plugins/raphael/raphael.min.js"></script>
+        <script src="js/chart.js"></script>
+
+         Custom JS 
+        <script src="js/app.js"></script>-->
     </body>

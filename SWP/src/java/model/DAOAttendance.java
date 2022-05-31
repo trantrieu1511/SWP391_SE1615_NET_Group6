@@ -34,9 +34,9 @@ public class DAOAttendance extends DBConnent {
     }
 
     public attendance getLastest(String employee_id) {
-        String sql = "select top 1 [shift_id], [date], [time_in], [time_out],"
-                + "[production_time], [employee_id] from attendance order by"
-                + " shift_id desc where [employee_id] = '" + employee_id + "'";
+        String sql = "  select top 1 [shift_id], [date], [time_in], [time_out], "
+                + "[production_time], [employee_id] from attendance where "
+                + "[employee_id] = '" + employee_id + "' order by shift_id desc";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
@@ -62,7 +62,7 @@ public class DAOAttendance extends DBConnent {
             pre.setString(1, time_out);
             pre.setString(2, production_time);
             pre.setInt(3, id);
-            pre.setString(3, employee_id);
+            pre.setString(4, employee_id);
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

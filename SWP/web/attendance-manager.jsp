@@ -72,43 +72,17 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-4">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" id="myInput" onkeyup="filter()">
+                                    <input type="text" class="form-control floating" id="name" onkeyup="filter1()">
                                     <label class="focus-label">Employee Name</label>
                                 </div>
-                            </div>
+                            </div>                       
                             <div class="col-sm-6 col-md-4"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating" id="month" onchange="filter()"> 
-                                        <option>-</option>
-                                        <option>Jan</option>
-                                        <option>Feb</option>
-                                        <option>Mar</option>
-                                        <option>Apr</option>
-                                        <option>May</option>
-                                        <option>Jun</option>
-                                        <option>Jul</option>
-                                        <option>Aug</option>
-                                        <option>Sep</option>
-                                        <option>Oct</option>
-                                        <option>Nov</option>
-                                        <option>Dec</option>
-                                    </select>
-                                    <label class="focus-label">Select Month</label>
+                                <div class="form-group form-focus">
+                                    <div>
+                                        <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating" id="year" onchange="filter()"> 
-                                        <option>-</option>
-                                        <option>2019</option>
-                                        <option>2018</option>
-                                        <option>2017</option>
-                                        <option>2016</option>
-                                        <option>2015</option>
-                                    </select>
-                                    <label class="focus-label">Select Year</label>
-                                </div>
-                            </div>                          
+                            </div>                                             
                         </div>
                         <!-- /Search Filter -->
 
@@ -141,9 +115,9 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                        function filter() {
+                        function filter1() {
                             var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("myInput");
+                            input = document.getElementById("name");
                             table = document.getElementById("table");
                             tr = table.getElementsByTagName("tr");
                             filter = input.value.toUpperCase();
@@ -153,6 +127,25 @@
                                 if (td) {
                                     txtValue = td.textContent || td.innerText;
                                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+
+                            }
+                        }
+                        function filter2(value) {
+                            var filter, table, tr, td, i, date;
+                            date = moment(value).format('DD/MM/YYYY');
+                            table = document.getElementById("table");
+                            tr = table.getElementsByTagName("tr");
+                            filter = date.toUpperCase();
+
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[1];
+                                if (td) {
+                                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                                         tr[i].style.display = "";
                                     } else {
                                         tr[i].style.display = "none";

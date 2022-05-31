@@ -77,9 +77,9 @@
                                 </div>
                             </div>                       
                             <div class="col-sm-6 col-md-4"> 
-                                <div class="form-group form-focus">
-                                    <div>
-                                        <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)">
+                                <div class="form-group form-focus"><label class="focus-label">Date</label>
+                                    <div>                                
+                                        <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
                                     </div>
                                 </div>
                             </div>                                             

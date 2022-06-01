@@ -7,6 +7,7 @@ package model;
 
 import entity.Employees;
 import entity.Profile;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,7 +49,9 @@ public class DAOProfile extends ConnectDB {
 
     public int addStaff(Profile pro) {
         int n = 0;
-        String sql = "insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,ReportsTo,department_id,username,[password])\n"
+        String sql = "insert into [Profile](profile_id,first_name,last_name,email,"
+                + "phone_number,hire_date,job_id,salary,ReportsTo,department_id,"
+                + "username,[password])\n"
                 + "values ("
                 + "'" + pro.getProfile_id() + "', "
                 + "'" + pro.getFirst_name() + "', "
@@ -103,6 +106,44 @@ public class DAOProfile extends ConnectDB {
             ex.printStackTrace();
         }
         return vector;
+    }
+
+    public int editStaff(Profile pro, String cur_profile_id) {
+        int n = 0;
+        String sql = "update [Profile] set "
+                + "profile_id = ?, "
+                + "first_name = ?, "
+                + "last_name = ?, "
+                + "email = ?, "
+                + "phone_number = ?, "
+                + "hire_date = ?, "
+                + "job_id = ?, "
+                + "salary = ?, "
+                + "ReportsTo = ?, "
+                + "department_id = ?, "
+                + "username = ?, "
+                + "[password] = ? "
+                + "where profile_id = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, pro.getProfile_id());
+            pre.setString(2, pro.getFirst_name());
+            pre.setString(3, pro.getLast_name());
+            pre.setString(4, pro.getEmail());
+            pre.setString(5, pro.getPhone_number());
+            pre.setString(6, pro.getHire_date());
+            pre.setInt(7, pro.getJob_id());
+            pre.setDouble(8, pro.getSalary());
+            pre.setString(9, pro.getReportsTo());
+            pre.setInt(10, pro.getDepartment_id());
+            pre.setString(11, pro.getUsername());
+            pre.setString(12, pro.getPassword());
+            pre.setString(13, cur_profile_id);
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
     }
 
     public static void main(String[] args) {

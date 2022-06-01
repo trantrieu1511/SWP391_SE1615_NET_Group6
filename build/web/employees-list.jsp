@@ -165,7 +165,7 @@
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="ControllerProfile?do=editStaff&profile_id=<%= pro.getProfile_id()%>" onclick="getProfile_id(<%= pro.getProfile_id() %>)"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item" href="ControllerProfile?do=editStaff&profile_id=<%= pro.getProfile_id()%>" > <i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
@@ -484,74 +484,7 @@
                 </div>
                 <!-- /Add Employee Modal -->
 
-                <script>
-                    function checkPassword2(checkpassword2) {
-                        var password = document.getElementById('password2').value;
-                        if (checkpassword2.value != password) {
-                            document.getElementById('wrong_pass_alert2').style.color = 'red';
-                            document.getElementById('wrong_pass_alert2').innerHTML
-                                    = '☒ Use same password! Confirm password does not match';
-                            document.getElementById('create2').disabled = true;
-                            document.getElementById('create2').style.opacity = (0.4);
-                        } else {
-                            document.getElementById('wrong_pass_alert2').style.color = 'green';
-                            document.getElementById('wrong_pass_alert2').innerHTML =
-                                    '🗹 Password Matched';
-                            document.getElementById('create2').disabled = false;
-                            document.getElementById('create2').style.opacity = (1);
-                        }
-                    }
-                    function checkconfirmPassword2(checkpassword2) {
-                        var confirm_password = document.getElementById('confirm_password2').value;
-                        if (checkpassword2.value != confirm_password) {
-                            document.getElementById('wrong_pass_alert2').style.color = 'red';
-                            document.getElementById('wrong_pass_alert2').innerHTML
-                                    = '☒ Use same password! Confirm password does not match';
-                            document.getElementById('create2').disabled = true;
-                            document.getElementById('create2').style.opacity = (0.4);
-                        } else {
-                            document.getElementById('wrong_pass_alert2').style.color = 'green';
-                            document.getElementById('wrong_pass_alert2').innerHTML =
-                                    '🗹 Password Matched';
-                            document.getElementById('create2').disabled = false;
-                            document.getElementById('create2').style.opacity = (1);
-                        }
-                    }
-// function validate_password() {
 
-//     var pass = document.getElementById('pass').value;
-//     var confirm_pass = document.getElementById('confirm_pass').value;
-//     if (pass != confirm_pass) {
-//         document.getElementById('wrong_pass_alert').style.color = 'red';
-//         document.getElementById('wrong_pass_alert').innerHTML
-//         = '☒ Use same password!';
-//         document.getElementById('create').disabled = true;
-//         document.getElementById('create').style.opacity = (0.4);
-//     } else {
-//         document.getElementById('wrong_pass_alert').style.color = 'green';
-//         document.getElementById('wrong_pass_alert').innerHTML =
-//             '🗹 Password Matched';
-//         document.getElementById('create').disabled = false;
-//         document.getElementById('create').style.opacity = (1);
-//     }
-// }
-                    function wrong_pass_alert2() {
-                        if (document.getElementById('password2').value != "" &&
-                                document.getElementById('confirm_password2').value != ""
-                                && document.getElementById("first_name2").value != ""
-                                && document.getElementById("last_name2").value != ""
-                                && document.getElementById("email2").value != ""
-                                && document.getElementById("username2").value != ""
-                                && document.getElementById("profile_id2").value != ""
-                                && document.getElementById("hire_date2").value != ""
-                                && document.getElementById("department_id2").value != ""
-                                && document.getElementById("job_id2").value != "") {
-                            alert("Your response is submitted");
-                        } else {
-                            alert("Please fill all the fields");
-                        }
-                    }
-                </script>
                 <!-- Edit Employee Modal -->
                 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

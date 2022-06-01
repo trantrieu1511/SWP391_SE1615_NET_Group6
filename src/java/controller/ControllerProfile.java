@@ -78,7 +78,8 @@ public class ControllerProfile extends HttpServlet {
                 String hire_date = request.getParameter("hire_date");
                 int job_id = Integer.parseInt(request.getParameter("job_id"));
                 String ReportsTo = request.getParameter("ReportsTo");
-                String department_id = request.getParameter("department_id");
+                int department_id = 
+                        Integer.parseInt(request.getParameter("department_id"));
                 double salary = 0; //default amount of salary
                 //display
 //                Date hiredate = Date.valueOf(hire_date);
@@ -88,7 +89,7 @@ public class ControllerProfile extends HttpServlet {
                 //commit insert to db
                 Profile pro = new Profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, job_id, username, password);
+                        ReportsTo, department_id, username, password);
                 //state > 0: success; state <= 0: fail
                 int state = dao.addStaff(pro);
                 if (state > 0) {
@@ -104,8 +105,15 @@ public class ControllerProfile extends HttpServlet {
                 if (submit == null) {  //chua nhan edit
                     //get data from db
                     String profile_id = request.getParameter("profile_id");
+                    HttpSession session = request.getSession();
+                    Object cur_profile_id = session.getAttribute("profile_id");
+                    if(cur_profile_id==null){
+                        session.setAttribute("profile_id", profile_id);
+                    }else{
+                        session.setAttribute("profile_id", profile_id);
+                    }
 //                    out.print(profile_id);
-                    ResultSet rsProfile = dao.getData("select * from [Profile]");
+                    ResultSet rsProfile = dao.getData("select * from [Profile] where profile_id = '"+profile_id+"'");
                     ResultSet rsJob = dao.getData("select * from jobs");
                     ResultSet rsDepartment = dao.getData("select * from departments");
                     ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
@@ -128,10 +136,24 @@ public class ControllerProfile extends HttpServlet {
                     String hire_date = request.getParameter("hire_date");
                     int job_id = Integer.parseInt(request.getParameter("job_id"));
                     String ReportsTo = request.getParameter("ReportsTo");
-                    String department_id = request.getParameter("department_id");
+                    int department_id = 
+                            Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0; //default amount of salary
+                    
+                    Profile pro = new Profile(profile_id, first_name, last_name,
+                            email, phone_number, hire_date, job_id, salary, 
+                            ReportsTo, department_id, username, password);
+                    HttpSession session = request.getSession();
+                    String cur_profile_id = session.getAttribute("profile_id").toString();
+                    int editStatus = dao.editStaff(pro, cur_profile_id);
+                    if(editStatus>0) System.out.println("Successfully edited Staff with profile_id = "+profile_id);
+                    else System.out.println("Edit failed! An error must be occured!");
+                    response.sendRedirect("ControllerProfile");
                 }
 
+            }
+            if(service.equals("removeStaff")){
+                
             }
         }
     }

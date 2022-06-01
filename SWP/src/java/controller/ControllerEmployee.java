@@ -46,6 +46,7 @@ public class ControllerEmployee extends HttpServlet {
             String service = request.getParameter("do");
             request.getSession(false);
             DAOAttendance dao = new DAOAttendance();
+            DAOProfile dao2 = new DAOProfile();
             String date = "";
             String time_in = "";
             String time_out = "";
@@ -53,10 +54,17 @@ public class ControllerEmployee extends HttpServlet {
             String employee_id = "";
             String button = "in";
 
-            if (service.equals("attendance")) {
-                List<attendance> list = dao.listEmployeeAll(employee_id);
+            if (service.equals("attendance")) {                
+                profile pf = dao2.getByUser(request.getParameter("user"));
+                employee_id = pf.getProfile_id();
+                List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
+                attendance temp = dao.getLastest(pf.getProfile_id());
+                if (temp.getTime_out().equals("")) {
+                    button = "out";
+                }
                 request.getSession(false);
                 request.setAttribute("list_attendance", list);
+                request.setAttribute("button", button);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                 dispath.forward(request, response);
             }
@@ -65,17 +73,14 @@ public class ControllerEmployee extends HttpServlet {
                 date = df.format(new java.util.Date());
                 time_in = hf.format(new java.util.Date());
                 button = "out";
-                DAOProfile dao2 = new DAOProfile();
                 profile pf = dao2.getByUser(request.getParameter("user"));
                 employee_id = pf.getProfile_id();
 
                 dao.add(date, time_in, time_out, production_time, employee_id);
                 attendance temp = dao.getLastest(pf.getProfile_id());
 
-                List<attendance> listToday = dao.listAllToday(temp.getDate(), employee_id);
-                List<attendance> list = dao.listAll();
+                List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                 request.setAttribute("list_attendance", list);
-                request.setAttribute("today", listToday);
                 request.setAttribute("button", button);
                 request.setAttribute("att", temp);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
@@ -84,7 +89,6 @@ public class ControllerEmployee extends HttpServlet {
 
             if (service.equals("punchout")) {
                 time_out = hf.format(new java.util.Date());
-                DAOProfile dao2 = new DAOProfile();
                 profile pf = dao2.getByUser(request.getParameter("user"));
                 employee_id = pf.getProfile_id();
                 attendance temp = dao.getLastest(employee_id);
@@ -111,7 +115,7 @@ public class ControllerEmployee extends HttpServlet {
 
                 production_time = proc_time_hr + ":" + proc_time_min;
                 dao.update(temp.getId(), time_out, production_time, employee_id);
-                List<attendance> list = dao.listAll();
+                List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                 List<attendance> listToday = dao.listAllToday(temp.getDate(), employee_id);
                 request.setAttribute("today", listToday);
                 request.setAttribute("button", button);

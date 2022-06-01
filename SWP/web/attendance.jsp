@@ -115,63 +115,27 @@
                             </div>
                         </div>                      
                         <div class="col-md-4">
-                            
+
                         </div>
                     </div>
 
                     <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-3">  
-                            <div class="form-group form-focus">
-                                <div class="cal-icon">
-                                    <input type="text" class="form-control floating datetimepicker">
+                    <div class="row filter-row"> 
+                        <div class="col-sm-6 col-md-4"> 
+                            <div class="form-group form-focus"><label class="focus-label">Date</label>
+                                <div>                                
+                                    <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type = 'date')" onblur="if (!this.value)
+                                                this.type = 'text'">
                                 </div>
-                                <label class="focus-label">Date</label>
                             </div>
-                        </div>
-                        <div class="col-sm-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>-</option>
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                    <option>Mar</option>
-                                    <option>Apr</option>
-                                    <option>May</option>
-                                    <option>Jun</option>
-                                    <option>Jul</option>
-                                    <option>Aug</option>
-                                    <option>Sep</option>
-                                    <option>Oct</option>
-                                    <option>Nov</option>
-                                    <option>Dec</option>
-                                </select>
-                                <label class="focus-label">Select Month</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>-</option>
-                                    <option>2019</option>
-                                    <option>2018</option>
-                                    <option>2017</option>
-                                    <option>2016</option>
-                                    <option>2015</option>
-                                </select>
-                                <label class="focus-label">Select Year</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
+                        </div>    
                     </div>
                     <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table mb-0">
+                                <table class="table table-striped custom-table datatable" id="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -198,13 +162,34 @@
                     </div>
                 </div>
                 <!-- /Page Content -->
+                
+                <script type="text/javascript">              
+                    function filter2(value) {
+                        var filter, table, tr, td, i, date;
+                        date = moment(value).format('DD/MM/YYYY');
+                        table = document.getElementById("table");
+                        tr = table.getElementsByTagName("tr");
+                        filter = date.toUpperCase();
 
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+
+                        }
+                    }
+                </script> 
             </div>
             <!-- Page Wrapper -->
 
         </div>
         <!-- /Main Wrapper -->
-        
+
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 

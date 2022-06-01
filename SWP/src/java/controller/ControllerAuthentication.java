@@ -21,8 +21,8 @@ import model.DAOLogin;
  *
  * @author Khanh
  */
-@WebServlet(name = "ControllerLogin", urlPatterns = {"/login"})
-public class ControllerLogin extends HttpServlet {
+@WebServlet(name = "ControllerAuthentication", urlPatterns = {"/authentication"})
+public class ControllerAuthentication extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,18 +37,27 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("user");
-            String password = request.getParameter("pass");
-            DAOLogin dao = new DAOLogin();
-            account a = dao.login(username, password);
-            if (a == null) {
-                request.setAttribute("mess", "Wrong username or password");
-                RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
-                dispath.forward(request, response);
-            } else {
+            String service = request.getParameter("do");
+            if (service.equals("login")) {
+                String username = request.getParameter("user");
+                String password = request.getParameter("pass");
+                DAOLogin dao = new DAOLogin();
+                account a = dao.login(username, password);
+                if (a == null) {
+                    request.setAttribute("mess", "Wrong username or password");
+                    RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
+                    dispath.forward(request, response);
+                } else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("acc", a);
+                    response.sendRedirect("home.jsp");
+                }
+            }
+
+            if (service.equals("logout")) {
                 HttpSession session = request.getSession();
-                session.setAttribute("acc", a);
-                response.sendRedirect("home.jsp");
+                session.invalidate();
+                response.sendRedirect("login.jsp");
             }
         }
     }

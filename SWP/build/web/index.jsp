@@ -299,7 +299,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="profile.html">My Profile</a>
                             <a class="dropdown-item" href="settings.html">Settings</a>
-                            <a class="dropdown-item" href="login.html">Logout</a>
+                            <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -312,7 +312,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="profile.html">My Profile</a>
                         <a class="dropdown-item" href="settings.html">Settings</a>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                     </div>
                 </div>
                 <!-- /Mobile Menu -->
@@ -372,7 +372,7 @@
                                     <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
                                         <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                         </c:if>
-                                    <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
+                                        <li><a href="employee?do=attendance&&user=${sessionScope.acc.user}">Attendance (Employee)</a></li>
                                     <!--                                    <li><a href="departments.html">Departments</a></li>
                                                                         <li><a href="designations.html">Designations</a></li>
                                                                         <li><a href="timesheet.html">Timesheet</a></li>

@@ -49,7 +49,7 @@
                                 ${mess}
                             </p>
                             <!-- Account Form -->
-                            <form action="login" method="post">
+                            <form action="authentication?do=login" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <input class="form-control" type="text" name="user">

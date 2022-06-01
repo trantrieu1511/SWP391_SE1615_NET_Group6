@@ -89,7 +89,7 @@ public class DAOAttendance extends DBConnent {
         return list;
     }
     
-    public List<attendance> listEmployeeAll(String employee_id) {
+    public List<attendance> listAllAttendanceofAnEmployee(String employee_id) {
         List<attendance> list = new ArrayList<>();
         String sql = "select * from attendance where [employee_id]='" + 
                 employee_id + "'";

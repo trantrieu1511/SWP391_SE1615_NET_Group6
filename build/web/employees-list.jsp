@@ -1,4 +1,5 @@
-    <%@page import="java.util.Vector"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.Vector"%>
 <%@page import="entity.Profile"%>
 <%-- 
     Document   : employees-list
@@ -13,1102 +14,913 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <meta name="description" content="Smarthr - Bootstrap Admin Template">
-		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+        <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
         <title>Employees - HRMS admin template</title>
-		
-		<!-- Favicon -->
+
+        <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
-		<!-- Bootstrap CSS -->
+
+        <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
+
+        <!-- Fontawesome CSS -->
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-		
-		<!-- Lineawesome CSS -->
+
+        <!-- Lineawesome CSS -->
         <link rel="stylesheet" href="assets/css/line-awesome.min.css">
-		
-		<!-- Datatable CSS -->
-		<link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
-		
-		<!-- Select2 CSS -->
-		<link rel="stylesheet" href="assets/css/select2.min.css">
-		
-		<!-- Datetimepicker CSS -->
-		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
-		
-		<!-- Main CSS -->
+
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+
+        <!-- Select2 CSS -->
+        <link rel="stylesheet" href="assets/css/select2.min.css">
+
+        <!-- Datetimepicker CSS -->
+        <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+
+        <!-- Main CSS -->
         <link rel="stylesheet" href="assets/css/style.css">
 
-		<!-- import js -->
-		<script src="js/employee-list_js.js"></script>
-		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+        <!-- import js -->
+        <script src="js/employee-list_js.js"></script>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+                <script src="assets/js/html5shiv.min.js"></script>
+                <script src="assets/js/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
-		<!-- Main Wrapper -->
+        <!-- Main Wrapper -->
         <div class="main-wrapper">
-		
-			<!-- Header -->
-            <div class="header">
-			
-				<!-- Logo -->
-                <div class="header-left">
-                    <a href="index.html" class="logo">
-						<img src="assets/img/logo.png" width="40" height="40" alt="">
-					</a>
-                </div>
-				<!-- /Logo -->
-				
-				<a id="toggle_btn" href="javascript:void(0);">
-					<span class="bar-icon">
-						<span></span>
-						<span></span>
-						<span></span>
-					</span>
-				</a>
-				
-				<!-- Header Title -->
-                <div class="page-title-box">
-					<h3>Dreamguy's Technologies</h3>
-                </div>
-				<!-- /Header Title -->
-				
-				<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
-				
-				<!-- Header Menu -->
-				<ul class="nav user-menu">
-				
-					<!-- Search -->
-					<li class="nav-item">
-						<div class="top-nav-search">
-							<a href="javascript:void(0);" class="responsive-search">
-								<i class="fa fa-search"></i>
-						   </a>
-							<form action="search.html">
-								<input class="form-control" type="text" placeholder="Search here">
-								<button class="btn" type="submit"><i class="fa fa-search"></i></button>
-							</form>
-						</div>
-					</li>
-					<!-- /Search -->
-				
-					<!-- Flag -->
-					<li class="nav-item dropdown has-arrow flag-nav">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-							<img src="assets/img/flags/us.png" alt="" height="20"> <span>English</span>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right">
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/us.png" alt="" height="16"> English
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/fr.png" alt="" height="16"> French
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/es.png" alt="" height="16"> Spanish
-							</a>
-							<a href="javascript:void(0);" class="dropdown-item">
-								<img src="assets/img/flags/de.png" alt="" height="16"> German
-							</a>
-						</div>
-					</li>
-					<!-- /Flag -->
-				
-					<!-- Notifications -->
-					<li class="nav-item dropdown">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Notifications</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-02.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-													<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-03.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-													<p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-06.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-													<p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-17.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-													<p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="activities.html">
-											<div class="media">
-												<span class="avatar">
-													<img alt="" src="assets/img/profiles/avatar-13.jpg">
-												</span>
-												<div class="media-body">
-													<p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-													<p class="noti-time"><span class="notification-time">2 days ago</span></p>
-												</div>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="activities.html">View all Notifications</a>
-							</div>
-						</div>
-					</li>
-					<!-- /Notifications -->
-					
-					<!-- Message Notifications -->
-					<li class="nav-item dropdown">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
-						</a>
-						<div class="dropdown-menu notifications">
-							<div class="topnav-dropdown-header">
-								<span class="notification-title">Messages</span>
-								<a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-							</div>
-							<div class="noti-content">
-								<ul class="notification-list">
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-09.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">Richard Miles </span>
-													<span class="message-time">12:28 AM</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-02.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">John Doe</span>
-													<span class="message-time">6 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-03.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author"> Tarah Shropshire </span>
-													<span class="message-time">5 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-05.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author">Mike Litorus</span>
-													<span class="message-time">3 Mar</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-									<li class="notification-message">
-										<a href="chat.html">
-											<div class="list-item">
-												<div class="list-left">
-													<span class="avatar">
-														<img alt="" src="assets/img/profiles/avatar-08.jpg">
-													</span>
-												</div>
-												<div class="list-body">
-													<span class="message-author"> Catherine Manseau </span>
-													<span class="message-time">27 Feb</span>
-													<div class="clearfix"></div>
-													<span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-												</div>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div class="topnav-dropdown-footer">
-								<a href="chat.html">View all Messages</a>
-							</div>
-						</div>
-					</li>
-					<!-- /Message Notifications -->
 
-					<li class="nav-item dropdown has-arrow main-drop">
-						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-							<span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="">
-							<span class="status online"></span></span>
-							<span>Admin</span>
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="profile.html">My Profile</a>
-							<a class="dropdown-item" href="settings.html">Settings</a>
-							<a class="dropdown-item" href="login.html">Logout</a>
-						</div>
-					</li>
-				</ul>
-				<!-- /Header Menu -->
-				
-				<!-- Mobile Menu -->
-				<div class="dropdown mobile-user-menu">
-					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a class="dropdown-item" href="profile.html">My Profile</a>
-						<a class="dropdown-item" href="settings.html">Settings</a>
-						<a class="dropdown-item" href="login.html">Logout</a>
-					</div>
-				</div>
-				<!-- /Mobile Menu -->
-				
-            </div>
-			<!-- /Header -->
-			
-			<!-- Page Wrapper -->
+            <!-- Page Wrapper -->
             <div class="page-wrapper">
-			
-				<!-- Page Content -->
+
+                <!-- Page Content -->
                 <div class="content container-fluid">
-				
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row align-items-center">
-							<div class="col">
-								<h3 class="page-title">Employee</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-									<li class="breadcrumb-item active">Employee</li>
-								</ul>
-							</div>
-							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
-								<div class="view-icons">
-									<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-									<a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- /Page Header -->
-					
-					<!-- Search Filter -->
-					<div class="row filter-row">
-						<div class="col-sm-6 col-md-3">  
-							<div class="form-group form-focus">
-								<input type="text" class="form-control floating">
-								<label class="focus-label">Employee ID</label>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">  
-							<div class="form-group form-focus">
-								<input type="text" class="form-control floating">
-								<label class="focus-label">Employee Name</label>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3"> 
-							<div class="form-group form-focus select-focus">
-								<select class="select floating"> 
-									<option>Select Designation</option>
-									<option>Web Developer</option>
-									<option>Web Designer</option>
-									<option>Android Developer</option>
-									<option>Ios Developer</option>
-								</select>
-								<label class="focus-label">Designation</label>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">  
-							<a href="#" class="btn btn-success btn-block"> Search </a>  
-						</div>     
+
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="page-title">Employee</h3>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Employee</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto float-right ml-auto">
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                                <div class="view-icons">
+                                    <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                                    <a href="ControllerProfile" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-					<!-- /Search Filter -->
-					
-					<div class="row">
-						<div class="col-md-12">
-							<div class="table-responsive">
-								<table class="table table-striped custom-table datatable">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Employee ID</th>
-											<th>Email</th>
-											<th>Mobile</th>
-											<th class="text-nowrap">Join Date</th>
-											<th>Role</th>
-											<th class="text-right no-sort">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-                                                                            <% 
-                                                                                Vector<Profile> vector = (Vector<Profile>)request.getAttribute("list");
-                                                                                for (Profile pro : vector) {
-                                                                            %>
-										<tr>
-											<td>
-												<h2 class="table-avatar">
-													<a href="profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
-													<a href="profile.html"><%= pro.getFirst_name()+" "+pro.getLast_name() %> <span><%= pro.getJob_id() %></span></a>
-												</h2>
-											</td>
-											<td><%= pro.getProfile_id() %></td>
-											<td><%= pro.getEmail() %></td>
-											<td><%= pro.getPhone_number() %></td>
-                                                                                        <td><%= pro.getHire_date() %></td>
-											<td>
-												<div class="dropdown">
-													<a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-													<div class="dropdown-menu">
-														<a class="dropdown-item" href="#">Software Engineer</a>
-														<a class="dropdown-item" href="#">Software Tester</a>
-														<a class="dropdown-item" href="#">Frontend Developer</a>
-														<a class="dropdown-item" href="#">UI/UX Developer</a>
-													</div>
-												</div>
-											</td>
-											<td class="text-right">
-												<div class="dropdown dropdown-action">
-													<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<%}%>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+                    <!-- /Page Header -->
+
+                    <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-3">  
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating">
+                                <label class="focus-label">Employee ID</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">  
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating">
+                                <label class="focus-label">Employee Name</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3"> 
+                            <div class="form-group form-focus select-focus">
+                                <select class="select floating"> 
+                                    <option>Select Designation</option>
+                                    <option>Web Developer</option>
+                                    <option>Web Designer</option>
+                                    <option>Android Developer</option>
+                                    <option>Ios Developer</option>
+                                </select>
+                                <label class="focus-label">Designation</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">  
+                            <a href="#" class="btn btn-success btn-block"> Search </a>  
+                        </div>     
+                    </div>
+                    <!-- /Search Filter -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Employee ID</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th class="text-nowrap">Join Date</th>
+                                            <th>Role</th>
+                                            <th class="text-right no-sort">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            Vector<Profile> vector = (Vector<Profile>) request.getAttribute("list");
+                                            for (Profile pro : vector) {
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="profile.html" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                                    <a href="profile.html"><%= pro.getFirst_name() + " " + pro.getLast_name()%> <span><%= pro.getJob_title()%></span></a>
+                                                </h2>
+                                            </td>
+                                            <td><%= pro.getProfile_id()%></td>
+                                            <td><%= pro.getEmail()%></td>
+                                            <%if (pro.getPhone_number().equals("")) {%>
+                                            <td><%out.print("N/A");%></td>
+                                            <%} else {%>
+                                            <td><%= pro.getPhone_number()%></td>
+                                            <%}%>
+                                            <td><%= pro.getHire_date()%></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer </a>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#">Software Engineer</a>
+                                                        <a class="dropdown-item" href="#">Software Tester</a>
+                                                        <a class="dropdown-item" href="#">Frontend Developer</a>
+                                                        <a class="dropdown-item" href="#">UI/UX Developer</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="ControllerProfile?do=editStaff&profile_id=<%= pro.getProfile_id()%>" onclick="getProfile_id(<%= pro.getProfile_id() %>)"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-				<!-- /Page Content -->
-				
-				<!-- Add Employee Modal -->
-				<div id="add_employee" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Add Staff</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form action="ControllerProfile" method="post">
-									<input type="hidden" name="do" value="addStaff">
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-												<input class="form-control" type="text" name="first_name" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-												<input class="form-control" type="text" name="last_name" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Username <span class="text-danger">*</span></label>
-												<input class="form-control" type="text" name="username" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Email <span class="text-danger">*</span></label>
-												<input class="form-control" type="email" name="email" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Password <span class="text-danger">*</span></label>
-												<input class="form-control" type="password" name="password" id="password" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
-												<input class="form-control" type="password" name="confirm_password"
-												onchange="checkPassword(this)" required>
-											</div>
-										</div>
-										<div class="col-sm-6">  
-											<div class="form-group">
-												<label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-												<input type="text" class="form-control" name="profile_id" required>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-												<div><input class="form-control" type="date" name="hire_date" required></div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Phone </label>
-												<input class="form-control" type="text" name="phone_number">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">ReportsTo</label>
-												<select class="select" name="ReportsTo">
-                                                                                                    <%  %>
-													<option value="ABCDE">Tran Trieu</option>
-													<option value="ABCDF">Delta Infotech</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Department <span class="text-danger">*</span></label>
-												<select class="select" name="department_id">
-													<!-- <option value="">Select Department</option> -->
-													<option value="1">Web Development</option>
-													<option value="2">IT Management</option>
-													<option value="3">Marketing</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Designation <span class="text-danger">*</span></label>
-												<select class="select" name="job_id">
-													<!-- <option>Select Designation</option> -->
-													<option value="1">Web Designer</option>
-													<option value="2">Web Developer</option>
-													<option value="3">Android Developer</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<!-- <div class="table-responsive m-t-15">
-										<table class="table table-striped custom-table">
-											<thead>
-												<tr>
-													<th>Module Permission</th>
-													<th class="text-center">Read</th>
-													<th class="text-center">Write</th>
-													<th class="text-center">Create</th>
-													<th class="text-center">Delete</th>
-													<th class="text-center">Import</th>
-													<th class="text-center">Export</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Holidays</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Leaves</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Clients</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Projects</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Tasks</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Chats</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Assets</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Timing Sheets</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div> -->
-									<span id="wrong_pass_alert"></span>
-									<div class="submit-section">
-										<button class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">Submit</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Add Employee Modal -->
-				
-				<!-- Edit Employee Modal -->
-				<div id="edit_employee" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Edit Employee</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form>
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-												<input class="form-control" value="John" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Last Name</label>
-												<input class="form-control" value="Doe" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Username <span class="text-danger">*</span></label>
-												<input class="form-control" value="johndoe" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Email <span class="text-danger">*</span></label>
-												<input class="form-control" value="johndoe@example.com" type="email">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Password</label>
-												<input class="form-control" value="johndoe" type="password">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Confirm Password</label>
-												<input class="form-control" value="johndoe" type="password">
-											</div>
-										</div>
-										<div class="col-sm-6">  
-											<div class="form-group">
-												<label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-												<input type="text" value="FT-0001" readonly class="form-control floating">
-											</div>
-										</div>
-										<div class="col-sm-6">  
-											<div class="form-group">
-												<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-												<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Phone </label>
-												<input class="form-control" value="9876543210" type="text">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="col-form-label">Company</label>
-												<select class="select">
-													<option>Global Technologies</option>
-													<option>Delta Infotech</option>
-													<option selected>International Software Inc</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Department <span class="text-danger">*</span></label>
-												<select class="select">
-													<option>Select Department</option>
-													<option>Web Development</option>
-													<option>IT Management</option>
-													<option>Marketing</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Designation <span class="text-danger">*</span></label>
-												<select class="select">
-													<option>Select Designation</option>
-													<option>Web Designer</option>
-													<option>Web Developer</option>
-													<option>Android Developer</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="table-responsive m-t-15">
-										<table class="table table-striped custom-table">
-											<thead>
-												<tr>
-													<th>Module Permission</th>
-													<th class="text-center">Read</th>
-													<th class="text-center">Write</th>
-													<th class="text-center">Create</th>
-													<th class="text-center">Delete</th>
-													<th class="text-center">Import</th>
-													<th class="text-center">Export</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Holidays</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Leaves</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Clients</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Projects</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Tasks</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Chats</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Assets</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-												<tr>
-													<td>Timing Sheets</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input checked="" type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-													<td class="text-center">
-														<input type="checkbox">
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="submit-section">
-										<button class="btn btn-primary submit-btn">Save</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Edit Employee Modal -->
-				
-				<!-- Delete Employee Modal -->
-				<div class="modal custom-modal fade" id="delete_employee" role="dialog">
-					<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-body">
-								<div class="form-header">
-									<h3>Delete Employee</h3>
-									<p>Are you sure want to delete?</p>
-								</div>
-								<div class="modal-btn delete-action">
-									<div class="row">
-										<div class="col-6">
-											<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-										</div>
-										<div class="col-6">
-											<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Delete Employee Modal -->
-				
+                <!-- /Page Content -->
+
+                <!-- Add Employee Modal -->
+                <div id="add_employee" class="modal custom-modal fade" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Staff</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <%
+                                    ResultSet rsJob = (ResultSet) request.getAttribute("rsJob");
+                                    ResultSet rsManager = (ResultSet) request.getAttribute("rsManager");
+                                    ResultSet rsDepartment = (ResultSet) request.getAttribute("rsDepartment");
+                                %>
+                                <form action="ControllerProfile" method="post">
+                                    <input type="hidden" name="do" value="addStaff">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="first_name" name="first_name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="last_name" name="last_name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="username" name="username" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="email" id="email" name="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Password <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="password" name="password" id="password" 
+                                                       onkeyup="checkconfirmPassword(this)" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password"
+                                                       onkeyup="checkPassword(this)" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">  
+                                            <div class="form-group">
+                                                <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="profile_id" name="profile_id" required pattern="[A-Z]{5}" placeholder="Enter 5 Captal letter!">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
+                                                <div><input class="form-control" type="date" id="hire_date" name="hire_date" required></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Phone </label>
+                                                <input class="form-control" type="text" id="phone_number" name="phone_number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>
+                                                <select class="select" id="ReportsTo" name="ReportsTo">
+                                                    <%while (rsManager.next()) {%>
+                                                    <option value="<%=rsManager.getString(1)%>"><%= rsManager.getString(2) + " " + rsManager.getString(3)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Department <span class="text-danger">*</span></label>
+                                                <select class="select" id="department_id" name="department_id">
+                                                    <!-- <option value="">Select Department</option> -->
+                                                    <%while (rsDepartment.next()) {%>
+                                                    <option value="<%= rsDepartment.getInt(1)%>"><%= rsDepartment.getString(2)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Designation <span class="text-danger">*</span></label>
+                                                <select class="select" id="job_id" name="job_id">
+                                                    <!-- <option>Select Designation</option> -->
+                                                    <%while (rsJob.next()) {%>
+                                                    <option value="<%= rsJob.getInt(1)%>"><%= rsJob.getString(2)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="table-responsive m-t-15">
+                                            <table class="table table-striped custom-table">
+                                                    <thead>
+                                                            <tr>
+                                                                    <th>Module Permission</th>
+                                                                    <th class="text-center">Read</th>
+                                                                    <th class="text-center">Write</th>
+                                                                    <th class="text-center">Create</th>
+                                                                    <th class="text-center">Delete</th>
+                                                                    <th class="text-center">Import</th>
+                                                                    <th class="text-center">Export</th>
+                                                            </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                                    <td>Holidays</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Leaves</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Clients</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Projects</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Tasks</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Chats</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Assets</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Timing Sheets</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                    </tbody>
+                                            </table>
+                                    </div> -->
+                                    <span id="wrong_pass_alert"></span>
+                                    <div class="submit-section">
+                                        <button class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Add Employee Modal -->
+
+                <script>
+                    function checkPassword2(checkpassword2) {
+                        var password = document.getElementById('password2').value;
+                        if (checkpassword2.value != password) {
+                            document.getElementById('wrong_pass_alert2').style.color = 'red';
+                            document.getElementById('wrong_pass_alert2').innerHTML
+                                    = '☒ Use same password! Confirm password does not match';
+                            document.getElementById('create2').disabled = true;
+                            document.getElementById('create2').style.opacity = (0.4);
+                        } else {
+                            document.getElementById('wrong_pass_alert2').style.color = 'green';
+                            document.getElementById('wrong_pass_alert2').innerHTML =
+                                    '🗹 Password Matched';
+                            document.getElementById('create2').disabled = false;
+                            document.getElementById('create2').style.opacity = (1);
+                        }
+                    }
+                    function checkconfirmPassword2(checkpassword2) {
+                        var confirm_password = document.getElementById('confirm_password2').value;
+                        if (checkpassword2.value != confirm_password) {
+                            document.getElementById('wrong_pass_alert2').style.color = 'red';
+                            document.getElementById('wrong_pass_alert2').innerHTML
+                                    = '☒ Use same password! Confirm password does not match';
+                            document.getElementById('create2').disabled = true;
+                            document.getElementById('create2').style.opacity = (0.4);
+                        } else {
+                            document.getElementById('wrong_pass_alert2').style.color = 'green';
+                            document.getElementById('wrong_pass_alert2').innerHTML =
+                                    '🗹 Password Matched';
+                            document.getElementById('create2').disabled = false;
+                            document.getElementById('create2').style.opacity = (1);
+                        }
+                    }
+// function validate_password() {
+
+//     var pass = document.getElementById('pass').value;
+//     var confirm_pass = document.getElementById('confirm_pass').value;
+//     if (pass != confirm_pass) {
+//         document.getElementById('wrong_pass_alert').style.color = 'red';
+//         document.getElementById('wrong_pass_alert').innerHTML
+//         = '☒ Use same password!';
+//         document.getElementById('create').disabled = true;
+//         document.getElementById('create').style.opacity = (0.4);
+//     } else {
+//         document.getElementById('wrong_pass_alert').style.color = 'green';
+//         document.getElementById('wrong_pass_alert').innerHTML =
+//             '🗹 Password Matched';
+//         document.getElementById('create').disabled = false;
+//         document.getElementById('create').style.opacity = (1);
+//     }
+// }
+                    function wrong_pass_alert2() {
+                        if (document.getElementById('password2').value != "" &&
+                                document.getElementById('confirm_password2').value != ""
+                                && document.getElementById("first_name2").value != ""
+                                && document.getElementById("last_name2").value != ""
+                                && document.getElementById("email2").value != ""
+                                && document.getElementById("username2").value != ""
+                                && document.getElementById("profile_id2").value != ""
+                                && document.getElementById("hire_date2").value != ""
+                                && document.getElementById("department_id2").value != ""
+                                && document.getElementById("job_id2").value != "") {
+                            alert("Your response is submitted");
+                        } else {
+                            alert("Please fill all the fields");
+                        }
+                    }
+                </script>
+                <!-- Edit Employee Modal -->
+                <div id="edit_employee" class="modal custom-modal fade" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Staff</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <%
+                                    Object profile_id = session.getAttribute("isedit");
+                                    if (profile_id != null) {
+                                        ResultSet rsProfile = (ResultSet) request.getAttribute("rsProfile");
+                                        if (rsProfile.next()) {
+                                %>
+                                <form action="ControllerProfile" method="post">
+                                    <input type="hidden" name="do" value="editStaff">
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="first_name2" name="first_name2" required value="<%=rsProfile.getString(2)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="last_name2" name="last_name2" required value="<%=rsProfile.getString(3)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" id="username2" name="username2" required value="<%=rsProfile.getString(12)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="email" id="email2" name="email2" required value="<%=rsProfile.getString(4)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Password <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="password" name="password2" id="password2"
+                                                       onkeyup="checkconfirmPassword2(this)" required value="<%=rsProfile.getString(13)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="password" name="confirm_password2" id="confirm_password2"
+                                                       onkeyup="checkPassword2(this)" required value="<%=rsProfile.getString(13)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="profile_id2" name="profile_id2" required pattern="[A-Z]{5}" placeholder="Enter 5 Captal letter!" value="<%=rsProfile.getString(1)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
+                                                <div><input class="form-control" type="date" id="hire_date2" name="hire_date2" required value="<%=rsProfile.getString(6)%>"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">Phone </label>
+                                                <input class="form-control" type="text" id="phone_number2" name="phone_number2" value="<%=rsProfile.getString(5)%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>
+                                                <select class="select" id="ReportsTo2" name="ReportsTo2">
+                                                    <%while (rsManager.next()) {%>
+                                                    <option value="<%=rsManager.getInt(1)%>" <%= (rsManager.getInt(1) == rsProfile.getInt(1) ? " selected" : "")%>><%= rsManager.getString(2) + " " + rsManager.getString(3)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Department <span class="text-danger">*</span></label>
+                                                <select class="select" id="department_id2" name="department_id2">
+                                                    <!-- <option value="">Select Department</option> -->
+                                                    <%while (rsJob.next()) {%>
+                                                    <option value="<%= rsJob.getInt(1)%>" <%= (rsJob.getInt(1) == rsProfile.getInt(7) ? " selected" : "")%>><%= rsJob.getString(2)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Designation <span class="text-danger">*</span></label>
+                                                <select class="select" id="job_id2" name="job_id2">
+                                                    <!-- <option>Select Designation</option> -->
+                                                    <%while (rsDepartment.next()) {%>
+                                                    <option value="<%= rsDepartment.getInt(1)%>" <%= (rsDepartment.getInt(1) == rsProfile.getInt(11) ? " selected" : "")%>><%= rsDepartment.getString(2)%></option>
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="table-responsive m-t-15">
+                                            <table class="table table-striped custom-table">
+                                                    <thead>
+                                                            <tr>
+                                                                    <th>Module Permission</th>
+                                                                    <th class="text-center">Read</th>
+                                                                    <th class="text-center">Write</th>
+                                                                    <th class="text-center">Create</th>
+                                                                    <th class="text-center">Delete</th>
+                                                                    <th class="text-center">Import</th>
+                                                                    <th class="text-center">Export</th>
+                                                            </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                                    <td>Holidays</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Leaves</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Clients</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Projects</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Tasks</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Chats</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Assets</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                            <tr>
+                                                                    <td>Timing Sheets</td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input checked="" type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                            <input type="checkbox">
+                                                                    </td>
+                                                            </tr>
+                                                    </tbody>
+                                            </table>
+                                    </div> -->
+                                    <span id="wrong_pass_alert2"></span>
+                                    <div class="submit-section">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" name="submit" onclick="wrong_pass_alert2()" value="commit edit">
+                                    </div>
+                                </form>
+                                <%}%>
+                                <%}%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Edit Employee Modal -->
+
+                <!-- Delete Employee Modal -->
+                <div class="modal custom-modal fade" id="delete_employee" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="form-header">
+                                    <h3>Delete Employee</h3>
+                                    <p>Are you sure want to delete?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Delete Employee Modal -->
+
             </div>
-			<!-- /Page Wrapper -->
-			
+            <!-- /Page Wrapper -->
+
         </div>
-		<!-- /Main Wrapper -->
-		
-		<!-- jQuery -->
+        <!-- /Main Wrapper -->
+
+        <script type="text/javascript">
+            function getProfile_id(id){
+                document.getElementsByTagName("tr").id=id;
+                
+            }
+            
+        </script>
+        <!-- jQuery -->
         <script src="assets/js/jquery-3.5.1.min.js"></script>
-		
-		<!-- Bootstrap Core JS -->
+
+        <!-- Bootstrap Core JS -->
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
-		
-		<!-- Slimscroll JS -->
-		<script src="assets/js/jquery.slimscroll.min.js"></script>
-		
-		<!-- Select2 JS -->
-		<script src="assets/js/select2.min.js"></script>
-		
-		<!-- Datetimepicker JS -->
-		<script src="assets/js/moment.min.js"></script>
-		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-		
-		<!-- Datatable JS -->
-		<script src="assets/js/jquery.dataTables.min.js"></script>
-		<script src="assets/js/dataTables.bootstrap4.min.js"></script>
-		
-		<!-- Custom JS -->
-		<script src="assets/js/app.js"></script>
-		
+
+        <!-- Slimscroll JS -->
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="assets/js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="assets/js/moment.min.js"></script>
+        <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Datatable JS -->
+        <script src="assets/js/jquery.dataTables.min.js"></script>
+        <script src="assets/js/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="assets/js/app.js"></script>
+
     </body>
 </html>

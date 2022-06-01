@@ -10,6 +10,7 @@ import entity.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAOProfile;
 
 /**
@@ -40,17 +42,23 @@ public class ControllerProfile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             DAOProfile dao = new DAOProfile();
-            
+
             String service = request.getParameter("do");
             if (service == null) {
                 service = "listAllProfile";
             }
-            if(service.equals("listAllProfile")){
+            if (service.equals("listAllProfile")) {
                 //pre data for jsp
                 Vector<Profile> vector = dao.listAllProfile();
+                ResultSet rsJob = dao.getData("select * from jobs");
+                ResultSet rsDepartment = dao.getData("select * from departments");
+                ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
 
                 //set data for request
                 request.setAttribute("list", vector);
+                request.setAttribute("rsJob", rsJob);
+                request.setAttribute("rsDepartment", rsDepartment);
+                request.setAttribute("rsManager", rsManager);
 
                 //select jsp
                 RequestDispatcher dispatch
@@ -58,7 +66,7 @@ public class ControllerProfile extends HttpServlet {
                 //run
                 dispatch.forward(request, response);
             }
-            if(service.equals("addStaff")){
+            if (service.equals("addStaff")) {
                 //get data
                 String profile_id = request.getParameter("profile_id");
                 String first_name = request.getParameter("first_name");
@@ -76,20 +84,54 @@ public class ControllerProfile extends HttpServlet {
 //                Date hiredate = Date.valueOf(hire_date);
 //                out.print(hire_date);
 //                out.print(hiredate);
-                
+
                 //commit insert to db
                 Profile pro = new Profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
                         ReportsTo, job_id, username, password);
                 //state > 0: success; state <= 0: fail
-                int state = dao.addStaff(pro); 
-                if(state>0){
+                int state = dao.addStaff(pro);
+                if (state > 0) {
                     System.out.println("Added new Staff with employee_id = "
-                            +profile_id);
-                }else{
+                            + profile_id);
+                } else {
                     System.out.println("Add failed!");
                 }
                 response.sendRedirect("ControllerProfile");
+            }
+            if (service.equals("editStaff")) {
+                String submit = request.getParameter("submit");
+                if (submit == null) {  //chua nhan edit
+                    //get data from db
+                    String profile_id = request.getParameter("profile_id");
+//                    out.print(profile_id);
+                    ResultSet rsProfile = dao.getData("select * from [Profile]");
+                    ResultSet rsJob = dao.getData("select * from jobs");
+                    ResultSet rsDepartment = dao.getData("select * from departments");
+                    ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
+                    request.setAttribute("rsProfile", rsProfile);
+                    request.setAttribute("rsJob", rsJob);
+                    request.setAttribute("rsDepartment", rsDepartment);
+                    request.setAttribute("rsManager", rsManager);
+
+                    RequestDispatcher dispatch = request.getRequestDispatcher("editStaff.jsp");
+                    dispatch.forward(request, response);
+                } else {  //nhan edit
+                    //get data
+                    String profile_id = request.getParameter("profile_id");
+                    String first_name = request.getParameter("first_name");
+                    String last_name = request.getParameter("last_name");
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    String email = request.getParameter("email");
+                    String phone_number = request.getParameter("phone_number");
+                    String hire_date = request.getParameter("hire_date");
+                    int job_id = Integer.parseInt(request.getParameter("job_id"));
+                    String ReportsTo = request.getParameter("ReportsTo");
+                    String department_id = request.getParameter("department_id");
+                    double salary = 0; //default amount of salary
+                }
+
             }
         }
     }

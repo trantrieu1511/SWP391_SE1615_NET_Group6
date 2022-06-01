@@ -39,11 +39,11 @@
     </head>
 
     <body>
-        
+
         <div class="page-wrapper">
-            
+
             <jsp:include page="index.jsp"></jsp:include>
-            
+
             <!-- Page Content -->
             <div class="content container-fluid">
                 <div class="row">
@@ -270,4 +270,18 @@
 
         </div>
         <!-- /Page Wrapper -->
+
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+
     </body>

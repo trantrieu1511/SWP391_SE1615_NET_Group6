@@ -328,10 +328,8 @@
                             <li class="submenu">
                                 <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-                                    <c:if test="${sessionScope.acc.report_to != null}">
-                                        <li><a href="employee-dashboard.jsp">Dashboard (Employee)</a></li>
-                                        </c:if>                               
-                                        <c:if test="${sessionScope.acc.report_to == null}">
+                                    <li><a href="employee-dashboard.jsp">Dashboard (Employee)</a></li>
+                                    <c:if test="${sessionScope.acc.report_to == null}">
                                         <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
                                         </c:if>  
                                 </ul>
@@ -372,7 +370,7 @@
                                     <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
                                         <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                         </c:if>
-                                        <li><a href="employee?do=attendance&&user=${sessionScope.acc.user}">Attendance (Employee)</a></li>
+                                    <li><a href="employee?do=attendance&&user=${sessionScope.acc.user}">Attendance (Employee)</a></li>
                                     <!--                                    <li><a href="departments.html">Departments</a></li>
                                                                         <li><a href="designations.html">Designations</a></li>
                                                                         <li><a href="timesheet.html">Timesheet</a></li>

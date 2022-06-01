@@ -60,8 +60,8 @@ public class ControllerManager extends HttpServlet {
             }
 
             if (service.equals("listAllProfile")) {
-                Vector<profile> vector = dao2.listAllProfile();
-                request.setAttribute("list", vector);
+                List<profile> list = dao2.listAllProfile();
+                request.setAttribute("list", list);
                 RequestDispatcher dispatch = request.getRequestDispatcher("employees-list.jsp");
                 dispatch.forward(request, response);
             }

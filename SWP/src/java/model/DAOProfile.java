@@ -9,6 +9,8 @@ import entity.profile;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -70,13 +72,13 @@ public class DAOProfile extends DBConnent {
     }
 
     //SELECT
-    public Vector<profile> listAllProfile() {
+    public List<profile> listAllProfile() {
         String sql = "select * from [profile]";
-        Vector<profile> vector = new Vector<>();
+        List<profile> list = new ArrayList<>();
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
-                vector.add(new profile(
+                list.add(new profile(
                         rs.getString(1), //employee_id
                         rs.getString(2), //first_name
                         rs.getString(3), //last_name
@@ -95,7 +97,7 @@ public class DAOProfile extends DBConnent {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return vector;
+        return list;
     }
 
     public profile getByUser(String user) {
@@ -121,6 +123,12 @@ public class DAOProfile extends DBConnent {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    public static void main(String[] args) {
+        DAOProfile dao = new DAOProfile();
+        List<profile> list = dao.listAllProfile();
+        System.out.println(list);
     }
 
 }

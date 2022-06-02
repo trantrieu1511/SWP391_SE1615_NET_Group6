@@ -165,6 +165,16 @@ public class DAOProfile extends DBConnent {
         }
         return null;
     }
+    
+    public void deleteProfile(String profile_id) {
+        String sql = "delete from [profile] where [profile_id] = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();

@@ -102,6 +102,21 @@ public class ControllerManager extends HttpServlet {
                         department_id, username, password);
                 response.sendRedirect("employees-list.jsp");
             }
+            
+            if (service.equals("deleteStaff")) {
+                String profile_id = request.getParameter("profile_id");
+//                out.println("<!DOCTYPE html>");
+//                out.println("<html>");
+//                out.println("<head>");
+//                out.println("<title>Servlet ControllerEmployee</title>");
+//                out.println("</head>");
+//                out.println("<body>");
+//                out.println("<h1>Servlet ControllerEmployee at " + profile_id + "</h1>");
+//                out.println("</body>");
+//                out.println("</html>");
+                dao2.deleteProfile(profile_id);
+                response.sendRedirect("employees-list.jsp");
+            }
         }
     }
 

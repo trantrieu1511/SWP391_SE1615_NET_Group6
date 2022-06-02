@@ -91,18 +91,30 @@
                     $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
                 });
             });
+            $(function () {
+                $("#add_employee").on("show.bs.modal", function (e) {
+                    var reportto = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
+                });
+            });
+            $(function () {
+                $("#delete_employee").on("show.bs.modal", function (e) {
+                    var id = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                });
+            });
         </script>
-        
+
         <!-- Bean -->
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
         <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
-   
-    </head>
-    <body>
 
-        <!-- Main Wrapper -->
-        <div class="main-wrapper">
+        </head>
+        <body>
+
+            <!-- Main Wrapper -->
+            <div class="main-wrapper">
 
             <jsp:include page="index.jsp"></jsp:include>
 
@@ -123,64 +135,64 @@
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
-                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
-                                    <div class="view-icons">
-                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                                        <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-                                    </div>
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee" data-id="${profile.getByUser(sessionScope.acc.user).getProfile_id()}"><i class="fa fa-plus"></i> Add Employee</a>
+                                <div class="view-icons">
+                                    <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                                    <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
                                 </div>
                             </div>
                         </div>
-                        <!-- /Page Header -->
+                    </div>
+                    <!-- /Page Header -->
 
-                        <!-- Search Filter -->
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">Employee ID</label>
-                                </div>
+                    <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-3">  
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating">
+                                <label class="focus-label">Employee ID</label>
                             </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">Employee Name</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option>Select Designation</option>
-                                        <option>Web Developer</option>
-                                        <option>Web Designer</option>
-                                        <option>Android Developer</option>
-                                        <option>Ios Developer</option>
-                                    </select>
-                                    <label class="focus-label">Designation</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <a href="#" class="btn btn-success btn-block"> Search </a>  
-                            </div>     
                         </div>
-                        <!-- /Search Filter -->
+                        <div class="col-sm-6 col-md-3">  
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating">
+                                <label class="focus-label">Employee Name</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3"> 
+                            <div class="form-group form-focus select-focus">
+                                <select class="select floating"> 
+                                    <option>Select Designation</option>
+                                    <option>Web Developer</option>
+                                    <option>Web Designer</option>
+                                    <option>Android Developer</option>
+                                    <option>Ios Developer</option>
+                                </select>
+                                <label class="focus-label">Designation</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">  
+                            <a href="#" class="btn btn-success btn-block"> Search </a>  
+                        </div>     
+                    </div>
+                    <!-- /Search Filter -->
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-striped custom-table datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Employee ID</th>
-                                                <th name="email">Email</th>
-                                                <th>Mobile</th>
-                                                <th class="text-nowrap">Join Date</th>
-                                                <th>Role</th>
-                                                <th class="text-right no-sort">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Employee ID</th>
+                                            <th name="email">Email</th>
+                                            <th>Mobile</th>
+                                            <th class="text-nowrap">Join Date</th>
+                                            <th>Role</th>
+                                            <th class="text-right no-sort">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
                                             <tr>
                                                 <td>${o.first_name} ${o.last_name}</td>
@@ -194,7 +206,7 @@
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.username} ${o.password} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -288,9 +300,9 @@
                                                 <label>Department <span class="text-danger">*</span></label>
                                                 <select class="select" name="department_id">
                                                     <option value="">Select Department</option>
-                                                <c:forEach items="${department.listAllDepartment()}" var="o">
-                                                    <option value="${o.id}">${o.name}</option>
-                                                </c:forEach>
+                                                    <c:forEach items="${department.listAllDepartment()}" var="o">
+                                                        <option value="${o.id}">${o.name}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -429,20 +441,24 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <div class="form-header">
-                                    <h3>Delete Employee</h3>
-                                    <p>Are you sure want to delete?</p>
-                                </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                <form action="manager" do="post">
+                                    <input type="hidden" name="do" value="deleteStaff">
+                                    <input type="hidden" name="profile_id">
+                                    <div class="form-header">
+                                        <h3>Delete Employee</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

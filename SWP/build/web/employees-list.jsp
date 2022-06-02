@@ -63,6 +63,7 @@
 
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        <script src="js/edit.js"></script>
 
         <!-- Model JS -->
         <script type="text/javascript">
@@ -286,10 +287,10 @@
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
                                                 <select class="select" name="department_id">
-                                                    <!-- <option value="">Select Department</option> -->
-                                                    <option value="1">Web Development</option>
-                                                    <option value="2">IT Management</option>
-                                                    <option value="3">Marketing</option>
+                                                    <option value="">Select Department</option>
+                                                <c:forEach items="${department.listAllDepartment()}" var="o">
+                                                    <option value="${o.id}">${o.name}</option>
+                                                </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -297,17 +298,17 @@
                                             <div class="form-group">
                                                 <label>Designation <span class="text-danger">*</span></label>
                                                 <select class="select" name="job_id">
-                                                    <!-- <option>Select Designation</option> -->
-                                                    <option value="1">Web Designer</option>
-                                                    <option value="2">Web Developer</option>
-                                                    <option value="3">Android Developer</option>
+                                                    <option value="">Select Designation</option>
+                                                    <c:forEach items="${job.listAllJob()}" var="o">
+                                                        <option value="${o.id}">${o.title}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <span id="wrong_pass_alert"></span>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">Submit</button>
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">
                                     </div>
                                 </form>
                             </div>

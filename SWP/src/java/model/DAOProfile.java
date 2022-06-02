@@ -46,10 +46,11 @@ public class DAOProfile extends DBConnent {
         return n;
     }
 
-    public int addStaff(profile pro) {
+    public void addStaff(profile pro) {
         int n = 0;
-        String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,ReportsTo,department_id,username,[password])\n"
-                + "values ("
+        String sql = "insert into [profile](profile_id,first_name,last_name,"
+                + "email,phone_number,hire_date,job_id,salary,ReportsTo,"
+                + "department_id,username,[password]) values ("
                 + "'" + pro.getProfile_id() + "', "
                 + "'" + pro.getFirst_name() + "', "
                 + "'" + pro.getLast_name() + "', "
@@ -69,12 +70,13 @@ public class DAOProfile extends DBConnent {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return n;
     }
 
-    public void editStaff(profile pro, String id) {
+    public void editStaff(String profile_id, String first_name, String last_name, 
+            String email, String phone_number, String hire_date, int job_id, 
+            double salary, String ReportsTo, int department_id, String username,
+            String password) {
         String sql = "update [Profile] set "
-                + "profile_id = ?, "
                 + "first_name = ?, "
                 + "last_name = ?, "
                 + "email = ?, "
@@ -89,19 +91,18 @@ public class DAOProfile extends DBConnent {
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, pro.getProfile_id());
-            pre.setString(2, pro.getFirst_name());
-            pre.setString(3, pro.getLast_name());
-            pre.setString(4, pro.getEmail());
-            pre.setString(5, pro.getPhone_number());
-            pre.setString(6, pro.getHire_date());
-            pre.setInt(7, pro.getJob_id());
-            pre.setDouble(8, pro.getSalary());
-            pre.setString(9, pro.getReportto());
-            pre.setInt(10, pro.getDepartment_id());
-            pre.setString(11, pro.getUsername());
-            pre.setString(12, pro.getPassword());
-            pre.setString(13, id);
+            pre.setString(1, first_name);
+            pre.setString(2, last_name);
+            pre.setString(3, email);
+            pre.setString(4, phone_number);
+            pre.setString(5, hire_date);
+            pre.setInt(6, job_id);
+            pre.setDouble(7, salary);
+            pre.setString(8, ReportsTo);
+            pre.setInt(9, department_id);
+            pre.setString(10, username);
+            pre.setString(11, password);
+            pre.setString(12, profile_id);
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -168,9 +169,10 @@ public class DAOProfile extends DBConnent {
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
         List<profile> list = dao.listAllProfile("12345");
-        for (profile o : list) {
-            System.out.println(o.getReportto());
+        for (profile p : list) {
+            System.out.println(p.getProfile_id());
         }
+        dao.editStaff("23456", "zxcxv", "addf", "rwqrq@gmail.com", "342525", "2022-08-01", 1, 1, "12345", 1, "staff", "123456");
     }
 
 }

@@ -71,20 +71,14 @@ public class ControllerManager extends HttpServlet {
                 String hire_date = request.getParameter("hire_date");
                 int job_id = Integer.parseInt(request.getParameter("job_id"));
                 String ReportsTo = request.getParameter("ReportsTo");
-                String department_id = request.getParameter("department_id");
+                int department_id = Integer.parseInt(request.getParameter("department_id"));
                 double salary = 0;
 
                 profile pro = new profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, job_id, username, password);
-                int state = dao2.addStaff(pro);
-                if (state > 0) {
-                    System.out.println("Added new Staff with employee_id = "
-                            + profile_id);
-                } else {
-                    System.out.println("Add failed!");
-                }
-                response.sendRedirect("ControllerProfile");
+                        ReportsTo, department_id, username, password);
+                dao2.addStaff(pro);             
+                response.sendRedirect("employees-list.jsp");
             }
 
             if (service.equals("editStaff")) {
@@ -96,18 +90,17 @@ public class ControllerManager extends HttpServlet {
                 String email = request.getParameter("email");
                 String phone_number = request.getParameter("phone_number");
                 String hire_date = request.getParameter("hire_date");
-                String job_title = request.getParameter("job_id");
+                String job_title = request.getParameter("job_title");
                 String ReportsTo = request.getParameter("ReportsTo");
-                String department_name = request.getParameter("department_id");
+                String department_name = request.getParameter("department_name");
                 double salary = 0;
                 int department_id = dao3.getDepartmentByName(department_name).getId();
                 int job_id = dao4.getJobByTitle(job_title).getId();
 
-                profile pro = new profile(profile_id, first_name, last_name,
-                        email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, department_id, username, password);
-                dao2.editStaff(pro, user.getProfile_id());
-                response.sendRedirect("manager?do=listAllProfile");
+                dao2.editStaff(profile_id, first_name, last_name, email, 
+                        phone_number, hire_date, job_id, salary, ReportsTo, 
+                        department_id, username, password);
+                response.sendRedirect("employees-list.jsp");
             }
         }
     }

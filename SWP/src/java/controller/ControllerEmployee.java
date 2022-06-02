@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.account;
 import entity.attendance;
 import entity.profile;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
 import model.DAOProfile;
 
@@ -44,21 +46,22 @@ public class ControllerEmployee extends HttpServlet {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
-            request.getSession(false);
             DAOAttendance dao = new DAOAttendance();
             DAOProfile dao2 = new DAOProfile();
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+            String user_name = acc.getUser();
+            profile user = dao2.getByUser(user_name);
             String date = "";
             String time_in = "";
             String time_out = "";
             String production_time = "";
-            String employee_id = "";
+            String employee_id = user.getProfile_id();;
             String button = "in";
 
             if (service.equals("attendance")) {
-                profile pf = dao2.getByUser(request.getParameter("user"));
-                employee_id = pf.getProfile_id();
                 List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
-                attendance temp = dao.getLastest(pf.getProfile_id());
+                attendance temp = dao.getLastest(user.getProfile_id());
                 if (temp != null) {
                     if (temp.getTime_out().equals("")) {
                         button = "out";
@@ -75,11 +78,9 @@ public class ControllerEmployee extends HttpServlet {
                 date = df.format(new java.util.Date());
                 time_in = hf.format(new java.util.Date());
                 button = "out";
-                profile pf = dao2.getByUser(request.getParameter("user"));
-                employee_id = pf.getProfile_id();
 
                 dao.add(date, time_in, time_out, production_time, employee_id);
-                attendance temp = dao.getLastest(pf.getProfile_id());
+                attendance temp = dao.getLastest(user.getProfile_id());
 
                 List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                 request.setAttribute("list_attendance", list);
@@ -90,10 +91,8 @@ public class ControllerEmployee extends HttpServlet {
             }
 
             if (service.equals("punchout")) {
-                time_out = hf.format(new java.util.Date());
-                profile pf = dao2.getByUser(request.getParameter("user"));
-                employee_id = pf.getProfile_id();
-                attendance temp = dao.getLastest(employee_id);
+                time_out = hf.format(new java.util.Date());                
+                attendance temp = dao.getLastest(user.getProfile_id());
 
                 int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
                 int t_out_min = Integer.parseInt(time_out.split(":")[1]);

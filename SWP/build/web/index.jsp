@@ -370,7 +370,7 @@
                                     <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
                                         <li><a href="attendance-manager.jsp">Attendance (Manager)</a></li>
                                         </c:if>
-                                    <li><a href="employee?do=attendance&&user=${sessionScope.acc.user}">Attendance (Employee)</a></li>
+                                    <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
                                     <!--                                    <li><a href="departments.html">Departments</a></li>
                                                                         <li><a href="designations.html">Designations</a></li>
                                                                         <li><a href="timesheet.html">Timesheet</a></li>

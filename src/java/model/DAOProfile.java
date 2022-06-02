@@ -52,7 +52,7 @@ public class DAOProfile extends ConnectDB {
         int n = 0;
         String sql = "insert into [Profile](profile_id,first_name,last_name,email,"
                 + "phone_number,hire_date,job_id,salary,ReportsTo,department_id,"
-                + "username,[password],img)\n"
+                + "username,[password])\n"
                 + "values ("
                 + "'" + pro.getProfile_id() + "', "
                 + "'" + pro.getFirst_name() + "', "
@@ -65,8 +65,7 @@ public class DAOProfile extends ConnectDB {
                 + "'" + pro.getReportsTo() + "', "
                 + "" + pro.getDepartment_id() + ", "
                 + "'" + pro.getUsername() + "', "
-                + "'" + pro.getPassword() + "', "
-                + "'" + pro.getImg()+ "' "
+                + "'" + pro.getPassword() + "'"
                 + ")";
         try {
             Statement state = conn.createStatement();
@@ -78,13 +77,65 @@ public class DAOProfile extends ConnectDB {
     }
 
     //SELECT
-    public Vector<Profile> listAllStaffProfile() {
+    public boolean checkLogin(String username, String password) {
+        //check xem co ban ghi cua profile ung voi account co ton tai hay khong
+        boolean isValid = false;
+        String sql = "select * from Profile where username = ? and password = ?";
+
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, username);
+            pre.setString(2, password);
+            ResultSet rs = pre.executeQuery();
+            if (rs.next()) {
+                isValid = true;
+            } else {
+                isValid = false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return isValid;
+    }
+
+    public Profile addProfileInfo(String username, String password) {
+        Profile pro = null;
+        ResultSet rs = getData("select * from [Profile] where username = '" + username + "' and password = '" + password + "'");
+
+        try {
+            if (rs.next()) {
+                pro = new Profile(
+                        rs.getString(1), //employee_id
+                        rs.getString(2), //first_name
+                        rs.getString(3), //last_name
+                        rs.getString(4), //email
+                        rs.getString(5), //phone_number
+                        rs.getString(6), //hire_date
+                        rs.getString(7), //job_title
+                        rs.getDouble(8), //salary
+                        rs.getString(9), //ReportsTo
+                        rs.getBoolean(10), //isadmin
+                        rs.getString(11), //department_name
+                        rs.getString(12), //username
+                        rs.getString(13) //password
+                );
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+//        return cus;
+        return pro;
+    }
+
+    public Vector<Profile> listAllStaffProfile(String manager_id) {
         String sql = "select p.profile_id, p.first_name, p.last_name, p.email, p.phone_number, \n"
                 + "	p.hire_date, j.job_title, p.salary, p.ReportsTo, p.isadmin, d.department_name,\n"
-                + "	p.username, p.[password], p.img\n"
+                + "	p.username, p.[password]\n"
                 + "	from [Profile] p, departments d, jobs j\n"
                 + "	where p.job_id = j.job_id and p.department_id = d.department_id\n"
-                + "     and ReportsTo is not null";
+                + "     and ReportsTo = '" + manager_id + "'";
         Vector<Profile> vector = new Vector<>();
         ResultSet rs = getData(sql);
         try {
@@ -102,8 +153,8 @@ public class DAOProfile extends ConnectDB {
                         rs.getBoolean(10), //isadmin
                         rs.getString(11), //department_name
                         rs.getString(12), //username
-                        rs.getString(13), //password
-                        rs.getString(14)
+                        rs.getString(13) //password
+
                 ));
             }
         } catch (SQLException ex) {
@@ -145,8 +196,7 @@ public class DAOProfile extends ConnectDB {
                 + "ReportsTo = ?, "
                 + "department_id = ?, "
                 + "username = ?, "
-                + "[password] = ?, "
-                + "[img] = ? "
+                + "[password] = ? "
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -162,8 +212,7 @@ public class DAOProfile extends ConnectDB {
             pre.setInt(10, pro.getDepartment_id());
             pre.setString(11, pro.getUsername());
             pre.setString(12, pro.getPassword());
-            pre.setString(13, pro.getImg());
-            pre.setString(14, cur_profile_id);
+            pre.setString(13, cur_profile_id);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -171,9 +220,22 @@ public class DAOProfile extends ConnectDB {
         return n;
     }
 
+    public int deleteStaff(String profile_id) {
+        int deleteStatus = 0;
+        String sql = "delete from [Profile]\n"
+                + "where profile_id = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            deleteStatus = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return deleteStatus;
+    }
+
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        Vector<Profile> vector = dao.listAllStaffProfile();
+        Vector<Profile> vector = dao.listAllStaffProfile("ABCDE");
         for (Profile profile : vector) {
             System.out.println(profile.toString());
         }

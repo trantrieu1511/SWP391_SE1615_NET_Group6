@@ -63,4 +63,5 @@ function wrong_pass_alert() {
     } else {
         alert("Please fill all the fields");
     }
+    
 }

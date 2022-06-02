@@ -8,6 +8,7 @@
     Author     : DELL
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +47,17 @@
 
         <!-- import js -->
         <script src="js/employee-list_js.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
+        <script type="text/javascript">
+            $(function () {
+                $("#delete_employee").on("show.bs.modal", function (e) {
+                    var id = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                });
+            });
+        </script>
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -57,47 +69,48 @@
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
+            <jsp:include page="menu.jsp"></jsp:include>
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="page-title">Employee</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Employee</li>
-                                </ul>
-                            </div>
-                            <div class="col-auto float-right ml-auto">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
-                                <div class="view-icons">
-                                    <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                                    <a href="ControllerProfile" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">Employee</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Employee</li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                                    <div class="view-icons">
+                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                                        <a href="ControllerProfile" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Page Header -->
+                        <!-- /Page Header -->
 
-                    <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Employee ID</label>
+                        <!-- Search Filter -->
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating">
+                                    <label class="focus-label">Employee ID</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Employee Name</label>
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating">
+                                    <label class="focus-label">Employee Name</label>
+                                </div>
                             </div>
-                        </div>
                         <% Vector<Jobs> vectorJobs = (Vector<Jobs>) request.getAttribute("vectorJobs");%>
                         <div class="col-sm-6 col-md-3"> 
                             <div class="form-group form-focus select-focus">
@@ -139,7 +152,7 @@
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="<%= pro.getImg()%>"></a>
+                                                    <a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>
                                                     <a href="profile.html"><%= pro.getFirst_name() + " " + pro.getLast_name()%> <span><%= pro.getJob_title()%></span></a>
                                                 </h2>
                                             </td>
@@ -169,7 +182,7 @@
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a class="dropdown-item" href="ControllerProfile?do=editStaff&profile_id=<%= pro.getProfile_id()%>" > <i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"  data-id="<%= pro.getProfile_id() %>"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -290,12 +303,6 @@
                                                     <option value="<%= jobs.getJob_id()%>"><%= jobs.getJob_title()%></option>
                                                     <%}%>
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label" for="img">Img </label>
-                                                <input class="form-control" type="search" id="img" name="img">
                                             </div>
                                         </div>
                                     </div>
@@ -434,28 +441,32 @@
                 </div>
                 <!-- /Edit Employee Modal -->
 
-                
+
                 <!-- Delete Employee Modal -->
                 <div class="modal custom-modal fade" id="delete_employee" role="dialog">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <div class="form-header">
-                                    <h3>Delete Employee</h3>
-                                    <p>Are you sure want to delete?</p>
-                                </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <%for (Profile pro : vectorStaff) {%>
-                                            <a href="ControllerProfile?do=deleteStaff&profile_id=<%= pro.getProfile_id() %>" class="btn btn-primary continue-btn">Delete</a>
-                                            <%}%>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                <form action="ControllerProfile" method="post">
+                                    <input type="hidden" name="do" value="deleteStaff">
+                                    <input type="hidden" name="profile_id" value="">
+                                    <div class="form-header">
+                                        <h3>Delete Employee</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" class="btn btn-primary continue-btn" name="submit" value="Delete" style="padding: 10px 75px;">
+                                                <!--<a href="ControllerProfile?do=deleteStaff&profile_id=" class="btn btn-primary continue-btn">Delete</a>-->
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
+
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -468,13 +479,7 @@
         </div>
         <!-- /Main Wrapper -->
 
-        <script type="text/javascript">
-            function getProfile_id(id) {
-                document.getElementsByTagName("tr").id = id;
 
-            }
-
-        </script>
         <!-- jQuery -->
         <script src="assets/js/jquery-3.5.1.min.js"></script>
 

@@ -168,12 +168,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="img">Img </label>
-                                        <input class="form-control" type="search" id="img" name="img" value="<%= rsProfile.getString(14) %>">
-                                    </div>
-                                </div>
                             </div>
                             <span id="wrong_pass_alert"></span>
                             <div class="submit-section">

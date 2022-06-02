@@ -46,28 +46,35 @@ public class ControllerProfile extends HttpServlet {
 
             String service = request.getParameter("do");
             if (service == null) {
-                service = "listAllProfile";
+                service = "listAllStaffProfile";
             }
-            if (service.equals("listAllProfile")) {
-                //pre data for jsp
-                Vector<Profile> vectorStaff = dao.listAllStaffProfile();
-                Vector<Jobs> vectorJobs = dao.listAllDesignation();
-                ResultSet rsDepartment = dao.getData("select * from departments");
-                ResultSet rsJobs = dao.getData("select * from jobs");
-                ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
+            if (service.equals("listAllStaffProfile")) {
+                HttpSession session = request.getSession();
+                Profile pro = (Profile) session.getAttribute("acc");
+                if (pro == null) {
+                    response.sendRedirect("login.jsp");
+                } else {
+                    String manager_id = pro.getProfile_id();
+                    //pre data for jsp
+                    Vector<Profile> vectorStaff = dao.listAllStaffProfile(manager_id);
+                    Vector<Jobs> vectorJobs = dao.listAllDesignation();
+                    ResultSet rsDepartment = dao.getData("select * from departments");
+                    ResultSet rsJobs = dao.getData("select * from jobs");
+                    ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
 
-                //set data for request
-                request.setAttribute("list", vectorStaff);
-                request.setAttribute("vectorJobs", vectorJobs);
-                request.setAttribute("rsJobs", rsJobs);
-                request.setAttribute("rsDepartment", rsDepartment);
-                request.setAttribute("rsManager", rsManager);
+                    //set data for request
+                    request.setAttribute("list", vectorStaff);
+                    request.setAttribute("vectorJobs", vectorJobs);
+                    request.setAttribute("rsJobs", rsJobs);
+                    request.setAttribute("rsDepartment", rsDepartment);
+                    request.setAttribute("rsManager", rsManager);
 
-                //select jsp
-                RequestDispatcher dispatch
-                        = request.getRequestDispatcher("employees-list.jsp");
-                //run
-                dispatch.forward(request, response);
+                    //select jsp
+                    RequestDispatcher dispatch
+                            = request.getRequestDispatcher("employees-list.jsp");
+                    //run
+                    dispatch.forward(request, response);
+                }
             }
             if (service.equals("addStaff")) {
                 //get data
@@ -81,10 +88,10 @@ public class ControllerProfile extends HttpServlet {
                 String hire_date = request.getParameter("hire_date");
                 int job_id = Integer.parseInt(request.getParameter("job_id"));
                 String ReportsTo = request.getParameter("ReportsTo");
-                int department_id = 
-                        Integer.parseInt(request.getParameter("department_id"));
+                int department_id
+                        = Integer.parseInt(request.getParameter("department_id"));
                 double salary = 0; //default amount of salary
-                String img = request.getParameter("img");
+//                String img = request.getParameter("img");
                 //display
 //                Date hiredate = Date.valueOf(hire_date);
 //                out.print(hire_date);
@@ -94,7 +101,7 @@ public class ControllerProfile extends HttpServlet {
                 //commit insert to db
                 Profile pro = new Profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, department_id, username, password, img);
+                        ReportsTo, department_id, username, password);
                 //state > 0: success; state <= 0: fail
                 int state = dao.addStaff(pro);
                 if (state > 0) {
@@ -112,13 +119,13 @@ public class ControllerProfile extends HttpServlet {
                     String profile_id = request.getParameter("profile_id");
                     HttpSession session = request.getSession();
                     Object cur_profile_id = session.getAttribute("profile_id");
-                    if(cur_profile_id==null){
+                    if (cur_profile_id == null) {
                         session.setAttribute("profile_id", profile_id);
-                    }else{
+                    } else {
                         session.setAttribute("profile_id", profile_id);
                     }
 //                    out.print(profile_id);
-                    ResultSet rsProfile = dao.getData("select * from [Profile] where profile_id = '"+profile_id+"'");
+                    ResultSet rsProfile = dao.getData("select * from [Profile] where profile_id = '" + profile_id + "'");
                     ResultSet rsJob = dao.getData("select * from jobs");
                     ResultSet rsDepartment = dao.getData("select * from departments");
                     ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
@@ -141,25 +148,68 @@ public class ControllerProfile extends HttpServlet {
                     String hire_date = request.getParameter("hire_date");
                     int job_id = Integer.parseInt(request.getParameter("job_id"));
                     String ReportsTo = request.getParameter("ReportsTo");
-                    int department_id = 
-                            Integer.parseInt(request.getParameter("department_id"));
+                    int department_id
+                            = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0; //default amount of salary
-                    String img = request.getParameter("img");
-                    
+//                    String img = request.getParameter("img");
+
                     Profile pro = new Profile(profile_id, first_name, last_name,
-                            email, phone_number, hire_date, job_id, salary, 
-                            ReportsTo, department_id, username, password, img);
+                            email, phone_number, hire_date, job_id, salary,
+                            ReportsTo, department_id, username, password);
                     HttpSession session = request.getSession();
                     String cur_profile_id = session.getAttribute("profile_id").toString();
                     int editStatus = dao.editStaff(pro, cur_profile_id);
-                    if(editStatus>0) System.out.println("Successfully edited Staff with profile_id = "+profile_id);
-                    else System.out.println("Edit failed! An error must have occured!");
+                    if (editStatus > 0) {
+                        System.out.println("Successfully edited Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Edit failed! An error must have occured!");
+                    }
                     response.sendRedirect("ControllerProfile");
                 }
 
+            }   
+            if (service.equals("login")) {
+                //check login
+                String getUserName = request.getParameter("username");
+                String getpassword = request.getParameter("password");
+
+                // goi DAO de kiem tra tai khoan dang nhap co trong DB hay k
+                boolean isValid = dao.checkLogin(getUserName, getpassword);
+
+                //chuyen den cac view tiep theo neu login thanh cong
+                if (isValid) {
+
+                    HttpSession session = request.getSession();
+
+                    Profile pro = (Profile) session.getAttribute("acc");
+                    if (pro == null) {
+                        pro = dao.addProfileInfo(getUserName, getpassword);
+
+                        session.setAttribute("acc", pro);
+                    } else {
+
+                        pro = dao.addProfileInfo(getUserName, getpassword);
+
+                        session.setAttribute("acc", pro);
+                    }
+                    response.sendRedirect("ControllerProfile");
+                } // truong hop that bai se quay lai form login
+                else {
+//                    out.print("Account isn't available!\nYou can try to register\n <a href = \"login.jsp\">return to Login</a>");
+                    HttpSession session = request.getSession();
+                    Object loginfail = true;
+                    session.setAttribute("status", loginfail);
+                    response.sendRedirect("login.jsp");
+                }
             }
-            if(service.equals("deleteStaff")){
-                
+            if (service.equals("deleteStaff")) {
+                String profile_id = request.getParameter("profile_id");
+//                out.print(profile_id);
+                //delete
+                int deleteStatus = dao.deleteStaff(profile_id);
+                if(deleteStatus>0) System.out.println("Successfully delete Staff with profile_id = "+profile_id);
+                else System.out.println("Delete fail!");
+                response.sendRedirect("ControllerProfile");
             }
         }
     }

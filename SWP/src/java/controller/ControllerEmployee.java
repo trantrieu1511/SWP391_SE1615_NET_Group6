@@ -54,13 +54,15 @@ public class ControllerEmployee extends HttpServlet {
             String employee_id = "";
             String button = "in";
 
-            if (service.equals("attendance")) {                
+            if (service.equals("attendance")) {
                 profile pf = dao2.getByUser(request.getParameter("user"));
                 employee_id = pf.getProfile_id();
                 List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                 attendance temp = dao.getLastest(pf.getProfile_id());
-                if (temp.getTime_out().equals("")) {
-                    button = "out";
+                if (temp != null) {
+                    if (temp.getTime_out().equals("")) {
+                        button = "out";
+                    }
                 }
                 request.getSession(false);
                 request.setAttribute("list_attendance", list);

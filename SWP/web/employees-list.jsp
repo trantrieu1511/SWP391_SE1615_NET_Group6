@@ -1,3 +1,5 @@
+<%@page import="entity.departments"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,7 +39,7 @@
 
         <!-- import js -->
         <script src="js/employee-list_js.js"></script>
-        
+
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 
@@ -61,43 +63,43 @@
 
         <!-- Custom JS -->
         <script src="js/app.js"></script>
-        
+
+        <!-- Model JS -->
         <script type="text/javascript">
-            $(function() {
-                   $("#edit_employee").on("show.bs.modal", function(e) {
-                   var text = $(e.relatedTarget).attr('data-id');
-                   const myArray = text.split(" ");
-                   var id = myArray[0];
-                   var first_name = myArray[1];
-                   var last_name =  myArray[2];
-                   var email = myArray[3];
-                   var phone_number = myArray[4];
-                   var hire_date = myArray[5];
-                   var username = myArray[6];
-                   var password = myArray[7];
-                   var reportto = myArray[8];
-                   $(e.currentTarget).find('input[name="first_name"]').val(first_name);
-                   $(e.currentTarget).find('input[name="last_name"]').val(last_name);
-                   $(e.currentTarget).find('input[name="email"]').val(email);
-                   $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
-                   $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
-                   $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                   $(e.currentTarget).find('input[name="username"]').val(username);
-                   $(e.currentTarget).find('input[name="password"]').val(password);
-                   $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
-                   });
-               });
+            $(function () {
+                $("#edit_employee").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var first_name = myArray[1];
+                    var last_name = myArray[2];
+                    var email = myArray[3];
+                    var phone_number = myArray[4];
+                    var hire_date = myArray[5];
+                    var username = myArray[6];
+                    var password = myArray[7];
+                    var reportto = myArray[8];
+                    $(e.currentTarget).find('input[name="first_name"]').val(first_name);
+                    $(e.currentTarget).find('input[name="last_name"]').val(last_name);
+                    $(e.currentTarget).find('input[name="email"]').val(email);
+                    $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
+                    $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="username"]').val(username);
+                    $(e.currentTarget).find('input[name="password"]').val(password);
+                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
+                });
+            });
         </script>
-
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
+        
+        <!-- Bean -->
+        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
+        <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
+   
     </head>
     <body>
-        
+
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
@@ -178,42 +180,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${list}" var="o">
-                                                <tr>
-                                                    <td>${o.first_name} ${o.last_name}</td>
-                                                    <td class="id">${o.profile_id}</td>
-                                                    <td>${o.email}</td>
-                                                    <td>${o.phone_number}</td>
-                                                    <td>${o.hire_date}</td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Web Developer </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Software Engineer</a>
-                                                                <a class="dropdown-item" href="#">Software Tester</a>
-                                                                <a class="dropdown-item" href="#">Frontend Developer</a>
-                                                                <a class="dropdown-item" href="#">UI/UX Developer</a>
-                                                            </div>
+                                        <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
+                                            <tr>
+                                                <td>${o.first_name} ${o.last_name}</td>
+                                                <td>${o.profile_id}</td>
+                                                <td>${o.email}</td>
+                                                <td>${o.phone_number}</td>
+                                                <td>${o.hire_date}</td>
+                                                <td>${o.job_title}</td>
+                                                <td class="text-right">
+                                                    <div class="dropdown dropdown-action">
+                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.username} ${o.password} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <div class="dropdown dropdown-action">
-                                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.username} ${o.password} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <!-- /Page Content -->
+                </div>
+                <!-- /Page Content -->
 
                 <!-- Add Employee Modal -->
                 <div id="add_employee" class="modal custom-modal fade" role="dialog">
@@ -226,7 +218,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="ControllerProfile" method="post">
+                                <form action="manager" method="post">
                                     <input type="hidden" name="do" value="addStaff">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -287,11 +279,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">ReportsTo</label>
-                                                <select class="select" name="ReportsTo">
-                                                    <%%>
-                                                    <option value="ABCDE">Tran Trieu</option>
-                                                    <option value="ABCDF">Delta Infotech</option>
-                                                </select>
+                                                <input class="form-control" readonly type="text" value="" name="ReportsTo">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -339,7 +327,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="manager" do="post">
+                                    <input type="hidden" name="do" value="editStaff">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -404,28 +393,28 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
-                                                <select class="select">
+                                                <select class="select" name="department_name">
                                                     <option>Select Department</option>
-                                                    <option>Web Development</option>
-                                                    <option>IT Management</option>
-                                                    <option>Marketing</option>
+                                                    <c:forEach items="${department.listAllDepartment()}" var="o">
+                                                        <option>${o.name}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Designation <span class="text-danger">*</span></label>
-                                                <select class="select">
+                                                <select class="select" name="job_title">
                                                     <option>Select Designation</option>
-                                                    <option>Web Designer</option>
-                                                    <option>Web Developer</option>
-                                                    <option>Android Developer</option>
+                                                    <c:forEach items="${job.listAllJob()}" var="o">
+                                                        <option>${o.title}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Save</button>
+                                        <input type="submit" class="btn btn-primary submit-btn">
                                     </div>
                                 </form>
                             </div>
@@ -458,7 +447,7 @@
                     </div>
                 </div>
                 <!-- /Delete Employee Modal -->
-               
+
             </div>
             <!-- /Page Wrapper -->
 

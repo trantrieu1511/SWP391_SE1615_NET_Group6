@@ -11,7 +11,6 @@ import entity.profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
+import model.DAODepartment;
+import model.DAOJob;
 import model.DAOProfile;
 
 /**
@@ -46,33 +47,20 @@ public class ControllerManager extends HttpServlet {
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
             DAOProfile dao2 = new DAOProfile();
-            
-            if (service.equals("dashboard")){
+            DAODepartment dao3 = new DAODepartment();
+            DAOJob dao4 = new DAOJob();
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+            String user_name = acc.getUser();
+            profile user = dao2.getByUser(user_name);
+
+            if (service.equals("dashboard")) {
                 request.getSession(false);
                 RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
                 dispath.forward(request, response);
             }
 
-            if (service.equals("attendance")) {
-                request.getSession(false);
-                List<attendance> list = dao.listAll();
-                request.setAttribute("list_attendance", list);
-                RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
-                dispath.forward(request, response);
-            }
-
-            if (service.equals("listAllProfile")) {
-                HttpSession session = request.getSession();
-                account acc = (account) session.getAttribute("acc");
-                String username = acc.getUser();
-                profile user = dao2.getByUser(username);
-                List<profile> list = dao2.listAllProfile(user.getProfile_id());
-                request.setAttribute("list", list);
-                RequestDispatcher dispatch = request.getRequestDispatcher("employees-list.jsp");
-                dispatch.forward(request, response);
-            }
             if (service.equals("addStaff")) {
-                //get data
                 String profile_id = request.getParameter("profile_id");
                 String first_name = request.getParameter("first_name");
                 String last_name = request.getParameter("last_name");
@@ -97,6 +85,29 @@ public class ControllerManager extends HttpServlet {
                     System.out.println("Add failed!");
                 }
                 response.sendRedirect("ControllerProfile");
+            }
+
+            if (service.equals("editStaff")) {
+                String profile_id = request.getParameter("profile_id");
+                String first_name = request.getParameter("first_name");
+                String last_name = request.getParameter("last_name");
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                String email = request.getParameter("email");
+                String phone_number = request.getParameter("phone_number");
+                String hire_date = request.getParameter("hire_date");
+                String job_title = request.getParameter("job_id");
+                String ReportsTo = request.getParameter("ReportsTo");
+                String department_name = request.getParameter("department_id");
+                double salary = 0;
+                int department_id = dao3.getDepartmentByName(department_name).getId();
+                int job_id = dao4.getJobByTitle(job_title).getId();
+
+                profile pro = new profile(profile_id, first_name, last_name,
+                        email, phone_number, hire_date, job_id, salary,
+                        ReportsTo, department_id, username, password);
+                dao2.editStaff(pro, user.getProfile_id());
+                response.sendRedirect("manager?do=listAllProfile");
             }
         }
     }

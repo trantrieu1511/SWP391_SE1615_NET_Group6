@@ -45,6 +45,10 @@
             <jsp:include page="manager-dashboard.jsp"></jsp:include>
         </c:if>
         
+        <c:if test="${sessionScope.acc.report_to != null && sessionScope.acc.isAdmin == false}">
+            <jsp:include page="employee-dashboard.jsp"></jsp:include>
+        </c:if>
+        
 <!--         jQuery 
         <script src="js/jquery-3.5.1.min.js"></script>
 

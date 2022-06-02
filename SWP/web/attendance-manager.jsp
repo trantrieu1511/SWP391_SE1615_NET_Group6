@@ -38,11 +38,10 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="assets/js/html5shiv.min.js"></script>
-                <script src="assets/js/respond.min.js"></script>
-        <![endif]-->
+        <!-- Bean -->
+        <jsp:useBean id="attendance" class="model.DAOAttendance" scope="request"></jsp:useBean>
+        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -100,7 +99,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${list_attendance}" var="o">
+                                        <c:forEach items="${attendance.listAll(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
                                             <tr>
                                                 <td>${o.employee_id}</td>
                                                 <td>${o.date}</td>

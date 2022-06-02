@@ -16,8 +16,19 @@ public class attendance {
     String time_out;
     String production_time;
     String employee_id;
+    String reportto;
 
     public attendance() {
+    }
+
+    public attendance(int id, String date, String time_in, String time_out, String production_time, String employee_id, String reportto) {
+        this.id = id;
+        this.date = date;
+        this.time_in = time_in;
+        this.time_out = time_out;
+        this.production_time = production_time;
+        this.employee_id = employee_id;
+        this.reportto = reportto;
     }
 
     public attendance(int id, String date, String time_in, String time_out, String production_time, String employee_id) {
@@ -77,9 +88,17 @@ public class attendance {
         this.employee_id = employee_id;
     }
 
+    public String getReportto() {
+        return reportto;
+    }
+
+    public void setReportto(String reportto) {
+        this.reportto = reportto;
+    }
+
     @Override
     public String toString() {
-        return "attendance{" + "id=" + id + ", date=" + date + ", time_in=" + time_in + ", time_out=" + time_out + ", production_time=" + production_time + ", employee_id=" + employee_id + '}';
+        return "attendance{" + "id=" + id + ", date=" + date + ", time_in=" + time_in + ", time_out=" + time_out + ", production_time=" + production_time + ", employee_id=" + employee_id + ", reportto=" + reportto + '}';
     }
 
 }

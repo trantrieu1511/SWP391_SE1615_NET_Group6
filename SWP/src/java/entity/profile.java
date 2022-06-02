@@ -15,7 +15,7 @@ public class profile {
     String hire_date;
     int job_id;
     double salary;
-    String ReportsTo;
+    String reportto;
     boolean isadmin;
     int department_id;
     String username;
@@ -25,7 +25,7 @@ public class profile {
     }
 
     //add Staff constructor
-    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, int department_id, String username, String password) {
+    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String reportto, int department_id, String username, String password) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -34,7 +34,7 @@ public class profile {
         this.hire_date = hire_date;
         this.job_id = job_id;
         this.salary = salary;
-        this.ReportsTo = ReportsTo;
+        this.reportto = reportto;
         this.department_id = department_id;
         this.username = username;
         this.password = password;
@@ -56,7 +56,7 @@ public class profile {
     }
     
     //add Admin constructor
-    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, boolean isadmin, int department_id, String username, String password) {
+    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String reportto, boolean isadmin, int department_id, String username, String password) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -65,7 +65,7 @@ public class profile {
         this.hire_date = hire_date;
         this.job_id = job_id;
         this.salary = salary;
-        this.ReportsTo = ReportsTo;
+        this.reportto = reportto;
         this.isadmin = isadmin;
         this.department_id = department_id;
         this.username = username;
@@ -136,12 +136,12 @@ public class profile {
         this.salary = salary;
     }
 
-    public String getReportsTo() {
-        return ReportsTo;
+    public String getReportto() {
+        return reportto;
     }
 
-    public void setReportsTo(String ReportsTo) {
-        this.ReportsTo = ReportsTo;
+    public void setReportto(String reportto) {
+        this.reportto = reportto;
     }
 
     public boolean isIsadmin() {
@@ -178,7 +178,7 @@ public class profile {
 
     @Override
     public String toString() {
-        return "Profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", salary=" + salary + ", ReportsTo=" + ReportsTo + ", isadmin=" + isadmin + ", department_id=" + department_id + ", username=" + username + ", password=" + password + '}';
+        return "Profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", salary=" + salary + ", ReportsTo=" + reportto + ", isadmin=" + isadmin + ", department_id=" + department_id + ", username=" + username + ", password=" + password + '}';
     }
 
     

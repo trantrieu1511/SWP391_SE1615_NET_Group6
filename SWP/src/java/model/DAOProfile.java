@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  *
@@ -57,7 +56,7 @@ public class DAOProfile extends DBConnent {
                 + "'" + pro.getHire_date() + "', "
                 + "" + pro.getJob_id() + ", "
                 + "" + pro.getSalary() + ", "
-                + "'" + pro.getReportsTo() + "', "
+                + "'" + pro.getReportto() + "', "
                 + "" + pro.getDepartment_id() + ", "
                 + "'" + pro.getUsername() + "', "
                 + "'" + pro.getPassword() + "' "
@@ -72,8 +71,8 @@ public class DAOProfile extends DBConnent {
     }
 
     //SELECT
-    public List<profile> listAllProfile() {
-        String sql = "select * from [profile]";
+    public List<profile> listAllProfile(String id) {
+        String sql = "select * from [profile] where [ReportsTo] = '" + id + "'";
         List<profile> list = new ArrayList<>();
         ResultSet rs = getData(sql);
         try {
@@ -127,8 +126,10 @@ public class DAOProfile extends DBConnent {
     
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        List<profile> list = dao.listAllProfile();
-        System.out.println(list);
+        List<profile> list = dao.listAllProfile("12345");
+        for (profile o : list) {
+            System.out.println(o.getReportto());
+        }
     }
 
 }

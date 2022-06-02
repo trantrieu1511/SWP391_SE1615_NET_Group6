@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.account;
 import entity.attendance;
 import entity.profile;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
 import model.DAOProfile;
 
@@ -60,7 +62,11 @@ public class ControllerManager extends HttpServlet {
             }
 
             if (service.equals("listAllProfile")) {
-                List<profile> list = dao2.listAllProfile();
+                HttpSession session = request.getSession();
+                account acc = (account) session.getAttribute("acc");
+                String username = acc.getUser();
+                profile user = dao2.getByUser(username);
+                List<profile> list = dao2.listAllProfile(user.getProfile_id());
                 request.setAttribute("list", list);
                 RequestDispatcher dispatch = request.getRequestDispatcher("employees-list.jsp");
                 dispatch.forward(request, response);

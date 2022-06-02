@@ -6,6 +6,7 @@
 package model;
 
 import entity.Employees;
+import entity.Jobs;
 import entity.Profile;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +52,7 @@ public class DAOProfile extends ConnectDB {
         int n = 0;
         String sql = "insert into [Profile](profile_id,first_name,last_name,email,"
                 + "phone_number,hire_date,job_id,salary,ReportsTo,department_id,"
-                + "username,[password])\n"
+                + "username,[password],img)\n"
                 + "values ("
                 + "'" + pro.getProfile_id() + "', "
                 + "'" + pro.getFirst_name() + "', "
@@ -64,7 +65,8 @@ public class DAOProfile extends ConnectDB {
                 + "'" + pro.getReportsTo() + "', "
                 + "" + pro.getDepartment_id() + ", "
                 + "'" + pro.getUsername() + "', "
-                + "'" + pro.getPassword() + "' "
+                + "'" + pro.getPassword() + "', "
+                + "'" + pro.getImg()+ "' "
                 + ")";
         try {
             Statement state = conn.createStatement();
@@ -76,12 +78,13 @@ public class DAOProfile extends ConnectDB {
     }
 
     //SELECT
-    public Vector<Profile> listAllProfile() {
+    public Vector<Profile> listAllStaffProfile() {
         String sql = "select p.profile_id, p.first_name, p.last_name, p.email, p.phone_number, \n"
                 + "	p.hire_date, j.job_title, p.salary, p.ReportsTo, p.isadmin, d.department_name,\n"
-                + "	p.username, p.[password]\n"
+                + "	p.username, p.[password], p.img\n"
                 + "	from [Profile] p, departments d, jobs j\n"
-                + "	where p.job_id = j.job_id and p.department_id = d.department_id";
+                + "	where p.job_id = j.job_id and p.department_id = d.department_id\n"
+                + "     and ReportsTo is not null";
         Vector<Profile> vector = new Vector<>();
         ResultSet rs = getData(sql);
         try {
@@ -99,7 +102,8 @@ public class DAOProfile extends ConnectDB {
                         rs.getBoolean(10), //isadmin
                         rs.getString(11), //department_name
                         rs.getString(12), //username
-                        rs.getString(13) //password
+                        rs.getString(13), //password
+                        rs.getString(14)
                 ));
             }
         } catch (SQLException ex) {
@@ -108,6 +112,25 @@ public class DAOProfile extends ConnectDB {
         return vector;
     }
 
+    public Vector<Jobs> listAllDesignation() {
+        Vector<Jobs> vector = new Vector<>();
+        String sql = "select * from jobs";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                vector.add(new Jobs(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getDouble(4)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vector;
+    }
+
+    //UPDATE
     public int editStaff(Profile pro, String cur_profile_id) {
         int n = 0;
         String sql = "update [Profile] set "
@@ -122,7 +145,8 @@ public class DAOProfile extends ConnectDB {
                 + "ReportsTo = ?, "
                 + "department_id = ?, "
                 + "username = ?, "
-                + "[password] = ? "
+                + "[password] = ?, "
+                + "[img] = ? "
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -138,7 +162,8 @@ public class DAOProfile extends ConnectDB {
             pre.setInt(10, pro.getDepartment_id());
             pre.setString(11, pro.getUsername());
             pre.setString(12, pro.getPassword());
-            pre.setString(13, cur_profile_id);
+            pre.setString(13, pro.getImg());
+            pre.setString(14, cur_profile_id);
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -148,7 +173,7 @@ public class DAOProfile extends ConnectDB {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        Vector<Profile> vector = dao.listAllProfile();
+        Vector<Profile> vector = dao.listAllStaffProfile();
         for (Profile profile : vector) {
             System.out.println(profile.toString());
         }

@@ -23,13 +23,14 @@ public class Profile {
     String department_name;
     String username;
     String password;
+    String img;
 
     public Profile() {
     }
     
     //select for display constructor
 
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, String job_title, double salary, String ReportsTo, boolean isadmin, String department_name, String username, String password) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, String job_title, double salary, String ReportsTo, boolean isadmin, String department_name, String username, String password, String img) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -43,6 +44,7 @@ public class Profile {
         this.department_name = department_name;
         this.username = username;
         this.password = password;
+        this.img = img;
     }
 
     public String getJob_title() {
@@ -60,10 +62,18 @@ public class Profile {
     public void setDepartment_name(String department_name) {
         this.department_name = department_name;
     }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
     
 
     //add Staff constructor
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, int department_id, String username, String password) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, int department_id, String username, String password, String img) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -76,10 +86,11 @@ public class Profile {
         this.department_id = department_id;
         this.username = username;
         this.password = password;
+        this.img = img;
     }
     
     //add Manager constructor
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, int department_id, String username, String password) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, int department_id, String username, String password, String img) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -91,10 +102,11 @@ public class Profile {
         this.department_id = department_id;
         this.username = username;
         this.password = password;
+        this.img = img;
     }
     
     //add Admin constructor
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, boolean isadmin, int department_id, String username, String password) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, double salary, String ReportsTo, boolean isadmin, int department_id, String username, String password, String img) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -108,6 +120,7 @@ public class Profile {
         this.department_id = department_id;
         this.username = username;
         this.password = password;
+        this.img = img;
     }
 
     public String getProfile_id() {

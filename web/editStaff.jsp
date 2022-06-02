@@ -56,7 +56,7 @@
     </head>
     <body>
 
-        
+
         <!-- Edit Employee Modal -->
         <div id="edit_employee" role="dialog" style="margin: 10px 400px 80px 400px;">
             <div role="document">
@@ -168,6 +168,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="img">Img </label>
+                                        <input class="form-control" type="search" id="img" name="img" value="<%= rsProfile.getString(14) %>">
+                                    </div>
+                                </div>
                             </div>
                             <span id="wrong_pass_alert"></span>
                             <div class="submit-section">
@@ -180,32 +186,32 @@
             </div>
         </div>
         <!-- /Edit Employee Modal -->
-        
 
-<!-- jQuery -->
-<script src="assets/js/jquery-3.5.1.min.js"></script>
 
-<!-- Bootstrap Core JS -->
-<script src="assets/js/popper.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
+        <!-- jQuery -->
+        <script src="assets/js/jquery-3.5.1.min.js"></script>
 
-<!-- Slimscroll JS -->
-<script src="assets/js/jquery.slimscroll.min.js"></script>
+        <!-- Bootstrap Core JS -->
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
 
-<!-- Select2 JS -->
-<script src="assets/js/select2.min.js"></script>
+        <!-- Slimscroll JS -->
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
 
-<!-- Datetimepicker JS -->
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+        <!-- Select2 JS -->
+        <script src="assets/js/select2.min.js"></script>
 
-<!-- Datatable JS -->
-<script src="assets/js/jquery.dataTables.min.js"></script>
-<script src="assets/js/dataTables.bootstrap4.min.js"></script>
+        <!-- Datetimepicker JS -->
+        <script src="assets/js/moment.min.js"></script>
+        <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
-<!-- Custom JS -->
-<script src="assets/js/app.js"></script>
+        <!-- Datatable JS -->
+        <script src="assets/js/jquery.dataTables.min.js"></script>
+        <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
-</body>
+        <!-- Custom JS -->
+        <script src="assets/js/app.js"></script>
+
+    </body>
 </html>
 

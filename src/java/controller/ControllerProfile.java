@@ -6,6 +6,7 @@
 package controller;
 
 import entity.Employees;
+import entity.Jobs;
 import entity.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,14 +50,16 @@ public class ControllerProfile extends HttpServlet {
             }
             if (service.equals("listAllProfile")) {
                 //pre data for jsp
-                Vector<Profile> vector = dao.listAllProfile();
-                ResultSet rsJob = dao.getData("select * from jobs");
+                Vector<Profile> vectorStaff = dao.listAllStaffProfile();
+                Vector<Jobs> vectorJobs = dao.listAllDesignation();
                 ResultSet rsDepartment = dao.getData("select * from departments");
+                ResultSet rsJobs = dao.getData("select * from jobs");
                 ResultSet rsManager = dao.getData("select * from [Profile] where ReportsTo is null");
 
                 //set data for request
-                request.setAttribute("list", vector);
-                request.setAttribute("rsJob", rsJob);
+                request.setAttribute("list", vectorStaff);
+                request.setAttribute("vectorJobs", vectorJobs);
+                request.setAttribute("rsJobs", rsJobs);
                 request.setAttribute("rsDepartment", rsDepartment);
                 request.setAttribute("rsManager", rsManager);
 
@@ -81,15 +84,17 @@ public class ControllerProfile extends HttpServlet {
                 int department_id = 
                         Integer.parseInt(request.getParameter("department_id"));
                 double salary = 0; //default amount of salary
+                String img = request.getParameter("img");
                 //display
 //                Date hiredate = Date.valueOf(hire_date);
 //                out.print(hire_date);
 //                out.print(hiredate);
+//                out.print(img);
 
                 //commit insert to db
                 Profile pro = new Profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, department_id, username, password);
+                        ReportsTo, department_id, username, password, img);
                 //state > 0: success; state <= 0: fail
                 int state = dao.addStaff(pro);
                 if (state > 0) {
@@ -139,20 +144,21 @@ public class ControllerProfile extends HttpServlet {
                     int department_id = 
                             Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0; //default amount of salary
+                    String img = request.getParameter("img");
                     
                     Profile pro = new Profile(profile_id, first_name, last_name,
                             email, phone_number, hire_date, job_id, salary, 
-                            ReportsTo, department_id, username, password);
+                            ReportsTo, department_id, username, password, img);
                     HttpSession session = request.getSession();
                     String cur_profile_id = session.getAttribute("profile_id").toString();
                     int editStatus = dao.editStaff(pro, cur_profile_id);
                     if(editStatus>0) System.out.println("Successfully edited Staff with profile_id = "+profile_id);
-                    else System.out.println("Edit failed! An error must be occured!");
+                    else System.out.println("Edit failed! An error must have occured!");
                     response.sendRedirect("ControllerProfile");
                 }
 
             }
-            if(service.equals("removeStaff")){
+            if(service.equals("deleteStaff")){
                 
             }
         }

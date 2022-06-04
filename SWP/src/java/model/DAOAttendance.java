@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DAOAttendance extends DBConnent {
     
-    public void add(String date, String time_in, String time_out, String production_time,
+    public boolean add(String date, String time_in, String time_out, String production_time,
             String employee_id) {
         String sql = "insert into attendance(date, time_in, time_out,"
                 + " production_time, employee_id) values('" + date + "', '" + time_in
@@ -30,7 +30,9 @@ public class DAOAttendance extends DBConnent {
             state.executeUpdate(sql);
         } catch (Exception ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     public attendance getLastest(String employee_id) {
@@ -54,7 +56,7 @@ public class DAOAttendance extends DBConnent {
         return null;
     }
     
-    public void update(int id, String time_out, String production_time, String employee_id) {
+    public boolean update(int id, String time_out, String production_time, String employee_id) {
         String sql = "update attendance set [time_out]=?, [production_time]=?"
                 + " where [shift_id]=? and [employee_id]=?";
         try {
@@ -66,7 +68,9 @@ public class DAOAttendance extends DBConnent {
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     public List<attendance> listAll(String id) {
@@ -135,11 +139,14 @@ public class DAOAttendance extends DBConnent {
         return list;
     }
 
-//    public static void main(String[] args) {
-//        DAOAttendance dao = new DAOAttendance();
-//        List<attendance> list = dao.listAllToday("27/05/2022");
-//        for(attendance a : list) {
-//            System.out.println(a.getTime_in());
+    public static void main(String[] args) {
+        DAOAttendance dao = new DAOAttendance();
+//        List<attendance> list = dao.listAll("12345");
+//        for (attendance a : list) {
+//            System.out.println(a);
 //        }
-//    }
+//        System.out.println(dao.getLastest("12345"));
+//        System.out.println(dao.listAllAttendanceofAnEmployee("12345"));
+        System.out.println(dao.listAllToday("02/06/2022", "23456"));
+    }
 }

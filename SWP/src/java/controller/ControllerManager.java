@@ -6,11 +6,9 @@
 package controller;
 
 import entity.account;
-import entity.attendance;
 import entity.profile;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,14 +43,13 @@ public class ControllerManager extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
-            DAOAttendance dao = new DAOAttendance();
-            DAOProfile dao2 = new DAOProfile();
-            DAODepartment dao3 = new DAODepartment();
-            DAOJob dao4 = new DAOJob();
+            DAOProfile daoPf = new DAOProfile();
+            DAODepartment daoDp = new DAODepartment();
+            DAOJob daoJob = new DAOJob();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
             String user_name = acc.getUser();
-            profile user = dao2.getByUser(user_name);
+            profile user = daoPf.getByUser(user_name);
 
             if (service.equals("dashboard")) {
                 request.getSession(false);
@@ -77,7 +74,7 @@ public class ControllerManager extends HttpServlet {
                 profile pro = new profile(profile_id, first_name, last_name,
                         email, phone_number, hire_date, job_id, salary,
                         ReportsTo, department_id, username, password);
-                dao2.addStaff(pro);             
+                daoPf.addStaff(pro);             
                 response.sendRedirect("employees-list.jsp");
             }
 
@@ -94,10 +91,10 @@ public class ControllerManager extends HttpServlet {
                 String ReportsTo = request.getParameter("ReportsTo");
                 String department_name = request.getParameter("department_name");
                 double salary = 0;
-                int department_id = dao3.getDepartmentByName(department_name).getId();
-                int job_id = dao4.getJobByTitle(job_title).getId();
+                int department_id = daoDp.getDepartmentByName(department_name).getId();
+                int job_id = daoJob.getJobByTitle(job_title).getId();
 
-                dao2.editStaff(profile_id, first_name, last_name, email, 
+                daoPf.editStaff(profile_id, first_name, last_name, email, 
                         phone_number, hire_date, job_id, salary, ReportsTo, 
                         department_id, username, password);
                 response.sendRedirect("employees-list.jsp");
@@ -114,7 +111,7 @@ public class ControllerManager extends HttpServlet {
 //                out.println("<h1>Servlet ControllerEmployee at " + profile_id + "</h1>");
 //                out.println("</body>");
 //                out.println("</html>");
-                dao2.deleteProfile(profile_id);
+                daoPf.deleteProfile(profile_id);
                 response.sendRedirect("employees-list.jsp");
             }
         }

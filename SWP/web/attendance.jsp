@@ -29,6 +29,9 @@
 
         <!-- Lineawesome CSS -->
         <link rel="stylesheet" href="css/line-awesome.min.css">
+        
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
 
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">
@@ -72,7 +75,7 @@
                             <div class="card punch-status">
                                 <div class="card-body">
                                     <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5> 
-                                    <div class="punch-info"onload="initClock()">
+                                    <div class="punch-info">
                                         <div class="punch-hours">
                                             <jsp:include page="clock.jsp"></jsp:include>  
                                         </div>

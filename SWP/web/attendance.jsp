@@ -39,11 +39,6 @@
         <!-- Main Stylesheet -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -51,38 +46,39 @@
 
             <jsp:include page="index.jsp"></jsp:include>
 
-                <!-- Page Wrapper -->
-                <div class="page-wrapper">
-                    <div class="content container-fluid">
+            <!-- Page Wrapper -->
+            <div class="page-wrapper">
+                
+                <!-- /Page Content -->
+                <div class="content container-fluid">
 
-                        <!-- Page Header -->
-                        <div class="page-header">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h3 class="page-title">Attendance</h3>
-                                    <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Attendance</li>
-                                    </ul>
-                                </div>
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="page-title">Attendance</h3>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Attendance</li>
+                                </ul>
                             </div>
                         </div>
-                        <!-- /Page Header -->
+                    </div>
+                    <!-- /Page Header -->
 
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
-                                <div class="card punch-status">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5>                           
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="card punch-status">
+                                <div class="card-body">
+                                    <h5 class="card-title">Timesheet <small class="text-muted"><%=date%></small></h5> 
                                     <div class="punch-info"onload="initClock()">
                                         <div class="punch-hours">
-                                            <jsp:include page="clock.jsp"></jsp:include>                                       
-                                            </div>
+                                            <jsp:include page="clock.jsp"></jsp:include>  
                                         </div>
-                                        <div class="punch-btn-section">
+                                    </div>
+                                    <div class="punch-btn-section">
                                         <%String bt = (String) request.getAttribute("button");%>
-
                                         <c:if test="${button == null}">
                                             <a href="employee" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
                                         </c:if>
@@ -91,7 +87,7 @@
                                         </c:if>
                                         <c:if test="${button == 'in'}">
                                             <a href="employee" button id="in" onclick="punch(this.id)" type="button" class="btn btn-primary punch-btn" name="punch">Punch In</button></a>
-                                        </c:if>                                      
+                                        </c:if>                 
                                         <script type="text/javascript">
                                             function punch(id)
                                             {
@@ -114,9 +110,7 @@
                                 </div>
                             </div>
                         </div>                      
-                        <div class="col-md-4">
-
-                        </div>
+                        <div class="col-md-4"></div>
                     </div>
 
                     <!-- Search Filter -->
@@ -124,8 +118,7 @@
                         <div class="col-sm-6 col-md-4"> 
                             <div class="form-group form-focus"><label class="focus-label">Date</label>
                                 <div>                                
-                                    <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type = 'date')" onblur="if (!this.value)
-                                                this.type = 'text'">
+                                    <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type = 'date')" onblur="if (!this.value) this.type = 'text'">
                                 </div>
                             </div>
                         </div>    
@@ -135,7 +128,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable" id="table">
+                                <table class="table table-striped custom-table datatable mb-0" id="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -162,8 +155,8 @@
                     </div>
                 </div>
                 <!-- /Page Content -->
-                
-                <script type="text/javascript">              
+
+                <script type="text/javascript">
                     function filter2(value) {
                         var filter, table, tr, td, i, date;
                         date = moment(value).format('DD/MM/YYYY');

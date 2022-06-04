@@ -41,64 +41,67 @@
         <!-- Bean -->
         <jsp:useBean id="attendance" class="model.DAOAttendance" scope="request"></jsp:useBean>
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
-        
+
     </head>
     <body>
         <!-- Main Wrapper -->
         <div class="main-wrapper">
-
+            
             <jsp:include page="index.jsp"></jsp:include>
 
-                <!-- Page Wrapper -->
-                <div class="page-wrapper">
-                    <div class="content container-fluid">
+            <!-- Page Wrapper -->
+            <div class="page-wrapper">
 
-                        <!-- Page Header -->
-                        <div class="page-header">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h3 class="page-title">Attendance</h3>
-                                    <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Attendance</li>
-                                    </ul>
-                                </div>
+                <!-- Page Content -->
+                <div class="content container-fluid">
+
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="page-title">Attendance</h3>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Attendance</li>
+                                </ul>
                             </div>
                         </div>
-                        <!-- /Page Header -->
+                    </div>
+                    <!-- /Page Header -->
 
-                        <!-- Search Filter -->
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-4">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" id="name" onkeyup="filter1()">
-                                    <label class="focus-label">Employee Name</label>
+                    <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-4">  
+                            <div class="form-group form-focus">
+                                <input type="text" class="form-control floating" id="name" onkeyup="filter1()">
+                                <label class="focus-label">Employee Name</label>
+                            </div>
+                        </div>                       
+                        <div class="col-sm-6 col-md-4"> 
+                            <div class="form-group form-focus"><label class="focus-label">Date</label>
+                                <div>                                
+                                    <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type = 'date')" onblur="if (!this.value)
+                                                this.type = 'text'">
                                 </div>
-                            </div>                       
-                            <div class="col-sm-6 col-md-4"> 
-                                <div class="form-group form-focus"><label class="focus-label">Date</label>
-                                    <div>                                
-                                        <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
-                                    </div>
-                                </div>
-                            </div>                                             
-                        </div>
-                        <!-- /Search Filter -->
+                            </div>
+                        </div>                                             
+                    </div>
+                    <!-- /Search Filter -->
 
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table table-striped custom-table datatable" id="table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Date </th>
-                                                <th>Punch In</th>
-                                                <th>Punch Out</th>
-                                                <th>Production</th>                                            
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table datatable" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Date </th>
+                                            <th>Punch In</th>
+                                            <th>Punch Out</th>
+                                            <th>Production</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach items="${attendance.listAll(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
                                             <tr>
                                                 <td>${o.employee_id}</td>

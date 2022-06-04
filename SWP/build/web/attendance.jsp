@@ -129,9 +129,9 @@
                     <!-- /Search Filter -->
 
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable mb-0" id="table">
+                                <table class="table table-striped custom-table datatable" id="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -210,6 +210,10 @@
         <!-- Datetimepicker JS -->
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
+        
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
 
     </body>
 </html>

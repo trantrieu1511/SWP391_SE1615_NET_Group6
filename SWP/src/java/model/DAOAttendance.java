@@ -117,27 +117,6 @@ public class DAOAttendance extends DBConnent {
         }
         return list;
     }
-    
-    public List<attendance> listAllToday(String date, String employee_id) {
-        List<attendance> list = new ArrayList<>();
-        String sql = "select * from attendance where date='" + date + "' and "
-                + "[employee_id]='" + employee_id + "'";
-        ResultSet rs = getData(sql);
-        try {
-            while (rs.next()) {
-                list.add(new attendance(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
@@ -147,6 +126,5 @@ public class DAOAttendance extends DBConnent {
 //        }
 //        System.out.println(dao.getLastest("12345"));
 //        System.out.println(dao.listAllAttendanceofAnEmployee("12345"));
-        System.out.println(dao.listAllToday("02/06/2022", "23456"));
     }
 }

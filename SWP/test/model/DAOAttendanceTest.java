@@ -106,21 +106,4 @@ public class DAOAttendanceTest {
     public void testListAllAttendanceofAnEmployee2() {
         assertNull(dao.listAllAttendanceofAnEmployee("87659"));
     }
-
-    /**
-     * Test of listAllToday method, of class DAOAttendance.
-     */
-    @Test
-    public void testListAllToday() {
-        String list = "[attendance{id=11, date=02/06/2022, time_in=07:10, "
-                + "time_out=07:10, production_time=00:00, employee_id=23456, "
-                + "reportto=null}, attendance{id=12, date=02/06/2022, time_in=08:02,"
-                + " time_out=08:02, production_time=00:00, employee_id=23456, reportto=null}]";
-        assertEquals(list, dao.listAllToday("02/06/2022", "23456").toString());
-    }
-    
-    @Test
-    public void testListAllToday2() {
-        assertNull(dao.listAllToday("08/06/2022", "23456"));
-    }
 }

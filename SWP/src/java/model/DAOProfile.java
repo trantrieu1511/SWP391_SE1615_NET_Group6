@@ -21,8 +21,7 @@ import java.util.List;
 public class DAOProfile extends DBConnent {
 
     //INSERT
-    public int addManager(profile pro) {
-        int n = 0;
+    public boolean addManager(profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,department_id,username,[password])\n"
                 + "values ("
                 + "'" + pro.getProfile_id() + "', "
@@ -39,15 +38,15 @@ public class DAOProfile extends DBConnent {
                 + ")";
         try {
             Statement state = conn.createStatement();
-            n = state.executeUpdate(sql);
+            state.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
-        return n;
+        return true;
     }
 
-    public void addStaff(profile pro) {
-        int n = 0;
+    public boolean addStaff(profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,"
                 + "email,phone_number,hire_date,job_id,salary,ReportsTo,"
                 + "department_id,username,[password]) values ("
@@ -66,13 +65,15 @@ public class DAOProfile extends DBConnent {
                 + ")";
         try {
             Statement state = conn.createStatement();
-            n = state.executeUpdate(sql);
+            state.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public void editStaff(String profile_id, String first_name, String last_name, 
+    public boolean editStaff(String profile_id, String first_name, String last_name, 
             String email, String phone_number, String hire_date, int job_id, 
             double salary, String ReportsTo, int department_id, String username,
             String password) {
@@ -106,7 +107,9 @@ public class DAOProfile extends DBConnent {
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public List<profile> listAllProfile(String id) {
@@ -166,14 +169,16 @@ public class DAOProfile extends DBConnent {
         return null;
     }
     
-    public void deleteProfile(String profile_id) {
+    public boolean deleteProfile(String profile_id) {
         String sql = "delete from [profile] where [profile_id] = '" + profile_id + "'";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public static void main(String[] args) {

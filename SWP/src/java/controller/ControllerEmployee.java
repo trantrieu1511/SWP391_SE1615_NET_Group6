@@ -116,9 +116,7 @@ public class ControllerEmployee extends HttpServlet {
 
                 production_time = proc_time_hr + ":" + proc_time_min;
                 dao.update(temp.getId(), time_out, production_time, employee_id);
-                List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
-                List<attendance> listToday = dao.listAllToday(temp.getDate(), employee_id);
-                request.setAttribute("today", listToday);
+                List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);               
                 request.setAttribute("button", button);
                 request.setAttribute("list_attendance", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");

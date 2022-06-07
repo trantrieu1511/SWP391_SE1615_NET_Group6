@@ -157,7 +157,7 @@
                             <div class="form-group form-focus select-focus"> 
                                 <label class="focus-label">Designation</label>
                                 <select class="select floating" id="EJob" onchange="filter3()"> 
-                                    <option>Select Designation</option>
+                                    <option> </option>
                                     <c:forEach items="${job.listAllJob()}" var="o">
                                     <option>${o.title}</option>
                                     </c:forEach>
@@ -264,8 +264,11 @@
 
                             for (i = 0; i < tr.length; i++) {
                                 td = tr[i].getElementsByTagName("td")[5];
+//                                if (input.value.equals("All Designation")) {
+//                                        tr[i].style.display = "";
+//                                } else
                                 if (td) {
-                                    txtValue = td.textContent || td.innerText;
+                                    txtValue = td.textContent || td.innerText;                                    
                                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                                         tr[i].style.display = "";
                                     } else {
@@ -405,49 +408,49 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="first_name">
+                                                <input class="form-control" value="" type="text" name="first_name" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name</label>
-                                                <input class="form-control" value="" type="text" name="last_name">
+                                                <input class="form-control" value="" type="text" name="last_name" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="username">
+                                                <input class="form-control" value="" type="text" name="username" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="email">
+                                                <input class="form-control" value="" type="text" name="email" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password</label>
-                                                <input class="form-control" value="" type="password" name="password">
+                                                <input class="form-control" value="" type="password" name="password" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password</label>
-                                                <input class="form-control" value="" type="password" name="password">
+                                                <input class="form-control" value="" type="password" name="password" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id">
+                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date"></div>
+                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" required></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -485,8 +488,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <span id="wrong_pass_alert"></span>
                                     <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">
                                     </div>
                                 </form>
                             </div>

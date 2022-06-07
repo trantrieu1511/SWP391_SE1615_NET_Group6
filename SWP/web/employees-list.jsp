@@ -222,10 +222,6 @@
                             tr = table.getElementsByTagName("tr");
                             filter = input.value.toUpperCase();
 
-                            if (input.value.equals("Select Designation")) {
-                                return;
-                            }
-
                             for (i = 0; i < tr.length; i++) {
                                 td = tr[i].getElementsByTagName("td")[1];
                                 if (td) {
@@ -276,7 +272,6 @@
                                         tr[i].style.display = "none";
                                     }
                                 }
-
                             }
                         }
                     </script> 

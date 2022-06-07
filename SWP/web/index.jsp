@@ -117,8 +117,7 @@
                             <li class="submenu">
                                 <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-                                    <li><a href="projects.jsp">Projects</a></li>
-                                    <li><a href="tasks.html">Tasks</a></li>
+                                    <li><a href="project-view.jsp">Projects</a></li>
                                     <li><a href="task-board.jsp">Task Board</a></li>
                                 </ul>
                             </li>

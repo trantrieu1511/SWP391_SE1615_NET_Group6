@@ -39,7 +39,9 @@
     <body>
         <!-- Main Wrapper -->
         <div class="main-wrapper">
-
+            
+            <div><jsp:include page="index.jsp"></jsp:include></div>
+            
             <!-- Page Wrapper -->
             <div class="page-wrapper">
 
@@ -288,137 +290,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Page Content -->
-
-                <!-- Assign Leader Modal -->
-                <div id="assign_leader" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Assign Leader to this project</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group m-b-30">
-                                    <input placeholder="Search to add a leader" class="form-control search-input" type="text">
-                                    <span class="input-group-append">
-                                        <button class="btn btn-primary">Search</button>
-                                    </span>
-                                </div>
-                                <div>
-                                    <ul class="chat-user-list">
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar"><img alt="" src="img/profiles/avatar-09.jpg"></span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">Richard Miles</div>
-                                                        <span class="designation">Web Developer</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar"><img alt="" src="img/profiles/avatar-10.jpg"></span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">John Smith</div>
-                                                        <span class="designation">Android Developer</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar">
-                                                        <img alt="" src="img/profiles/avatar-16.jpg">
-                                                    </span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">Jeffery Lalor</div>
-                                                        <span class="designation">Team Leader</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Assign Leader Modal -->
-
-                <!-- Assign User Modal -->
-                <div id="assign_user" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Assign the user to this project</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group m-b-30">
-                                    <input placeholder="Search a user to assign" class="form-control search-input" type="text">
-                                    <span class="input-group-append">
-                                        <button class="btn btn-primary">Search</button>
-                                    </span>
-                                </div>
-                                <div>
-                                    <ul class="chat-user-list">
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar"><img alt="" src="img/profiles/avatar-09.jpg"></span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">Richard Miles</div>
-                                                        <span class="designation">Web Developer</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar"><img alt="" src="img/profiles/avatar-10.jpg"></span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">John Smith</div>
-                                                        <span class="designation">Android Developer</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <span class="avatar">
-                                                        <img alt="" src="img/profiles/avatar-16.jpg">
-                                                    </span>
-                                                    <div class="media-body align-self-center text-nowrap">
-                                                        <div class="user-name">Jeffery Lalor</div>
-                                                        <span class="designation">Team Leader</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Assign User Modal -->
+                <!-- /Page Content -->  
 
                 <!-- Edit Project Modal -->
                 <div id="edit_project" class="modal custom-modal fade" role="dialog">
@@ -473,80 +345,11 @@
                                                 <label>Rate</label>
                                                 <input placeholder="$50" class="form-control" value="$5000" type="text">
                                             </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <select class="select">
-                                                    <option>Hourly</option>
-                                                    <option selected>Fixed</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Priority</label>
-                                                <select class="select">
-                                                    <option selected>High</option>
-                                                    <option>Medium</option>
-                                                    <option>Low</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Add Project Leader</label>
-                                                <input class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Leader</label>
-                                                <div class="project-members">
-                                                    <a class="avatar" href="#" data-toggle="tooltip" title="Jeffery Lalor">
-                                                        <img alt="" src="img/profiles/avatar-16.jpg">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Add Team</label>
-                                                <input class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Members</label>
-                                                <div class="project-members">
-                                                    <a class="avatar" href="#" data-toggle="tooltip" title="John Doe">
-                                                        <img alt="" src="img/profiles/avatar-02.jpg">
-                                                    </a>
-                                                    <a class="avatar" href="#" data-toggle="tooltip" title="Richard Miles">
-                                                        <img alt="" src="img/profiles/avatar-09.jpg">
-                                                    </a>
-                                                    <a class="avatar" href="#" data-toggle="tooltip" title="John Smith">
-                                                        <img alt="" src="img/profiles/avatar-10.jpg">
-                                                    </a>
-                                                    <a class="avatar" href="#" data-toggle="tooltip" title="Mike Litorus">
-                                                        <img alt="" src="img/profiles/avatar-05.jpg">
-                                                    </a>
-                                                    <span class="all-team">+2</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>                                                                          
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
                                         <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Upload Files</label>
-                                        <input class="form-control" type="file">
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Save</button>

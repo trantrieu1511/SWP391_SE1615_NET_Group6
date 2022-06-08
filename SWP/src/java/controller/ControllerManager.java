@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import model.DAODepartment;
 import model.DAOJob;
 import model.DAOProfile;
+import model.DAOTask;
 
 /**
  *
@@ -45,6 +46,7 @@ public class ControllerManager extends HttpServlet {
             DAOProfile daoPf = new DAOProfile();
             DAODepartment daoDp = new DAODepartment();
             DAOJob daoJob = new DAOJob();
+            DAOTask daoT = new DAOTask();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
             if (acc == null) {
@@ -115,6 +117,16 @@ public class ControllerManager extends HttpServlet {
 //                out.println("</html>");
                     daoPf.deleteProfile(profile_id);
                     response.sendRedirect("employees-list.jsp");
+                }
+                
+                if (service.equals("addTask")) {
+                    String name = request.getParameter("name");
+                    int priority = Integer.parseInt(request.getParameter("priority"));
+                    String deadline = request.getParameter("deadline");
+                    int status = 0;
+                    String assigned = request.getParameter("assigned");
+                    daoT.add(name, priority, deadline, status, assigned);
+                    response.sendRedirect("task-board.jsp");
                 }
             }
         }

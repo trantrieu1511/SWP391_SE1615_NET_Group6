@@ -55,7 +55,7 @@ CREATE TABLE [profile] (
 	password VARCHAR(20) NOT NULL, 
 	FOREIGN KEY (job_id) REFERENCES jobs (job_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (department_id) REFERENCES departments (department_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (ReportsTo) REFERENCES [Profile] (profile_id)
+	FOREIGN KEY (ReportsTo) REFERENCES [profile] (profile_id)
 );
 
 CREATE TABLE clients (
@@ -64,9 +64,7 @@ CREATE TABLE clients (
 	last_name VARCHAR (25) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) DEFAULT NULL,
-	company VARCHAR(25) NOT NULL,
-	job_id INT NOT NULL,
-	FOREIGN KEY (job_id) REFERENCES jobs (job_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	company VARCHAR(25) NOT NULL,	
 );
 
 --drop table attendance
@@ -76,4 +74,29 @@ CREATE TABLE attendance (
 	time_out VARCHAR(30) NOT NULL,
 	production_time VARCHAR(30) NOT NULL,
 	employee_id CHAR(5),
+);
+
+CREATE TABLE shift (
+    start_time VARCHAR(20),
+	end_time VARCHAR(20)
+);
+
+CREATE TABLE task (
+    name VARCHAR(35),
+	priority INT,
+	deadline DATE,
+	status int,
+	assigned CHAR(5),
+	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id)
+);
+
+CREATE TABLE projects (
+   title VARCHAR (35),
+   client_id CHAR(5),
+   start_date DATE,
+   end_date DATE,
+   rate DECIMAL(8,2),
+   manager_id CHAR(5),
+   description VARCHAR(255),
+   FOREIGN KEY (client_id) REFERENCES [clients] (client_id),
 );

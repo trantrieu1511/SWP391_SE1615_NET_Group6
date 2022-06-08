@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,11 +32,10 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <!-- Bean -->
+        <jsp:useBean id="task" class="model.DAOTask" scope="request"></jsp:useBean>
+        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -114,10 +115,11 @@
                                         <span class="status-title">Pending</span>
                                     </div>
                                     <div class="kanban-wrap">
+                                        <c:forEach items="${task.list(0)}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Website redesign</a></span>
+                                                    <span class="status-title">${o.name}</span>
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -128,93 +130,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
+                                                <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
                                                         <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-danger">High</span>
+                                                            <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                            <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
                                                         <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
+                                                            ${o.assigned}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card panel">
-                                            <div class="kanban-box">
-                                                <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Make a wireframe</a></span>
-                                                    <div class="dropdown kanban-task-action">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
-                                                    <div class="kanban-footer">
-                                                        <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-success">Low</span>
-                                                        </span>
-                                                        <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
-                                                            <span class="task-user-count">+2</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card panel">
-                                            <div class="kanban-box">
-                                                <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Website redesign</a></span>
-                                                    <div class="dropdown kanban-task-action">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
-                                                    <div class="kanban-footer">
-                                                        <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-warning">Normal</span>
-                                                        </span>
-                                                        <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
-                                                            <span class="task-user-count">+2</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
                                     <div class="add-new-task">
                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal">Add New Task</a>
@@ -225,10 +154,11 @@
                                         <span class="status-title">Progress</span>                                        
                                     </div>
                                     <div class="kanban-wrap">
+                                        <c:forEach items="${task.list(1)}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Website redesign</a></span>
+                                                    <span class="status-title">${o.name}</span>
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -239,79 +169,32 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
+                                                <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
                                                         <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-warning">Normal</span>
+                                                            <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                            <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
                                                         <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
+                                                            ${o.assigned}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card panel">
-                                            <div class="kanban-box">
-                                                <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Website redesign</a></span>
-                                                    <div class="dropdown kanban-task-action">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
-                                                    <div class="kanban-footer">
-                                                        <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-danger">High</span>
-                                                        </span>
-                                                        <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
-                                                            <span class="task-user-count">+2</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
                                 </div>                               
                                 <div class="kanban-list kanban-primary">
                                     <div class="kanban-header">
-                                        <span class="status-title">Review</span>
-                                        <div class="dropdown kanban-action">
-                                            <a href="" data-toggle="dropdown">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_board">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
+                                        <span class="status-title">Review</span>                                      
                                     </div>
                                     <div class="kanban-wrap">
+                                        <c:forEach items="${task.list(2)}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
-                                                    <span class="status-title"><a href="task-view.html">Website redesign</a></span>
+                                                    <span class="status-title">${o.name}</span>
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -322,33 +205,56 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="task-board-body">
-                                                    <div class="kanban-info">
-                                                        <div class="progress progress-xs">
-                                                            <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                        <span>70%</span>
-                                                    </div>
+                                                <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
                                                         <span class="task-info-cont">
-                                                            <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
-                                                            <span class="task-priority badge bg-inverse-danger">High</span>
+                                                            <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                            <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
                                                         <span class="task-users">
-                                                            <img src="img/profiles/avatar-12.jpg" class="task-avatar" width="24" height="24" alt="">
-                                                            <span class="task-user-count">+2</span>
+                                                            ${o.assigned}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        </c:forEach>
                                     </div>                                   
                                 </div>
                                 <div class="kanban-list kanban-success">
                                     <div class="kanban-header">
                                         <span class="status-title">Completed</span>                              
                                     </div>
-                                    <div class="kanban-wrap ks-empty">
+                                    <div class="kanban-wrap">
+                                        <c:forEach items="${task.list(3)}" var="o">
+                                        <div class="card panel">
+                                            <div class="kanban-box">
+                                                <div class="task-board-header">
+                                                    <span class="status-title">${o.name}</span>
+                                                    <div class="dropdown kanban-task-action">
+                                                        <a href="" data-toggle="dropdown">
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
+                                                            <a class="dropdown-item" href="#">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="task-board-body">                                            
+                                                    <div class="kanban-footer">
+                                                        <span class="task-info-cont">
+                                                            <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                            <span class="task-priority badge bg-inverse-danger"></span>
+                                                        </span>
+                                                        <span class="task-users">
+                                                            ${o.assigned}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </c:forEach>
                                     </div>                                
                                 </div>
                             </div>
@@ -367,45 +273,33 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="manager" do="post">
+                                    <input type="hidden" name="do" value="addTask">
                                     <div class="form-group">
                                         <label>Task Name</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" name="name">
                                     </div>
                                     <div class="form-group">
                                         <label>Task Priority</label>
-                                        <select class="form-control select">
+                                        <select class="form-control select" name="priority">
                                             <option>Select</option>
-                                            <option>High</option>
-                                            <option>Normal</option>
-                                            <option>Low</option>
+                                            <option value="0">High</option>
+                                            <option value="1">Normal</option>
+                                            <option value="2">Low</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Due Date</label>
-                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
+                                        <div class="cal-icon"><input class="form-control datetimepicker" type="date" name="deadline"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Task Followers</label>
-                                        <input type="text" class="form-control" placeholder="Search to add">
-                                        <div class="task-follower-list">
-                                            <span data-toggle="tooltip" title="John Doe">
-                                                <img src="img/profiles/avatar-02.jpg" class="avatar" alt="John Doe" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="Richard Miles">
-                                                <img src="img/profiles/avatar-09.jpg" class="avatar" alt="Richard Miles" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="John Smith">
-                                                <img src="img/profiles/avatar-10.jpg" class="avatar" alt="John Smith" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="Mike Litorus">
-                                                <img src="img/profiles/avatar-05.jpg" class="avatar" alt="Mike Litorus" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                        </div>
+                                        <label>Assigned</label>
+                                        <select class="select floating" name="assigned"> 
+                                            <option> </option>
+                                            <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
+                                            <option>${o.first_name} ${o.last_name}</option>
+                                            </c:forEach>
+                                        </select>  
                                     </div>
                                     <div class="submit-section text-center">
                                         <button class="btn btn-primary submit-btn">Submit</button>

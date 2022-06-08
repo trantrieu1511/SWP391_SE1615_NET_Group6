@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOAttendance;
 import model.DAODepartment;
 import model.DAOJob;
 import model.DAOProfile;
@@ -48,60 +47,63 @@ public class ControllerManager extends HttpServlet {
             DAOJob daoJob = new DAOJob();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            String user_name = acc.getUser();
-            profile user = daoPf.getByUser(user_name);
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
+            } else {
+                String user_name = acc.getUser();
+                profile user = daoPf.getByUser(user_name);
 
-            if (service.equals("dashboard")) {
-                request.getSession(false);
-                RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
-                dispath.forward(request, response);
-            }
+                if (service.equals("dashboard")) {
+                    request.getSession(false);
+                    RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
+                    dispath.forward(request, response);
+                }
 
-            if (service.equals("addStaff")) {
-                String profile_id = request.getParameter("profile_id");
-                String first_name = request.getParameter("first_name");
-                String last_name = request.getParameter("last_name");
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String email = request.getParameter("email");
-                String phone_number = request.getParameter("phone_number");
-                String hire_date = request.getParameter("hire_date");
-                int job_id = Integer.parseInt(request.getParameter("job_id"));
-                String ReportsTo = request.getParameter("ReportsTo");
-                int department_id = Integer.parseInt(request.getParameter("department_id"));
-                double salary = 0;
+                if (service.equals("addStaff")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String first_name = request.getParameter("first_name");
+                    String last_name = request.getParameter("last_name");
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    String email = request.getParameter("email");
+                    String phone_number = request.getParameter("phone_number");
+                    String hire_date = request.getParameter("hire_date");
+                    int job_id = Integer.parseInt(request.getParameter("job_id"));
+                    String ReportsTo = request.getParameter("ReportsTo");
+                    int department_id = Integer.parseInt(request.getParameter("department_id"));
+                    double salary = 0;
 
-                profile pro = new profile(profile_id, first_name, last_name,
-                        email, phone_number, hire_date, job_id, salary,
-                        ReportsTo, department_id, username, password);
-                daoPf.addStaff(pro);             
-                response.sendRedirect("employees-list.jsp");
-            }
+                    profile pro = new profile(profile_id, first_name, last_name,
+                            email, phone_number, hire_date, job_id, salary,
+                            ReportsTo, department_id, username, password);
+                    daoPf.addStaff(pro);
+                    response.sendRedirect("employees-list.jsp");
+                }
 
-            if (service.equals("editStaff")) {
-                String profile_id = request.getParameter("profile_id");
-                String first_name = request.getParameter("first_name");
-                String last_name = request.getParameter("last_name");
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String email = request.getParameter("email");
-                String phone_number = request.getParameter("phone_number");
-                String hire_date = request.getParameter("hire_date");
-                String job_title = request.getParameter("job_title");
-                String ReportsTo = request.getParameter("ReportsTo");
-                String department_name = request.getParameter("department_name");
-                double salary = 0;
-                int department_id = daoDp.getDepartmentByName(department_name).getId();
-                int job_id = daoJob.getJobByTitle(job_title).getId();
+                if (service.equals("editStaff")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String first_name = request.getParameter("first_name");
+                    String last_name = request.getParameter("last_name");
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    String email = request.getParameter("email");
+                    String phone_number = request.getParameter("phone_number");
+                    String hire_date = request.getParameter("hire_date");
+                    String job_title = request.getParameter("job_title");
+                    String ReportsTo = request.getParameter("ReportsTo");
+                    String department_name = request.getParameter("department_name");
+                    double salary = 0;
+                    int department_id = daoDp.getDepartmentByName(department_name).getId();
+                    int job_id = daoJob.getJobByTitle(job_title).getId();
 
-                daoPf.editStaff(profile_id, first_name, last_name, email, 
-                        phone_number, hire_date, job_id, salary, ReportsTo, 
-                        department_id, username, password);
-                response.sendRedirect("employees-list.jsp");
-            }
-            
-            if (service.equals("deleteStaff")) {
-                String profile_id = request.getParameter("profile_id");
+                    daoPf.editStaff(profile_id, first_name, last_name, email,
+                            phone_number, hire_date, job_id, salary, ReportsTo,
+                            department_id, username, password);
+                    response.sendRedirect("employees-list.jsp");
+                }
+
+                if (service.equals("deleteStaff")) {
+                    String profile_id = request.getParameter("profile_id");
 //                out.println("<!DOCTYPE html>");
 //                out.println("<html>");
 //                out.println("<head>");
@@ -111,8 +113,9 @@ public class ControllerManager extends HttpServlet {
 //                out.println("<h1>Servlet ControllerEmployee at " + profile_id + "</h1>");
 //                out.println("</body>");
 //                out.println("</html>");
-                daoPf.deleteProfile(profile_id);
-                response.sendRedirect("employees-list.jsp");
+                    daoPf.deleteProfile(profile_id);
+                    response.sendRedirect("employees-list.jsp");
+                }
             }
         }
     }

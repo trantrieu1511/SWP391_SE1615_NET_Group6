@@ -47,29 +47,24 @@ public class ControllerEmployee extends HttpServlet {
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
-            DAOProfile dao2 = new DAOProfile();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            String user_name = "";
-
+            
             String date = "";
             String time_in = "";
             String time_out = "";
             String production_time = "";
             String employee_id = "";
             profile user = null;
-
             String button = "in";
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                user_name = acc.getUser();
-                user = dao2.getByUser(user_name);
-                employee_id = user.getProfile_id();;
+                employee_id = acc.getProfile_id();;
 
                 if (service.equals("attendance")) {
                     List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
-                    attendance temp = dao.getLastest(user.getProfile_id());
+                    attendance temp = dao.getLastest(employee_id);
                     if (temp != null) {
                         if (temp.getTime_out().equals("")) {
                             button = "out";
@@ -100,7 +95,7 @@ public class ControllerEmployee extends HttpServlet {
 
                 if (service.equals("punchout")) {
                     time_out = hf.format(new java.util.Date());
-                    attendance temp = dao.getLastest(user.getProfile_id());
+                    attendance temp = dao.getLastest(employee_id);
 
                     int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
                     int t_out_min = Integer.parseInt(time_out.split(":")[1]);

@@ -296,7 +296,7 @@
                                         <label>Assigned</label>
                                         <select class="select floating" name="assigned"> 
                                             <option> </option>
-                                            <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
+                                            <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">
                                             <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
                                             </c:forEach>
                                         </select>  

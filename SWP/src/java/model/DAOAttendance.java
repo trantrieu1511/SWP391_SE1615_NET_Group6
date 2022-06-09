@@ -76,9 +76,9 @@ public class DAOAttendance extends DBConnent {
     public List<attendance> listAll(String id) {
         List<attendance> list = new ArrayList<>();
         String sql = "select [shift_id], [date], [time_in], [time_out],"
-                + " [production_time], [employee_id], [ReportsTo] "
+                + " [production_time], [employee_id], [report_to] "
                 + "from attendance join profile on attendance.employee_id = "
-                + "profile.profile_id where [ReportsTo] = '" + id + "'";
+                + "profile.profile_id where [report_to] = '" + id + "'";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {

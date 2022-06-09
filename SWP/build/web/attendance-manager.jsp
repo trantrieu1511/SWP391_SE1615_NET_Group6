@@ -102,7 +102,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${attendance.listAll(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
+                                        <c:forEach items="${attendance.listAll(sessionScope.acc.profile_id)}" var="o">
                                             <tr>
                                                 <td>${o.employee_id}</td>
                                                 <td>${o.date}</td>

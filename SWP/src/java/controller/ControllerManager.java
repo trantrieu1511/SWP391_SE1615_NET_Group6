@@ -52,8 +52,7 @@ public class ControllerManager extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                String user_name = acc.getUser();
-                profile user = daoPf.getByUser(user_name);
+                //profile user = daoPf.getByID(acc.getProfile_id());
 
                 if (service.equals("dashboard")) {
                     request.getSession(false);
@@ -75,7 +74,9 @@ public class ControllerManager extends HttpServlet {
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
 
-                    profile pro = new profile();
+                    profile pro = new profile(profile_id, first_name, last_name,
+                            email, phone_number, hire_date, department_id, 
+                            job_id, salary, ReportsTo);
                     daoPf.addStaff(pro);
                     response.sendRedirect("employees-list.jsp");
                 }

@@ -42,7 +42,7 @@
 
         <div class="page-wrapper">
 
-            <jsp:include page="index.jsp"></jsp:include>
+            <jsp:include page="menu.jsp"></jsp:include>
 
             <!-- Page Content -->
             <div class="content container-fluid">

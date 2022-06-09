@@ -77,7 +77,7 @@
                     var email = myArray[3];
                     var phone_number = myArray[4];
                     var hire_date = myArray[5];
-                    var reportto = myArray[8];
+                    var reportto = myArray[6];
                     $(e.currentTarget).find('input[name="first_name"]').val(first_name);
                     $(e.currentTarget).find('input[name="last_name"]').val(last_name);
                     $(e.currentTarget).find('input[name="email"]').val(email);
@@ -114,7 +114,7 @@
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
-            <jsp:include page="index.jsp"></jsp:include>
+            <jsp:include page="menu.jsp"></jsp:include>
 
             <!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -320,14 +320,15 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="password" name="password" id="password" required>
+                                                <input class="form-control" type="password" name="password" id="password"
+                                                       onkeyup="checkconfirmPassword(this)" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="password" name="confirm_password"
-                                                       onchange="checkPassword(this)" required>
+                                                <input class="form-control" type="password" name="confirm_password" id="check_password"
+                                                       onkeyup="checkPassword(this)" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  

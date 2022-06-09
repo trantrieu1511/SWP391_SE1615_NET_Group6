@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Khanh
  */
-public class DAOJob extends DBConnent {
+public class DAOJob extends DBConnect {
     
     public List<jobs> listAllJob() {
         List<jobs> list = new ArrayList<>();

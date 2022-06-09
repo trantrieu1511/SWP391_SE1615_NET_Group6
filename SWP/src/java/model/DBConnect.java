@@ -15,11 +15,11 @@ import java.sql.Statement;
  *
  * @author Khanh
  */
-public class DBConnent {
+public class DBConnect {
 
     public Connection conn = null;
 
-    public DBConnent(String URL, String userName, String password) {
+    public DBConnect(String URL, String userName, String password) {
         try {
             // URL: connection string: address, port, database of server
             // call drivers
@@ -34,8 +34,8 @@ public class DBConnent {
         }
     }
 
-    public DBConnent() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_3", "sa", "12345678");
+    public DBConnect() {
+        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_3", "sa", "123456");
     }
 
     public ResultSet getData(String sql) {
@@ -51,6 +51,6 @@ public class DBConnent {
     }
 
     public static void main(String[] args) {
-        new DBConnent();
+        new DBConnect();
     }
 }

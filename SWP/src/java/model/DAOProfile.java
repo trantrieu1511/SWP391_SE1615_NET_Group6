@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author DELL
  */
-public class DAOProfile extends DBConnent {
+public class DAOProfile extends DBConnect {
 
     public boolean addManager(profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"

@@ -39,7 +39,7 @@
     </head>
 
     <body>
-        <jsp:include page="index.jsp"></jsp:include>
+        <jsp:include page="menu.jsp"></jsp:include>
 
         <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
             <jsp:include page="manager-dashboard.jsp"></jsp:include>

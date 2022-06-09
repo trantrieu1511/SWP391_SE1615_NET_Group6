@@ -12,7 +12,7 @@ import java.sql.ResultSet;
  *
  * @author Khanh
  */
-public class DAOLogin extends DBConnent {
+public class DAOLogin extends DBConnect {
     
     public account login(String user, String pass) {
         String sql = "select * from [account] where [username] = '" + user

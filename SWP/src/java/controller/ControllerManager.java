@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.DAOAccount;
 import model.DAODepartment;
 import model.DAOJob;
 import model.DAOProfile;
@@ -47,6 +48,7 @@ public class ControllerManager extends HttpServlet {
             DAODepartment daoDp = new DAODepartment();
             DAOJob daoJob = new DAOJob();
             DAOTask daoT = new DAOTask();
+            DAOAccount daoAcc = new DAOAccount();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
             if (acc == null) {
@@ -78,6 +80,7 @@ public class ControllerManager extends HttpServlet {
                             email, phone_number, hire_date, department_id, 
                             job_id, salary, ReportsTo);
                     daoPf.addStaff(pro);
+                    daoAcc.addAccount(profile_id, username, password);
                     response.sendRedirect("employees-list.jsp");
                 }
 
@@ -100,6 +103,7 @@ public class ControllerManager extends HttpServlet {
                     daoPf.editStaff(profile_id, first_name, last_name, email,
                             phone_number, hire_date, department_id, job_id,
                             salary, ReportsTo);
+                    daoAcc.editAccount(profile_id, username, password);
                     response.sendRedirect("employees-list.jsp");
                 }
 

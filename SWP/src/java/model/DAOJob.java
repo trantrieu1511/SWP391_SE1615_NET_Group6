@@ -8,7 +8,6 @@ package model;
 import entity.jobs;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,23 @@ public class DAOJob extends DBConnent {
     
     public jobs getJobByTitle(String title) {
         String sql = "select * from jobs where [job_title] = '" + title + "'";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                return new jobs(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getDouble(4));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public jobs getJobById(String id) {
+        String sql = "select * from jobs where [job_id] = '" + id + "'";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {

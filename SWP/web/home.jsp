@@ -30,22 +30,20 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
+        
+        <!-- Bean -->
+        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                            <script src="assets/js/html5shiv.min.js"></script>
-                            <script src="assets/js/respond.min.js"></script>
-                    <![endif]-->
     </head>
 
     <body>
         <jsp:include page="index.jsp"></jsp:include>
 
-        <c:if test="${sessionScope.acc.report_to == null && sessionScope.acc.isAdmin == false}">
+        <c:if test="${profile.getByID(sessionScope.acc.profile_id).reportto == null && sessionScope.acc.isAdmin == false}">
             <jsp:include page="manager-dashboard.jsp"></jsp:include>
         </c:if>
         
-        <c:if test="${sessionScope.acc.report_to != null && sessionScope.acc.isAdmin == false}">
+        <c:if test="${profile.getByID(sessionScope.acc.profile_id).reportto != null && sessionScope.acc.isAdmin == false}">
             <jsp:include page="employee-dashboard.jsp"></jsp:include>
         </c:if>
         

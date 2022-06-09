@@ -105,7 +105,7 @@
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
         <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
-        <jsp:useBean id="account" class="model.DAOLogin" scope="request"></jsp:useBean>
+        <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
         
     </head>
 
@@ -163,7 +163,7 @@
                         </div> 
                         <div class="col-sm-6 col-md-3">
                             <div class="form-group form-focus">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee" data-id="${profile.getByUser(sessionScope.acc.user).getProfile_id()}"><i class="fa fa-plus"></i> Add Employee</a>                            
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee" data-id="${sessionScope.acc.profile_id}"><i class="fa fa-plus"></i> Add Employee</a>                            
                             </div>
                         </div> 
                     </div>
@@ -185,14 +185,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
+                                        <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">
                                             <tr>
                                                 <td>${o.first_name} ${o.last_name}</td>
                                                 <td>${o.profile_id}</td>
                                                 <td>${o.email}</td>
                                                 <td>${o.phone_number}</td>
                                                 <td>${o.hire_date}</td>
-                                                <td>${o.job_title}</td>
+                                                <td>${job.getJobById(o.job_id)}</td>
                                                 <td class="text-right">
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

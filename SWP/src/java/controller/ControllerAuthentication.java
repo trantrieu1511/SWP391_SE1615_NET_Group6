@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOLogin;
+import model.DAOAccount;
 
 /**
  *
@@ -41,7 +41,7 @@ public class ControllerAuthentication extends HttpServlet {
             if (service.equals("login")) {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
-                DAOLogin dao = new DAOLogin();
+                DAOAccount dao = new DAOAccount();
                 account a = dao.login(username, password);
                 if (a == null) {
                     request.setAttribute("mess", "Wrong username or password");

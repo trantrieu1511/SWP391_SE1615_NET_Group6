@@ -54,7 +54,7 @@ public class DAOAccount extends DBConnent {
     
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isAdmin)"
-                + "value('" + profile_id + "', '" + username + "', '" + password
+                + "values('" + profile_id + "', '" + username + "', '" + password
                 + "', " + 0 + ")";
         try {
             Statement state = conn.createStatement();
@@ -79,5 +79,10 @@ public class DAOAccount extends DBConnent {
             return false;
         }
         return true;
+    }
+    
+    public static void main(String[] args) {
+        DAOAccount dao = new DAOAccount();
+        dao.addAccount("12345", "1", "1");
     }
 }

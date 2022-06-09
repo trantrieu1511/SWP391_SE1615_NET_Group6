@@ -45,17 +45,17 @@ public class DAOProfile extends DBConnent {
 
     public boolean addStaff(profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,"
-                + "phone_number,hire_date,department_id,job_id,salary,report_to,) values ("
+                + "phone_number,hire_date,department_id,job_id,salary,report_to) values ("
                 + "'" + pro.getProfile_id() + "', "
                 + "'" + pro.getFirst_name() + "', "
                 + "'" + pro.getLast_name() + "', "
+                + "'" + pro.getEmail() + "', "
                 + "'" + pro.getPhone_number() + "', "
                 + "'" + pro.getHire_date() + "', "
                 + "" + pro.getDepartment_id() + ", "
                 + "" + pro.getJob_id() + ", "
                 + "" + pro.getSalary() + ", "
-                + "'" + pro.getReportto() + "', "
-                + ")";
+                + "'" + pro.getReportto() + "')";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
@@ -101,7 +101,7 @@ public class DAOProfile extends DBConnent {
     }
 
     public List<profile> listAllStaff(String id) {
-        String sql = "select * from [profile] where profile_id = '" + id + "'";
+        String sql = "select * from [profile] where report_to = '" + id + "'";
         List<profile> list = new ArrayList<>();
         ResultSet rs = getData(sql);
         try {

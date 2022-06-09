@@ -78,7 +78,7 @@ public class DAOProfile extends DBConnent {
                 + "department_id = ?, "
                 + "job_id = ?, "
                 + "salary = ?, "
-                + "report_to = ?, "
+                + "report_to = ? "
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);

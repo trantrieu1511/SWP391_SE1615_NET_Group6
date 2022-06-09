@@ -447,7 +447,7 @@
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" required></div>
+                                                <div><input type="date" name="hire_date" required></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">

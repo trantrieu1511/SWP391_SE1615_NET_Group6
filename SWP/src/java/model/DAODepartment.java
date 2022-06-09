@@ -25,8 +25,7 @@ public class DAODepartment extends DBConnent {
             while (rs.next()) {
                 list.add(new departments(
                         rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3)));
+                        rs.getString(2)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -41,8 +40,7 @@ public class DAODepartment extends DBConnent {
             while (rs.next()) {
                 return new departments(
                         rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3));
+                        rs.getString(2));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

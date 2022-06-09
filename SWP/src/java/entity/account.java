@@ -10,19 +10,27 @@ package entity;
  * @author Khanh
  */
 public class account {
-    private String user;
-    private String pass;
-    String report_to;
+    String profile_id;
+    String user;
+    String pass;
     boolean isAdmin;
 
     public account() {
     }
 
-    public account(String user, String pass, String report_to, boolean isAdmin) {
+    public account(String profile_id, String user, String pass, boolean isAdmin) {
+        this.profile_id = profile_id;
         this.user = user;
         this.pass = pass;
-        this.report_to = report_to;
         this.isAdmin = isAdmin;
+    }
+
+    public String getProfile_id() {
+        return profile_id;
+    }
+
+    public void setProfile_id(String profile_id) {
+        this.profile_id = profile_id;
     }
 
     public String getUser() {
@@ -41,20 +49,17 @@ public class account {
         this.pass = pass;
     }
 
-    public String getReport_to() {
-        return report_to;
-    }
-
-    public void setReport_to(String report_to) {
-        this.report_to = report_to;
-    }
-
     public boolean isIsAdmin() {
         return isAdmin;
     }
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        return "account{" + "profile_id=" + profile_id + ", user=" + user + ", pass=" + pass + ", isAdmin=" + isAdmin + '}';
+    }
     
 }

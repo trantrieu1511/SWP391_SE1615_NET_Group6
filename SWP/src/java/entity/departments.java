@@ -12,15 +12,13 @@ package entity;
 public class departments {
     int id;
     String name;
-    int location;
 
     public departments() {
     }
 
-    public departments(int id, String name, int location) {
+    public departments(int id, String name) {
         this.id = id;
         this.name = name;
-        this.location = location;
     }
 
     public int getId() {
@@ -39,17 +37,8 @@ public class departments {
         this.name = name;
     }
 
-    public int getLocation() {
-        return location;
-    }
-
-    public void setLocation(int location) {
-        this.location = location;
-    }
-
     @Override
     public String toString() {
-        return "departments{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
+        return "departments{" + "id=" + id + ", name=" + name + '}';
     }
-    
 }

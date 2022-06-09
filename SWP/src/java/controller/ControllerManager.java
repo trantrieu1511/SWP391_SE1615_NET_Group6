@@ -106,15 +106,6 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
-//                out.println("<!DOCTYPE html>");
-//                out.println("<html>");
-//                out.println("<head>");
-//                out.println("<title>Servlet ControllerEmployee</title>");
-//                out.println("</head>");
-//                out.println("<body>");
-//                out.println("<h1>Servlet ControllerEmployee at " + profile_id + "</h1>");
-//                out.println("</body>");
-//                out.println("</html>");
                     daoPf.deleteProfile(profile_id);
                     response.sendRedirect("employees-list.jsp");
                 }
@@ -122,9 +113,18 @@ public class ControllerManager extends HttpServlet {
                 if (service.equals("addTask")) {
                     String name = request.getParameter("name");
                     int priority = Integer.parseInt(request.getParameter("priority"));
-                    String deadline = request.getParameter("deadline");
+                    String deadline = request.getParameter("deadline");                   
                     int status = 0;
                     String assigned = request.getParameter("assigned");
+//                    out.println("<!DOCTYPE html>");
+//                    out.println("<html>");
+//                    out.println("<head>");
+//                    out.println("<title>Servlet ControllerEmployee</title>");
+//                    out.println("</head>");
+//                    out.println("<body>");
+//                    out.println("<h1>Servlet ControllerEmployee at " + deadline + "</h1>");
+//                    out.println("</body>");
+//                    out.println("</html>");
                     daoT.add(name, priority, deadline, status, assigned);
                     response.sendRedirect("task-board.jsp");
                 }

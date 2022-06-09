@@ -169,6 +169,31 @@ public class DAOProfile extends DBConnent {
         return null;
     }
     
+    public profile getByID(String profile_id) {
+        String sql = "select * from [profile] where [profile_id] = '" + profile_id + "'";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                return new profile(rs.getString(1), //employee_id
+                        rs.getString(2), //first_name
+                        rs.getString(3), //last_name
+                        rs.getString(4), //email
+                        rs.getString(5), //phone_number
+                        rs.getString(6), //hire_date
+                        rs.getInt(7), //job_id
+                        rs.getDouble(8), //salary
+                        rs.getString(9), //ReportsTo
+                        rs.getBoolean(10), //isadmin
+                        rs.getInt(11), //department_id
+                        rs.getString(12), //username
+                        rs.getString(13));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
     public boolean deleteProfile(String profile_id) {
         String sql = "delete from [profile] where [profile_id] = '" + profile_id + "'";
         try {

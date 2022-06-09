@@ -137,7 +137,7 @@
                                                             <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
                                                         <span class="task-users">
-                                                            ${o.assigned}
+                                                            ${profile.getByID(o.assigned).getFirst_name()} ${profile.getByID(o.assigned).getLast_name()}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -290,14 +290,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Due Date</label>
-                                        <div class="cal-icon"><input class="form-control datetimepicker" type="date" name="deadline"></div>
+                                        <input type="date" name="deadline">
                                     </div>
                                     <div class="form-group">
                                         <label>Assigned</label>
                                         <select class="select floating" name="assigned"> 
                                             <option> </option>
                                             <c:forEach items="${profile.listAllProfile(profile.getByUser(sessionScope.acc.user).getProfile_id())}" var="o">
-                                            <option>${o.first_name} ${o.last_name}</option>
+                                            <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
                                             </c:forEach>
                                         </select>  
                                     </div>

@@ -87,7 +87,7 @@ CREATE TABLE task (
 	deadline DATE,
 	status int,
 	assigned CHAR(5),
-	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id)
+	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id),
 );
 
 CREATE TABLE projects (

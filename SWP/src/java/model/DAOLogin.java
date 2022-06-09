@@ -15,16 +15,16 @@ import java.sql.ResultSet;
 public class DAOLogin extends DBConnent {
     
     public account login(String user, String pass) {
-        String sql = "select * from [profile] where [username] = '" + user
+        String sql = "select * from [account] where [username] = '" + user
                 + "' and [password] = '" + pass + "'";
         try {
             ResultSet rs = getData(sql);
             while (rs.next()) {
                 return new account(
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getString(9),
-                        rs.getBoolean((10)));
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean((4)));
             }
         } catch (Exception e) {
             e.printStackTrace();

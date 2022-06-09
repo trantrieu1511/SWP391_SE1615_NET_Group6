@@ -21,10 +21,11 @@ import java.util.List;
 public class DAOProfile extends DBConnent {
 
     public boolean addManager(profile pro) {
-        String sql = "insert into [profile](profile_id,full_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
+        String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
                 + "values ("
                 + "'" + pro.getProfile_id() + "', "
-                + "'" + pro.getFull_name() + "', "
+                + "'" + pro.getFirst_name() + "', "
+                + "'" + pro.getLast_name() + "', "
                 + "'" + pro.getEmail() + "', "
                 + "'" + pro.getPhone_number() + "', "
                 + "'" + pro.getHire_date() + "', "
@@ -43,11 +44,11 @@ public class DAOProfile extends DBConnent {
     }
 
     public boolean addStaff(profile pro) {
-        String sql = "insert into [profile](profile_id,full_name,email,"
+        String sql = "insert into [profile](profile_id,first_name,last_name,email,"
                 + "phone_number,hire_date,department_id,job_id,salary,report_to,) values ("
                 + "'" + pro.getProfile_id() + "', "
-                + "'" + pro.getFull_name() + "', "
-                + "'" + pro.getEmail() + "', "
+                + "'" + pro.getFirst_name() + "', "
+                + "'" + pro.getLast_name() + "', "
                 + "'" + pro.getPhone_number() + "', "
                 + "'" + pro.getHire_date() + "', "
                 + "" + pro.getDepartment_id() + ", "
@@ -65,11 +66,12 @@ public class DAOProfile extends DBConnent {
         return true;
     }
 
-    public boolean editStaff(String profile_id, String full_name, String email,
-            String phone_number, String hire_date, int department_id, int job_id,
-            double salary, String reportto) {
+    public boolean editStaff(String profile_id, String first_name, String last_name, 
+            String email, String phone_number, String hire_date, int department_id, 
+            int job_id, double salary, String reportto) {
         String sql = "update [Profile] set "
-                + "full_name = ?, "
+                + "first_name = ?, "
+                + "last_name = ?, "
                 + "email = ?, "
                 + "phone_number = ?, "
                 + "hire_date = ?, "
@@ -80,15 +82,16 @@ public class DAOProfile extends DBConnent {
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, full_name);
-            pre.setString(2, email);
-            pre.setString(3, phone_number);
-            pre.setString(4, hire_date);
-            pre.setInt(5, job_id);
-            pre.setInt(6, department_id);
-            pre.setDouble(7, salary);
-            pre.setString(8, reportto);
-            pre.setString(9, profile_id);
+            pre.setString(1, first_name);
+            pre.setString(2, last_name);
+            pre.setString(3, email);
+            pre.setString(4, phone_number);
+            pre.setString(5, hire_date);
+            pre.setInt(6, job_id);
+            pre.setInt(7, department_id);
+            pre.setDouble(8, salary);
+            pre.setString(9, reportto);
+            pre.setString(10, profile_id);
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,10 +112,11 @@ public class DAOProfile extends DBConnent {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getInt(7),
-                        rs.getDouble(8),
-                        rs.getString(9)));
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -131,10 +135,11 @@ public class DAOProfile extends DBConnent {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getInt(7),
-                        rs.getDouble(8),
-                        rs.getString(9));
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -153,10 +158,11 @@ public class DAOProfile extends DBConnent {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getInt(7),
-                        rs.getDouble(8),
-                        rs.getString(9));
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

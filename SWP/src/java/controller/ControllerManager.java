@@ -97,8 +97,8 @@ public class ControllerManager extends HttpServlet {
                     int job_id = daoJob.getJobByTitle(job_title).getId();
 
                     daoPf.editStaff(profile_id, first_name, last_name, email,
-                            phone_number, hire_date, job_id, salary, ReportsTo,
-                            department_id, username, password);
+                            phone_number, hire_date, department_id, job_id,
+                            salary, ReportsTo);
                     response.sendRedirect("employees-list.jsp");
                 }
 

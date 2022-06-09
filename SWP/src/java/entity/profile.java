@@ -10,7 +10,7 @@ package entity;
  * @author DELL
  */
 public class profile {
-    String profile_id, full_name, email, phone_number;
+    String profile_id, first_name, last_name, email, phone_number;
     String hire_date;
     int department_id;
     int job_id;
@@ -20,9 +20,10 @@ public class profile {
     public profile() {
     }
 
-    public profile(String profile_id, String full_name, String email, String phone_number, String hire_date, int department_id, int job_id, double salary, String reportto) {
+    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int department_id, int job_id, double salary, String reportto) {
         this.profile_id = profile_id;
-        this.full_name = full_name;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
         this.hire_date = hire_date;
@@ -40,12 +41,20 @@ public class profile {
         this.profile_id = profile_id;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getEmail() {
@@ -106,6 +115,8 @@ public class profile {
 
     @Override
     public String toString() {
-        return "profile{" + "profile_id=" + profile_id + ", full_name=" + full_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", department_id=" + department_id + ", job_id=" + job_id + ", salary=" + salary + ", reportto=" + reportto + '}';
+        return "profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", department_id=" + department_id + ", job_id=" + job_id + ", salary=" + salary + ", reportto=" + reportto + '}';
     }
+
+    
 }

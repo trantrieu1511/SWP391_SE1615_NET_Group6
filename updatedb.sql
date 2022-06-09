@@ -15,7 +15,8 @@ CREATE TABLE [departments] (
 
 CREATE TABLE [profile] (
 	profile_id CHAR(5) PRIMARY KEY,
-	full_name VARCHAR (50) NOT NULL,
+	first_name VARCHAR (20) NOT NULL,
+	last_name VARCHAR (20) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) NULL,
 	hire_date DATE NOT NULL,

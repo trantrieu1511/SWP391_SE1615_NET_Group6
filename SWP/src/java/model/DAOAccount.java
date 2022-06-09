@@ -36,7 +36,7 @@ public class DAOAccount extends DBConnent {
     }
 
     public account getAccount(String profile_id) {
-        String sql = "select * from [account] where profile_id = " + profile_id;
+        String sql = "select * from [account] where profile_id = '" + profile_id + "'";
         try {
             ResultSet rs = getData(sql);
             while (rs.next()) {

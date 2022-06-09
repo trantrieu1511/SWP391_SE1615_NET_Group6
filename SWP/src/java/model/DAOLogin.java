@@ -31,4 +31,20 @@ public class DAOLogin extends DBConnent {
         }
         return null;
     }
+    public account getAccount(String profile_id) {
+        String sql = "select * from [account] where profile_id = " + profile_id;
+        try {
+            ResultSet rs = getData(sql);
+            while (rs.next()) {
+                return new account(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean((4)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

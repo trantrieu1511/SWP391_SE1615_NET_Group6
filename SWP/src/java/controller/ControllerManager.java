@@ -75,9 +75,7 @@ public class ControllerManager extends HttpServlet {
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
 
-                    profile pro = new profile(profile_id, first_name, last_name,
-                            email, phone_number, hire_date, job_id, salary,
-                            ReportsTo, department_id, username, password);
+                    profile pro = new profile();
                     daoPf.addStaff(pro);
                     response.sendRedirect("employees-list.jsp");
                 }

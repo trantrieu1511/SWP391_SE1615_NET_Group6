@@ -77,8 +77,6 @@
                     var email = myArray[3];
                     var phone_number = myArray[4];
                     var hire_date = myArray[5];
-                    var username = myArray[6];
-                    var password = myArray[7];
                     var reportto = myArray[8];
                     $(e.currentTarget).find('input[name="first_name"]').val(first_name);
                     $(e.currentTarget).find('input[name="last_name"]').val(last_name);
@@ -86,8 +84,6 @@
                     $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
                     $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                    $(e.currentTarget).find('input[name="username"]').val(username);
-                    $(e.currentTarget).find('input[name="password"]').val(password);
                     $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
                 });
             });
@@ -109,7 +105,8 @@
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
         <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
-
+        <jsp:useBean id="account" class="model.DAOLogin" scope="request"></jsp:useBean>
+        
     </head>
 
     <body>
@@ -200,7 +197,7 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.username} ${o.password} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${account.getAccount(o.profile_id).getUser()} ${account.getAccount(o.profile_id).getPass()} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>

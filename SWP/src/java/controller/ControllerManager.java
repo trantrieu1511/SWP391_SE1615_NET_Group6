@@ -75,7 +75,13 @@ public class ControllerManager extends HttpServlet {
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
 
+<<<<<<< Updated upstream
                     profile pro = new profile();
+=======
+                    profile pro = new profile(profile_id, first_name, last_name,
+                            email, phone_number, hire_date, job_id, department_id,
+                            salary, ReportsTo);
+>>>>>>> Stashed changes
                     daoPf.addStaff(pro);
                     response.sendRedirect("employees-list.jsp");
                 }
@@ -96,8 +102,8 @@ public class ControllerManager extends HttpServlet {
                     int department_id = daoDp.getDepartmentByName(department_name).getId();
                     int job_id = daoJob.getJobByTitle(job_title).getId();
 
-                    daoPf.editStaff(profile_id, first_name, last_name, email,
-                            phone_number, hire_date, department_id, job_id,
+                    daoPf.editStaff(profile_id, first_name, last_name,
+                            email, phone_number, hire_date, job_id, department_id,
                             salary, ReportsTo);
                     response.sendRedirect("employees-list.jsp");
                 }

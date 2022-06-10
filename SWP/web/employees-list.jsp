@@ -296,13 +296,21 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+<<<<<<< Updated upstream
                                                 <input class="form-control" type="text" name="first_name" required>
+=======
+                                                <input class="form-control" type="text" name="first_name" required pattern="^[A-Za-z]*$">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
+<<<<<<< Updated upstream
                                                 <input class="form-control" type="text" name="last_name" required>
+=======
+                                                <input class="form-control" type="text" name="last_name" required pattern="^[A-Za-z]*$">
+>>>>>>> Stashed changes
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -334,7 +342,7 @@
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" required>
+                                                <input type="text" class="form-control" name="profile_id" required pattern="[A-Z]{5}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -69,7 +70,7 @@ public class DAOProfile extends DBConnent {
     public boolean editStaff(String profile_id, String first_name, String last_name, 
             String email, String phone_number, String hire_date, int department_id, 
             int job_id, double salary, String reportto) {
-        String sql = "update [Profile] set "
+        String sql = "update [profile] set "
                 + "first_name = ?, "
                 + "last_name = ?, "
                 + "email = ?, "
@@ -183,6 +184,11 @@ public class DAOProfile extends DBConnent {
     }
 
     public static void main(String[] args) {
+        DAOProfile dao = new DAOProfile();
+        List<profile> staff = dao.listAllStaff("ABCDE");
+        for (profile object : staff) {
+            System.out.println(object.toString());
+        }
     }
 
 }

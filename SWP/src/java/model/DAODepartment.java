@@ -48,11 +48,28 @@ public class DAODepartment extends DBConnent {
         return null;
     }
     
+    public departments getDepartmentByID(int id) {
+        String sql = "select * from departments where [department_id] = " + id;
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                return new departments(
+                        rs.getInt(1),
+                        rs.getString(2));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
         DAODepartment dao = new DAODepartment();
-        List<departments> list = dao.listAllDepartment();
-        for (departments a : list) {
-            System.err.println(a.getName());
-        }
+//        List<departments> list = dao.listAllDepartment();
+//        for (departments a : list) {
+//            System.err.println(a.getName());
+//        }
+        departments department = dao.getDepartmentByID(1);
+        System.out.println(department.toString());
     }
 }

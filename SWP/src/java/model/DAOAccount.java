@@ -16,7 +16,7 @@ import java.sql.Statement;
  * @author Khanh
  */
 public class DAOAccount extends DBConnent {
-    
+
     public account login(String user, String pass) {
         String sql = "select * from [account] where [username] = '" + user
                 + "' and [password] = '" + pass + "'";
@@ -34,9 +34,9 @@ public class DAOAccount extends DBConnent {
         }
         return null;
     }
-    
+
     public account getAccount(String profile_id) {
-        String sql = "select * from [account] where profile_id = " + profile_id;
+        String sql = "select * from [account] where profile_id = '" + profile_id + "'";
         try {
             ResultSet rs = getData(sql);
             while (rs.next()) {
@@ -51,7 +51,7 @@ public class DAOAccount extends DBConnent {
         }
         return null;
     }
-    
+
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isAdmin)"
                 + "values('" + profile_id + "', '" + username + "', '" + password
@@ -65,7 +65,7 @@ public class DAOAccount extends DBConnent {
         }
         return true;
     }
-    
+
     public boolean editAccount(String profile_id, String username, String password) {
         String sql = "update account set username=?, password=? where profile_id=?";
         try {
@@ -80,7 +80,7 @@ public class DAOAccount extends DBConnent {
         }
         return true;
     }
-    
+
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
         dao.addAccount("12345", "1", "1");

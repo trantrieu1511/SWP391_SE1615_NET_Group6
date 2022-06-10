@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -35,7 +35,7 @@ public class DBConnent {
     }
 
     public DBConnent() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_3", "sa", "12345678");
+        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_3", "sa", "123456");
     }
 
     public ResultSet getData(String sql) {

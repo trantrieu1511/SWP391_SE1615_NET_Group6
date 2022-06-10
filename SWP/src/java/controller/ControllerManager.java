@@ -109,6 +109,7 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
+                    daoAcc.deleteAccount(profile_id);
                     daoPf.deleteProfile(profile_id);
                     response.sendRedirect("employees-list.jsp");
                 }

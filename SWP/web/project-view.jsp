@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -30,11 +32,11 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <!-- Bean -->
+        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
+        <jsp:useBean id="task" class="model.DAOTask" scope="request"></jsp:useBean>
+        
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -52,7 +54,7 @@
                     <div class="page-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="page-title">Hospital Admin</h3>
+                                <h3 class="page-title">Project</h3>
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Project</li>
@@ -90,129 +92,52 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
+                                                        <c:forEach items="${task.list(0)}" var="o">
                                                         <li class="task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label" contenteditable="true">Patient appointment booking</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
+                                                            <div class="task-container">                                                            
+                                                                <span class="task-label" contenteditable="false">${o.name}</span>                                                   
                                                             </div>
                                                         </li>
-                                                        <li class="task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label" contenteditable="true">Appointment booking with payment gateway</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="completed task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label">Doctor available module</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label" contenteditable="true">Patient and Doctor video conferencing</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label" contenteditable="true">Private chat module</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="task">
-                                                            <div class="task-container">
-                                                                <span class="task-action-btn task-check">
-                                                                    <span class="action-circle large complete-btn" title="Mark Complete">
-                                                                        <i class="material-icons">check</i>
-                                                                    </span>
-                                                                </span>
-                                                                <span class="task-label" contenteditable="true">Patient Profile add</span>
-                                                                <span class="task-action-btn task-btn-right">
-                                                                    <span class="action-circle large" title="Assign">
-                                                                        <i class="material-icons">person_add</i>
-                                                                    </span>
-                                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                                        <i class="material-icons">delete</i>
-                                                                    </span>
-                                                                </span>
-                                                            </div>
-                                                        </li>
+                                                        </c:forEach>
                                                     </ul>
-                                                </div>
-                                                <div class="task-list-footer">
-                                                    <div class="new-task-wrapper">
-                                                        <textarea  id="new-task" placeholder="Enter new task here. . ."></textarea>
-                                                        <span class="error-message hidden">You need to enter a task first</span>
-                                                        <span class="add-new-task-btn btn" id="add-task">Add Task</span>
-                                                        <span class="btn" id="close-task-panel">Close</span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="pending_tasks"></div>
-                                    <div class="tab-pane" id="completed_tasks"></div>
+                                    <div class="tab-pane" id="pending_tasks">
+                                        <div class="task-wrapper">
+                                            <div class="task-list-container">
+                                                <div class="task-list-body">
+                                                    <ul id="task-list">
+                                                        <c:forEach items="${task.list(1)}" var="o">
+                                                        <li class="task">
+                                                            <div class="task-container">                                                            
+                                                                <span class="task-label" contenteditable="false">${o.name}</span>                                                   
+                                                            </div>
+                                                        </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="completed_tasks">
+                                        <div class="task-wrapper">
+                                            <div class="task-list-container">
+                                                <div class="task-list-body">
+                                                    <ul id="task-list">
+                                                        <c:forEach items="${task.list(3)}" var="o">
+                                                        <li class="task">
+                                                            <div class="task-container">                                                            
+                                                                <span class="task-label" contenteditable="false">${o.name}</span>                                                   
+                                                            </div>
+                                                        </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +181,7 @@
                                     <ul class="list-box">
                                         <li>
                                             <a href="#">
-                                                <span class="message-author">Wilmer Deluna</span>
+                                                <span class="message-author">${profile.getByID(sessionScope.acc.profile_id).getFirst_name()} ${profile.getByID(sessionScope.acc.profile_id).getLast_name()}</span>
                                                 <div class="clearfix"></div>
                                                 <span class="message-content">Team Leader</span>
                                             </a>
@@ -270,20 +195,15 @@
                                         Assigned member                                         
                                     </h6>
                                     <ul class="list-box">
+                                        <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">  
                                         <li>
                                             <a href="#">
-                                                <span class="message-author">John Doe</span>
+                                                <span class="message-author">${o.first_name} ${o.last_name}</span>
                                                 <div class="clearfix"></div>
-                                                <span class="message-content">Web Designer</span>
+                                                <span class="message-content">${job.getJobById(o.job_id).getTitle()}</span>
                                             </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">                                                                                                                                                   
-                                                <span class="message-author">Richard Miles</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Web Developer</span>                                                 
-                                            </a>
-                                        </li>
+                                        </li>                                   
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>

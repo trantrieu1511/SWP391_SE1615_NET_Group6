@@ -300,19 +300,19 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="first_name" required pattern="^[A-Z][A-Za-z]*$">
+                                                <input class="form-control" type="text" name="first_name" required pattern="^[A-Za-z]*$">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="last_name" required pattern="^[A-Z][A-Za-z]*$">
+                                                <input class="form-control" type="text" name="last_name" required pattern="^[A-Za-z]*$">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="username" required pattern="^[A-Za-z]+$">
+                                                <input class="form-control" type="text" name="username" required pattern="^[A-Za-z]*$">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -325,26 +325,26 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="password" id="password" 
-                                                       onkeyup="checkconfirmPassword(this)" required pattern="^[A-Za-z]+$">
+                                                       onkeyup="checkconfirmPassword(this)" required pattern="^[A-Za-z]*$">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                       onkeyup="checkPassword(this)" required pattern="^[A-Za-z]+$">
+                                                       onkeyup="checkPassword(this)" required pattern="^[A-Za-z]*$">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" required>
+                                                <input type="text" class="form-control" name="profile_id" required pattern="[A-Z]{5}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div><input class="form-control" readonly type="date" name="hire_date" required></div>
+                                                <div><input class="form-control" type="date" name="hire_date" required></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -473,9 +473,9 @@
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
                                                 <select class="select" name="department_name" required="">
-                                                    <option>Select Department</option>
+                                                    <option value="">Select Department</option>
                                                     <c:forEach items="${department.listAllDepartment()}" var="o">
-                                                        <option>${o.name}</option>
+                                                        <option value="${o.id}">${o.name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -484,9 +484,9 @@
                                             <div class="form-group">
                                                 <label>Designation <span class="text-danger">*</span></label>
                                                 <select class="select" name="job_title" required="">
-                                                    <option>Select Designation</option>
+                                                    <option value="">Select Designation</option>
                                                     <c:forEach items="${job.listAllJob()}" var="o">
-                                                        <option>${o.title}</option>
+                                                        <option value="${o.id}">${o.title}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

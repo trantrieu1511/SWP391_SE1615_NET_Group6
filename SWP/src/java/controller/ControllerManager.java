@@ -77,10 +77,21 @@ public class ControllerManager extends HttpServlet {
                     double salary = 0;
 
                     profile pro = new profile(profile_id, first_name, last_name,
-                            email, phone_number, hire_date, department_id, 
-                            job_id, salary, ReportsTo);
-                    daoPf.addStaff(pro);
-                    daoAcc.addAccount(profile_id, username, password);
+                            email, phone_number, hire_date, job_id, department_id,
+                            salary, ReportsTo);
+                    boolean statusPro = daoPf.addStaff(pro);
+                    if (statusPro) {
+                        System.out.println("Successfully added new Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to add new Staff with profile_id = " + profile_id);
+                    }
+
+                    boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
+                    if (statusAcc) {
+                        System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
+                    }
                     response.sendRedirect("employees-list.jsp");
                 }
 
@@ -93,31 +104,54 @@ public class ControllerManager extends HttpServlet {
                     String email = request.getParameter("email");
                     String phone_number = request.getParameter("phone_number");
                     String hire_date = request.getParameter("hire_date");
-                    String job_title = request.getParameter("job_title");
+                    int job_id = Integer.parseInt(request.getParameter("job_title"));
                     String ReportsTo = request.getParameter("ReportsTo");
-                    String department_name = request.getParameter("department_name");
+                    int department_id = Integer.parseInt(request.getParameter("department_name"));
                     double salary = 0;
-                    int department_id = daoDp.getDepartmentByName(department_name).getId();
-                    int job_id = daoJob.getJobByTitle(job_title).getId();
+//                    int department_id = daoDp.getDepartmentByName(department_name).getId();
+//                    int job_id = daoJob.getJobByTitle(job_title).getId();
+//
+                    boolean statusPro = daoPf.editStaff(new profile(profile_id,
+                            first_name, last_name, email, phone_number, hire_date,
+                            job_id, department_id, salary, ReportsTo));
+                    if (statusPro) {
+                        System.out.println("Successfully edited Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to edit new Staff with profile_id = " + profile_id);
+                    }
 
-                    daoPf.editStaff(profile_id, first_name, last_name, email,
-                            phone_number, hire_date, department_id, job_id,
-                            salary, ReportsTo);
-                    daoAcc.editAccount(profile_id, username, password);
+                    boolean statusAcc = daoAcc.editAccount(profile_id, username, password);
+                    if (statusAcc) {
+                        System.out.println("Successfully edited new account for Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to edit new account for Staff with profile_id = " + profile_id);
+                    }
                     response.sendRedirect("employees-list.jsp");
                 }
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
-                    daoAcc.deleteAccount(profile_id);
-                    daoPf.deleteProfile(profile_id);
+                    boolean statusAcc = daoAcc.deleteAccount(profile_id);
+                    if (statusAcc) {
+                        System.out.println("Successfully deleted Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to delete new account for Staff with profile_id = " + profile_id);
+                    }
+
+                    boolean statusPro = daoPf.deleteProfile(profile_id);
+                    if (statusAcc) {
+                        System.out.println("Successfully deleted account for Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to delete account for Staff with profile_id = " + profile_id);
+                    }
+
                     response.sendRedirect("employees-list.jsp");
                 }
-                
+
                 if (service.equals("addTask")) {
                     String name = request.getParameter("name");
                     int priority = Integer.parseInt(request.getParameter("priority"));
-                    String deadline = request.getParameter("deadline");                   
+                    String deadline = request.getParameter("deadline");
                     int status = 0;
                     String assigned = request.getParameter("assigned");
 //                    out.println("<!DOCTYPE html>");

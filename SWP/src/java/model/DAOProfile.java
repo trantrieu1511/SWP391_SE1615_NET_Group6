@@ -65,9 +65,7 @@ public class DAOProfile extends DBConnent {
         return true;
     }
 
-    public boolean editStaff(String profile_id, String first_name, String last_name, 
-            String email, String phone_number, String hire_date, int department_id, 
-            int job_id, double salary, String reportto) {
+    public boolean editStaff(profile pro) {
         String sql = "update [profile] set "
                 + "first_name = ?, "
                 + "last_name = ?, "
@@ -81,16 +79,16 @@ public class DAOProfile extends DBConnent {
                 + "where profile_id = ?";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, first_name);
-            pre.setString(2, last_name);
-            pre.setString(3, email);
-            pre.setString(4, phone_number);
-            pre.setString(5, hire_date);
-            pre.setInt(6, job_id);
-            pre.setInt(7, department_id);
-            pre.setDouble(8, salary);
-            pre.setString(9, reportto);
-            pre.setString(10, profile_id);
+            pre.setString(1, pro.getFirst_name());
+            pre.setString(2, pro.getLast_name());
+            pre.setString(3, pro.getEmail());
+            pre.setString(4, pro.getPhone_number());
+            pre.setString(5, pro.getHire_date());
+            pre.setInt(6, pro.getDepartment_id());
+            pre.setInt(7, pro.getJob_id());
+            pre.setDouble(8, pro.getSalary());
+            pre.setString(9, pro.getReportto());
+            pre.setString(10, pro.getProfile_id());
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -105,8 +103,7 @@ public class DAOProfile extends DBConnent {
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
-                list.add(new profile(
-                        rs.getString(1),
+                list.add(new profile(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),

@@ -80,6 +80,18 @@ public class DAOAccount extends DBConnent {
         }
         return true;
     }
+    
+    public boolean deleteAccount(String profile_id) {
+        String sql = "delete from account where profile_id = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();

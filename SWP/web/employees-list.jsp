@@ -132,7 +132,7 @@
                                 <div class="col">
                                     <h3 class="page-title">Employee</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="manager-dashboard.jsp">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Employee</li>
                                     </ul>
                                 </div>
@@ -363,7 +363,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>
-                                                <input class="form-control" readonly type="text" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
+                                                <input class="form-control" readonly type="hidden" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -468,15 +468,15 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="9876543210" type="text" name="phone_number" id="phone_number2" pattern="^[0-9]+$">
+                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="^[0-9]+$">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+<!--                                        <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label class="col-form-label">Report To <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="ReportsTo" id="ReportsTo2" required="" pattern="[A-Z]{5}">
-                                            </div>
-                                        </div>
+                                                <label class="col-form-label">Report To <span class="text-danger">*</span></label>-->
+                                                <input class="form-control" value="" type="hidden" name="ReportsTo" id="ReportsTo2" required="" pattern="[A-Z]{5}">
+<!--                                            </div>
+                                        </div>-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>

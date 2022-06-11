@@ -34,7 +34,7 @@
                                 <span>${sessionScope.acc.user}</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="profile.html">My Profile</a>
+                            <a class="dropdown-item" href="profile.jsp">My Profile</a>
                             <a class="dropdown-item" href="settings.html">Settings</a>
                             <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                         </div>

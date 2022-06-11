@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Khanh
  */
-public class DAOTask extends DBConnent {
+public class DAOTask extends DBConnect {
 
     public boolean add(String name, int priority, String deadline, int status, String assigned) {
         String sql = "insert into task(name, priority, deadline, status, assigned)"

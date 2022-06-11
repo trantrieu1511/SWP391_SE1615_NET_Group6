@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author Khanh
  */
-public class DAOProject extends DBConnent {
+public class DAOProject extends DBConnect {
     public projects getProject(String profile_id) {
         String sql = "select * from projects where manager_id = '" + profile_id + "'";
         ResultSet rs = getData(sql);

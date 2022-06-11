@@ -47,7 +47,7 @@
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
-            <jsp:include page="index.jsp"></jsp:include>
+            <jsp:include page="menu.jsp"></jsp:include>
 
             <!-- Page Wrapper -->
             <div class="page-wrapper">

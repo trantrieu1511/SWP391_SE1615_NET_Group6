@@ -15,7 +15,7 @@ import java.sql.Statement;
  *
  * @author Khanh
  */
-public class DAOAccount extends DBConnent {
+public class DAOAccount extends DBConnect {
 
     public account login(String user, String pass) {
         String sql = "select * from [account] where [username] = '" + user

@@ -43,7 +43,7 @@
         <!-- Main Wrapper -->
         <div class="main-wrapper">
             
-            <div><jsp:include page="index.jsp"></jsp:include></div>
+            <div><jsp:include page="menu.jsp"></jsp:include></div>
             
             <!-- Page Wrapper -->
             <div class="page-wrapper">

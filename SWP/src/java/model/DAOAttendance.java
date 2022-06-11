@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Khanh
  */
-public class DAOAttendance extends DBConnent {
+public class DAOAttendance extends DBConnect {
     
     public boolean add(String date, String time_in, String time_out, String production_time,
             String employee_id) {

@@ -37,7 +37,7 @@
     </head>
 
     <body>
-        <jsp:include page="index.jsp"></jsp:include>
+        <jsp:include page="menu.jsp"></jsp:include>
 
         <c:if test="${profile.getByID(sessionScope.acc.profile_id).reportto == null && sessionScope.acc.isAdmin == false}">
             <jsp:include page="manager-dashboard.jsp"></jsp:include>

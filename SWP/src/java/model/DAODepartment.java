@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Khanh
  */
-public class DAODepartment extends DBConnent {
+public class DAODepartment extends DBConnect {
 
     public List<departments> listAllDepartment() {
         List<departments> list = new ArrayList<>();

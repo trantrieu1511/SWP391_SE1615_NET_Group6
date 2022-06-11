@@ -104,9 +104,9 @@ public class ControllerManager extends HttpServlet {
                     String email = request.getParameter("email");
                     String phone_number = request.getParameter("phone_number");
                     String hire_date = request.getParameter("hire_date");
-                    int job_id = Integer.parseInt(request.getParameter("job_title"));
+                    int job_id = Integer.parseInt(request.getParameter("job_id"));
                     String ReportsTo = request.getParameter("ReportsTo");
-                    int department_id = Integer.parseInt(request.getParameter("department_name"));
+                    int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
 //                    int department_id = daoDp.getDepartmentByName(department_name).getId();
 //                    int job_id = daoJob.getJobByTitle(job_title).getId();

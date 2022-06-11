@@ -57,6 +57,7 @@ function wrong_pass_alert() {
             && document.getElementById('username').value != ""
             && document.getElementById('profile_id').value != ""
             && document.getElementById('hire_date').value != ""
+            && document.getElementById('ReportsTo').value != ""
             && document.getElementById('department_id').value != ""
             && document.getElementById('job_id').value != "") {
         alert("Your response is submitted");

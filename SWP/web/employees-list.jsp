@@ -360,12 +360,12 @@
                                                 <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="^[0-9]+$">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+<!--                                        <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>
+                                                <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>-->
                                                 <input class="form-control" readonly type="hidden" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
-                                            </div>
-                                        </div>
+<!--                                            </div>
+                                        </div>-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>

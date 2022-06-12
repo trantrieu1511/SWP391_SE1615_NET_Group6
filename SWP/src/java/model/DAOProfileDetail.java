@@ -20,13 +20,14 @@ import java.util.logging.Logger;
  */
 public class DAOProfileDetail extends DBConnect {
 
-    public profileDetail getIndividualProfileDetail(String profile_id) {
-        profileDetail pd = new profileDetail();
+    public List<profileDetail> getIndividualProfileDetail(String profile_id) {
+        List<profileDetail> pdlist = new ArrayList<profileDetail>();
         String sql = "select * from [profileDetail] where profile_id = '" + profile_id + "'";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
-                pd = new profileDetail(rs.getString(1),
+                pdlist.add(new profileDetail(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getBoolean(4),
@@ -35,13 +36,14 @@ public class DAOProfileDetail extends DBConnect {
                         rs.getBoolean(7),
                         rs.getInt(8),
                         rs.getString(9),
-                        rs.getString(10));
+                        rs.getString(10)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return pd;
+        return pdlist;
     }
+
 
     public boolean addProfileDetail(profileDetail pd) {
         boolean status = false;
@@ -70,8 +72,9 @@ public class DAOProfileDetail extends DBConnect {
     
     public static void main(String[] args) {
         DAOProfileDetail dao = new DAOProfileDetail();
-        profileDetail pd = new profileDetail();
-        pd = dao.getIndividualProfileDetail("AAAAA");
-        System.out.println(pd.toString());
+        List<profileDetail> list = dao.getIndividualProfileDetail("AAAAA");
+        for (profileDetail pdetail : list) {
+            System.out.println(pdetail.toString());
+        }
     }
 }

@@ -52,6 +52,9 @@
         <jsp:useBean id="profileDetail" class="model.DAOProfileDetail" scope="request"></jsp:useBean>
         <jsp:useBean id="familyInfo" class="model.DAOFamilyInfo" scope="request"></jsp:useBean>
         <jsp:useBean id="experience" class="model.DAOExperience" scope="request"></jsp:useBean>
+        <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
+        <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -61,83 +64,96 @@
         <jsp:include page="menu.jsp"></jsp:include>
 
 
-        <!-- Page Wrapper -->
-        <div class="page-wrapper">
+            <!-- Page Wrapper -->
+            <div class="page-wrapper">
 
-            <!-- Page Content -->
-            <div class="content container-fluid">
+                <!-- Page Content -->
+                <div class="content container-fluid">
 
-                <!-- Page Header -->
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3 class="page-title">Profile</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="manager-dashboard.jsp">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Profile</li>
-                            </ul>
+                    <!-- Page Header -->
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="page-title">Profile</h3>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="manager-dashboard.jsp">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Profile</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- /Page Header -->
+                    <!-- /Page Header -->
 
-                <div class="card mb-0">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="profile-view">
-                                    <div class="profile-img-wrap">
-                                        <div class="profile-img">
-                                            <a href="#"><img alt="" src="img/profiles/avatar-02.jpg"></a>
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="profile-view">
+                                        <div class="profile-img-wrap">
+                                            <div class="profile-img">
+                                                <a href="#"><img alt="" src="img/profiles/avatar-02.jpg"></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="profile-basic">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="profile-info-left">
-                                                    <h3 class="user-name m-t-0 mb-0">John Doe</h3>
-                                                    <h6 class="text-muted">UI/UX Design Team</h6>
-                                                    <small class="text-muted">Web Designer</small>
-                                                    <div class="staff-id">Employee ID : FT-0001</div>
-                                                    <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+                                        <div class="profile-basic">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="profile-info-left">
+                                                    <c:forEach items="${profile.getProfile(sessionScope.acc.profile_id)}" var="o">
+                                                        <h3 class="user-name m-t-0 mb-0">${o.first_name} ${o.last_name}</h3>
+                                                        <h6 class="text-muted">${department.getDepartmentByID(o.department_id).name}</h6>
+                                                        <small class="text-muted">${job.getJobById(o.job_id).title}</small>
+                                                        <div class="staff-id">Employee ID : ${o.profile_id}</div>
+                                                        <div class="small doj text-muted">Date of Join : ${o.hire_date}</div>
+                                                    </c:forEach>
                                                     <!--<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>-->
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <ul class="personal-info">
-                                                    <li>
-                                                        <div class="title">Phone:</div>
-                                                        <div class="text"><a href="">9876543210</a></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Email:</div>
-                                                        <div class="text"><a href="">johndoe@example.com</a></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Birthday:</div>
-                                                        <div class="text">24th July</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Address:</div>
-                                                        <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Gender:</div>
-                                                        <div class="text">Male</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Reports to:</div>
-                                                        <div class="text">
-                                                            <div class="avatar-box">
-                                                                <div class="avatar avatar-xs">
-                                                                    <img src="img/profiles/avatar-16.jpg" alt="">
+                                                    <c:forEach items="${profileDetail.getIndividualProfileDetail(sessionScope.acc.profile_id)}" var="pd">
+                                                        <li>
+                                                            <div class="title">Birthday:</div>
+                                                            <div class="text">${pd.dob}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Address:</div>
+                                                            <div class="text">${pd.address}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Gender:</div>
+                                                            <div class="text">${pd.gender}</div>
+                                                        </li>
+                                                    </c:forEach>
+                                                    <c:forEach items="${profile.getProfile(sessionScope.acc.profile_id)}" var="p">
+                                                        <li>
+                                                            <div class="title">Phone:</div>
+                                                            <div class="text">${p.phone_number}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Email:</div>
+                                                            <div class="text"><a href="">${p.email}</a></div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Reports to:</div>
+                                                            <div class="text">
+                                                                <div class="avatar-box">
+                                                                    <c:choose>
+                                                                        <c:when test="${p.reportto != null}">
+                                                                            <div class="avatar avatar-xs">
+                                                                                <img src="img/profiles/avatar-16.jpg" alt="">
+                                                                            </div>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <p>N/A</p>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
                                                                 </div>
+                                                                <a href="profile.jsp">
+                                                                    ${p.reportto}
+                                                                </a>
                                                             </div>
-                                                            <a href="profile.jsp">
-                                                                Jeffery Lalor
-                                                            </a>
-                                                        </div>
-                                                    </li>
+                                                        </li>
+                                                    </c:forEach>
                                                 </ul>
                                             </div>
                                         </div>
@@ -243,7 +259,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            
+
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
@@ -288,10 +304,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            
-                            
                         </div>
                     </div>
                     <!-- /Profile Info Tab -->

@@ -7,9 +7,7 @@
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
         <jsp:useBean id="project" class="model.DAOProject" scope="request"></jsp:useBean>
-        <c:if test="${sessionScope.acc == null}">
-            <c:redirect url="login.jsp"></c:redirect>
-        </c:if>
+        
         </head>
 
     

@@ -16,27 +16,29 @@ import java.util.List;
  * @author DELL
  */
 public class DAOExperience extends DBConnect{
-    public experience getIndividualExperience(String profile_id){
-        experience exp = new experience();
-        String sql = "select * from [experience] where profile_id = '" + profile_id + "'";
+    public List<experience> listIndividualExperience(String profile_id){
+        List<experience> elist = new ArrayList<>();
+        String sql = "select * from [experience]";
         ResultSet rs = getData(sql);
         try {
             while(rs.next()){
-                exp = new experience(
+                elist.add(new experience(
                         rs.getString(1), 
                         rs.getString(2), 
                         rs.getString(3), 
-                        rs.getString(4));
+                        rs.getString(4)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return exp;
+        return elist;
     }
-    
+
     public static void main(String[] args) {
         DAOExperience dao = new DAOExperience();
-        experience exp = dao.getIndividualExperience("AAAAA");
-        System.out.println(exp.toString());
+        List<experience> list = dao.listIndividualExperience("AAAAA");
+        for (experience exp : list) {
+            System.out.println(exp.toString());
+        }
     }
 }

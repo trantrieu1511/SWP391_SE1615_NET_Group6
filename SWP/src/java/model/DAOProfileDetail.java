@@ -8,6 +8,7 @@ package model;
 import entity.profileDetail;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,8 +48,32 @@ public class DAOProfileDetail extends DBConnect {
         boolean status = false;
         String sql = "insert into profileDetail\n"
                 + "values ("
-                + "'"+pd+"', '', '', 1, '', '', 1, null, '', '')";
-
-        return true;
+                + "'"+pd.getProfile_id()+"', "
+                + "'"+pd.getDob()+"', "
+                + "'"+pd.getAddress()+"', "
+                + ""+pd.isGender()+", "
+                + "'"+pd.getCountry()+"', "
+                + "'"+pd.getReligion()+"', "
+                + ""+pd.isIsMarried()+", "
+                + ""+pd.getChildren()+", "
+                + "'"+pd.getBank_name()+"', "
+                + "'"+pd.getBank_number()+"')";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+            status = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            status = false;
+        }
+        return status;
+    }
+    
+    public static void main(String[] args) {
+        DAOProfileDetail dao = new DAOProfileDetail();
+        List<profileDetail> list = dao.listIndividualProfileDetail("AAAAA");
+        for (profileDetail pdetail : list) {
+            System.out.println(pdetail.toString());
+        }
     }
 }

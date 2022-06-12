@@ -5,25 +5,20 @@
  */
 package controller;
 
-import entity.profileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DAOExperience;
-import model.DAOFamilyInfo;
-import model.DAOProfileDetail;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "ControllerProfileDetail", urlPatterns = {"/profileDetail"})
-public class ControllerProfileDetail extends HttpServlet {
+@WebServlet(name = "ControllerExperience", urlPatterns = {"/experience"})
+public class ControllerExperience extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,17 +33,16 @@ public class ControllerProfileDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("do");
-            
-            DAOProfileDetail daopd = new DAOProfileDetail();
-            DAOFamilyInfo daof = new DAOFamilyInfo();
-            DAOExperience daoexp = new DAOExperience();
-            
-            
-            if(service.equals("editProfileDetail")){
-                
-            }
-            
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ControllerExperience</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ControllerExperience at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

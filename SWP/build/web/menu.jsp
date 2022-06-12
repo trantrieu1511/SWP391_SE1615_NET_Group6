@@ -3,11 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- use bean -->
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
         <jsp:useBean id="project" class="model.DAOProject" scope="request"></jsp:useBean>
+        <c:if test="${sessionScope.acc == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
         </head>
 
+    
         <body>
             <!-- Main Wrapper -->
             <div class="main-wrapper">
@@ -36,7 +41,7 @@
                         </a>
                         <div class="dropdown-menu">
                             
-                            <a class="dropdown-item" href="profileDetail?do=viewProfileDetail&profile_id=${sessionScope.acc.profile_id}">My Profile</a>
+                            <a class="dropdown-item" href="profile.jsp">My Profile</a>
                             <c:if test="${account.getAccount(sessionScope.acc.profile_id).isAdmin == true}">
                             <a class="dropdown-item" href="settings.html">Settings</a>
                             </c:if>
@@ -52,7 +57,9 @@
                             class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="profile.html">My Profile</a>
+                        <c:if test="${account.getAccount(sessionScope.acc.profile_id).isAdmin == true}">
                         <a class="dropdown-item" href="settings.html">Settings</a>
+                        </c:if>
                         <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                     </div>
                 </div>

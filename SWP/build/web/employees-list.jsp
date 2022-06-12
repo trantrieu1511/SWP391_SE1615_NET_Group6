@@ -110,7 +110,9 @@
         <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
         <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
         <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
-
+        <c:if test="${sessionScope.acc == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
         </head>
 
         <body onpageshow="checkPasswordonpageshow()">

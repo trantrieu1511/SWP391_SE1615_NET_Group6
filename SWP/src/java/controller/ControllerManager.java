@@ -7,8 +7,10 @@ package controller;
 
 import entity.account;
 import entity.profile;
+import entity.profileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -92,6 +94,12 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
                     }
+                    
+                    Date getDate = null;
+                    profileDetail pd = new profileDetail(profile_id, email, 
+                            ReportsTo, statusPro, email, email, statusAcc, 
+                            job_id, last_name, phone_number);
+                    
                     response.sendRedirect("employees-list.jsp");
                 }
 

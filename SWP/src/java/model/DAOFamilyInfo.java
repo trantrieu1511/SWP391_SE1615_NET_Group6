@@ -19,17 +19,17 @@ import java.util.logging.Logger;
  */
 public class DAOFamilyInfo extends DBConnect {
 
-    public List<familyInfo> getIndividualFamilyInfo(String profile_id){
+    public List<familyInfo> getIndividualFamilyInfo(String profile_id) {
         List<familyInfo> flist = new ArrayList<>();
-        String sql = "select * from [familyInfo]";
+        String sql = "select * from [familyInfo] where profile_id = '" + profile_id + "'";
         ResultSet rs = getData(sql);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 flist.add(new familyInfo(
-                        rs.getString(1), 
-                        rs.getString(2), 
-                        rs.getString(3), 
-                        rs.getString(4), 
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
                         rs.getString(5)));
 
             }
@@ -41,7 +41,7 @@ public class DAOFamilyInfo extends DBConnect {
 
     public static void main(String[] args) {
         DAOFamilyInfo dao = new DAOFamilyInfo();
-        List<familyInfo> list = dao.getIndividualFamilyInfo("AAAAA");
+        List<familyInfo> list = dao.getIndividualFamilyInfo("ABCDE");
         for (familyInfo finfo : list) {
             System.out.println(finfo.toString());
         }

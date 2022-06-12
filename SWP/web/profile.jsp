@@ -176,46 +176,32 @@
                                     <div class="card-body">
                                         <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
                                         <ul class="personal-info">
-                                            <li>
-                                                <div class="title">Passport No.</div>
-                                                <div class="text">9876543210</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Passport Exp Date.</div>
-                                                <div class="text">9876543210</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Tel</div>
-                                                <div class="text"><a href="">9876543210</a></div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Nationality</div>
-                                                <div class="text">Indian</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Religion</div>
-                                                <div class="text">Christian</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Marital status</div>
-                                                <div class="text">Married</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Employment of spouse</div>
-                                                <div class="text">No</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">No. of children</div>
-                                                <div class="text">2</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Bank name</div>
-                                                <div class="text">ICICI Bank</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Bank account No.</div>
-                                                <div class="text">159843014641</div>
-                                            </li>
+                                            <c:forEach items="${profileDetail.getIndividualProfileDetail(sessionScope.acc.profile_id)}" var="pd">
+                                                <li>
+                                                    <div class="title">Nationality</div>
+                                                    <div class="text">${pd.country}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Religion</div>
+                                                    <div class="text">${pd.religion}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Marital status</div>
+                                                    <div class="text">${pd.isMarried}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">No. of children</div>
+                                                    <div class="text">${pd.children}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Bank name</div>
+                                                    <div class="text">${pd.bank_name}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Bank account No.</div>
+                                                    <div class="text">${pd.bank_number}</div>
+                                                </li>
+                                            </c:forEach>
                                         </ul>
                                     </div>
                                 </div>
@@ -236,21 +222,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Leo</td>
-                                                        <td>Brother</td>
-                                                        <td>Feb 16th, 2019</td>
-                                                        <td>9876543210</td>
-                                                        <td class="text-right">
-                                                            <div class="dropdown dropdown-action">
-                                                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                    <a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    <c:forEach items="${familyInfo.getIndividualFamilyInfo(sessionScope.acc.profile_id)}" var="f">
+                                                        <tr>
+                                                            <td>${f.name}</td>
+                                                            <td>${f.relationship}</td>
+                                                            <td>${f.dob}</td>
+                                                            <td>${f.phone}</td>
+                                                            <td class="text-right">
+                                                                <div class="dropdown dropdown-action">
+                                                                    <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                        <a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                        <a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -266,39 +254,19 @@
                                         <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <a href="#/" class="name">Web Designer at Zen Corporation</a>
-                                                            <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                                <c:forEach items="${experience.listIndividualExperience(sessionScope.acc.profile_id)}" var="exp">
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <a href="#/" class="name">Web Designer at Ron-tech</a>
-                                                            <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#/" class="name">${exp.role}</a>
+                                                                <span class="time">${exp.start_date} - Present (${exp.end_date})</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="experience-user">
-                                                        <div class="before-circle"></div>
-                                                    </div>
-                                                    <div class="experience-content">
-                                                        <div class="timeline-content">
-                                                            <a href="#/" class="name">Web Designer at Dalt Technology</a>
-                                                            <span class="time">Jan 2013 - Present (5 years 2 months)</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
+                                                </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
@@ -309,7 +277,7 @@
                     <!-- /Profile Info Tab -->
 
                     <!-- Projects Tab -->
-                    <div class="tab-pane fade" id="emp_projects">
+<!--                    <div class="tab-pane fade" id="emp_projects">
                         <div class="row">
                             <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                                 <div class="card">
@@ -564,9 +532,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Projects Tab -->
+                     /Projects Tab 
 
-                    <!-- Bank Statutory Tab -->
+                     Bank Statutory Tab 
                     <div class="tab-pane fade" id="bank_statutory">
                         <div class="card">
                             <div class="card-body">
@@ -776,11 +744,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /Bank Statutory Tab -->
+                     /Bank Statutory Tab 
 
                 </div>
             </div>
-            <!-- /Page Content -->
+             /Page Content -->
 
             <!-- Profile Modal -->
             <div id="profile_info" class="modal custom-modal fade" role="dialog">
@@ -797,7 +765,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="profile-img-wrap edit-img">
-                                            <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
+                                            <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
                                             <div class="fileupload btn">
                                                 <span class="btn-text">edit</span>
                                                 <input class="upload" type="file">

@@ -44,21 +44,20 @@ public class DAOProfileDetail extends DBConnect {
         return pdlist;
     }
 
-
     public boolean addProfileDetail(profileDetail pd) {
         boolean status = false;
         String sql = "insert into profileDetail\n"
                 + "values ("
-                + "'"+pd.getProfile_id()+"', "
-                + "'"+pd.getDob()+"', "
-                + "'"+pd.getAddress()+"', "
-                + ""+pd.isGender()+", "
-                + "'"+pd.getCountry()+"', "
-                + "'"+pd.getReligion()+"', "
-                + ""+pd.isIsMarried()+", "
-                + ""+pd.getChildren()+", "
-                + "'"+pd.getBank_name()+"', "
-                + "'"+pd.getBank_number()+"')";
+                + "'" + pd.getProfile_id() + "', "
+                + "'" + pd.getDob() + "', "
+                + "'" + pd.getAddress() + "', "
+                + "" + pd.isGender() + ", "
+                + "'" + pd.getCountry() + "', "
+                + "'" + pd.getReligion() + "', "
+                + "" + pd.isIsMarried() + ", "
+                + "" + pd.getChildren() + ", "
+                + "'" + pd.getBank_name() + "', "
+                + "'" + pd.getBank_number() + "')";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
@@ -69,10 +68,10 @@ public class DAOProfileDetail extends DBConnect {
         }
         return status;
     }
-    
+
     public static void main(String[] args) {
         DAOProfileDetail dao = new DAOProfileDetail();
-        List<profileDetail> list = dao.getIndividualProfileDetail("AAAAA");
+        List<profileDetail> list = dao.getIndividualProfileDetail("ABCDE");
         for (profileDetail pdetail : list) {
             System.out.println(pdetail.toString());
         }

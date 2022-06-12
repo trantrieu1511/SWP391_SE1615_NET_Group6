@@ -4,6 +4,7 @@
 <html lang="en">
     <head>
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
         <jsp:useBean id="project" class="model.DAOProject" scope="request"></jsp:useBean>
         </head>
 
@@ -34,8 +35,11 @@
                                 <span>${sessionScope.acc.user}</span>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="profile.jsp">My Profile</a>
+                            
+                            <a class="dropdown-item" href="profileDetail?do=viewProfileDetail&profile_id=${sessionScope.acc.profile_id}">My Profile</a>
+                            <c:if test="${account.getAccount(sessionScope.acc.profile_id).isAdmin == true}">
                             <a class="dropdown-item" href="settings.html">Settings</a>
+                            </c:if>
                             <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                         </div>
                     </li>

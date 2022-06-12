@@ -17,33 +17,31 @@ import java.util.logging.Logger;
  *
  * @author DELL
  */
-public class DAOFamilyInfo extends DBConnect{
-    
-    public List<familyInfo> listIndividualFamilyInfo(String profile_id){
-        List<familyInfo> flist = new ArrayList<>();
-        String sql = "select * from [familyInfo]";
+public class DAOFamilyInfo extends DBConnect {
+
+    public familyInfo getIndividualFamilyInfo(String profile_id) {
+        familyInfo finfo = new familyInfo();
+        String sql = "select * from [familyInfo] where profile_id = '" + profile_id + "'";
         ResultSet rs = getData(sql);
         try {
-            while(rs.next()){
-                flist.add(new familyInfo(
-                        rs.getString(1), 
-                        rs.getString(2), 
-                        rs.getString(3), 
-                        rs.getString(4), 
-                        rs.getString(5)));
-                
+            while (rs.next()) {
+                finfo = new familyInfo(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5));
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return flist;
+        return finfo;
     }
-    
+
     public static void main(String[] args) {
         DAOFamilyInfo dao = new DAOFamilyInfo();
-        List<familyInfo> list = dao.listIndividualFamilyInfo("AAAAA");
-        for (familyInfo finfo : list) {
-            System.out.println(finfo.toString());
-        }
+        familyInfo finfo = dao.getIndividualFamilyInfo("AAAAA");
+        System.out.println(finfo.toString());
     }
 }

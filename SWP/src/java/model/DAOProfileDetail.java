@@ -46,15 +46,15 @@ public class DAOProfileDetail extends DBConnect {
 
     public boolean addProfileDetail(profileDetail pd) {
         boolean status = false;
-        String sql = "insert into profileDetail\n"
+        String sql = "insert into [profileDetail]\n"
                 + "values ("
                 + "'" + pd.getProfile_id() + "', "
-                + "'" + pd.getDob() + "', "
+                + "" + pd.getDob() + ", "
                 + "'" + pd.getAddress() + "', "
-                + "" + pd.isGender() + ", "
+                + "'" + pd.isGender() + "', "
                 + "'" + pd.getCountry() + "', "
                 + "'" + pd.getReligion() + "', "
-                + "" + pd.isIsMarried() + ", "
+                + "'" + pd.isIsMarried() + "', "
                 + "" + pd.getChildren() + ", "
                 + "'" + pd.getBank_name() + "', "
                 + "'" + pd.getBank_number() + "')";
@@ -70,10 +70,19 @@ public class DAOProfileDetail extends DBConnect {
     }
 
     public static void main(String[] args) {
-        DAOProfileDetail dao = new DAOProfileDetail();
-        List<profileDetail> list = dao.getIndividualProfileDetail("ABCDE");
-        for (profileDetail pdetail : list) {
-            System.out.println(pdetail.toString());
+        DAOProfileDetail daopd = new DAOProfileDetail();
+//        List<profileDetail> list = dao.getIndividualProfileDetail("ABCDE");
+//        for (profileDetail pdetail : list) {
+//            System.out.println(pdetail.toString());
+//        }
+        String profile_id = "MRNEW";
+        profileDetail pd = new profileDetail(profile_id, "GETDATE()",
+                "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
+        boolean statusPd = daopd.addProfileDetail(pd);
+        if (statusPd) {
+            System.out.println("Successfully added new profileDetail for Staff with profile_id = " + profile_id);
+        } else {
+            System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
         }
     }
 }

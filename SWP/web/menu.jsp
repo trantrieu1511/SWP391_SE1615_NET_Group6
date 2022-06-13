@@ -132,7 +132,7 @@
                                 <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a href="project-view.jsp">Projects</a></li>
-                                        <c:if test="${project.getProject(sessionScope.acc.profile_id) != null}">
+                                        <c:if test="${project.getProject(sessionScope.acc.profile_id) != null || project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()) != null}">
                                         <li><a href="task-board.jsp">Task Board</a></li>
                                     </c:if>
                             </ul>

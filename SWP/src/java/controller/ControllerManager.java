@@ -12,9 +12,13 @@ import entity.profile;
 import entity.profileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +33,7 @@ import model.DAOFamilyInfo;
 import model.DAOJob;
 import model.DAOProfile;
 import model.DAOProfileDetail;
+import model.DAOProject;
 import model.DAOTask;
 
 /**
@@ -48,7 +53,7 @@ public class ControllerManager extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -59,6 +64,7 @@ public class ControllerManager extends HttpServlet {
             DAOProfileDetail daopd = new DAOProfileDetail();
             DAOFamilyInfo daof = new DAOFamilyInfo();
             DAOExperience daoexp = new DAOExperience();
+            DAOProject daopj = new DAOProject();
             
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
@@ -72,7 +78,7 @@ public class ControllerManager extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
                     dispath.forward(request, response);
                 }
-
+                
                 if (service.equals("addStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     String first_name = request.getParameter("first_name");
@@ -86,7 +92,7 @@ public class ControllerManager extends HttpServlet {
                     String ReportsTo = request.getParameter("ReportsTo");
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
-
+                    
                     profile pro = new profile(profile_id, first_name, last_name,
                             email, phone_number, hire_date, job_id, department_id,
                             salary, ReportsTo);
@@ -96,7 +102,7 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to add new Staff with profile_id = " + profile_id);
                     }
-
+                    
                     boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
                     if (statusAcc) {
                         System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
@@ -113,7 +119,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
                     }
                     
-                    familyInfo f = new familyInfo(profile_id, "N/A", "N/A", 
+                    familyInfo f = new familyInfo(profile_id, "N/A", "N/A",
                             "GETDATE()", "N/A");
                     boolean statusf = daof.addFamilyInfo(f);
                     if (statusf) {
@@ -122,7 +128,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
                     }
                     
-                    experience exp = new experience(profile_id, "N/A", "GETDATE()", 
+                    experience exp = new experience(profile_id, "N/A", "GETDATE()",
                             "GETDATE()");
                     boolean statusexp = daoexp.addExperience(exp);
                     if (statusexp) {
@@ -133,7 +139,7 @@ public class ControllerManager extends HttpServlet {
                     
                     response.sendRedirect("employees-list.jsp");
                 }
-
+                
                 if (service.equals("editStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     String first_name = request.getParameter("first_name");
@@ -158,7 +164,7 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to edit new Staff with profile_id = " + profile_id);
                     }
-
+                    
                     boolean statusAcc = daoAcc.editAccount(profile_id, username, password);
                     if (statusAcc) {
                         System.out.println("Successfully edited new account for Staff with profile_id = " + profile_id);
@@ -167,7 +173,7 @@ public class ControllerManager extends HttpServlet {
                     }
                     response.sendRedirect("employees-list.jsp");
                 }
-
+                
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     boolean statusAcc = daoAcc.deleteAccount(profile_id);
@@ -176,34 +182,50 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to delete new account for Staff with profile_id = " + profile_id);
                     }
-
+                    
                     boolean statusPro = daoPf.deleteProfile(profile_id);
                     if (statusAcc) {
                         System.out.println("Successfully deleted account for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete account for Staff with profile_id = " + profile_id);
                     }
-
+                    
                     response.sendRedirect("employees-list.jsp");
                 }
-
+                
                 if (service.equals("addTask")) {
                     String name = request.getParameter("name");
                     int priority = Integer.parseInt(request.getParameter("priority"));
                     String deadline = request.getParameter("deadline");
                     int status = 0;
-                    String assigned = request.getParameter("assigned");
+                    String assigned = request.getParameter("assigned");                    
+                    daoT.add(name, priority, deadline, status, assigned);
+                    response.sendRedirect("task-board.jsp");
+                }
+                
+                if (service.equals("createProject")) {
+                    String title = request.getParameter("title");
+                    String client = request.getParameter("client");
+                    String start_date = request.getParameter("start_date");
+                    String end_date = request.getParameter("end_date");
+                    double rate = Double.parseDouble(request.getParameter("rate"));
+                    String manager = request.getParameter("leader");
+                    String desc = request.getParameter("desc");
+                    Date start = new SimpleDateFormat("dd/MM/yyyy").parse(start_date);                    
+                    Date end = new SimpleDateFormat("dd/MM/yyyy").parse(end_date);
+                    java.sql.Date startDate = new java.sql.Date(start.getTime());
+                    java.sql.Date endDate = new java.sql.Date(end.getTime());                    
+                    daopj.addProject(title, client, startDate, endDate, rate, manager, desc);
 //                    out.println("<!DOCTYPE html>");
 //                    out.println("<html>");
 //                    out.println("<head>");
 //                    out.println("<title>Servlet ControllerEmployee</title>");
 //                    out.println("</head>");
 //                    out.println("<body>");
-//                    out.println("<h1>Servlet ControllerEmployee at " + deadline + "</h1>");
+//                    out.println("<h1>" + title + client + start_date + end_date + rate + manager + "</h1>");
 //                    out.println("</body>");
 //                    out.println("</html>");
-                    daoT.add(name, priority, deadline, status, assigned);
-                    response.sendRedirect("task-board.jsp");
+                    response.sendRedirect("project-view.jsp");
                 }
             }
         }
@@ -221,7 +243,11 @@ public class ControllerManager extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -235,7 +261,11 @@ public class ControllerManager extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

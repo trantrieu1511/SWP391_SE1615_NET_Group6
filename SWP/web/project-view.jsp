@@ -37,6 +37,7 @@
         <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
         <jsp:useBean id="task" class="model.DAOTask" scope="request"></jsp:useBean>
         <jsp:useBean id="project" class="model.DAOProject" scope="request"></jsp:useBean>
+        <jsp:useBean id="clients" class="model.DAOClients" scope="request"></jsp:useBean>
         
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
@@ -78,17 +79,25 @@
                     </div>
                     <!-- /Page Header -->
 
-                    <c:if test="${project.getProject(sessionScope.acc.profile_id) != null}">
+                    <c:if test="${project.getProject(sessionScope.acc.profile_id) != null || project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()) != null}">
                     <div class="row">
                         <div class="col-lg-8 col-xl-9">
                             <div class="card">
                                 <div class="card-body">
+                                    <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() == null}">
                                     <div class="project-title">
-                                        <h5 class="card-title">Hospital Administration</h5>
+                                        <h5 class="card-title">${project.getProject(sessionScope.acc.profile_id).getTitle()}</h5>
                                         <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget, imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat tincidunt urna, vel ullamcorper ligula fermentum at. </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget, imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat tincidunt urna, vel ullamcorper ligula fermentum at. </p>
+                                    <p>${project.getProject(sessionScope.acc.profile_id).getDescription()}</p>     
+                                    </c:if>
+                                    <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() != null}">
+                                    <div class="project-title">
+                                        <h5 class="card-title">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getTitle()}</h5>
+                                        <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
+                                    </div>
+                                    <p>${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getDescription()}</p>   
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="project-task">
@@ -158,30 +167,50 @@
                                     <h6 class="card-title m-b-15">Project details</h6>
                                     <table class="table table-striped table-border">
                                         <tbody>
+                                            <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() != null}">
                                             <tr>
                                                 <td>Cost:</td>
-                                                <td class="text-right">$1200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Hours:</td>
-                                                <td class="text-right">100 Hours</td>
-                                            </tr>
+                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getRate()}</td>
+                                            </tr>                                            
                                             <tr>
                                                 <td>Created:</td>
-                                                <td class="text-right">25 Feb, 2019</td>
+                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getStart_date()}</td>
                                             </tr>
                                             <tr>
                                                 <td>Deadline:</td>
-                                                <td class="text-right">12 Jun, 2019</td>
+                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getEnd_date()}</td>
                                             </tr>                                           
                                             <tr>
                                                 <td>Client:</td>
-                                                <td class="text-right"><a href="#">Barry Cuda</a></td>
+                                                <td class="text-right"><a href="#">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getClient()}</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Status:</td>
                                                 <td class="text-right">Working</td>
                                             </tr>
+                                            </c:if>
+                                            <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() == null}">
+                                            <tr>
+                                                <td>Cost:</td>
+                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getRate()}</td>
+                                            </tr>                                            
+                                            <tr>
+                                                <td>Created:</td>
+                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getStart_date()}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deadline:</td>
+                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getEnd_date()}</td>
+                                            </tr>                                           
+                                            <tr>
+                                                <td>Client:</td>
+                                                <td class="text-right"><a href="#">${project.getProject(sessionScope.acc.profile_id).getClient()}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Status:</td>
+                                                <td class="text-right">Working</td>
+                                            </tr> 
+                                            </c:if>
                                         </tbody>
                                     </table>                                    
                                 </div>
@@ -235,20 +264,22 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="manager" do="post">
+                                    <input type="hidden" name="do" value="createProject">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name</label>
-                                                <input class="form-control" type="text">
+                                                <label>Project Title</label>
+                                                <input class="form-control" type="text" name="title">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Client</label>
-                                                <select class="select">
-                                                    <option>Global Technologies</option>
-                                                    <option>Delta Infotech</option>
+                                                <select class="select" name="client">
+                                                <c:forEach items="${clients.listAllClients()}" var="o">
+                                                    <option value="${o.client_id}">${o.company}</option>
+                                                </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -258,7 +289,7 @@
                                             <div class="form-group">
                                                 <label>Start Date</label>
                                                 <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                    <input class="form-control datetimepicker" type="text" name="start_date">
                                                 </div>
                                             </div>
                                         </div>
@@ -266,7 +297,7 @@
                                             <div class="form-group">
                                                 <label>End Date</label>
                                                 <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                    <input class="form-control datetimepicker" type="text" name="end_date">
                                                 </div>
                                             </div>
                                         </div>
@@ -275,82 +306,21 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Rate</label>
-                                                <input placeholder="$50" class="form-control" type="text">
+                                                <input placeholder="$50" class="form-control" type="text" name="rate">
                                             </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <select class="select">
-                                                    <option>Hourly</option>
-                                                    <option>Fixed</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Priority</label>
-                                                <select class="select">
-                                                    <option>High</option>
-                                                    <option>Medium</option>
-                                                    <option>Low</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        </div>                                  
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Add Project Leader</label>
-                                                <input class="form-control" type="text">
+                                                <label>Project Leader</label>
+                                                <input class="form-control" type="text" name="leader" value="${sessionScope.acc.profile_id}" readonly>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Leader</label>
-                                                <div class="project-members">
-                                                    <a href="#" data-toggle="tooltip" title="Jeffery Lalor" class="avatar">
-                                                        <img src="assets/img/profiles/avatar-16.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Add Team</label>
-                                                <input class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Members</label>
-                                                <div class="project-members">
-                                                    <a href="#" data-toggle="tooltip" title="John Doe" class="avatar">
-                                                        <img src="assets/img/profiles/avatar-16.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="Richard Miles" class="avatar">
-                                                        <img src="assets/img/profiles/avatar-09.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="John Smith" class="avatar">
-                                                        <img src="assets/img/profiles/avatar-10.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="Mike Litorus" class="avatar">
-                                                        <img src="assets/img/profiles/avatar-05.jpg" alt="">
-                                                    </a>
-                                                    <span class="all-team">+2</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>                                       
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Upload Files</label>
-                                        <input class="form-control" type="file">
+                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="desc"></textarea>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Submit</button>

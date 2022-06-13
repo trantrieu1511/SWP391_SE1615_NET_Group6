@@ -143,29 +143,6 @@ public class DAOProfile extends DBConnect {
         return list;
     }
 
-    public profile getByUser(String user) {
-        String sql = "select * from [profile] where [username] = '" + user + "'";
-        ResultSet rs = getData(sql);
-        try {
-            while (rs.next()) {
-                return new profile(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getInt(7),
-                        rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
     public profile getByID(String profile_id) {
         String sql = "select * from [profile] where [profile_id] = '" + profile_id + "'";
         ResultSet rs = getData(sql);

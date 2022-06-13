@@ -8,6 +8,8 @@ package model;
 import entity.projects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
@@ -34,4 +36,19 @@ public class DAOProject extends DBConnect {
         return null;
     }
     
+    public boolean addProject(String title, String client_id, Date start_date,
+            Date end_date, double rate, String manager_id, String desc) {
+        String sql = "insert into projects(title, client_id, start_date, "
+                + "end_date, rate, manager_id, description) values('" + title + 
+                "', '" + client_id + "', '" + start_date + "', '" + end_date +
+                "', " + rate + ", '" + manager_id + "', '" + desc + "')";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

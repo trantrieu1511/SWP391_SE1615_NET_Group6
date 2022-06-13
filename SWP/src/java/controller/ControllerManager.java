@@ -10,6 +10,8 @@ import entity.profile;
 import entity.profileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,42 +67,42 @@ public class ControllerManager extends HttpServlet {
                 }
 
                 if (service.equals("addStaff")) {
-                    String profile_id = request.getParameter("profile_id");
-                    String first_name = request.getParameter("first_name");
-                    String last_name = request.getParameter("last_name");
-                    String username = request.getParameter("username");
-                    String password = request.getParameter("password");
-                    String email = request.getParameter("email");
-                    String phone_number = request.getParameter("phone_number");
-                    String hire_date = request.getParameter("hire_date");
-                    int job_id = Integer.parseInt(request.getParameter("job_id"));
-                    String ReportsTo = request.getParameter("ReportsTo");
-                    int department_id = Integer.parseInt(request.getParameter("department_id"));
-                    double salary = 0;
-
-                    profile pro = new profile(profile_id, first_name, last_name,
-                            email, phone_number, hire_date, job_id, department_id,
-                            salary, ReportsTo);
-                    boolean statusPro = daoPf.addStaff(pro);
-                    if (statusPro) {
-                        System.out.println("Successfully added new Staff with profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to add new Staff with profile_id = " + profile_id);
-                    }
-
-                    boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
-                    if (statusAcc) {
-                        System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
-                    }
+//                    String profile_id = request.getParameter("profile_id");
+//                    String first_name = request.getParameter("first_name");
+//                    String last_name = request.getParameter("last_name");
+//                    String username = request.getParameter("username");
+//                    String password = request.getParameter("password");
+//                    String email = request.getParameter("email");
+//                    String phone_number = request.getParameter("phone_number");
+//                    String hire_date = request.getParameter("hire_date");
+//                    int job_id = Integer.parseInt(request.getParameter("job_id"));
+//                    String ReportsTo = request.getParameter("ReportsTo");
+//                    int department_id = Integer.parseInt(request.getParameter("department_id"));
+//                    double salary = 0;
+//
+//                    profile pro = new profile(profile_id, first_name, last_name,
+//                            email, phone_number, hire_date, job_id, department_id,
+//                            salary, ReportsTo);
+//                    boolean statusPro = daoPf.addStaff(pro);
+//                    if (statusPro) {
+//                        System.out.println("Successfully added new Staff with profile_id = " + profile_id);
+//                    } else {
+//                        System.out.println("Fail to add new Staff with profile_id = " + profile_id);
+//                    }
+//
+//                    boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
+//                    if (statusAcc) {
+//                        System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
+//                    } else {
+//                        System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
+//                    }
+//                    
+                    LocalDateTime now = LocalDateTime.now();;
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    out.print(dtf.format(now));
+                    profileDetail pd = new profileDetail();
                     
-                    Date getDate = null;
-                    profileDetail pd = new profileDetail(profile_id, email, 
-                            ReportsTo, statusPro, email, email, statusAcc, 
-                            job_id, last_name, phone_number);
-                    
-                    response.sendRedirect("employees-list.jsp");
+//                    response.sendRedirect("employees-list.jsp");
                 }
 
                 if (service.equals("editStaff")) {

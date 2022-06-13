@@ -47,8 +47,6 @@ public class ControllerManager extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             DAOProfile daoPf = new DAOProfile();
-            DAODepartment daoDp = new DAODepartment();
-            DAOJob daoJob = new DAOJob();
             DAOTask daoT = new DAOTask();
             DAOAccount daoAcc = new DAOAccount();
             HttpSession session = request.getSession();

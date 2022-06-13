@@ -33,6 +33,10 @@
         
         <!-- Bean -->
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        
+        <c:if test="${sessionScope.acc == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
 
     </head>
 

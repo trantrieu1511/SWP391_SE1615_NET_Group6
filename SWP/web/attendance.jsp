@@ -41,6 +41,10 @@
 
         <!-- Main Stylesheet -->
         <link rel="stylesheet" href="css/style.css">
+        
+        <c:if test="${sessionScope.acc == null}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
 
     </head>
     <body>

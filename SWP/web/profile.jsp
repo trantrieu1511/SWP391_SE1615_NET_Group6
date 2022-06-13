@@ -41,11 +41,6 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="assets/js/html5shiv.min.js"></script>
-                <script src="assets/js/respond.min.js"></script>
-        <![endif]-->
         <!-- use Bean -->
         <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
         <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>

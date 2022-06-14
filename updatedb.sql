@@ -19,7 +19,7 @@ CREATE TABLE [profile] (
 	last_name VARCHAR (20) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) NULL,
-	hire_date DATE NOT NULL,
+	hire_date VARCHAR (20) NOT NULL,
 	job_id INT NULL,
 	department_id INT NULL,	
 	salary DECIMAL (8, 2) NOT NULL,
@@ -33,13 +33,14 @@ CREATE TABLE [account] (
     profile_id CHAR(5),
 	username VARCHAR(20) NOT NULL,
 	password VARCHAR(20) NOT NULL, 
-	isadmin BIT null,
+	isadmin BIT NOT NULL,
+	ismanager BIT NOT NULL,
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
 CREATE TABLE [profileDetail] (
     profile_id CHAR(5),
-	dob DATE NOT NULL,
+	dob VARCHAR(20) NOT NULL,
 	address VARCHAR(150) NOT NULL,
 	gender BIT NOT NULL,
 	country VARCHAR(20) NOT NULL,
@@ -55,7 +56,7 @@ CREATE TABLE [familyInfo] (
     profile_id CHAR(5),
 	name VARCHAR(50) NOT NULL,
 	relationship VARCHAR(20) NOT NULL,
-	dob DATE,
+	dob VARCHAR (20),
 	phone VARCHAR(20) NOT NULL,
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
@@ -77,19 +78,36 @@ CREATE TABLE [clients] (
 	company VARCHAR(25) NOT NULL,	
 );
 
+
 CREATE TABLE [attendance] (
     shift_id INT IDENTITY(1,1) PRIMARY KEY,
-	date DATE NOT NULL,
+	date VARCHAR(30) NOT NULL,
     time_in VARCHAR(30) NOT NULL,
 	time_out VARCHAR(30) NOT NULL,
 	production_time VARCHAR(30) NOT NULL,
 	employee_id CHAR(5),
+	note VARCHAR(45),
+);
+
+CREATE TABLE [shift](
+    name VARCHAR(15),
+	start_time VARCHAR(20),
+	end_time VARCHAR(20),
+
+);
+
+CREATE TABLE [schedule](
+    profile_id CHAR(5),
+	shift_name VARCHAR(15),
+	date VARCHAR(15),
+	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id),
+	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
 );
 
 CREATE TABLE [task] (
     name VARCHAR(35),
 	priority INT,
-	deadline DATE,
+	deadline VARCHAR(20),
 	status int,
 	assigned CHAR(5),
 	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id),
@@ -98,8 +116,8 @@ CREATE TABLE [task] (
 CREATE TABLE [projects] (
    title VARCHAR (35),
    client_id CHAR(5),
-   start_date DATE,
-   end_date DATE,
+   start_date VARCHAR(20),
+   end_date VARCHAR(20),
    rate DECIMAL(8,2),
    manager_id CHAR(5),
    description VARCHAR(255),

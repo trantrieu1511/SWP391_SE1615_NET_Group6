@@ -5,13 +5,22 @@
  */
 package controller;
 
+import entity.account;
+import entity.projects;
+import entity.shift;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.DAOProfile;
+import model.DAOProject;
+import model.DAOShift;
 
 /**
  *
@@ -33,16 +42,31 @@ public class ControllerSchedule extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControllerSchedule</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControllerSchedule at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+            DAOProject daopj = new DAOProject();
+            DAOProfile daoPf = new DAOProfile();
+            DAOShift daos = new DAOShift();
+            List<projects> list = null;
+            if (acc.isIsManager()) {
+                list = daopj.getProject(acc.getProfile_id());
+            } else {
+                list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+            }
+            request.setAttribute("project", list);
+            String service = request.getParameter("do");
+
+            if (service.equals("list")) {
+                RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
+                dispath.forward(request, response);
+            }
+            
+            if (service.equals("shift")) {
+                List<shift> listS = daos.listShift();
+                request.setAttribute("list", listS);
+                RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                dispath.forward(request, response);
+            }
         }
     }
 

@@ -76,6 +76,12 @@ public class ControllerEmployee extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
+                
+                if (service.equals("searchAttendance")) {
+                    String date_search = request.getParameter("date");
+                    List<attendance> list = dao.search(date_search, employee_id);
+                    request.setAttribute("list", list);
+                }
 
                 if (service.equals("punchin")) {
                     date = df.format(new java.util.Date());
@@ -83,7 +89,7 @@ public class ControllerEmployee extends HttpServlet {
                     button = "out";
 
                     dao.add(date, time_in, time_out, production_time, employee_id);
-                    attendance temp = dao.getLastest(user.getProfile_id());
+                    attendance temp = dao.getLastest(acc.getProfile_id());
 
                     List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                     request.setAttribute("list_attendance", list);

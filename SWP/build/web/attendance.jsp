@@ -121,15 +121,22 @@
                     </div>
 
                     <!-- Search Filter -->
-                    <div class="row filter-row"> 
-                        <div class="col-sm-6 col-md-4"> 
-                            <div class="form-group form-focus"><label class="focus-label">Date</label>
-                                <div>                                
-                                    <input type="date" class="form-control floating" id="date" onchange="filter2(this.value)" onfocus="(this.type = 'date')" onblur="if (!this.value) this.type = 'text'">
+                    <form action="employee" do="post">
+                        <input type="hidden" value="searchAttendance" name="do">
+                        <div class="row filter-row">                    
+                            <div class="col-sm-3">  
+                                <div class="form-group form-focus">
+                                    <div class="cal-icon">
+                                        <input type="text" class="form-control floating datetimepicker" name="date">
+                                    </div>
+                                    <label class="focus-label">Date</label>
                                 </div>
-                            </div>
-                        </div>    
-                    </div>
+                            </div>                       
+                            <div class="col-sm-3">  
+                                <input type="submit" class="btn btn-success btn-block" value="Search ">  
+                            </div>                     
+                        </div>
+                    </form>
                     <!-- /Search Filter -->
 
                     <div class="row">

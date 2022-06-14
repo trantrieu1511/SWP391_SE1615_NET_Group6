@@ -111,13 +111,12 @@ function wrong_pass_alert() {
             && document.getElementById('ReportsTo').value != ""
             && document.getElementById('department_id').value != ""
             && document.getElementById('job_id').value != "") {
-        alert("Your response is submitted");
     } else {
-        alert("Please fill all the fields");
+        alert("Please fill all the fields!");
     }
 }
 
-function wrongpassalert2() {
+function wrongpassalert2(msg) {
     if (document.getElementById('password2').value != "" &&
             document.getElementById('confirm_password2').value != ""
             && document.getElementById('first_name2').value != ""
@@ -129,7 +128,7 @@ function wrongpassalert2() {
             && document.getElementById('ReportsTo2').value != ""
             && document.getElementById('department_id2').value != ""
             && document.getElementById('job_id2').value != "") {
-        alert("Your response is submitted");
+        alert(msg);
     } else {
         alert("Please fill all the fields");
     }

@@ -6,6 +6,7 @@
 package controller;
 
 import entity.account;
+import entity.attendance;
 import entity.experience;
 import entity.familyInfo;
 import entity.profile;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
+import model.DAOAttendance;
 import model.DAODepartment;
 import model.DAOExperience;
 import model.DAOFamilyInfo;
@@ -58,6 +61,7 @@ public class ControllerManager extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
+            DAOAttendance daoA = new DAOAttendance();
             DAOProfile daoPf = new DAOProfile();
             DAOTask daoT = new DAOTask();
             DAOAccount daoAcc = new DAOAccount();
@@ -72,7 +76,20 @@ public class ControllerManager extends HttpServlet {
                 response.sendRedirect("login.jsp");
             } else {
                 //profile user = daoPf.getByID(acc.getProfile_id());
-
+                if (service.equals("attendance")) {
+                    List<attendance> list = daoA.listAll(acc.getProfile_id());
+                    request.setAttribute("list", list);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("list")) {
+                    List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
+                    request.setAttribute("list", list);
+                    RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                    dispath.forward(request, response);
+                }
+                
                 if (service.equals("dashboard")) {
                     request.getSession(false);
                     RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
@@ -137,7 +154,8 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
                     }
                     
-                    response.sendRedirect("employees-list.jsp");
+                    RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
+                    dispath.forward(request, response);
                 }
                 
                 if (service.equals("editStaff")) {
@@ -171,7 +189,9 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to edit new account for Staff with profile_id = " + profile_id);
                     }
-                    response.sendRedirect("employees-list.jsp");
+                    
+                    RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
+                    dispath.forward(request, response);
                 }
                 
                 if (service.equals("deleteStaff")) {
@@ -190,7 +210,8 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to delete account for Staff with profile_id = " + profile_id);
                     }
                     
-                    response.sendRedirect("employees-list.jsp");
+                    RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
+                    dispath.forward(request, response);
                 }
                 
                 if (service.equals("addTask")) {

@@ -117,6 +117,27 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
+    
+    public List<attendance> search(String date, String profile_id) {
+        List<attendance> list = new ArrayList<>();
+        String sql = "select * from attendance where employee_id = '" + 
+                profile_id + "' and date = '" + date + "'";
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                list.add(new attendance(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();

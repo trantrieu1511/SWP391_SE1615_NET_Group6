@@ -191,7 +191,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">
+                                        <c:forEach items="${list}" var="o">
                                             <tr>
                                                 <td>${o.first_name} ${o.last_name}</td>
                                                 <td>${o.profile_id}</td>
@@ -393,7 +393,7 @@
                                     </div>
                                     <span id="wrong_pass_alert"></span>
                                     <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert()">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert('New staff added successfully!');">
                                     </div>
                                 </form>
                             </div>
@@ -504,7 +504,7 @@
                                     </div>
                                     <span id="wrong_pass_alert2"></span>
                                     <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" onclick="wrongpassalert2()">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" onclick="wrongpassalert2('Edit succeeded!');">
                                     </div>
                                 </form>
                             </div>

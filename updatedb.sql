@@ -104,17 +104,8 @@ CREATE TABLE [schedule](
 	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
 );
 
-CREATE TABLE [task] (
-    name VARCHAR(35),
-	priority INT,
-	deadline VARCHAR(20),
-	status int,
-	assigned CHAR(5),
-	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id),
-);
-
 CREATE TABLE [projects] (
-   title VARCHAR (35),
+   title VARCHAR (35) PRIMARY KEY,
    client_id CHAR(5),
    start_date VARCHAR(20),
    end_date VARCHAR(20),
@@ -123,4 +114,15 @@ CREATE TABLE [projects] (
    description VARCHAR(255),
    FOREIGN KEY (client_id) REFERENCES [clients] (client_id),
    FOREIGN KEY (manager_id) REFERENCES [profile] (profile_id),
+);
+
+CREATE TABLE [task] (
+    name VARCHAR(35),
+	priority INT,
+	deadline VARCHAR(20),
+	status int,
+	assigned CHAR(5),
+	project VARCHAR(35),
+	FOREIGN KEY (assigned) REFERENCES [profile] (profile_id),
+	FOREIGN KEY (project) REFERENCES [projects] (title),
 );

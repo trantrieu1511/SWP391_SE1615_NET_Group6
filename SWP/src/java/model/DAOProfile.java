@@ -119,7 +119,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public List<profile> getProfile(String id) {
         String sql = "select * from [profile] where profile_id = '" + id + "'";
         List<profile> list = new ArrayList<>();
@@ -184,6 +184,81 @@ public class DAOProfile extends DBConnect {
         for (profile object : staff) {
             System.out.println(object.toString());
         }
+    }
+
+    public List<profile> searchStaffByid(String profile_id, String eid) {
+        String sql = "select * from [profile]\n"
+                + "where report_to = '"+profile_id+"'\n"
+                + "and profile_id like '%"+eid+"%'";
+        List<profile> list = new ArrayList<>();
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                list.add(new profile(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<profile> searchStaffByjob(String profile_id, String ejob) {
+        String sql = "select * from [profile]\n"
+                + "where report_to = '" + profile_id + "'\n"
+                + "and job_id = " + ejob + "";
+        List<profile> list = new ArrayList<>();
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                list.add(new profile(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<profile> searchStaffByname(String profile_id, String ename) {
+        String sql = "select * from [profile]\n"
+                + "where report_to = '" + profile_id + "'\n"
+                + "and first_name + last_name like '%" + ename + "%'";
+        List<profile> list = new ArrayList<>();
+        ResultSet rs = getData(sql);
+        try {
+            while (rs.next()) {
+                list.add(new profile(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
     }
 
 }

@@ -55,9 +55,9 @@ public class DAOAccount extends DBConnect {
     }
     
     public boolean addAccount(String profile_id, String username, String password) {
-        String sql = "insert into account(profile_id, username, password, isAdmin)"
+        String sql = "insert into account(profile_id, username, password, isadmin, ismanager)"
                 + "values('" + profile_id + "', '" + username + "', '" + password
-                + "', " + 0 + ")";
+                + "', " + 0 + ", " + 0 + ")";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);

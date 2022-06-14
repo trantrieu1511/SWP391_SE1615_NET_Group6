@@ -16,7 +16,7 @@ import java.sql.Statement;
  * @author Khanh
  */
 public class DAOAccount extends DBConnect {
-
+    
     public account login(String user, String pass) {
         String sql = "select * from [account] where [username] = '" + user
                 + "' and [password] = '" + pass + "'";
@@ -27,14 +27,15 @@ public class DAOAccount extends DBConnect {
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getBoolean((4)));
+                        rs.getBoolean(4),
+                        rs.getBoolean(5));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
     public account getAccount(String profile_id) {
         String sql = "select * from [account] where profile_id = '" + profile_id + "'";
         try {
@@ -44,14 +45,15 @@ public class DAOAccount extends DBConnect {
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getBoolean((4)));
+                        rs.getBoolean(4),
+                        rs.getBoolean(5));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
+    
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isAdmin)"
                 + "values('" + profile_id + "', '" + username + "', '" + password
@@ -65,7 +67,7 @@ public class DAOAccount extends DBConnect {
         }
         return true;
     }
-
+    
     public boolean editAccount(String profile_id, String username, String password) {
         String sql = "update account set username=?, password=? where profile_id=?";
         try {
@@ -92,7 +94,7 @@ public class DAOAccount extends DBConnect {
         }
         return true;
     }
-
+    
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
         dao.addAccount("12345", "1", "1");

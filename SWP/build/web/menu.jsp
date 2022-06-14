@@ -40,7 +40,7 @@
                         <div class="dropdown-menu">
                             
                             <a class="dropdown-item" href="profile.jsp">My Profile</a>
-                            <c:if test="${account.getAccount(sessionScope.acc.profile_id).isAdmin == true}">
+                            <c:if test="${sessionScope.acc.isAdmin == true}">
                             <a class="dropdown-item" href="settings.html">Settings</a>
                             </c:if>
                             <a class="dropdown-item" href="authentication?do=logout">Logout</a>
@@ -55,7 +55,7 @@
                             class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="profile.html">My Profile</a>
-                        <c:if test="${account.getAccount(sessionScope.acc.profile_id).isAdmin == true}">
+                        <c:if test="${sessionScope.acc.isAdmin == true}">
                         <a class="dropdown-item" href="settings.html">Settings</a>
                         </c:if>
                         <a class="dropdown-item" href="authentication?do=logout">Logout</a>

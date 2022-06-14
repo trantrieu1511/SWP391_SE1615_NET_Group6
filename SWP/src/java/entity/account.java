@@ -14,15 +14,17 @@ public class account {
     String user;
     String pass;
     boolean isAdmin;
+    boolean isManager;
 
     public account() {
     }
 
-    public account(String profile_id, String user, String pass, boolean isAdmin) {
+    public account(String profile_id, String user, String pass, boolean isAdmin, boolean isManager) {
         this.profile_id = profile_id;
         this.user = user;
         this.pass = pass;
         this.isAdmin = isAdmin;
+        this.isManager = isManager;
     }
 
     public String getProfile_id() {
@@ -57,9 +59,17 @@ public class account {
         this.isAdmin = isAdmin;
     }
 
+    public boolean isIsManager() {
+        return isManager;
+    }
+
+    public void setIsManager(boolean isManager) {
+        this.isManager = isManager;
+    }
+
     @Override
     public String toString() {
-        return "account{" + "profile_id=" + profile_id + ", user=" + user + ", pass=" + pass + ", isAdmin=" + isAdmin + '}';
+        return "account{" + "profile_id=" + profile_id + ", user=" + user + ", pass=" + pass + ", isAdmin=" + isAdmin + ", isManager=" + isManager + '}';
     }
     
 }

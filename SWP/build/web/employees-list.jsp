@@ -27,6 +27,7 @@
 
         <!-- Datatable CSS -->
         <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">
@@ -64,7 +65,7 @@
         <!-- Custom JS -->
         <script src="js/app.js"></script>
         <script src="js/edit.js"></script>
-
+        
         <!-- Model JS -->
         <script type="text/javascript">
             $(function () {
@@ -103,13 +104,33 @@
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                 });
             });
+            $(document).ready(function () {
+                // Setup - add a text input to each footer cell
+                $('#table tfoot th').each(function () {
+                    var title = $(this).text();
+                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                });
+
+                // DataTable
+                var table = $('#table').DataTable({
+                    initComplete: function () {
+                        // Apply the search
+                        this.api()
+                                .columns()
+                                .every(function () {
+                                    var that = this;
+
+                                    $('input', this.footer()).on('keyup change clear', function () {
+                                        if (that.search() !== this.value) {
+                                            that.search(this.value).draw();
+                                        }
+                                    });
+                                });
+                    },
+                });
+            });
         </script>
 
-        <!-- Bean -->
-        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
-        <jsp:useBean id="department" class="model.DAODepartment" scope="request"></jsp:useBean>
-        <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
-        <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -142,43 +163,20 @@
                         </div>
                         <!-- /Page Header -->
 
-                        <!-- Search Filter -->
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" id="EID" onkeyup="filter1()">
-                                    <label class="focus-label">Employee ID</label>
-                                </div>
-                            </div>                       
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" id="EName" onkeyup="filter2()">
-                                    <label class="focus-label">Employee Name</label>
-                                </div>
-                            </div>  
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus select-focus"> 
-                                    <label class="focus-label">Designation</label>
-                                    <select class="select floating" id="EJob" onchange="filter3()"> 
-                                        <option> </option>
-                                    <c:forEach items="${job.listAllJob()}" var="o">
-                                        <option>${o.title}</option>
-                                    </c:forEach>
-                                </select>   
-                            </div>
-                        </div> 
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group form-focus">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee" data-id="${sessionScope.acc.profile_id}"><i class="fa fa-plus"></i> Add Employee</a>                            
-                            </div>
-                        </div> 
-                    </div>
-                    <!-- /Search Filter -->
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable" id="table">
+                                <table class="table table-striped custom-table display" id="table">
+                                    <tfoot style="display: table-header-group">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Employee ID</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Join Date</th>
+                                            <th>Role</th>
+                                        </tr>
+                                    </tfoot>
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -189,7 +187,7 @@
                                             <th>Role</th>
                                             <th class="text-right no-sort">Action</th>
                                         </tr>
-                                    </thead>
+                                    </thead>                                   
                                     <tbody>
                                         <c:forEach items="${list}" var="o">
                                             <tr>
@@ -205,7 +203,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <td>${o.hire_date}</td>
-                                                <td>${job.getJobById(o.job_id).getTitle()}</td>
+                                                <td>${o.job_title}</td>
                                                 <td class="text-right">
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -217,14 +215,14 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
-                                    </tbody>
+                                    </tbody>                                  
                                 </table>
                             </div>
                         </div>
                     </div>
 
 
-                    <script type="text/javascript">
+<!--                    <script type="text/javascript">
                         function filter1() {
                             var input, filter, table, tr, td, i, txtValue;
                             input = document.getElementById("EID");
@@ -287,7 +285,7 @@
                                 }
                             }
                         }
-                    </script> 
+                    </script> -->
 
                 </div>
                 <!-- /Page Content -->
@@ -373,7 +371,7 @@
                                                 <label>Department <span class="text-danger">*</span></label>
                                                 <select class="select" name="department_id" id="department_id" required="">
                                                     <option value="">Select Department</option>
-                                                    <c:forEach items="${department.listAllDepartment()}" var="o">
+                                                    <c:forEach items="${department}" var="o">
                                                         <option value="${o.id}">${o.name}</option>
                                                     </c:forEach>
                                                 </select>
@@ -384,7 +382,7 @@
                                                 <label>Designation <span class="text-danger">*</span></label>
                                                 <select class="select" name="job_id" id="job_id" required="">
                                                     <option value="">Select Designation</option>
-                                                    <c:forEach items="${job.listAllJob()}" var="o">
+                                                    <c:forEach items="${job}" var="o">
                                                         <option value="${o.id}">${o.title}</option>
                                                     </c:forEach>
                                                 </select>
@@ -484,7 +482,7 @@
                                                 <label>Department <span class="text-danger">*</span></label>
                                                 <select class="select" name="department_id" id="department_id2" required="">
                                                     <option value="">Select Department</option>
-                                                    <c:forEach items="${department.listAllDepartment()}" var="o">
+                                                    <c:forEach items="${department}" var="o">
                                                         <option value="${o.id}">${o.name}</option>
                                                     </c:forEach>
                                                 </select>
@@ -495,7 +493,7 @@
                                                 <label>Designation <span class="text-danger">*</span></label>
                                                 <select class="select" name="job_id" id="job_id2" required="">
                                                     <option value="">Select Designation</option>
-                                                    <c:forEach items="${job.listAllJob()}" var="o">
+                                                    <c:forEach items="${job}" var="o">
                                                         <option value="${o.id}">${o.title}</option>
                                                     </c:forEach>
                                                 </select>

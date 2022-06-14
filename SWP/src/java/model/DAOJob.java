@@ -52,8 +52,8 @@ public class DAOJob extends DBConnect {
         return null;
     }
     
-    public jobs getJobById(String id) {
-        String sql = "select * from jobs where [job_id] = '" + id + "'";
+    public jobs getJobById(int id) {
+        String sql = "select * from jobs where [job_id] = " + id;
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {

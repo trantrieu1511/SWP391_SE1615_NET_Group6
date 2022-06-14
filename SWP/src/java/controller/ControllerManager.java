@@ -7,8 +7,10 @@ package controller;
 
 import entity.account;
 import entity.attendance;
+import entity.departments;
 import entity.experience;
 import entity.familyInfo;
+import entity.jobs;
 import entity.profile;
 import entity.profileDetail;
 import java.io.IOException;
@@ -63,6 +65,8 @@ public class ControllerManager extends HttpServlet {
             String service = request.getParameter("do");
             DAOAttendance daoA = new DAOAttendance();
             DAOProfile daoPf = new DAOProfile();
+            DAODepartment daoDp = new DAODepartment();
+            DAOJob daoJ = new DAOJob();
             DAOTask daoT = new DAOTask();
             DAOAccount daoAcc = new DAOAccount();
             DAOProfileDetail daopd = new DAOProfileDetail();
@@ -85,7 +89,14 @@ public class ControllerManager extends HttpServlet {
                 
                 if (service.equals("list")) {
                     List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
+                    List<departments> listDp = daoDp.listAllDepartment();
+                    List<jobs> listJ = daoJ.listAllJob();
+                    for(profile p : list) {
+                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                    }
                     request.setAttribute("list", list);
+                    request.setAttribute("department", listDp);
+                    request.setAttribute("job", listJ);
                     RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                     dispath.forward(request, response);
                 }

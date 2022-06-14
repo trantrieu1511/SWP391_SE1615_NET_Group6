@@ -214,7 +214,7 @@ public class DAOProfile extends DBConnect {
     public List<profile> searchStaffByjob(String profile_id, String ejob) {
         String sql = "select * from [profile]\n"
                 + "where report_to = '" + profile_id + "'\n"
-                + "and job_id = " + ejob + "";
+                + "and job_id = '" + ejob + "'";
         List<profile> list = new ArrayList<>();
         ResultSet rs = getData(sql);
         try {

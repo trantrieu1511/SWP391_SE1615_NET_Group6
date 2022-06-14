@@ -268,30 +268,29 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to delete new account for Staff with profile_id = " + profile_id);
                     }
-
-                    boolean statusPro = daoPf.deleteProfile(profile_id);
-                    if (statusAcc) {
-                        System.out.println("Successfully deleted Profile for Staff with profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete Profile for Staff with profile_id = " + profile_id);
-                    }
                     boolean statusPd = daopd.deleteProfileDetail(profile_id);
                     if (statusPd) {
-                        System.out.println("Successfully deleted new profileDetail for Staff with profile_id = " + profile_id);
+                        System.out.println("Successfully deleted profileDetail for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete new profileDetail for Staff with profile_id = " + profile_id);
                     }
                     boolean statusf = daof.deleteFamilyInfo(profile_id);
                     if (statusf) {
-                        System.out.println("Successfully deleted new familyInfo for Staff with profile_id = " + profile_id);
+                        System.out.println("Successfully deleted familyInfo for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete new familyInfo for Staff with profile_id = " + profile_id);
                     }
                     boolean statusexp = daoexp.deleteExperience(profile_id);
                     if (statusexp) {
-                        System.out.println("Successfully deleted new experience for Staff with profile_id = " + profile_id);
+                        System.out.println("Successfully deleted experience for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete new experience for Staff with profile_id = " + profile_id);
+                    }
+                    boolean statusPro = daoPf.deleteProfile(profile_id);
+                    if (statusAcc) {
+                        System.out.println("Successfully deleted Profile for Staff with profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to delete Profile for Staff with profile_id = " + profile_id);
                     }
 
                     RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");

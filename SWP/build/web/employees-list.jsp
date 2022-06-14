@@ -104,31 +104,6 @@
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                 });
             });
-            $(document).ready(function () {
-                // Setup - add a text input to each footer cell
-                $('#table tfoot th').each(function () {
-                    var title = $(this).text();
-                    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-                });
-
-                // DataTable
-                var table = $('#table').DataTable({
-                    initComplete: function () {
-                        // Apply the search
-                        this.api()
-                                .columns()
-                                .every(function () {
-                                    var that = this;
-
-                                    $('input', this.footer()).on('keyup change clear', function () {
-                                        if (that.search() !== this.value) {
-                                            that.search(this.value).draw();
-                                        }
-                                    });
-                                });
-                    },
-                });
-            });
         </script>
 
         <c:if test="${sessionScope.acc == null}">
@@ -166,17 +141,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table display" id="table">
-                                    <tfoot style="display: table-header-group">
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Employee ID</th>
-                                            <th>Email</th>
-                                            <th>Mobile</th>
-                                            <th>Join Date</th>
-                                            <th>Role</th>
-                                        </tr>
-                                    </tfoot>
+                                <table class="table table-striped custom-table datatable" id="table">                                   
                                     <thead>
                                         <tr>
                                             <th>Name</th>

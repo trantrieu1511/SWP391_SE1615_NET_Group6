@@ -9,6 +9,8 @@ import entity.projects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -50,5 +52,19 @@ public class DAOProject extends DBConnect {
             return false;
         }
         return true;
+    }
+    
+    public static void main(String[] args) {
+        DAOProject dao = new DAOProject();
+        //System.out.println(dao.getProject("12345"));   
+        try {
+            Date start = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
+            Date end = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
+            java.sql.Date startDate = new java.sql.Date(start.getTime());
+            java.sql.Date endDate = new java.sql.Date(end.getTime());
+            dao.addProject("test", "00000", startDate, endDate, 0, "00000", "N/A");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
     }
 }

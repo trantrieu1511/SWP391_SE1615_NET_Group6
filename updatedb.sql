@@ -90,7 +90,7 @@ CREATE TABLE [attendance] (
 );
 
 CREATE TABLE [shift](
-    name VARCHAR(15),
+    name VARCHAR(15) PRIMARY KEY,
 	start_time VARCHAR(20),
 	end_time VARCHAR(20),
 

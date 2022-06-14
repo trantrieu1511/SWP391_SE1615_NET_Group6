@@ -770,113 +770,108 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form action="profileDetail" method="post">
+                                        <input type="hidden" name="do" value="editProfileDetail">
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="profile-img-wrap edit-img">
-                                                    <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
-                                                    <div class="fileupload btn">
-                                                        <span class="btn-text">edit</span>
-                                                        <input class="upload" type="file">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>First Name</label>
-                                                            <input type="text" class="form-control" value="John">
+                                            <c:forEach items="${profileDetail.getIndividualProfileDetail(sessionScope.acc.profile_id)}" var="pd">
+                                                <c:forEach items="${profile.getProfile(sessionScope.acc.profile_id)}" var="p">
+                                                    <div class="col-md-12">
+                                                        <div class="profile-img-wrap edit-img">
+                                                            <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
+                                                            <div class="fileupload btn">
+                                                                <span class="btn-text">edit</span>
+                                                                <input class="upload" type="file">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Last Name</label>
-                                                            <input type="text" class="form-control" value="Doe">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Birth Date</label>
-                                                            <div class="cal-icon">
-                                                                <input class="form-control datetimepicker" type="text" value="05/06/1985">
+                                                        <div class="row">
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>First Name</label>
+                                                                    <input type="text" class="form-control" readonly="" value="${p.first_name}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Last Name</label>
+                                                                    <input type="text" class="form-control" readonly="" value="${p.last_name}">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Birth Date</label>
+                                                                    <div class="cal-icon">
+                                                                        <input class="form-control datetimepicker" type="text" value="${pd.dob}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Gender</label>
+                                                                    <select class="select form-control">
+                                                                        <option value="true">Male</option>
+                                                                        <option value="false">Female</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" class="form-control" value="${pd.address}">
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Gender</label>
-                                                            <select class="select form-control">
-                                                                <option value="male selected">Male</option>
-                                                                <option value="female">Female</option>
+                                                            <label>Country</label>
+                                                            <input type="text" class="form-control" value="${pd.country}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Phone Number</label>
+                                                            <input type="text" class="form-control" readonly="" value="${p.phone_number}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Department <span class="text-danger">*</span></label>
+                                                            <select class="select">
+                                                                <option>Select Department</option>
+                                                                <option>Web Development</option>
+                                                                <option>IT Management</option>
+                                                                <option>Marketing</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Address</label>
-                                                    <input type="text" class="form-control" value="4487 Snowbird Lane">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>State</label>
-                                                    <input type="text" class="form-control" value="New York">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                    <input type="text" class="form-control" value="United States">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Pin Code</label>
-                                                    <input type="text" class="form-control" value="10523">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Phone Number</label>
-                                                    <input type="text" class="form-control" value="631-889-3206">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Department <span class="text-danger">*</span></label>
-                                                    <select class="select">
-                                                        <option>Select Department</option>
-                                                        <option>Web Development</option>
-                                                        <option>IT Management</option>
-                                                        <option>Marketing</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Designation <span class="text-danger">*</span></label>
-                                                    <select class="select">
-                                                        <option>Select Designation</option>
-                                                        <option>Web Designer</option>
-                                                        <option>Web Developer</option>
-                                                        <option>Android Developer</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Reports To <span class="text-danger">*</span></label>
-                                                    <select class="select">
-                                                        <option>-</option>
-                                                        <option>Wilmer Deluna</option>
-                                                        <option>Lesley Grauer</option>
-                                                        <option>Jeffery Lalor</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Designation <span class="text-danger">*</span></label>
+                                                            <select class="select">
+                                                                <option>Select Designation</option>
+                                                                <option>Web Designer</option>
+                                                                <option>Web Developer</option>
+                                                                <option>Android Developer</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Reports To <span class="text-danger">*</span></label>
+                                                            <select class="select">
+                                                                <option>-</option>
+                                                                <option>Wilmer Deluna</option>
+                                                                <option>Lesley Grauer</option>
+                                                                <option>Jeffery Lalor</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </c:forEach>
                                         </div>
                                         <div class="submit-section">
                                             <button class="btn btn-primary submit-btn">Submit</button>

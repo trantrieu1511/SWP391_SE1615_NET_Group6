@@ -11,31 +11,34 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Khanh
  */
 public class DAOProject extends DBConnect {
-    public projects getProject(String profile_id) {
+    public List<projects> getProject(String profile_id) {
+        List<projects> list =  new ArrayList<>();
         String sql = "select * from projects where manager_id = '" + profile_id + "'";
         ResultSet rs = getData(sql);
         try {
             while (rs.next()) {
-                return new projects(
+                list.add(new projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3), 
                         rs.getString(4),
                         rs.getDouble(5), 
                         rs.getString(6),
-                        rs.getString(7));
+                        rs.getString(7)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return list;
     }
     
     public boolean addProject(String title, String client_id, Date start_date,

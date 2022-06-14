@@ -13,16 +13,13 @@ import entity.familyInfo;
 import entity.jobs;
 import entity.profile;
 import entity.profileDetail;
+import entity.projects;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,6 +73,13 @@ public class ControllerManager extends HttpServlet {
             
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
+            List<projects> listPj = null;
+            if (acc.isIsManager()) {
+                listPj = daopj.getProject(acc.getProfile_id());
+            } else {
+                listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+            }
+            request.setAttribute("project", listPj);
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {

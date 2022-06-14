@@ -27,7 +27,6 @@
 
         <!-- Datatable CSS -->
         <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">

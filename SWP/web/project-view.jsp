@@ -67,19 +67,13 @@
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">
-                                <c:if test="${project.getProject(sessionScope.acc.profile_id) != null}">
                                 <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project"><i class="fa fa-plus"></i> Edit Project</a>
-                                </c:if>
-                                <c:if test="${project.getProject(sessionScope.acc.profile_id) == null}">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Add Project</a>
-                                </c:if>
                                 <a href="task-board.jsp" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
                     </div>
                     <!-- /Page Header -->
 
-                    <c:if test="${project.getProject(sessionScope.acc.profile_id) != null || project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()) != null}">
                     <div class="row">
                         <div class="col-lg-8 col-xl-9">
                             <div class="card">
@@ -249,7 +243,6 @@
                             </div>
                         </div>
                     </div>
-                    </c:if>
                 </div>
                 <!-- /Page Content -->  
                 

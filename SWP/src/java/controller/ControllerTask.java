@@ -6,8 +6,10 @@
 package controller;
 
 import entity.account;
+import entity.projects;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,14 +17,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOAccount;
+import model.DAOProfile;
+import model.DAOProject;
 
 /**
  *
  * @author Khanh
  */
-@WebServlet(name = "ControllerAuthentication", urlPatterns = {"/authentication"})
-public class ControllerAuthentication extends HttpServlet {
+@WebServlet(name = "ControllerTask", urlPatterns = {"/task"})
+public class ControllerTask extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,28 +40,19 @@ public class ControllerAuthentication extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String service = request.getParameter("do");
-            if (service.equals("login")) {
-                String username = request.getParameter("user");
-                String password = request.getParameter("pass");
-                DAOAccount dao = new DAOAccount();
-                account a = dao.login(username, password);
-                if (a == null) {
-                    request.setAttribute("mess", "Wrong username or password");
-                    RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
-                    dispath.forward(request, response);
-                } else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("acc", a);
-                    response.sendRedirect("home");
-                }
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+            DAOProject daopj = new DAOProject();
+            DAOProfile daoPf = new DAOProfile();
+            List<projects> list = null;
+            if (acc.isIsManager()) {
+                list = daopj.getProject(acc.getProfile_id());
+            } else {
+                list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
             }
-
-            if (service.equals("logout")) {
-                HttpSession session = request.getSession();
-                session.invalidate();
-                response.sendRedirect("login.jsp");
-            }
+            request.setAttribute("project", list);
+            RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
+            dispath.forward(request, response);
         }
     }
 

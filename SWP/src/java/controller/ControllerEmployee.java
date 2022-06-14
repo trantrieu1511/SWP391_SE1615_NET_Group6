@@ -8,6 +8,7 @@ package controller;
 import entity.account;
 import entity.attendance;
 import entity.profile;
+import entity.projects;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
 import model.DAOProfile;
+import model.DAOProject;
 
 /**
  *
@@ -47,8 +49,17 @@ public class ControllerEmployee extends HttpServlet {
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
             DAOAttendance dao = new DAOAttendance();
+            DAOProject daopj = new DAOProject();
+            DAOProfile daoPf = new DAOProfile();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
+            List<projects> listPj = null;
+            if (acc.isIsManager()) {
+                listPj = daopj.getProject(acc.getProfile_id());
+            } else {
+                listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+            }
+            request.setAttribute("project", listPj);
             
             String date = "";
             String time_in = "";

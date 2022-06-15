@@ -6,6 +6,7 @@
 package controller;
 
 import entity.account;
+import entity.clients;
 import entity.projects;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.DAOClients;
 import model.DAOProfile;
 import model.DAOProject;
 
@@ -42,20 +44,34 @@ public class ControllerProject extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            DAOProject daopj = new DAOProject();
-            DAOProfile daoPf = new DAOProfile();
-            List<projects> list = null;
-            if (acc.isIsManager()) {
-                list = daopj.getProject(acc.getProfile_id());
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
             } else {
-                list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
-            }
-            request.setAttribute("project", list);
-            String service = request.getParameter("do");
+                DAOProject daopj = new DAOProject();
+                DAOProfile daoPf = new DAOProfile();
+                DAOClients daoc = new DAOClients();
+                List<projects> list = null;
+                if (acc.isIsManager()) {
+                    list = daopj.getProject(acc.getProfile_id());
+                } else {
+                    list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                }
+                request.setAttribute("project", list);
+                String service = request.getParameter("do");
 
-            if (service.equals("list")) {
-                RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
-                dispath.forward(request, response);
+                if (service.equals("list")) {
+                    List<projects> listPj = null;
+                    if (acc.isIsManager()) {
+                        listPj = daopj.getProject(acc.getProfile_id());
+                    } else {
+                        listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    }
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("list", listPj);
+                    request.setAttribute("listC", listC);
+                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
+                    dispath.forward(request, response);
+                }
             }
         }
     }

@@ -15,16 +15,18 @@ public class task {
     String deadline;
     int status;
     String assigned;
+    String project;
 
     public task() {
     }
 
-    public task(String name, int priority, String deadline, int status, String assigned) {
+    public task(String name, int priority, String deadline, int status, String assigned, String project) {
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
         this.status = status;
         this.assigned = assigned;
+        this.project = project;
     }
 
     public String getName() {
@@ -67,9 +69,17 @@ public class task {
         this.assigned = assigned;
     }
 
-    @Override
-    public String toString() {
-        return "task{" + "name=" + name + ", priority=" + priority + ", deadline=" + deadline + ", status=" + status + ", assigned=" + assigned + '}';
+    public String getProject() {
+        return project;
     }
 
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    @Override
+    public String toString() {
+        return "task{" + "name=" + name + ", priority=" + priority + ", deadline=" + deadline + ", status=" + status + ", assigned=" + assigned + ", project=" + project + '}';
+    }
+    
 }

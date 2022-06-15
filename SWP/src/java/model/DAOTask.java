@@ -16,11 +16,11 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOTask extends DBConnect {
-
-    public boolean add(String name, int priority, String deadline, int status, String assigned) {
-        String sql = "insert into task(name, priority, deadline, status, assigned)"
+    
+    public boolean add(String name, int priority, String deadline, int status, String assigned, String project) {
+        String sql = "insert into task(name, priority, deadline, status, assigned, project)"
                 + " values('" + name + "', " + priority + ", '" + deadline + "', "
-                + status + ", '" + assigned + "')";
+                + status + ", '" + assigned + "', '" + project + "')";
         try {
             Statement state = conn.createStatement();
             state.executeUpdate(sql);
@@ -30,7 +30,7 @@ public class DAOTask extends DBConnect {
         }
         return true;
     }
-
+    
     public List<task> list(int status) {
         List<task> list = new ArrayList<>();
         String sql = "select * from task where status = " + status;
@@ -41,7 +41,8 @@ public class DAOTask extends DBConnect {
                         rs.getInt(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getString(5)));
+                        rs.getString(5),
+                        rs.getString(6)));
             }
         } catch (Exception e) {
             e.printStackTrace();

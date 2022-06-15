@@ -234,8 +234,9 @@ public class ControllerManager extends HttpServlet {
                     int priority = Integer.parseInt(request.getParameter("priority"));
                     String deadline = request.getParameter("deadline");
                     int status = 0;
-                    String assigned = request.getParameter("assigned");                    
-                    daoT.add(name, priority, deadline, status, assigned);
+                    String assigned = request.getParameter("assigned"); 
+                    String project = request.getParameter("project");
+                    daoT.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
                 

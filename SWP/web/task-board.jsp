@@ -31,10 +31,39 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
+        
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
 
-        <!-- Bean -->
-        <jsp:useBean id="task" class="model.DAOTask" scope="request"></jsp:useBean>
-        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.ui.touch-punch.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+
+        <!-- Model JS -->
+        <script type="text/javascript">
+          $(function () {
+                $("#add_task_model").on("show.bs.modal", function (e) {
+                    var pj = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="project"]').val(pj);
+                });
+            });  
+        </script>
         
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
@@ -150,7 +179,7 @@
                                         </c:forEach>
                                     </div>
                                     <div class="add-new-task">
-                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal">Add New Task</a>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal" data-id="${o.project}">Add New Task</a>
                                     </div>
                                 </div>
                                 <div class="kanban-list kanban-info">
@@ -280,12 +309,16 @@
                                 <form action="manager" do="post">
                                     <input type="hidden" name="do" value="addTask">
                                     <div class="form-group">
+                                        <label>Project</label>
+                                        <input type="text" class="form-control" name="project" readonly>
+                                    </div>
+                                    <div class="form-group">
                                         <label>Task Name</label>
-                                        <input type="text" class="form-control" name="name">
+                                        <input type="text" class="form-control" name="name" required onchange="return trim(this)">
                                     </div>
                                     <div class="form-group">
                                         <label>Task Priority</label>
-                                        <select class="form-control select" name="priority">
+                                        <select class="form-control select" name="priority" required onchange="return trim(this)">
                                             <option>Select</option>
                                             <option value="0">High</option>
                                             <option value="1">Normal</option>
@@ -294,11 +327,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Due Date</label>
-                                        <input type="date" name="deadline">
+                                        <input type="date" name="deadline" required onchange="return trim(this)"> 
                                     </div>
                                     <div class="form-group">
                                         <label>Assigned</label>
-                                        <select class="select floating" name="assigned"> 
+                                        <select class="select floating" name="assigned" required onchange="return trim(this)"> 
                                             <option> </option>
                                             <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">
                                             <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
@@ -381,29 +414,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/jquery.ui.touch-punch.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Select2 JS -->
-        <script src="js/select2.min.js"></script>
-
-        <!-- Datetimepicker JS -->
-        <script src="js/moment.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
 
     </body>
 </html>

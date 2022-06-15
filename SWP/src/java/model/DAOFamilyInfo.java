@@ -77,4 +77,16 @@ public class DAOFamilyInfo extends DBConnect {
         }
     }
 
+    public boolean deleteFamilyInfo(String profile_id) {
+        String sql = "delete from [familyInfo] where [profile_id] = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

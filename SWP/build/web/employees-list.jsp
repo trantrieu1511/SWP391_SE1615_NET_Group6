@@ -64,7 +64,7 @@
         <!-- Custom JS -->
         <script src="js/app.js"></script>
         <script src="js/edit.js"></script>
-        
+
         <!-- Model JS -->
         <script type="text/javascript">
             $(function () {
@@ -105,15 +105,17 @@
             });
         </script>
 
+        <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
-        </head>
+    </head>
 
-        <body onpageshow="checkPasswordonpageshow()">
+    <body onpageshow="checkPasswordonpageshow()">
 
-            <!-- Main Wrapper -->
-            <div class="main-wrapper">
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
 
             <jsp:include page="menu.jsp"></jsp:include>
 
@@ -133,9 +135,49 @@
                                         <li class="breadcrumb-item active">Employee</li>
                                     </ul>
                                 </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                                <div class="view-icons">
+                                    <!--                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+                                                                            <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>-->
+                                </div>
                             </div>
                         </div>
-                        <!-- /Page Header -->
+                    </div>
+                    <!-- /Page Header -->
+
+                    <!-- Search Filter -->
+                    <form action="manager?do=filter" method="post">
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" name="eid" class="form-control floating">
+                                    <label class="focus-label">Employee ID</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group form-focus">
+                                    <input type="text" name="ename" class="form-control floating">
+                                    <label class="focus-label">Employee Name</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3"> 
+                                <div class="form-group form-focus select-focus">
+                                    <select name="ejob" class="select floating">
+                                        <option value="">select designation</option>
+                                        <c:forEach items="${job}" var="j">
+                                            <option value="${j.id}">${j.title}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <label class="focus-label">Designation</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">
@@ -186,70 +228,70 @@
                     </div>
 
 
-<!--                    <script type="text/javascript">
-                        function filter1() {
-                            var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("EID");
-                            table = document.getElementById("table");
-                            tr = table.getElementsByTagName("tr");
-                            filter = input.value.toUpperCase();
-
-                            for (i = 0; i < tr.length; i++) {
-                                td = tr[i].getElementsByTagName("td")[1];
-                                if (td) {
-                                    txtValue = td.textContent || td.innerText;
-                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                        tr[i].style.display = "";
-                                    } else {
-                                        tr[i].style.display = "none";
-                                    }
-                                }
-
-                            }
-                        }
-                        function filter2() {
-                            var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("EName");
-                            table = document.getElementById("table");
-                            tr = table.getElementsByTagName("tr");
-                            filter = input.value.toUpperCase();
-
-                            for (i = 0; i < tr.length; i++) {
-                                td = tr[i].getElementsByTagName("td")[0];
-                                if (td) {
-                                    txtValue = td.textContent || td.innerText;
-                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                        tr[i].style.display = "";
-                                    } else {
-                                        tr[i].style.display = "none";
-                                    }
-                                }
-
-                            }
-                        }
-                        function filter3() {
-                            var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("EJob");
-                            table = document.getElementById("table");
-                            tr = table.getElementsByTagName("tr");
-                            filter = input.value.toUpperCase();
-
-                            for (i = 0; i < tr.length; i++) {
-                                td = tr[i].getElementsByTagName("td")[5];
-//                                if (input.value.equals("All Designation")) {
-//                                        tr[i].style.display = "";
-//                                } else
-                                if (td) {
-                                    txtValue = td.textContent || td.innerText;
-                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                        tr[i].style.display = "";
-                                    } else {
-                                        tr[i].style.display = "none";
-                                    }
-                                }
-                            }
-                        }
-                    </script> -->
+                    <!--                    <script type="text/javascript">
+                                            function filter1() {
+                                                var input, filter, table, tr, td, i, txtValue;
+                                                input = document.getElementById("EID");
+                                                table = document.getElementById("table");
+                                                tr = table.getElementsByTagName("tr");
+                                                filter = input.value.toUpperCase();
+                    
+                                                for (i = 0; i < tr.length; i++) {
+                                                    td = tr[i].getElementsByTagName("td")[1];
+                                                    if (td) {
+                                                        txtValue = td.textContent || td.innerText;
+                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                            tr[i].style.display = "";
+                                                        } else {
+                                                            tr[i].style.display = "none";
+                                                        }
+                                                    }
+                    
+                                                }
+                                            }
+                                            function filter2() {
+                                                var input, filter, table, tr, td, i, txtValue;
+                                                input = document.getElementById("EName");
+                                                table = document.getElementById("table");
+                                                tr = table.getElementsByTagName("tr");
+                                                filter = input.value.toUpperCase();
+                    
+                                                for (i = 0; i < tr.length; i++) {
+                                                    td = tr[i].getElementsByTagName("td")[0];
+                                                    if (td) {
+                                                        txtValue = td.textContent || td.innerText;
+                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                            tr[i].style.display = "";
+                                                        } else {
+                                                            tr[i].style.display = "none";
+                                                        }
+                                                    }
+                    
+                                                }
+                                            }
+                                            function filter3() {
+                                                var input, filter, table, tr, td, i, txtValue;
+                                                input = document.getElementById("EJob");
+                                                table = document.getElementById("table");
+                                                tr = table.getElementsByTagName("tr");
+                                                filter = input.value.toUpperCase();
+                    
+                                                for (i = 0; i < tr.length; i++) {
+                                                    td = tr[i].getElementsByTagName("td")[5];
+                    //                                if (input.value.equals("All Designation")) {
+                    //                                        tr[i].style.display = "";
+                    //                                } else
+                                                    if (td) {
+                                                        txtValue = td.textContent || td.innerText;
+                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                            tr[i].style.display = "";
+                                                        } else {
+                                                            tr[i].style.display = "none";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </script> -->
 
                 </div>
                 <!-- /Page Content -->
@@ -324,12 +366,12 @@
                                                 <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="^[0-9]+$">
                                             </div>
                                         </div>
-<!--                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>-->
-                                                <input class="form-control" readonly type="hidden" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
-<!--                                            </div>
-                                        </div>-->
+                                        <!--                                        <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>-->
+                                        <input class="form-control" readonly type="hidden" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
+                                        <!--                                            </div>
+                                                                                </div>-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
@@ -435,12 +477,12 @@
                                                 <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="^[0-9]+$">
                                             </div>
                                         </div>
-<!--                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Report To <span class="text-danger">*</span></label>-->
-                                                <input class="form-control" value="" type="hidden" name="ReportsTo" id="ReportsTo2" required="" pattern="[A-Z]{5}">
-<!--                                            </div>
-                                        </div>-->
+                                        <!--                                        <div class="col-sm-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-form-label">Report To <span class="text-danger">*</span></label>-->
+                                        <input class="form-control" value="" type="hidden" name="ReportsTo" id="ReportsTo2" required="" pattern="[A-Z]{5}">
+                                        <!--                                            </div>
+                                                                                </div>-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>

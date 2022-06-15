@@ -72,4 +72,16 @@ public class DAOExperience extends DBConnect {
         }
 
     }
+
+    public boolean deleteExperience(String profile_id) {
+        String sql = "delete from [experience] where [profile_id] = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

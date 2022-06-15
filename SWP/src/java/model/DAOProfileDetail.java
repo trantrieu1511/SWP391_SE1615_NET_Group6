@@ -85,4 +85,16 @@ public class DAOProfileDetail extends DBConnect {
             System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
         }
     }
+
+    public boolean deleteProfileDetail(String profile_id) {
+        String sql = "delete from [profileDetail] where [profile_id] = '" + profile_id + "'";
+        try {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

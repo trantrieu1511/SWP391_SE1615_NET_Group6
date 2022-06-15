@@ -99,7 +99,7 @@ function checkConfirmPassword2(checkpassword) {
 //         document.getElementById('create').style.opacity = (1);
 //     }
 // }
-function wrong_pass_alert() {
+function wrong_pass_alert(msg) {
     if (document.getElementById('password').value != "" &&
             document.getElementById('confirm_password').value != ""
             && document.getElementById('first_name').value != ""
@@ -111,6 +111,7 @@ function wrong_pass_alert() {
             && document.getElementById('ReportsTo').value != ""
             && document.getElementById('department_id').value != ""
             && document.getElementById('job_id').value != "") {
+        alert(msg);
     } else {
         alert("Please fill all the fields!");
     }

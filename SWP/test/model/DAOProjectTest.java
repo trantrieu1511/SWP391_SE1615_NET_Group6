@@ -44,47 +44,16 @@ public class DAOProjectTest {
      */
     @Test
     public void testAddProject1() {
-        try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            Date end = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            java.sql.Date startDate = new java.sql.Date(start.getTime());
-            java.sql.Date endDate = new java.sql.Date(end.getTime());
-            assertTrue(dao.addProject("test", "ZXCVB", startDate, endDate, 0, "12345", "N/A"));
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    @Test
-    public void testAddProject2() {
-        try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            Date end = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            java.sql.Date startDate = new java.sql.Date(start.getTime());
-            java.sql.Date endDate = new java.sql.Date(end.getTime());
-            assertFalse(dao.addProject("test", "00000", startDate, endDate, 0, "12345", "N/A"));
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    @Test
-    public void testAddProject3() {
-        try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            Date end = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            java.sql.Date startDate = new java.sql.Date(start.getTime());
-            java.sql.Date endDate = new java.sql.Date(end.getTime());
-            assertFalse(dao.addProject("test", "ZXCVB", startDate, endDate, 0, "00000", "N/A"));
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    @Test
-    public void testAddProject4() { 
-        Date date = new Date();
-        assertFalse(dao.addProject("test", "00000", date, date, 0, "12345", "N/A"));      
+        assertTrue(dao.addProject("test", "ZXCVB", "01/01/2001", "01/01/2001", 0, "12345", "N/A"));
     }
 
+    @Test
+    public void testAddProject2() {
+        assertFalse(dao.addProject("test", "00000", "01/01/2001", "01/01/2001", 0, "12345", "N/A"));
+    }
+
+    @Test
+    public void testAddProject3() {
+        assertFalse(dao.addProject("test", "ZXCVB", "01/01/2001", "01/01/2001", 0, "00000", "N/A"));
+    }
 }

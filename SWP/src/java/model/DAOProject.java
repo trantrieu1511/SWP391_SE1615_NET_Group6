@@ -6,6 +6,7 @@
 package model;
  
 import entity.projects;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,8 +42,8 @@ public class DAOProject extends DBConnect {
         return list;
     }
     
-    public boolean addProject(String title, String client_id, Date start_date,
-            Date end_date, double rate, String manager_id, String desc) {
+    public boolean addProject(String title, String client_id, String start_date,
+            String end_date, double rate, String manager_id, String desc) {
         String sql = "insert into projects(title, client_id, start_date, "
                 + "end_date, rate, manager_id, description) values('" + title + 
                 "', '" + client_id + "', '" + start_date + "', '" + end_date +
@@ -57,17 +58,40 @@ public class DAOProject extends DBConnect {
         return true;
     }
     
-    public static void main(String[] args) {
-        DAOProject dao = new DAOProject();
-        //System.out.println(dao.getProject("12345"));   
+    public boolean deleteProject(String title) {
+        String sql = "delete from projects where title = '" + title + "'";
         try {
-            Date start = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            Date end = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/2001");
-            java.sql.Date startDate = new java.sql.Date(start.getTime());
-            java.sql.Date endDate = new java.sql.Date(end.getTime());
-            dao.addProject("test", "00000", startDate, endDate, 0, "00000", "N/A");
-        } catch (ParseException ex) {
+            Statement state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
+        return true;
+    }
+    
+    public boolean updateProject(String title, String client_id, String start_date,
+            String end_date, double rate, String manager_id, String desc) {
+        String sql = "update projects set title = ?, client_id = ?, start_date = ?"
+                + ", end_date = ?, rate = ?, manager_id = ?, description = ?";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, title);
+            pre.setString(2, client_id);
+            pre.setString(3, start_date);
+            pre.setString(4, end_date);
+            pre.setDouble(5, rate);
+            pre.setString(6, manager_id);
+            pre.setString(7, desc);
+            pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public static void main(String[] args) {
+        
     }
 }

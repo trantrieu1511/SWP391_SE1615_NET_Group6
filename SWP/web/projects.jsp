@@ -35,7 +35,59 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
         
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Summernote JS -->
+        <script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
         <script src="js/edit.js"></script>
+        
+        <!-- Model JS -->
+        <script type="text/javascript">
+            $(function () {
+                $("#edit_project").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var title = myArray[0];
+                    var client_id = myArray[1];
+                    var start_date = myArray[2];
+                    var end_date = myArray[3];
+                    var rate = myArray[4];
+                    var manager = myArray[5];
+                    var description = myArray[6];                   
+                    $(e.currentTarget).find('input[name="title"]').val(title);
+                    $(e.currentTarget).find('input[name="client"]').val(client_id);
+                    $(e.currentTarget).find('input[name="start_date"]').val(start_date);
+                    $(e.currentTarget).find('input[name="end_date"]').val(end_date);
+                    $(e.currentTarget).find('input[name="rate"]').val(rate);
+                    
+                    $(e.currentTarget).find('textarea[name="description"]').val(description);
+                });
+            });
+            $(function () {
+                $("#delete_project").on("show.bs.modal", function (e) {
+                    var title = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="title"]').val(title);
+                });
+            });
+        </script>
 
 
     </head>
@@ -110,8 +162,8 @@
                                     <div class="dropdown dropdown-action profile-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.title} ${o.client} ${o.start_date} ${o.end_date} ${o.rate} ${o.manager}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                     <h4 class="project-title"><a href="project?do=view">${o.title}</a></h4>
@@ -151,7 +203,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="project" do="post">
-                                    <input type="hidden" name="do" value="create">
+                                    <input type="hidden" name="do" value="edit">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -236,20 +288,26 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="project" do="post">
+                                    <input type="hidden" name="do" value="create">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name</label>
-                                                <input class="form-control" value="Project Management" type="text">
+                                                <label>Project Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input class="form-control" type="text" name="title" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Client</label>
-                                                <select class="select">
-                                                    <option>Global Technologies</option>
-                                                    <option>Delta Infotech</option>
+                                                <label>Client
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <select class="select" name="client" required onchange="return trim(this)">
+                                                    <c:forEach items="${listC}" var="o">
+                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -257,17 +315,19 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Start Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                <label>Start Date
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div>
+                                                    <input type="date" name="start_date" id="start_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>End Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                <label>End Date<span class="text-danger">*</span></label>
+                                                <div>
+                                                    <input type="date" name="end_date" id="end_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>
@@ -275,86 +335,26 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label>Rate</label>
-                                                <input placeholder="$50" class="form-control" value="$5000" type="text">
+                                                <label>Rate<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="number" name="rate" required onchange="return trim(this)">
                                             </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <select class="select">
-                                                    <option>Hourly</option>
-                                                    <option selected>Fixed</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Priority</label>
-                                                <select class="select">
-                                                    <option selected>High</option>
-                                                    <option>Medium</option>
-                                                    <option>Low</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        </div>                                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Add Project Leader</label>
-                                                <input class="form-control" type="text">
+                                                <label>Add Project Leader<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" name="manager" value="${sessionScope.acc.profile_id}" readonly>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Leader</label>
-                                                <div class="project-members">
-                                                    <a href="#" data-toggle="tooltip" title="Jeffery Lalor" class="avatar">
-                                                        <img src="img/profiles/avatar-16.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Add Team</label>
-                                                <input class="form-control" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Team Members</label>
-                                                <div class="project-members">
-                                                    <a href="#" data-toggle="tooltip" title="John Doe" class="avatar">
-                                                        <img src="img/profiles/avatar-16.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="Richard Miles" class="avatar">
-                                                        <img src="img/profiles/avatar-09.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="John Smith" class="avatar">
-                                                        <img src="img/profiles/avatar-10.jpg" alt="">
-                                                    </a>
-                                                    <a href="#" data-toggle="tooltip" title="Mike Litorus" class="avatar">
-                                                        <img src="img/profiles/avatar-05.jpg" alt="">
-                                                    </a>
-                                                    <span class="all-team">+2</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>                                     
                                     </div>
                                     <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
+                                        <label>Description<span class="text-danger">*</span></label>
+                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="description" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,255}"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label>Upload Files</label>
-                                        <input class="form-control" type="file">
-                                    </div>
+                                    <span id="alert"></span>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Save</button>
+                                        <button class="btn btn-primary submit-btn" id="create">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -368,20 +368,24 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <div class="form-header">
-                                    <h3>Delete Project</h3>
-                                    <p>Are you sure want to delete?</p>
-                                </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                <form action="project" do="post">
+                                    <input type="hidden" name="do" value="delete">
+                                    <input type="hidden" name="title">
+                                    <div class="form-header">
+                                        <h3>Delete Project</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -393,29 +397,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Select2 JS -->
-        <script src="js/select2.min.js"></script>
-
-        <!-- Datetimepicker JS -->
-        <script src="js/moment.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Summernote JS -->
-        <script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
         
     </body>
 </html>

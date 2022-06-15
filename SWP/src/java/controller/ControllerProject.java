@@ -10,7 +10,13 @@ import entity.clients;
 import entity.projects;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -70,6 +76,66 @@ public class ControllerProject extends HttpServlet {
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("create")) {
+                    String title = request.getParameter("title");
+                    String client_id = request.getParameter("client");
+                    String start_date = request.getParameter("start_date");
+                    String end_date = request.getParameter("end_date");
+                    String rate = request.getParameter("rate");
+                    String manager = request.getParameter("manager");
+                    String desc = request.getParameter("description");
+                    try {
+                        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
+                        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");  
+                        String sdate = dateFormat.format(start);
+                        String edate = dateFormat.format(end);
+                        daopj.addProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    dispath.forward(request, response);
+//                    out.println("<!DOCTYPE html>");
+//                    out.println("<html>");
+//                    out.println("<head>");
+//                    out.println("<title>Servlet ControllerEmployee</title>");
+//                    out.println("</head>");
+//                    out.println("<body>");
+//                    out.println("<h1>" + title + client_id + start_date + end_date + manager + desc + "</h1>");
+//                    out.println("</body>");
+//                    out.println("</html>");
+                }
+                
+                if (service.equals("delete")) {
+                    String title = request.getParameter("title");
+                    daopj.deleteProject(title);
+                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("edit")) {
+                    String title = request.getParameter("title");
+                    String client_id = request.getParameter("client");
+                    String start_date = request.getParameter("start_date");
+                    String end_date = request.getParameter("end_date");
+                    String rate = request.getParameter("rate");
+                    String manager = request.getParameter("manager");
+                    String desc = request.getParameter("description");
+                    try {
+                        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
+                        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");  
+                        String sdate = dateFormat.format(start);
+                        String edate = dateFormat.format(end);
+                        daopj.updateProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
                     dispath.forward(request, response);
                 }
             }

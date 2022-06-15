@@ -288,32 +288,7 @@ public class ControllerManager extends HttpServlet {
                     String project = request.getParameter("project");
                     daoT.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
-                }
-                
-                if (service.equals("createProject")) {
-                    String title = request.getParameter("title");
-                    String client = request.getParameter("client");
-                    String start_date = request.getParameter("start_date");
-                    String end_date = request.getParameter("end_date");
-                    double rate = Double.parseDouble(request.getParameter("rate"));
-                    String manager = request.getParameter("leader");
-                    String desc = request.getParameter("desc");
-                    Date start = new SimpleDateFormat("dd/MM/yyyy").parse(start_date);                    
-                    Date end = new SimpleDateFormat("dd/MM/yyyy").parse(end_date);
-                    java.sql.Date startDate = new java.sql.Date(start.getTime());
-                    java.sql.Date endDate = new java.sql.Date(end.getTime());                    
-                    daopj.addProject(title, client, startDate, endDate, rate, manager, desc);
-//                    out.println("<!DOCTYPE html>");
-//                    out.println("<html>");
-//                    out.println("<head>");
-//                    out.println("<title>Servlet ControllerEmployee</title>");
-//                    out.println("</head>");
-//                    out.println("<body>");
-//                    out.println("<h1>" + title + client + start_date + end_date + rate + manager + "</h1>");
-//                    out.println("</body>");
-//                    out.println("</html>");
-                    response.sendRedirect("project-view.jsp");
-                }
+                }               
             }
         }
     }

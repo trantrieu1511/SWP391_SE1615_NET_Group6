@@ -66,19 +66,15 @@
                     var text = $(e.relatedTarget).attr('data-id');
                     const myArray = text.split(" ");
                     var title = myArray[0];
-                    var client_id = myArray[1];
-                    var start_date = myArray[2];
-                    var end_date = myArray[3];
-                    var rate = myArray[4];
-                    var manager = myArray[5];
-                    var description = myArray[6];                   
+                    var client_id = myArray[4];
+                    var start_date = myArray[1];
+                    var end_date = myArray[2];
+                    var rate = myArray[3];                  
                     $(e.currentTarget).find('input[name="title"]').val(title);
                     $(e.currentTarget).find('input[name="client"]').val(client_id);
                     $(e.currentTarget).find('input[name="start_date"]').val(start_date);
                     $(e.currentTarget).find('input[name="end_date"]').val(end_date);
-                    $(e.currentTarget).find('input[name="rate"]').val(rate);
-                    
-                    $(e.currentTarget).find('textarea[name="description"]').val(description);
+                    $(e.currentTarget).find('input[name="rate"]').val(rate);                  
                 });
             });
             $(function () {
@@ -159,14 +155,16 @@
                         <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
                             <div class="card">
                                 <div class="card-body">
+                                    <c:if test="${sessionScope.acc.isManager == true}">
                                     <div class="dropdown dropdown-action profile-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.title} ${o.client} ${o.start_date} ${o.end_date} ${o.rate} ${o.manager}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        <div class="dropdown-menu dropdown-menu-right"> 
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.title} ${o.start_date} ${o.end_date} ${o.rate} ${o.client}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>                         
                                         </div>
                                     </div>
-                                    <h4 class="project-title"><a href="project?do=view">${o.title}</a></h4>
+                                    </c:if>
+                                    <h4 class="project-title"><a href="project?do=view&title=${o.title}">${o.title}</a></h4>
                                     <p class="text-muted">${o.description}
                                     </p>
                                     <div class="pro-deadline m-b-15">
@@ -203,7 +201,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="project" do="post">
-                                    <input type="hidden" name="do" value="edit">
+                                    <input type="hidden" name="do" value="create">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -289,22 +287,18 @@
                             </div>
                             <div class="modal-body">
                                 <form action="project" do="post">
-                                    <input type="hidden" name="do" value="create">
+                                    <input type="hidden" name="do" value="edit">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input class="form-control" type="text" name="title" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
+                                                <label>Project Name</label>
+                                                <input class="form-control" type="text" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Client
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <select class="select" name="client" required onchange="return trim(this)">
+                                                <label>Client</label>
+                                                <select class="select" name="client" onchange="return trim(this)">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>
@@ -315,19 +309,17 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Start Date
-                                                    <span class="text-danger">*</span>
-                                                </label>
+                                                <label>Start Date</label>
                                                 <div>
-                                                    <input type="date" name="start_date" id="start_date" required onchange="check()">
+                                                    <input placeholder="start" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="start_date" id="start_date2" onchange="check2()">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>End Date<span class="text-danger">*</span></label>
+                                                <label>End Date</label>
                                                 <div>
-                                                    <input type="date" name="end_date" id="end_date" required onchange="check()">
+                                                    <input placeholder="end" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="end_date" id="end_date2" onchange="check2()">
                                                 </div>
                                             </div>
                                         </div>
@@ -335,26 +327,26 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label>Rate<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="number" name="rate" required onchange="return trim(this)">
+                                                <label>Rate</label>
+                                                <input class="form-control" type="text" name="rate" onchange="return trim(this)">
                                             </div>
                                         </div>                                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Add Project Leader<span class="text-danger">*</span></label>
+                                                <label>Add Project Leader</label>
                                                 <input class="form-control" type="text" name="manager" value="${sessionScope.acc.profile_id}" readonly>
                                             </div>
                                         </div>                                     
                                     </div>
                                     <div class="form-group">
-                                        <label>Description<span class="text-danger">*</span></label>
+                                        <label>Description</label>
                                         <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="description" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,255}"></textarea>
                                     </div>
-                                    <span id="alert"></span>
+                                    <span id="alert2"></span>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn" id="create">Submit</button>
+                                        <button class="btn btn-primary submit-btn" id="create2">Submit</button>
                                     </div>
                                 </form>
                             </div>

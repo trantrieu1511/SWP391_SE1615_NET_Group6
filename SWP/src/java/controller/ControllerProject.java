@@ -7,7 +7,9 @@ package controller;
 
 import entity.account;
 import entity.clients;
+import entity.profile;
 import entity.projects;
+import entity.task;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -25,8 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOClients;
+import model.DAOJob;
 import model.DAOProfile;
 import model.DAOProject;
+import model.DAOTask;
 
 /**
  *
@@ -44,18 +48,28 @@ public class ControllerProject extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public String format(String date) throws Exception {
+        Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy");
+        String formatted = dateFormat.format(date1);
+        return formatted;
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
+
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
                 DAOProject daopj = new DAOProject();
                 DAOProfile daoPf = new DAOProfile();
                 DAOClients daoc = new DAOClients();
+                DAOTask daot = new DAOTask();
+                DAOJob daoJ = new DAOJob();
                 List<projects> list = null;
                 if (acc.isIsManager()) {
                     list = daopj.getProject(acc.getProfile_id());
@@ -90,12 +104,12 @@ public class ControllerProject extends HttpServlet {
                     try {
                         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
                         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");  
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                         String sdate = dateFormat.format(start);
                         String edate = dateFormat.format(end);
                         daopj.addProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
                     } catch (ParseException ex) {
-                        ex.printStackTrace();
+                        daopj.addProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
                     }
                     RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
                     dispath.forward(request, response);
@@ -109,14 +123,14 @@ public class ControllerProject extends HttpServlet {
 //                    out.println("</body>");
 //                    out.println("</html>");
                 }
-                
+
                 if (service.equals("delete")) {
                     String title = request.getParameter("title");
                     daopj.deleteProject(title);
                     RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("edit")) {
                     String title = request.getParameter("title");
                     String client_id = request.getParameter("client");
@@ -128,14 +142,51 @@ public class ControllerProject extends HttpServlet {
                     try {
                         Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
                         Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");  
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                         String sdate = dateFormat.format(start);
                         String edate = dateFormat.format(end);
                         daopj.updateProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
                     } catch (ParseException ex) {
-                        ex.printStackTrace();
+                        daopj.updateProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
                     }
                     RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("view")) {
+                    String title = request.getParameter("title");
+                    projects pj = daopj.getP(title);
+                    pj.setStart_date(format(pj.getStart_date()));
+                    pj.setEnd_date(format(pj.getEnd_date()));
+                    List<task> list0 = daot.list(0);
+                    List<task> list1 = daot.list(1);
+                    List<task> list2 = daot.list(2);
+                    List<task> list3 = daot.list(3);
+                    profile lead = null;
+                    if (acc.isIsManager()) {
+                        lead = daoPf.getByID(acc.getProfile_id());
+                    } else {
+                        lead = daoPf.getByID(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    }
+                    List<profile> listPf = null;
+                    if (acc.isIsManager()) {
+                        listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    } else {
+                        listPf = daoPf.listAllStaff(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    }
+                    for (profile p : listPf) {
+                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                    }
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("project", pj);
+                    request.setAttribute("list0", list0);
+                    request.setAttribute("list1", list1);
+                    request.setAttribute("list2", list2);
+                    request.setAttribute("list3", list3);
+                    request.setAttribute("lead", lead);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("listC", listC);
+                    RequestDispatcher dispath = request.getRequestDispatcher("project-view.jsp");
                     dispath.forward(request, response);
                 }
             }
@@ -154,7 +205,11 @@ public class ControllerProject extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -168,7 +223,11 @@ public class ControllerProject extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

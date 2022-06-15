@@ -1,3 +1,6 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,24 +34,25 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
-
-        <!-- Bean -->
-        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
-        <jsp:useBean id="job" class="model.DAOJob" scope="request"></jsp:useBean>
-        <jsp:useBean id="task" class="model.DAOTask" scope="request"></jsp:useBean>
-        <jsp:useBean id="project" class="model.DAOProject" scope="request"></jsp:useBean>
-        <jsp:useBean id="clients" class="model.DAOClients" scope="request"></jsp:useBean>
-        
+   
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
+        <%!
+            public String format(String date) throws Exception {
+                Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+                DateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy");
+                String formatted = dateFormat.format(date1);
+                return formatted;
+            }
+        %>
         
     </head>
     <body>
         <!-- Main Wrapper -->
         <div class="main-wrapper">
             
-            <div><jsp:include page="menu.jsp"></jsp:include></div>
+            <jsp:include page="menu.jsp"></jsp:include>
             
             <!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -78,20 +82,11 @@
                         <div class="col-lg-8 col-xl-9">
                             <div class="card">
                                 <div class="card-body">
-                                    <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() == null}">
                                     <div class="project-title">
-                                        <h5 class="card-title">${project.getProject(sessionScope.acc.profile_id).getTitle()}</h5>
+                                        <h5 class="card-title">${project.title}</h5>
                                         <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
                                     </div>
-                                    <p>${project.getProject(sessionScope.acc.profile_id).getDescription()}</p>     
-                                    </c:if>
-                                    <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() != null}">
-                                    <div class="project-title">
-                                        <h5 class="card-title">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getTitle()}</h5>
-                                        <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
-                                    </div>
-                                    <p>${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getDescription()}</p>   
-                                    </c:if>
+                                    <p>${project.description}</p>                                      
                                 </div>
                             </div>
                             <div class="project-task">
@@ -106,7 +101,7 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
-                                                        <c:forEach items="${task.list(0)}" var="o">
+                                                        <c:forEach items="${list0}" var="o">
                                                         <li class="task">
                                                             <div class="task-container">                                                            
                                                                 <span class="task-label" contenteditable="false">${o.name}</span>                                                   
@@ -123,7 +118,7 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
-                                                        <c:forEach items="${task.list(1)}" var="o">
+                                                        <c:forEach items="${list1}" var="o">
                                                         <li class="task">
                                                             <div class="task-container">                                                            
                                                                 <span class="task-label" contenteditable="false">${o.name}</span>                                                   
@@ -140,7 +135,7 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
-                                                        <c:forEach items="${task.list(3)}" var="o">
+                                                        <c:forEach items="${list3}" var="o">
                                                         <li class="task">
                                                             <div class="task-container">                                                            
                                                                 <span class="task-label" contenteditable="false">${o.name}</span>                                                   
@@ -160,51 +155,27 @@
                                 <div class="card-body">
                                     <h6 class="card-title m-b-15">Project details</h6>
                                     <table class="table table-striped table-border">
-                                        <tbody>
-                                            <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() != null}">
+                                        <tbody>                                 
                                             <tr>
                                                 <td>Cost:</td>
-                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getRate()}</td>
+                                                <td class="text-right">${project.rate}</td>
                                             </tr>                                            
                                             <tr>
                                                 <td>Created:</td>
-                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getStart_date()}</td>
+                                                <td class="text-right">${project.start_date}</td>
                                             </tr>
                                             <tr>
                                                 <td>Deadline:</td>
-                                                <td class="text-right">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getEnd_date()}</td>
+                                                <td class="text-right">${project.end_date}</td>
                                             </tr>                                           
                                             <tr>
                                                 <td>Client:</td>
-                                                <td class="text-right"><a href="#">${project.getProject(profile.getByID(sessionScope.acc.profile_id).getReportto()).getClient()}</a></td>
+                                                <td class="text-right"><a href="#">${project.client}</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Status:</td>
                                                 <td class="text-right">Working</td>
                                             </tr>
-                                            </c:if>
-                                            <c:if test="${profile.getByID(sessionScope.acc.profile_id).getReportto() == null}">
-                                            <tr>
-                                                <td>Cost:</td>
-                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getRate()}</td>
-                                            </tr>                                            
-                                            <tr>
-                                                <td>Created:</td>
-                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getStart_date()}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Deadline:</td>
-                                                <td class="text-right">${project.getProject(sessionScope.acc.profile_id).getEnd_date()}</td>
-                                            </tr>                                           
-                                            <tr>
-                                                <td>Client:</td>
-                                                <td class="text-right"><a href="#">${project.getProject(sessionScope.acc.profile_id).getClient()}</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Status:</td>
-                                                <td class="text-right">Working</td>
-                                            </tr> 
-                                            </c:if>
                                         </tbody>
                                     </table>                                    
                                 </div>
@@ -215,7 +186,7 @@
                                     <ul class="list-box">
                                         <li>
                                             <a href="#">
-                                                <span class="message-author">${profile.getByID(sessionScope.acc.profile_id).getFirst_name()} ${profile.getByID(sessionScope.acc.profile_id).getLast_name()}</span>
+                                                <span class="message-author">${lead.getFirst_name()} ${lead.getLast_name()}</span>
                                                 <div class="clearfix"></div>
                                                 <span class="message-content">Team Leader</span>
                                             </a>
@@ -229,12 +200,12 @@
                                         Assigned member                                         
                                     </h6>
                                     <ul class="list-box">
-                                        <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">  
+                                        <c:forEach items="${listPf}" var="o">  
                                         <li>
                                             <a href="#">
                                                 <span class="message-author">${o.first_name} ${o.last_name}</span>
                                                 <div class="clearfix"></div>
-                                                <span class="message-content">${job.getJobById(o.job_id).getTitle()}</span>
+                                                <span class="message-content">${p.job_title}</span>
                                             </a>
                                         </li>                                   
                                         </c:forEach>
@@ -245,85 +216,6 @@
                     </div>
                 </div>
                 <!-- /Page Content -->  
-                
-                <!-- Create Project Modal -->
-                <div id="create_project" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Create Project</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="manager" do="post">
-                                    <input type="hidden" name="do" value="createProject">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Project Title</label>
-                                                <input class="form-control" type="text" name="title">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Client</label>
-                                                <select class="select" name="client">
-                                                <c:forEach items="${clients.listAllClients()}" var="o">
-                                                    <option value="${o.client_id}">${o.company}</option>
-                                                </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Start Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" name="start_date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>End Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text" name="end_date">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label>Rate</label>
-                                                <input placeholder="$50" class="form-control" type="text" name="rate">
-                                            </div>
-                                        </div>                                  
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Project Leader</label>
-                                                <input class="form-control" type="text" name="leader" value="${sessionScope.acc.profile_id}" readonly>
-                                            </div>
-                                        </div>                                       
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="desc"></textarea>
-                                    </div>
-                                    <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Create Project Modal -->
 
                 <!-- Edit Project Modal -->
                 <div id="edit_project" class="modal custom-modal fade" role="dialog">
@@ -336,20 +228,26 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="project" do="post">
+                                    <input type="hidden" name="do" value="edit">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name</label>
-                                                <input class="form-control" value="Project Management" type="text">
+                                                <label>Project Name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input class="form-control" type="text" name="title" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Client</label>
-                                                <select class="select">
-                                                    <option>Global Technologies</option>
-                                                    <option>Delta Infotech</option>
+                                                <label>Client
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <select class="select" name="client" required onchange="return trim(this)">
+                                                    <c:forEach items="${listC}" var="o">
+                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -357,17 +255,19 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Start Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                <label>Start Date
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div>
+                                                    <input type="date" name="start_date" id="start_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>End Date</label>
-                                                <div class="cal-icon">
-                                                    <input class="form-control datetimepicker" type="text">
+                                                <label>End Date<span class="text-danger">*</span></label>
+                                                <div>
+                                                    <input type="date" name="end_date" id="end_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>
@@ -375,17 +275,26 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label>Rate</label>
-                                                <input placeholder="$50" class="form-control" value="$5000" type="text">
+                                                <label>Rate<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="number" name="rate" required onchange="return trim(this)">
                                             </div>
-                                        </div>                                                                          
+                                        </div>                                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Add Project Leader<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" name="manager" value="${sessionScope.acc.profile_id}" readonly>
+                                            </div>
+                                        </div>                                     
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
                                         <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
                                     </div>
+                                    <span id="alert"></span>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Save</button>
+                                        <button class="btn btn-primary submit-btn" id="create">Submit</button>
                                     </div>
                                 </form>
                             </div>

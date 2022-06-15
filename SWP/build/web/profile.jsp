@@ -142,7 +142,7 @@
                                                                                     <img src="img/profiles/avatar-16.jpg" alt="">
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="profile?do=othersProfile?profile_id=${p.reportto}">
+                                                                            <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
                                                                                 ${p.reportto}
                                                                             </a>
                                                                         </div>

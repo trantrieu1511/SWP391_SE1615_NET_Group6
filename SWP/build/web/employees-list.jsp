@@ -146,24 +146,25 @@
                     </div>
                     <!-- /Page Header -->
 
+
                     <!-- Search Filter -->
                     <form action="manager?do=filter" method="post">
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" name="eid" class="form-control floating">
+                                    <input type="text" name="eid" id="eid" class="form-control floating">
                                     <label class="focus-label">Employee ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group form-focus">
-                                    <input type="text" name="ename" class="form-control floating">
+                                    <input type="text" name="ename" id="ename" class="form-control floating">
                                     <label class="focus-label">Employee Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
-                                    <select name="ejob" class="select floating">
+                                    <select name="ejob" id="ejob" class="select floating">
                                         <option value="">select designation</option>
                                         <c:forEach items="${job}" var="j">
                                             <option value="${j.id}">${j.title}</option>
@@ -173,11 +174,28 @@
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">  
-                                <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
+                                <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px" onclick="checkSearch()">
                             </div>
                         </div>
                     </form>
                     <!-- /Search Filter -->
+                    <script type="text/javascript">
+                        function checkSearch() {
+                            var eid = document.getElementById('eid').value;
+                            var ename = document.getElementById('ename').value;
+                            var ejob = document.getElementById('ejob').value;
+                            if (eid != "" && ename != "" && ejob != "") {
+                                alert('please search seperately!');
+                            }else if(eid!=""&&ename!=""&&ejob==""){
+                                alert('please search seperately!');
+                            }else if(eid!=""&&ename==""&&ejob!=""){
+                                alert('please search seperately!');
+                            }else if(eid==""&&ename!=""&&ejob!=""){
+                                alert('please search seperately!');
+                            }
+                        }
+
+                    </script>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -197,7 +215,13 @@
                                     <tbody>
                                         <c:forEach items="${list}" var="o">
                                             <tr>
-                                                <td>${o.first_name} ${o.last_name}</td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <!--<a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>-->
+                                                        <a href="profile.jsp">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
+                                                    </h2>
+
+                                                </td>
                                                 <td>${o.profile_id}</td>
                                                 <td>${o.email}</td>
                                                 <c:choose>
@@ -313,19 +337,19 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="first_name" id="first_name" required pattern="^[A-Za-z]+$">
+                                                <input class="form-control" type="text" name="first_name" id="first_name" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="last_name" id="last_name" required pattern="^[A-Za-z]+$">
+                                                <input class="form-control" type="text" name="last_name" id="last_name" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="username" id="username" required pattern="^[A-Za-z0-9]+$">
+                                                <input class="form-control" type="text" name="username" id="username" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -338,14 +362,14 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="password" id="password" 
-                                                       onkeyup="checkconfirmPassword(this)" required pattern="^[A-Za-z0-9]+$">
+                                                       onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                       onkeyup="checkPassword(this)" required pattern="^[A-Za-z0-9]+$">
+                                                       onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
@@ -363,7 +387,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="^[0-9]+$">
+                                                <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">
@@ -423,19 +447,19 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" required pattern="^[A-Za-z]+$">
+                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name</label>
-                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" required pattern="^[A-Za-z]+$">
+                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="username" id="username2" required pattern="^[A-Za-z0-9]+$">
+                                                <input class="form-control" value="" type="text" name="username" id="username2" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -448,14 +472,14 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="password2" 
-                                                       onkeyup="checkConfirmPassword2(this)" required pattern="^[A-Za-z0-9]+$">
+                                                       onkeyup="checkConfirmPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="confirm_password2" 
-                                                       onkeyup="checkPassword2(this)" required pattern="^[A-Za-z0-9]+$">
+                                                       onkeyup="checkPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
@@ -474,7 +498,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="^[0-9]+$">
+                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">

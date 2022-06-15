@@ -15,13 +15,14 @@ public class profile {
     int job_id;
     String job_title;
     int department_id;
+    String department_name;
     double salary;
     String reportto;
 
     public profile() {
     }
 
-    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, double salary, String reportto) {
+    public profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, String department_name, double salary, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -31,6 +32,7 @@ public class profile {
         this.job_id = job_id;
         this.job_title = job_title;
         this.department_id = department_id;
+        this.department_name = department_name;
         this.salary = salary;
         this.reportto = reportto;
     }
@@ -138,9 +140,18 @@ public class profile {
         this.reportto = reportto;
     }
 
+    public String getDepartment_name() {
+        return department_name;
+    }
+
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
+    }
+
     @Override
     public String toString() {
-        return "profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", job_title=" + job_title + ", department_id=" + department_id + ", salary=" + salary + ", reportto=" + reportto + '}';
+        return "profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", job_title=" + job_title + ", department_id=" + department_id + ", department_name=" + department_name + ", salary=" + salary + ", reportto=" + reportto + '}';
     }
+
    
 }

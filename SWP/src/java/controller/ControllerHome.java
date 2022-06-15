@@ -41,21 +41,27 @@ public class ControllerHome extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+
             DAOProject daoPj = new DAOProject();
             DAOProfile daoPf = new DAOProfile();
-           
-            List<projects> list = null;
-            if (acc.isIsManager()) {
-                list = daoPj.getProject(acc.getProfile_id());
+
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
             } else {
-                list = daoPj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                List<projects> list = null;
+                if (acc.isIsManager()) {
+                    list = daoPj.getProject(acc.getProfile_id());
+                } else {
+                    list = daoPj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                }
+
+                request.setAttribute("project", list);
+                RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");
+                dispath.forward(request, response);
             }
-            
-            request.setAttribute("project", list);
-            RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");
-            dispath.forward(request, response);         
+
         }
     }
 

@@ -53,14 +53,7 @@ public class ControllerEmployee extends HttpServlet {
             DAOProfile daoPf = new DAOProfile();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            List<projects> listPj = null;
-            if (acc.isIsManager()) {
-                listPj = daopj.getProject(acc.getProfile_id());
-            } else {
-                listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
-            }
-            request.setAttribute("project", listPj);
-            
+
             String date = "";
             String time_in = "";
             String time_out = "";
@@ -71,8 +64,20 @@ public class ControllerEmployee extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
+                List<projects> listPj = null;
+                if (acc.isIsManager()) {
+                    listPj = daopj.getProject(acc.getProfile_id());
+                } else {
+                    listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                }
+                request.setAttribute("project", listPj);
+                
                 employee_id = acc.getProfile_id();;
 
+                if(service.equals("dashboard")){
+                    response.sendRedirect("employee-dashboard.jsp");
+                }
+                
                 if (service.equals("attendance")) {
                     List<attendance> list = dao.listAllAttendanceofAnEmployee(employee_id);
                     attendance temp = dao.getLastest(employee_id);
@@ -87,7 +92,7 @@ public class ControllerEmployee extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("searchAttendance")) {
                     String date_search = request.getParameter("date");
                     List<attendance> list = dao.search(date_search, employee_id);

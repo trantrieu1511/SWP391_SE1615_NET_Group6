@@ -151,3 +151,19 @@ function check() {
     }
 }
 
+function check2() {
+    var a = document.getElementById('start_date2').value;
+    var b = document.getElementById('end_date2').value;
+    if ((new Date(a).getTime() > (new Date(b).getTime()))) {
+        document.getElementById('alert2').style.color = 'red';
+        document.getElementById('alert2').innerHTML = '☒ Invalid end date';
+        document.getElementById('create2').disabled = true;
+        document.getElementById('create2').style.opacity = (0.4);
+    } else {
+        document.getElementById('alert2').style.color = 'green';
+        document.getElementById('alert2').innerHTML ='🗹 Valid end date';
+        document.getElementById('create2').disabled = false;
+        document.getElementById('create2').style.opacity = (1);
+    }
+}
+

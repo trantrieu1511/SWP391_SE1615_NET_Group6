@@ -111,6 +111,56 @@ public class ControllerManager extends HttpServlet {
                     dispath.forward(request, response);
                 }
                 
+                if (service.equals("filter")) {
+                    String eid = request.getParameter("eid");
+                    String ename = request.getParameter("ename");
+                    String ejob = request.getParameter("ejob");
+                    if (eid.equals("") && ename.equals("")) {
+                        List<profile> list = daoPf.searchStaffByjob(acc.getProfile_id(), ejob);
+                        for (profile p : list) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+
+                        }
+                        request.setAttribute("list", list);
+                        List<departments> listDp = daoDp.listAllDepartment();
+                        List<jobs> listJ = daoJ.listAllJob();
+
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        dispath.forward(request, response);
+
+                    } else if (eid.equals("") && ejob.equals("")) {
+                        List<profile> list = daoPf.searchStaffByname(acc.getProfile_id(), ename);
+                        for (profile p : list) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                        }
+                        request.setAttribute("list", list);
+                        List<departments> listDp = daoDp.listAllDepartment();
+                        List<jobs> listJ = daoJ.listAllJob();
+
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        dispath.forward(request, response);
+
+                    } else if (ename.equals("") && ejob.equals("")) {
+                        List<profile> list = daoPf.searchStaffByid(acc.getProfile_id(), eid);
+                        for (profile p : list) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                        }
+                        request.setAttribute("list", list);
+                        List<departments> listDp = daoDp.listAllDepartment();
+                        List<jobs> listJ = daoJ.listAllJob();
+
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        dispath.forward(request, response);
+
+                    }
+                }
+                
                 if (service.equals("addStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     String first_name = request.getParameter("first_name");

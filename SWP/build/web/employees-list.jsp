@@ -197,7 +197,13 @@
                                     <tbody>
                                         <c:forEach items="${list}" var="o">
                                             <tr>
-                                                <td>${o.first_name} ${o.last_name}</td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <!--<a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>-->
+                                                        <a href="profile.jsp">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
+                                                    </h2>
+                                                    
+                                                </td>
                                                 <td>${o.profile_id}</td>
                                                 <td>${o.email}</td>
                                                 <c:choose>

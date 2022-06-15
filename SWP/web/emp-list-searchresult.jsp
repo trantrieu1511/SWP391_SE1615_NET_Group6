@@ -1,3 +1,9 @@
+<%-- 
+    Document   : search-result-emp-list
+    Created on : Jun 15, 2022, 7:59:02 PM
+    Author     : DELL
+--%>
+
 <%@page import="entity.departments"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -136,7 +142,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
-                                    <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                                    <!--<a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>-->
                                 <div class="view-icons">
                                     <!--                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
                                                                             <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>-->
@@ -146,43 +152,11 @@
                     </div>
                     <!-- /Page Header -->
 
-                    <!-- Search Filter -->
-                    <form action="manager?do=filter" method="post">
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" name="eid" class="form-control floating">
-                                    <label class="focus-label">Employee ID</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group form-focus">
-                                    <input type="text" name="ename" class="form-control floating">
-                                    <label class="focus-label">Employee Name</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select name="ejob" class="select floating">
-                                        <option value="">select designation</option>
-                                        <c:forEach items="${job}" var="j">
-                                            <option value="${j.id}">${j.title}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <label class="focus-label">Designation</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
-                            </div>
-                        </div>
-                    </form>
-                    <!-- /Search Filter -->
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable" id="table">                                   
+                                    <h4><a href="manager?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
                                     <thead>
                                         <tr>
                                             <th>Name</th>

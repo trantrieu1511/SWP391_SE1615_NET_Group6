@@ -70,19 +70,20 @@ public class ControllerManager extends HttpServlet {
             DAOFamilyInfo daof = new DAOFamilyInfo();
             DAOExperience daoexp = new DAOExperience();
             DAOProject daopj = new DAOProject();
-            
+
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            List<projects> listPj = null;
-            if (acc.isIsManager()) {
-                listPj = daopj.getProject(acc.getProfile_id());
-            } else {
-                listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
-            }
-            request.setAttribute("project", listPj);
+
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
+                List<projects> listPj = null;
+                if (acc.isIsManager()) {
+                    listPj = daopj.getProject(acc.getProfile_id());
+                } else {
+                    listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                }
+                request.setAttribute("project", listPj);
                 //profile user = daoPf.getByID(acc.getProfile_id());
                 if (service.equals("attendance")) {
                     List<attendance> list = daoA.listAll(acc.getProfile_id());
@@ -90,13 +91,14 @@ public class ControllerManager extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("list")) {
                     List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
                     List<departments> listDp = daoDp.listAllDepartment();
                     List<jobs> listJ = daoJ.listAllJob();
-                    for(profile p : list) {
+                    for (profile p : list) {
                         p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                        p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                     }
                     request.setAttribute("list", list);
                     request.setAttribute("department", listDp);
@@ -104,13 +106,13 @@ public class ControllerManager extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("dashboard")) {
                     request.getSession(false);
                     RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("filter")) {
                     String eid = request.getParameter("eid");
                     String ename = request.getParameter("ename");
@@ -119,7 +121,7 @@ public class ControllerManager extends HttpServlet {
                         List<profile> list = daoPf.searchStaffByjob(acc.getProfile_id(), ejob);
                         for (profile p : list) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
                         request.setAttribute("list", list);
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -127,13 +129,14 @@ public class ControllerManager extends HttpServlet {
 
                         request.setAttribute("department", listDp);
                         request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
                         dispath.forward(request, response);
 
                     } else if (eid.equals("") && ejob.equals("")) {
                         List<profile> list = daoPf.searchStaffByname(acc.getProfile_id(), ename);
                         for (profile p : list) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
                         request.setAttribute("list", list);
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -141,13 +144,14 @@ public class ControllerManager extends HttpServlet {
 
                         request.setAttribute("department", listDp);
                         request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
                         dispath.forward(request, response);
 
                     } else if (ename.equals("") && ejob.equals("")) {
                         List<profile> list = daoPf.searchStaffByid(acc.getProfile_id(), eid);
                         for (profile p : list) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
                         request.setAttribute("list", list);
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -155,12 +159,21 @@ public class ControllerManager extends HttpServlet {
 
                         request.setAttribute("department", listDp);
                         request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
                         dispath.forward(request, response);
 
+                    } else {
+                        List<departments> listDp = daoDp.listAllDepartment();
+                        List<jobs> listJ = daoJ.listAllJob();
+
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
+                        dispath.forward(request, response);
+//                        response.sendRedirect("manager?do=list");
                     }
                 }
-                
+
                 if (service.equals("addStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     String first_name = request.getParameter("first_name");
@@ -174,7 +187,7 @@ public class ControllerManager extends HttpServlet {
                     String ReportsTo = request.getParameter("ReportsTo");
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
-                    
+
                     profile pro = new profile(profile_id, first_name, last_name,
                             email, phone_number, hire_date, job_id, department_id,
                             salary, ReportsTo);
@@ -184,14 +197,14 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to add new Staff with profile_id = " + profile_id);
                     }
-                    
+
                     boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
                     if (statusAcc) {
                         System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     profileDetail pd = new profileDetail(profile_id, "GETDATE()",
                             "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
                     boolean statusPd = daopd.addProfileDetail(pd);
@@ -200,7 +213,7 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     familyInfo f = new familyInfo(profile_id, "N/A", "N/A",
                             "GETDATE()", "N/A");
                     boolean statusf = daof.addFamilyInfo(f);
@@ -209,7 +222,7 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     experience exp = new experience(profile_id, "N/A", "GETDATE()",
                             "GETDATE()");
                     boolean statusexp = daoexp.addExperience(exp);
@@ -218,11 +231,11 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("editStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     String first_name = request.getParameter("first_name");
@@ -247,18 +260,18 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to edit new Staff with profile_id = " + profile_id);
                     }
-                    
+
                     boolean statusAcc = daoAcc.editAccount(profile_id, username, password);
                     if (statusAcc) {
                         System.out.println("Successfully edited new account for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to edit new account for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
                     boolean statusAcc = daoAcc.deleteAccount(profile_id);
@@ -267,28 +280,28 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         System.out.println("Fail to delete new account for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     boolean statusPro = daoPf.deleteProfile(profile_id);
                     if (statusAcc) {
                         System.out.println("Successfully deleted account for Staff with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete account for Staff with profile_id = " + profile_id);
                     }
-                    
+
                     RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("addTask")) {
                     String name = request.getParameter("name");
                     int priority = Integer.parseInt(request.getParameter("priority"));
                     String deadline = request.getParameter("deadline");
                     int status = 0;
-                    String assigned = request.getParameter("assigned"); 
+                    String assigned = request.getParameter("assigned");
                     String project = request.getParameter("project");
                     daoT.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
-                }               
+                }
             }
         }
     }

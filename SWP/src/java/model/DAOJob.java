@@ -6,6 +6,8 @@
 package model;
 
 import entity.jobs;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,11 +19,17 @@ import java.util.List;
  */
 public class DAOJob extends DBConnect {
     
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+    
     public List<jobs> listAllJob() {
         List<jobs> list = new ArrayList<>();
         String sql = "select * from [jobs]";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new jobs(
                         rs.getInt(1),
@@ -31,14 +39,20 @@ public class DAOJob extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
     
     public jobs getJobByTitle(String title) {
         String sql = "select * from jobs where [job_title] = '" + title + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new jobs(
                         rs.getInt(1),
@@ -48,14 +62,20 @@ public class DAOJob extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
     
     public jobs getJobById(int id) {
         String sql = "select * from jobs where [job_id] = " + id;
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new jobs(
                         rs.getInt(1),
@@ -65,6 +85,10 @@ public class DAOJob extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }

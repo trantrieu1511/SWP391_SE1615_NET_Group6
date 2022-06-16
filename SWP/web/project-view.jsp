@@ -31,21 +31,66 @@
 
         <!-- Datetimepicker CSS -->
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+        
+        <!-- Summernote CSS -->
+        <link rel="stylesheet" href="plugins/summernote/dist/summernote-bs4.css">
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
+        
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Task JS -->
+        <script src="js/task.js"></script>
+        
+        <!-- Summernote JS -->
+        <script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+        
+        <!-- Model JS -->
+        <script type="text/javascript">
+            const changeSelected = (e) => {
+                const $select = document.querySelector('#clientEdit');
+                $select.value = e;
+            }
+            $(function () {
+                $("#edit_project").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id').trim();
+                    const myArray = text.split(" ");
+                    var title = myArray[0];
+                    var client_id = myArray[4];
+                    var start_date = myArray[1];
+                    var end_date = myArray[2];
+                    var rate = myArray[3];       
+                    $(e.currentTarget).find('#titleEdit').val(title);
+                    $(e.currentTarget).find('#clientEdit option[value="2    "]').attr('selected', 'selected');
+                    $(e.currentTarget).find('#start_date2').val(start_date);
+                    $(e.currentTarget).find('#end_date2').val(end_date);
+                    $(e.currentTarget).find('#rateEdit').val(rate);                  
+                });
+            });              
+        </script>
    
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
-        </c:if>
-        <%!
-            public String format(String date) throws Exception {
-                Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
-                DateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy");
-                String formatted = dateFormat.format(date1);
-                return formatted;
-            }
-        %>
+        </c:if>      
         
     </head>
     <body>
@@ -71,7 +116,7 @@
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project"><i class="fa fa-plus"></i> Edit Project</a>
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${pro.title} ${pro.start_date} ${pro.end_date} ${pro.rate} ${pro.client}"><i class="fa fa-plus"></i> Edit Project</a>
                                 <a href="task-board.jsp" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
@@ -233,18 +278,14 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <input class="form-control" type="text" name="title" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
+                                                <label>Project Name</label>
+                                                <input class="form-control" type="text" id="titleEdit" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Client
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <select class="select" name="client" required onchange="return trim(this)">
+                                                <label>Client</label>
+                                                <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>
@@ -255,19 +296,17 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Start Date
-                                                    <span class="text-danger">*</span>
-                                                </label>
+                                                <label>Start Date</label>
                                                 <div>
-                                                    <input type="date" name="start_date" id="start_date" required onchange="check()">
+                                                    <input placeholder="start" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="start_date" id="start_date2" onchange="check2()">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>End Date<span class="text-danger">*</span></label>
+                                                <label>End Date</label>
                                                 <div>
-                                                    <input type="date" name="end_date" id="end_date" required onchange="check()">
+                                                    <input placeholder="end" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="end_date" id="end_date2" onchange="check2()">
                                                 </div>
                                             </div>
                                         </div>
@@ -275,26 +314,26 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label>Rate<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="number" name="rate" required onchange="return trim(this)">
+                                                <label>Rate</label>
+                                                <input class="form-control" type="text" name="rate" id="rateEdit" onchange="return trim(this)">
                                             </div>
                                         </div>                                                        
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Add Project Leader<span class="text-danger">*</span></label>
+                                                <label>Add Project Leader</label>
                                                 <input class="form-control" type="text" name="manager" value="${sessionScope.acc.profile_id}" readonly>
                                             </div>
                                         </div>                                     
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
+                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="description" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,255}"></textarea>
                                     </div>
-                                    <span id="alert"></span>
+                                    <span id="alert2"></span>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn" id="create">Submit</button>
+                                        <button class="btn btn-primary submit-btn" id="create2">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -308,29 +347,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Select2 JS -->
-        <script src="js/select2.min.js"></script>
-
-        <!-- Datetimepicker JS -->
-        <script src="js/moment.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Task JS -->
-        <script src="js/task.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
-
+        
     </body>
 </html>

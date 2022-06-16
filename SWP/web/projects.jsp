@@ -61,20 +61,24 @@
         
         <!-- Model JS -->
         <script type="text/javascript">
+            const changeSelected = (e) => {
+                const $select = document.querySelector('#clientEdit');
+                $select.value = e;
+            }
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id');
+                    var text = $(e.relatedTarget).attr('data-id').trim();
                     const myArray = text.split(" ");
                     var title = myArray[0];
                     var client_id = myArray[4];
                     var start_date = myArray[1];
                     var end_date = myArray[2];
-                    var rate = myArray[3];                  
-                    $(e.currentTarget).find('input[name="title"]').val(title);
-                    $(e.currentTarget).find('input[name="client"]').val(client_id);
-                    $(e.currentTarget).find('input[name="start_date"]').val(start_date);
-                    $(e.currentTarget).find('input[name="end_date"]').val(end_date);
-                    $(e.currentTarget).find('input[name="rate"]').val(rate);                  
+                    var rate = myArray[3];       
+                    $(e.currentTarget).find('#titleEdit').val(title);
+                    $(e.currentTarget).find('#clientEdit option[value="2    "]').attr('selected', 'selected');
+                    $(e.currentTarget).find('#start_date2').val(start_date);
+                    $(e.currentTarget).find('#end_date2').val(end_date);
+                    $(e.currentTarget).find('#rateEdit').val(rate);                  
                 });
             });
             $(function () {
@@ -82,7 +86,7 @@
                     var title = $(e.relatedTarget).attr('data-id');
                     $(e.currentTarget).find('input[name="title"]').val(title);
                 });
-            });
+            });        
         </script>
 
 
@@ -119,35 +123,24 @@
                     <!-- /Page Header -->
 
                     <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Project Name</label>
+                    <form action="project" do="post">
+                        <input type="hidden" name="do" value="search">
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
+                                    <label class="focus-label">Project Title</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Employee Name</label>
+                            <div class="col-sm-6 col-md-3">                      
                             </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>Select Roll</option>
-                                    <option>Web Developer</option>
-                                    <option>Web Designer</option>
-                                    <option>Android Developer</option>
-                                    <option>Ios Developer</option>
-                                </select>
-                                <label class="focus-label">Designation</label>
+                            <div class="col-sm-6 col-md-3">                                
                             </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <button class="btn btn-success btn-block"> Search </button>  
+                            </div>     
                         </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
-                    </div>
+                    </form>
                     <!-- Search Filter -->
 
                     <div class="row">
@@ -292,13 +285,13 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Project Name</label>
-                                                <input class="form-control" type="text" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
+                                                <input class="form-control" type="text" id="titleEdit" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Client</label>
-                                                <select class="select" name="client" onchange="return trim(this)">
+                                                <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>
@@ -328,7 +321,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Rate</label>
-                                                <input class="form-control" type="text" name="rate" onchange="return trim(this)">
+                                                <input class="form-control" type="text" name="rate" id="rateEdit" onchange="return trim(this)">
                                             </div>
                                         </div>                                                        
                                     </div>

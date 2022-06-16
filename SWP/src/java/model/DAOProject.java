@@ -6,14 +6,11 @@
 package model;
 
 import entity.projects;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,11 +19,17 @@ import java.util.List;
  */
 public class DAOProject extends DBConnect {
 
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+
     public List<projects> getProject(String profile_id) {
         List<projects> list = new ArrayList<>();
         String sql = "select * from projects where manager_id = '" + profile_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new projects(
                         rs.getString(1),
@@ -39,14 +42,20 @@ public class DAOProject extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
 
     public projects getP(String title) {
         String sql = "select * from projects where title = '" + title + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new projects(
                         rs.getString(1),
@@ -60,6 +69,10 @@ public class DAOProject extends DBConnect {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
@@ -71,11 +84,15 @@ public class DAOProject extends DBConnect {
                 + "', '" + client_id + "', '" + start_date + "', '" + end_date
                 + "', " + rate + ", '" + manager_id + "', '" + desc + "')";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -83,11 +100,15 @@ public class DAOProject extends DBConnect {
     public boolean deleteProject(String title) {
         String sql = "delete from projects where title = '" + title + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -97,23 +118,56 @@ public class DAOProject extends DBConnect {
         String sql = "update projects set client_id = ?, start_date = ?"
                 + ", end_date = ?, rate = ?, manager_id = ?, description = ? where title = ?";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, client_id);
-            pre.setString(2, start_date);
-            pre.setString(3, end_date);
-            pre.setDouble(4, rate);
-            pre.setString(5, manager_id);
-            pre.setString(6, desc);
-            pre.setString(7, title);
-            pre.executeUpdate();
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, client_id);
+            state.setString(2, start_date);
+            state.setString(3, end_date);
+            state.setDouble(4, rate);
+            state.setString(5, manager_id);
+            state.setString(6, desc);
+            state.setString(7, title);
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
 
-    public static void main(String[] args) {
+    public List<projects> search(String title, String id) {
+        List<projects> list = new ArrayList<>();
+        String sql = "select * from projects where title like '%" + title + "%'"
+                + " and manager_id = '" + id + "'";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new projects(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getString(6),
+                        rs.getString(7)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
+    public static void main(String[] args) {
+        DAOProject dao = new DAOProject();
+        System.out.println(dao.getProject("ABCDE"));
     }
 }

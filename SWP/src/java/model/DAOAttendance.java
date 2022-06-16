@@ -6,6 +6,7 @@
 package model;
 
 import entity.attendance;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,10 @@ import java.util.List;
  */
 public class DAOAttendance extends DBConnect {
     
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+    
     public boolean add(String date, String time_in, String time_out, String production_time,
             String employee_id) {
         String sql = "insert into attendance(date, time_in, time_out,"
@@ -26,11 +31,15 @@ public class DAOAttendance extends DBConnect {
                 + "', '" + time_out + "', '" + production_time + "', '" + employee_id
                 + "')";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -39,8 +48,10 @@ public class DAOAttendance extends DBConnect {
         String sql = "  select top 1 [shift_id], [date], [time_in], [time_out], "
                 + "[production_time], [employee_id] from attendance where "
                 + "[employee_id] = '" + employee_id + "' order by shift_id desc";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new attendance(
                         rs.getInt(1),
@@ -52,6 +63,10 @@ public class DAOAttendance extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
@@ -60,15 +75,20 @@ public class DAOAttendance extends DBConnect {
         String sql = "update attendance set [time_out]=?, [production_time]=?"
                 + " where [shift_id]=? and [employee_id]=?";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, time_out);
-            pre.setString(2, production_time);
-            pre.setInt(3, id);
-            pre.setString(4, employee_id);
-            pre.executeUpdate();
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+            state.setString(1, time_out);
+            state.setString(2, production_time);
+            state.setInt(3, id);
+            state.setString(4, employee_id);
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -79,8 +99,10 @@ public class DAOAttendance extends DBConnect {
                 + " [production_time], [employee_id], [report_to] "
                 + "from attendance join profile on attendance.employee_id = "
                 + "profile.profile_id where [report_to] = '" + id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new attendance(
                         rs.getInt(1),
@@ -93,6 +115,10 @@ public class DAOAttendance extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
@@ -101,8 +127,10 @@ public class DAOAttendance extends DBConnect {
         List<attendance> list = new ArrayList<>();
         String sql = "select * from attendance where [employee_id]='"
                 + employee_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new attendance(
                         rs.getInt(1),
@@ -114,6 +142,10 @@ public class DAOAttendance extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
@@ -122,8 +154,10 @@ public class DAOAttendance extends DBConnect {
         List<attendance> list = new ArrayList<>();
         String sql = "select * from attendance where employee_id = '" + 
                 profile_id + "' and date = '" + date + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new attendance(
                         rs.getInt(1),
@@ -135,6 +169,10 @@ public class DAOAttendance extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }

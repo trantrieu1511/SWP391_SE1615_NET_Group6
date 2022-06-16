@@ -6,6 +6,7 @@
 package model;
 
 import entity.account;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,11 +18,17 @@ import java.sql.Statement;
  */
 public class DAOAccount extends DBConnect {
     
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+    
     public account login(String user, String pass) {
         String sql = "select * from [account] where [username] = '" + user
                 + "' and [password] = '" + pass + "'";
         try {
-            ResultSet rs = getData(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new account(
                         rs.getString(1),
@@ -32,6 +39,10 @@ public class DAOAccount extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
@@ -39,7 +50,9 @@ public class DAOAccount extends DBConnect {
     public account getAccount(String profile_id) {
         String sql = "select * from [account] where profile_id = '" + profile_id + "'";
         try {
-            ResultSet rs = getData(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new account(
                         rs.getString(1),
@@ -50,6 +63,10 @@ public class DAOAccount extends DBConnect {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
@@ -59,11 +76,15 @@ public class DAOAccount extends DBConnect {
                 + "values('" + profile_id + "', '" + username + "', '" + password
                 + "', " + 0 + ", " + 0 + ")";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -71,14 +92,19 @@ public class DAOAccount extends DBConnect {
     public boolean editAccount(String profile_id, String username, String password) {
         String sql = "update account set username=?, password=? where profile_id=?";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, username);
-            pre.setString(2, password);
-            pre.setString(3, profile_id);
-            pre.executeUpdate();
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+            state.setString(1, username);
+            state.setString(2, password);
+            state.setString(3, profile_id);
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -86,11 +112,15 @@ public class DAOAccount extends DBConnect {
     public boolean deleteAccount(String profile_id) {
         String sql = "delete from account where profile_id = '" + profile_id + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }

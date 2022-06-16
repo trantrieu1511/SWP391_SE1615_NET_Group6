@@ -6,25 +6,30 @@
 package model;
 
 import entity.familyInfo;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
 public class DAOFamilyInfo extends DBConnect {
+    
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
 
     public List<familyInfo> getIndividualFamilyInfo(String profile_id) {
         List<familyInfo> flist = new ArrayList<>();
         String sql = "select * from [familyInfo] where profile_id = '" + profile_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 flist.add(new familyInfo(
                         rs.getString(1),
@@ -36,6 +41,10 @@ public class DAOFamilyInfo extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return flist;
     }
@@ -50,12 +59,16 @@ public class DAOFamilyInfo extends DBConnect {
                 + "" + f.getDob() + ","
                 + "'" + f.getPhone() + "')";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
             status = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return status;
     }
@@ -80,11 +93,15 @@ public class DAOFamilyInfo extends DBConnect {
     public boolean deleteFamilyInfo(String profile_id) {
         String sql = "delete from [familyInfo] where [profile_id] = '" + profile_id + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
-        } catch (SQLException ex) {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }

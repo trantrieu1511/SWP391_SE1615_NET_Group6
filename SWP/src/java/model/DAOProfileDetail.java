@@ -6,25 +6,30 @@
 package model;
 
 import entity.profileDetail;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
 public class DAOProfileDetail extends DBConnect {
+    
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
 
     public List<profileDetail> getIndividualProfileDetail(String profile_id) {
         List<profileDetail> pdlist = new ArrayList<profileDetail>();
         String sql = "select * from [profileDetail] where profile_id = '" + profile_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 pdlist.add(new profileDetail(
                         rs.getString(1),
@@ -40,6 +45,10 @@ public class DAOProfileDetail extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return pdlist;
     }
@@ -59,12 +68,16 @@ public class DAOProfileDetail extends DBConnect {
                 + "'" + pd.getBank_name() + "', "
                 + "'" + pd.getBank_number() + "')";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
             status = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return status;
     }
@@ -89,11 +102,15 @@ public class DAOProfileDetail extends DBConnect {
     public boolean deleteProfileDetail(String profile_id) {
         String sql = "delete from [profileDetail] where [profile_id] = '" + profile_id + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
-        } catch (SQLException ex) {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }

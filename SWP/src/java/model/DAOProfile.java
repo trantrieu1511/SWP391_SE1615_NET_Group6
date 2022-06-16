@@ -6,10 +6,10 @@
 package model;
 
 import entity.profile;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +18,10 @@ import java.util.List;
  * @author DELL
  */
 public class DAOProfile extends DBConnect {
+    
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
 
     public boolean addManager(profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
@@ -33,11 +37,15 @@ public class DAOProfile extends DBConnect {
                 + "" + pro.getSalary() + ", "
                 + ")";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -56,11 +64,15 @@ public class DAOProfile extends DBConnect {
                 + "" + pro.getSalary() + ", "
                 + "'" + pro.getReportto() + "')";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -78,21 +90,26 @@ public class DAOProfile extends DBConnect {
                 + "report_to = ? "
                 + "where profile_id = ?";
         try {
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, pro.getFirst_name());
-            pre.setString(2, pro.getLast_name());
-            pre.setString(3, pro.getEmail());
-            pre.setString(4, pro.getPhone_number());
-            pre.setString(5, pro.getHire_date());
-            pre.setInt(6, pro.getDepartment_id());
-            pre.setInt(7, pro.getJob_id());
-            pre.setDouble(8, pro.getSalary());
-            pre.setString(9, pro.getReportto());
-            pre.setString(10, pro.getProfile_id());
-            pre.executeUpdate();
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+            state.setString(1, pro.getFirst_name());
+            state.setString(2, pro.getLast_name());
+            state.setString(3, pro.getEmail());
+            state.setString(4, pro.getPhone_number());
+            state.setString(5, pro.getHire_date());
+            state.setInt(6, pro.getDepartment_id());
+            state.setInt(7, pro.getJob_id());
+            state.setDouble(8, pro.getSalary());
+            state.setString(9, pro.getReportto());
+            state.setString(10, pro.getProfile_id());
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -100,8 +117,10 @@ public class DAOProfile extends DBConnect {
     public List<profile> listAllStaff(String id) {
         String sql = "select * from [profile] where report_to = '" + id + "'";
         List<profile> list = new ArrayList<>();
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new profile(rs.getString(1),
                         rs.getString(2),
@@ -116,6 +135,10 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
@@ -123,8 +146,10 @@ public class DAOProfile extends DBConnect {
     public List<profile> getProfile(String id) {
         String sql = "select * from [profile] where profile_id = '" + id + "'";
         List<profile> list = new ArrayList<>();
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new profile(rs.getString(1),
                         rs.getString(2),
@@ -139,14 +164,20 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
 
     public profile getByID(String profile_id) {
         String sql = "select * from [profile] where [profile_id] = '" + profile_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new profile(
                         rs.getString(1),
@@ -162,6 +193,10 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
@@ -169,11 +204,15 @@ public class DAOProfile extends DBConnect {
     public boolean deleteProfile(String profile_id) {
         String sql = "delete from [profile] where [profile_id] = '" + profile_id + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }
@@ -191,8 +230,10 @@ public class DAOProfile extends DBConnect {
                 + "where report_to = '"+profile_id+"'\n"
                 + "and profile_id like '%"+eid+"%'";
         List<profile> list = new ArrayList<>();
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new profile(rs.getString(1),
                         rs.getString(2),
@@ -207,6 +248,10 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
@@ -216,8 +261,10 @@ public class DAOProfile extends DBConnect {
                 + "where report_to = '" + profile_id + "'\n"
                 + "and job_id = '" + ejob + "'";
         List<profile> list = new ArrayList<>();
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new profile(rs.getString(1),
                         rs.getString(2),
@@ -232,6 +279,10 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
@@ -241,8 +292,10 @@ public class DAOProfile extends DBConnect {
                 + "where report_to = '" + profile_id + "'\n"
                 + "and first_name + last_name like '%" + ename + "%'";
         List<profile> list = new ArrayList<>();
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new profile(rs.getString(1),
                         rs.getString(2),
@@ -257,6 +310,10 @@ public class DAOProfile extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }

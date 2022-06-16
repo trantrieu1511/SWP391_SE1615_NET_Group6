@@ -6,6 +6,8 @@
 package model;
 
 import entity.departments;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,12 +18,18 @@ import java.util.List;
  * @author Khanh
  */
 public class DAODepartment extends DBConnect {
+    
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
 
     public List<departments> listAllDepartment() {
         List<departments> list = new ArrayList<>();
         String sql = "select * from [departments]";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new departments(
                         rs.getInt(1),
@@ -29,14 +37,20 @@ public class DAODepartment extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }
     
     public departments getDepartmentByName(String name) {
         String sql = "select * from departments where [department_name] = '" + name + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new departments(
                         rs.getInt(1),
@@ -44,14 +58,20 @@ public class DAODepartment extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }
     
     public departments getDepartmentByID(int id) {
         String sql = "select * from departments where [department_id] = " + id;
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 return new departments(
                         rs.getInt(1),
@@ -59,6 +79,10 @@ public class DAODepartment extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return null;
     }

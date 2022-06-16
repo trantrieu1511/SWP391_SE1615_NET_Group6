@@ -113,13 +113,29 @@ public class ControllerProject extends HttpServlet {
                     }
                     RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
                     dispath.forward(request, response);
+                }
+                
+                if (service.equals("search")) {
+                    String title = request.getParameter("title");
+                    List<projects> listPj = null;
+                    if (acc.isIsManager()) {
+                        listPj = daopj.search(title, acc.getProfile_id());
+                    } else {
+                        listPj = daopj.search(title, daoPf.getByID(acc.getProfile_id()).getReportto());
+                    }
+                    request.setAttribute(title, out);
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("list", listPj);
+                    request.setAttribute("listC", listC);
+                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
+                    dispath.forward(request, response);
 //                    out.println("<!DOCTYPE html>");
 //                    out.println("<html>");
 //                    out.println("<head>");
 //                    out.println("<title>Servlet ControllerEmployee</title>");
 //                    out.println("</head>");
 //                    out.println("<body>");
-//                    out.println("<h1>" + title + client_id + start_date + end_date + manager + desc + "</h1>");
+//                    out.println("<h1>" + title + lead + "</h1>");
 //                    out.println("</body>");
 //                    out.println("</html>");
                 }
@@ -158,6 +174,7 @@ public class ControllerProject extends HttpServlet {
                     projects pj = daopj.getP(title);
                     pj.setStart_date(format(pj.getStart_date()));
                     pj.setEnd_date(format(pj.getEnd_date()));
+                    projects pro = daopj.getP(title);
                     List<task> list0 = daot.list(0);
                     List<task> list1 = daot.list(1);
                     List<task> list2 = daot.list(2);
@@ -179,6 +196,7 @@ public class ControllerProject extends HttpServlet {
                     }
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("project", pj);
+                    request.setAttribute("pro", pro);
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
                     request.setAttribute("list2", list2);

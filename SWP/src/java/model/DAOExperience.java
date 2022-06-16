@@ -6,6 +6,8 @@
 package model;
 
 import entity.experience;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,11 +20,17 @@ import java.util.List;
  */
 public class DAOExperience extends DBConnect {
 
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+
     public List<experience> listIndividualExperience(String profile_id) {
         List<experience> elist = new ArrayList<>();
         String sql = "select * from [experience] where profile_id = '" + profile_id + "'";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 elist.add(new experience(
                         rs.getString(1),
@@ -32,6 +40,10 @@ public class DAOExperience extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return elist;
     }
@@ -40,17 +52,21 @@ public class DAOExperience extends DBConnect {
         boolean status = false;
         String sql = "insert into [experience]\n"
                 + "values ("
-                + "'"+exp.getProfile_id()+"', "
-                + "'"+exp.getRole()+"',"
-                + ""+exp.getStart_date()+","
-                + ""+exp.getEnd_date()+")";
+                + "'" + exp.getProfile_id() + "', "
+                + "'" + exp.getRole() + "',"
+                + "" + exp.getStart_date() + ","
+                + "" + exp.getEnd_date() + ")";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
             status = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             status = false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return status;
     }
@@ -76,11 +92,15 @@ public class DAOExperience extends DBConnect {
     public boolean deleteExperience(String profile_id) {
         String sql = "delete from [experience] where [profile_id] = '" + profile_id + "'";
         try {
-            Statement state = conn.createStatement();
-            state.executeUpdate(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return true;
     }

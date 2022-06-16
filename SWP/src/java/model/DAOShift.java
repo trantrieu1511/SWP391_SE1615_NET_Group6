@@ -6,6 +6,8 @@
 package model;
 
 import entity.shift;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,11 +18,18 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOShift extends DBConnect {
+    
+    Connection conn = null;
+    PreparedStatement state = null;
+    ResultSet rs = null;
+    
     public List<shift> listShift() {
         List<shift> list = new ArrayList<>();
         String sql ="select * from shift";
-        ResultSet rs = getData(sql);
         try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new shift(
                         rs.getString(1), 
@@ -29,6 +38,10 @@ public class DAOShift extends DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
         }
         return list;
     }

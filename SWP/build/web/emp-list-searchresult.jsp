@@ -72,44 +72,7 @@
         <script src="js/edit.js"></script>
 
         <!-- Model JS -->
-        <script type="text/javascript">
-            $(function () {
-                $("#edit_employee").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id');
-                    const myArray = text.split(" ");
-                    var id = myArray[0];
-                    var first_name = myArray[1];
-                    var last_name = myArray[2];
-                    var email = myArray[3];
-                    var phone_number = myArray[4];
-                    var hire_date = myArray[5];
-                    var username = myArray[6];
-                    var password = myArray[7];
-                    var reportto = myArray[8];
-                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                    $(e.currentTarget).find('input[name="first_name"]').val(first_name);
-                    $(e.currentTarget).find('input[name="last_name"]').val(last_name);
-                    $(e.currentTarget).find('input[name="email"]').val(email);
-                    $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
-                    $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
-                    $(e.currentTarget).find('input[name="username"]').val(username);
-                    $(e.currentTarget).find('input[name="password"]').val(password);
-                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
-                });
-            });
-            $(function () {
-                $("#add_employee").on("show.bs.modal", function (e) {
-                    var reportto = $(e.relatedTarget).attr('data-id');
-                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
-                });
-            });
-            $(function () {
-                $("#delete_employee").on("show.bs.modal", function (e) {
-                    var id = $(e.relatedTarget).attr('data-id');
-                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                });
-            });
-        </script>
+
 
         <jsp:useBean id="account" class="model.DAOAccount" scope="request"></jsp:useBean>
 
@@ -165,7 +128,7 @@
                                             <th>Mobile</th>
                                             <th class="text-nowrap">Join Date</th>
                                             <th>Role</th>
-                                            <th class="text-right no-sort">Action</th>
+                                            <!--<th class="text-right no-sort">Action</th>-->
                                         </tr>
                                     </thead>                                   
                                     <tbody>
@@ -176,7 +139,7 @@
                                                         <!--<a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>-->
                                                         <a href="profile.jsp">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
                                                     </h2>
-                                                    
+
                                                 </td>
                                                 <td>${o.profile_id}</td>
                                                 <td>${o.email}</td>
@@ -190,15 +153,15 @@
                                                 </c:choose>
                                                 <td>${o.hire_date}</td>
                                                 <td>${o.job_title}</td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
+                                                <!--<td class="text-right">-->
+<!--                                                    <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${account.getAccount(o.profile_id).getUser()} ${account.getAccount(o.profile_id).getPass()} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </div>-->
+                                                <!--</td>-->
                                             </tr>
                                         </c:forEach>
                                     </tbody>                                  
@@ -208,327 +171,12 @@
                     </div>
 
 
-                    <!--                    <script type="text/javascript">
-                                            function filter1() {
-                                                var input, filter, table, tr, td, i, txtValue;
-                                                input = document.getElementById("EID");
-                                                table = document.getElementById("table");
-                                                tr = table.getElementsByTagName("tr");
-                                                filter = input.value.toUpperCase();
-                    
-                                                for (i = 0; i < tr.length; i++) {
-                                                    td = tr[i].getElementsByTagName("td")[1];
-                                                    if (td) {
-                                                        txtValue = td.textContent || td.innerText;
-                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                            tr[i].style.display = "";
-                                                        } else {
-                                                            tr[i].style.display = "none";
-                                                        }
-                                                    }
-                    
-                                                }
-                                            }
-                                            function filter2() {
-                                                var input, filter, table, tr, td, i, txtValue;
-                                                input = document.getElementById("EName");
-                                                table = document.getElementById("table");
-                                                tr = table.getElementsByTagName("tr");
-                                                filter = input.value.toUpperCase();
-                    
-                                                for (i = 0; i < tr.length; i++) {
-                                                    td = tr[i].getElementsByTagName("td")[0];
-                                                    if (td) {
-                                                        txtValue = td.textContent || td.innerText;
-                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                            tr[i].style.display = "";
-                                                        } else {
-                                                            tr[i].style.display = "none";
-                                                        }
-                                                    }
-                    
-                                                }
-                                            }
-                                            function filter3() {
-                                                var input, filter, table, tr, td, i, txtValue;
-                                                input = document.getElementById("EJob");
-                                                table = document.getElementById("table");
-                                                tr = table.getElementsByTagName("tr");
-                                                filter = input.value.toUpperCase();
-                    
-                                                for (i = 0; i < tr.length; i++) {
-                                                    td = tr[i].getElementsByTagName("td")[5];
-                    //                                if (input.value.equals("All Designation")) {
-                    //                                        tr[i].style.display = "";
-                    //                                } else
-                                                    if (td) {
-                                                        txtValue = td.textContent || td.innerText;
-                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                            tr[i].style.display = "";
-                                                        } else {
-                                                            tr[i].style.display = "none";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        </script> -->
+
 
                 </div>
-                <!-- /Page Content -->
-
-                <!-- Add Employee Modal -->
-                <div id="add_employee" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Staff</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="manager" method="post">
-                                    <input type="hidden" name="do" value="addStaff">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="first_name" id="first_name" required pattern="^[A-Za-z]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="last_name" id="last_name" required pattern="^[A-Za-z]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="username" id="username" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="email" name="email" id="email" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="password" name="password" id="password" 
-                                                       onkeyup="checkconfirmPassword(this)" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                       onkeyup="checkPassword(this)" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required pattern="[A-Z]{5}">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div><input class="form-control" type="date" name="hire_date" id="hire_date" required></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Phone </label>
-                                                <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="^[0-9]+$">
-                                            </div>
-                                        </div>
-                                        <!--                                        <div class="col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="col-form-label">ReportsTo <span class="text-danger">*</span></label>-->
-                                        <input class="form-control" readonly type="hidden" value="" name="ReportsTo" id="ReportsTo" pattern="[A-Z]{5}">
-                                        <!--                                            </div>
-                                                                                </div>-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Department <span class="text-danger">*</span></label>
-                                                <select class="select" name="department_id" id="department_id" required="">
-                                                    <option value="">Select Department</option>
-                                                    <c:forEach items="${department}" var="o">
-                                                        <option value="${o.id}">${o.name}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Designation <span class="text-danger">*</span></label>
-                                                <select class="select" name="job_id" id="job_id" required="">
-                                                    <option value="">Select Designation</option>
-                                                    <c:forEach items="${job}" var="o">
-                                                        <option value="${o.id}">${o.title}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span id="wrong_pass_alert"></span>
-                                    <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert('New staff added successfully!');">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Add Employee Modal -->
-
-                <!-- Edit Employee Modal -->
-                <div id="edit_employee" class="modal custom-modal fade" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Edit Employee</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="manager" do="post">
-                                    <input type="hidden" name="do" value="editStaff">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" required pattern="^[A-Za-z]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Last Name</label>
-                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" required pattern="^[A-Za-z]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="username" id="username2" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="email" id="email2" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Password</label>
-                                                <input class="form-control" value="" type="password" name="password" id="password2" 
-                                                       onkeyup="checkConfirmPassword2(this)" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Confirm Password</label>
-                                                <input class="form-control" value="" type="password" name="password" id="confirm_password2" 
-                                                       onkeyup="checkPassword2(this)" required pattern="^[A-Za-z0-9]+$">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" required
-                                                       pattern="[A-Z]{5}">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div><input class="form-control" type="date" name="hire_date" id="hire_date2" required></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="^[0-9]+$">
-                                            </div>
-                                        </div>
-                                        <!--                                        <div class="col-sm-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="col-form-label">Report To <span class="text-danger">*</span></label>-->
-                                        <input class="form-control" value="" type="hidden" name="ReportsTo" id="ReportsTo2" required="" pattern="[A-Z]{5}">
-                                        <!--                                            </div>
-                                                                                </div>-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Department <span class="text-danger">*</span></label>
-                                                <select class="select" name="department_id" id="department_id2" required="">
-                                                    <option value="">Select Department</option>
-                                                    <c:forEach items="${department}" var="o">
-                                                        <option value="${o.id}">${o.name}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Designation <span class="text-danger">*</span></label>
-                                                <select class="select" name="job_id" id="job_id2" required="">
-                                                    <option value="">Select Designation</option>
-                                                    <c:forEach items="${job}" var="o">
-                                                        <option value="${o.id}">${o.title}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span id="wrong_pass_alert2"></span>
-                                    <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" onclick="wrongpassalert2('Edit succeeded!');">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Edit Employee Modal -->
-
-                <!-- Delete Employee Modal -->
-                <div class="modal custom-modal fade" id="delete_employee" role="dialog">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <form action="manager" do="post">
-                                    <input type="hidden" name="do" value="deleteStaff">
-                                    <input type="hidden" name="profile_id">
-                                    <div class="form-header">
-                                        <h3>Delete Employee</h3>
-                                        <p>Are you sure want to delete?</p>
-                                    </div>
-                                    <div class="modal-btn delete-action">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
-                                            </div>
-                                            <div class="col-6">
-                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Delete Employee Modal -->
-
-
             </div>
             <!-- /Page Wrapper -->
+
 
         </div>
         <!-- /Main Wrapper -->

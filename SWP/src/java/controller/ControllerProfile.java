@@ -49,6 +49,7 @@ public class ControllerProfile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
+            
             DAOProfile daop = new DAOProfile();
             DAOProfileDetail daopd = new DAOProfileDetail();
             DAOFamilyInfo daof = new DAOFamilyInfo();
@@ -88,7 +89,7 @@ public class ControllerProfile extends HttpServlet {
                     List<profileDetail> listpd = daopd.getIndividualProfileDetail(profile_id);
                     List<familyInfo> listf = daof.getIndividualFamilyInfo(profile_id);
                     List<experience> listexp = daoexp.listIndividualExperience(profile_id);
-//                    List<account> listacc = daoacc.getAccountwithList(profile_id);
+                    List<account> listacc = daoacc.getAccountwithList(profile_id);
                     for (profile p : listp) {
                         p.setJob_title(daoj.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -97,7 +98,7 @@ public class ControllerProfile extends HttpServlet {
                     request.setAttribute("listpd", listpd);
                     request.setAttribute("listf", listf);
                     request.setAttribute("listexp", listexp);
-//                    request.setAttribute("listacc", listacc);
+                    request.setAttribute("listacc", listacc);
 
                     RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                     dispatch.forward(request, response);

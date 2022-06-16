@@ -218,7 +218,7 @@
                                                 <td>
                                                     <h2 class="table-avatar">
                                                         <!--<a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>-->
-                                                        <a href="profile.jsp">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
+                                                        <a href="profile?do=getothersProfile&profile_id=${o.profile_id}">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
                                                     </h2>
 
                                                 </td>

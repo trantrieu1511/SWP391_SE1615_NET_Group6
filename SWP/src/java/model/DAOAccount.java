@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -71,6 +73,29 @@ public class DAOAccount extends DBConnect {
         return null;
     }
     
+    public List<account> getAccountwithList(String profile_id) {
+        List<account> list = new ArrayList<>();
+        String sql = "select * from [account] where profile_id = '" + profile_id + "'";
+        try {
+            ResultSet rs = getData(sql);
+            while (rs.next()) {
+                list.add(new account(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getBoolean(5)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isadmin, ismanager)"
                 + "values('" + profile_id + "', '" + username + "', '" + password
@@ -129,4 +154,5 @@ public class DAOAccount extends DBConnect {
         DAOAccount dao = new DAOAccount();
         dao.addAccount("12345", "1", "1");
     }
+
 }

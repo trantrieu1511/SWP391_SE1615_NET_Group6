@@ -55,7 +55,9 @@ public class DBConnect {
 //    }
     public ResultSet getData(String sql) throws Exception {
         try {
-            Statement state = getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Statement state = getConnection().createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             return rs;
         } catch (SQLException ex) {

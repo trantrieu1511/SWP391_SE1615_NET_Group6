@@ -142,9 +142,18 @@
                                                                                     <img src="img/profiles/avatar-16.jpg" alt="">
                                                                                 </div>
                                                                             </div>
-                                                                            <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
-                                                                                ${p.reportto}
-                                                                            </a>
+                                                                            <c:choose>
+                                                                                <c:when test="${(p.reportto!=sessionScope.acc.profile_id)}">
+                                                                                    <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
+                                                                                        ${p.reportto}
+                                                                                    </a>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <a href="profile?do=getmyProfile">
+                                                                                        ${p.reportto}
+                                                                                    </a>    
+                                                                                </c:otherwise>
+                                                                            </c:choose>
                                                                         </div>
                                                                     </c:otherwise> 
                                                                 </c:choose>
@@ -155,7 +164,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                                    <c:forEach items="${listp}" var="p">
+                                        <c:choose>
+                                            <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +200,20 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                        <h3 class="card-title">Personal Informations 
+                                            <c:forEach items="${listp}" var="p">
+                                                <c:choose>
+                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
+                                                        </c:when>
+                                                        <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+
+
+                                        </h3>
                                         <ul class="personal-info">
                                             <!--                                        <li>
                                                                                         <div class="title">Passport No.</div>
@@ -250,7 +281,7 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>
+                                        <h3 class="card-title">Emergency Contact</h3>
                                         <h5 class="section-title">Primary</h5>
                                         <ul class="personal-info">
                                             <c:forEach items="${listf}" var="f">
@@ -317,7 +348,19 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
+                                        <h3 class="card-title">Experience 
+                                            <c:forEach items="${listp}" var="p">
+                                                <c:choose>
+                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a>
+                                                        </c:when>
+                                                        <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+
+                                        </h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
                                                 <c:forEach items="${listexp}" var="e">
@@ -341,7 +384,18 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Family Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                        <h3 class="card-title">Family Informations 
+                                            <c:forEach items="${listp}" var="p">
+                                                <c:choose>
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>
+                                                        </c:when>
+                                                        <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </h3>
                                         <div class="table-responsive">
                                             <table class="table table-nowrap">
                                                 <thead>
@@ -393,7 +447,14 @@
                                                     </li>
                                                     <li>
                                                         <div class="title" style="margin-right: 0px">Password</div>
-                                                        <div class="text">${acc.pass}</div>
+                                                        <c:choose>
+                                                            <c:when test="${acc.pass!=sessionScope.acc.pass}">
+                                                                <div class="text">*************************</div>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                <div class="text">${acc.pass}</div>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                     </li>
                                                 </c:forEach>
                                             </ul>

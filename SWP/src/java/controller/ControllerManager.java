@@ -97,6 +97,7 @@ public class ControllerManager extends HttpServlet {
                         p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                     }
+                    request.setAttribute("filter", "yes");
                     request.setAttribute("list", list);
                     request.setAttribute("department", listDp);
                     request.setAttribute("job", listJ);
@@ -114,61 +115,38 @@ public class ControllerManager extends HttpServlet {
                     String eid = request.getParameter("eid");
                     String ename = request.getParameter("ename");
                     String ejob = request.getParameter("ejob");
-                    if (eid.equals("") && ename.equals("")) {
-                        List<profile> list = daoPf.searchStaffByjob(acc.getProfile_id(), ejob);
+                    List<profile> list = null;
+                    List<departments> listDp = daoDp.listAllDepartment();
+                    List<jobs> listJ = daoJ.listAllJob();
+
+                    if (ejob.equals("")) {
+                        list = daoPf.searchStaff1(eid, ename);
                         for (profile p : list) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
-                        request.setAttribute("list", list);
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
 
+                        request.setAttribute("list", list);
+                        request.setAttribute("filter", "no");
                         request.setAttribute("department", listDp);
                         request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                         dispath.forward(request, response);
-
-                    } else if (eid.equals("") && ejob.equals("")) {
-                        List<profile> list = daoPf.searchStaffByname(acc.getProfile_id(), ename);
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                        }
-                        request.setAttribute("list", list);
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
-                        dispath.forward(request, response);
-
-                    } else if (ename.equals("") && ejob.equals("")) {
-                        List<profile> list = daoPf.searchStaffByid(acc.getProfile_id(), eid);
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                        }
-                        request.setAttribute("list", list);
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
-                        dispath.forward(request, response);
-
                     } else {
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
+                        list = daoPf.searchStaff2(eid, ename, ejob);
+                        for (profile p : list) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
 
+                        request.setAttribute("list", list);
+                        request.setAttribute("filter", "no");
                         request.setAttribute("department", listDp);
                         request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("emp-list-searchresult.jsp");
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                         dispath.forward(request, response);
-//                        response.sendRedirect("manager?do=list");
                     }
+
                 }
 
                 if (service.equals("addStaff")) {
@@ -299,7 +277,7 @@ public class ControllerManager extends HttpServlet {
                     daoT.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
-                
+
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date = request.getParameter("date");
@@ -310,11 +288,12 @@ public class ControllerManager extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

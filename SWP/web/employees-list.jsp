@@ -177,30 +177,16 @@
                                 <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px" onclick="checkSearch()">
                             </div>
                         </div>
-                    </form>
+                    </form>         
                     <!-- /Search Filter -->
-                    <script type="text/javascript">
-                        function checkSearch() {
-                            var eid = document.getElementById('eid').value;
-                            var ename = document.getElementById('ename').value;
-                            var ejob = document.getElementById('ejob').value;
-                            if (eid != "" && ename != "" && ejob != "") {
-                                alert('please search seperately!');
-                            }else if(eid!=""&&ename!=""&&ejob==""){
-                                alert('please search seperately!');
-                            }else if(eid!=""&&ename==""&&ejob!=""){
-                                alert('please search seperately!');
-                            }else if(eid==""&&ename!=""&&ejob!=""){
-                                alert('please search seperately!');
-                            }
-                        }
-
-                    </script>
-
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable" id="table">                                   
+                                <table class="table table-striped custom-table datatable" id="table">  
+                                    <c:if test="${filter == 'no'}">
+                                        <h4><a href="manager?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
                                             <th>Name</th>

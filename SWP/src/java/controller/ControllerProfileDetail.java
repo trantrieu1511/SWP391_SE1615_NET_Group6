@@ -5,10 +5,7 @@
  */
 package controller;
 
-import entity.profileDetail;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,18 +34,19 @@ public class ControllerProfileDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            
+
             DAOProfileDetail daopd = new DAOProfileDetail();
             DAOFamilyInfo daof = new DAOFamilyInfo();
             DAOExperience daoexp = new DAOExperience();
-            
-            
-            if(service.equals("editProfileDetail")){
-                
+
+            if (service.equals("editProfileDetail")) {
+
             }
-            
+
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

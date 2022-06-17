@@ -7,7 +7,6 @@ package controller;
 
 import entity.account;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +35,7 @@ public class ControllerAuthentication extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
             if (service.equals("login")) {
                 String username = request.getParameter("user");
@@ -59,6 +58,8 @@ public class ControllerAuthentication extends HttpServlet {
                 session.invalidate();
                 response.sendRedirect("login.jsp");
             }
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

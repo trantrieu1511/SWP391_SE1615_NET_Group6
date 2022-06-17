@@ -15,10 +15,7 @@ import entity.profile;
 import entity.profileDetail;
 import entity.projects;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,7 +54,7 @@ public class ControllerManager extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             DAOAttendance daoA = new DAOAttendance();
@@ -303,6 +300,8 @@ public class ControllerManager extends HttpServlet {
                     response.sendRedirect("task-board.jsp");
                 }
             }
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

@@ -10,7 +10,6 @@ import entity.attendance;
 import entity.profile;
 import entity.projects;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -44,7 +43,7 @@ public class ControllerEmployee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
@@ -59,7 +58,6 @@ public class ControllerEmployee extends HttpServlet {
             String time_out = "";
             String production_time = "";
             String employee_id = "";
-            profile user = null;
             String button = "in";
             if (acc == null) {
                 response.sendRedirect("login.jsp");
@@ -158,6 +156,8 @@ public class ControllerEmployee extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
             }
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

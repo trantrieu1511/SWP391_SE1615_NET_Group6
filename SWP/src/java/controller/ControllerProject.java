@@ -11,14 +11,11 @@ import entity.profile;
 import entity.projects;
 import entity.task;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,7 +55,7 @@ public class ControllerProject extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
 
@@ -114,7 +111,7 @@ public class ControllerProject extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("search")) {
                     String title = request.getParameter("title");
                     List<projects> listPj = null;
@@ -123,7 +120,7 @@ public class ControllerProject extends HttpServlet {
                     } else {
                         listPj = daopj.search(title, daoPf.getByID(acc.getProfile_id()).getReportto());
                     }
-                    request.setAttribute(title, out);
+                    request.setAttribute("title", title);
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
@@ -208,6 +205,8 @@ public class ControllerProject extends HttpServlet {
                     dispath.forward(request, response);
                 }
             }
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

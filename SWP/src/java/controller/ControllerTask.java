@@ -8,7 +8,6 @@ package controller;
 import entity.account;
 import entity.projects;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,7 +38,7 @@ public class ControllerTask extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
             DAOProject daopj = new DAOProject();
@@ -53,6 +52,8 @@ public class ControllerTask extends HttpServlet {
             request.setAttribute("project", list);
             RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
             dispath.forward(request, response);
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

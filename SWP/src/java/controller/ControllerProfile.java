@@ -11,7 +11,6 @@ import entity.familyInfo;
 import entity.profile;
 import entity.profileDetail;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,9 +46,9 @@ public class ControllerProfile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
-            
+
             DAOProfile daop = new DAOProfile();
             DAOProfileDetail daopd = new DAOProfileDetail();
             DAOFamilyInfo daof = new DAOFamilyInfo();
@@ -57,9 +56,9 @@ public class ControllerProfile extends HttpServlet {
             DAOJob daoj = new DAOJob();
             DAODepartment daoDp = new DAODepartment();
             DAOAccount daoacc = new DAOAccount();
-            
+
             HttpSession session = request.getSession();
-            
+
             account acc = (account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
@@ -83,7 +82,7 @@ public class ControllerProfile extends HttpServlet {
                     RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                     dispatch.forward(request, response);
                 }
-                if(service.equals("getothersProfile")){
+                if (service.equals("getothersProfile")) {
                     String profile_id = request.getParameter("profile_id");
                     List<profile> listp = daop.getProfile(profile_id);
                     List<profileDetail> listpd = daopd.getIndividualProfileDetail(profile_id);
@@ -104,7 +103,8 @@ public class ControllerProfile extends HttpServlet {
                     dispatch.forward(request, response);
                 }
             }
-
+        } catch (Exception ex) {
+            response.sendRedirect("error404.jsp");
         }
     }
 

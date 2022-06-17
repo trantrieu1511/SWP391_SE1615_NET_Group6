@@ -299,6 +299,15 @@ public class ControllerManager extends HttpServlet {
                     daoT.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
+                
+                if (service.equals("searchAttendance")) {
+                    String name = request.getParameter("name");
+                    String date = request.getParameter("date");
+                    List<attendance> list = daoA.search(name, date);
+                    request.setAttribute("list", list);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
+                    dispath.forward(request, response);
+                }
             }
         } catch (Exception ex) {
             response.sendRedirect("error404.jsp");

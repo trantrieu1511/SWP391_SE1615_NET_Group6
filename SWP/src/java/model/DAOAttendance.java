@@ -33,7 +33,7 @@ public class DAOAttendance extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -76,8 +76,7 @@ public class DAOAttendance extends DBConnect {
                 + " where [shift_id]=? and [employee_id]=?";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state = conn.prepareStatement(sql);          
             state.setString(1, time_out);
             state.setString(2, production_time);
             state.setInt(3, id);

@@ -66,7 +66,7 @@ public class DAOProfile extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -92,7 +92,6 @@ public class DAOProfile extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
             state.setString(1, pro.getFirst_name());
             state.setString(2, pro.getLast_name());
             state.setString(3, pro.getEmail());

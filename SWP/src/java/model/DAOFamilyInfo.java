@@ -61,7 +61,7 @@ public class DAOFamilyInfo extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();

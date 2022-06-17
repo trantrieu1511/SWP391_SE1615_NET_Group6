@@ -103,7 +103,7 @@ public class DAOAccount extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -119,7 +119,6 @@ public class DAOAccount extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
             state.setString(1, username);
             state.setString(2, password);
             state.setString(3, profile_id);

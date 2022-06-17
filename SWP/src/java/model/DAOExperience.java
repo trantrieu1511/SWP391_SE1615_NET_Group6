@@ -59,7 +59,7 @@ public class DAOExperience extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
             status = true;
         } catch (SQLException ex) {
             ex.printStackTrace();

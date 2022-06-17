@@ -70,21 +70,27 @@
                     <!-- /Page Header -->
 
                     <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-6 col-md-4">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating" name="name">
-                                <label class="focus-label">Employee Name</label>
-                            </div>
-                        </div>                       
-                        <div class="col-sm-6 col-md-4"> 
-                            <div class="form-group form-focus"><label class="focus-label">Date</label>
-                                <div>                                
-                                    <input type="date" class="form-control floating" name="date" onfocus="(this.type = 'date')" onblur="if (!this.value) this.type = 'text'">
+                    <form action="manager" do="post">
+                        <input type="hidden" name="do" value="searchAttendance">
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-4">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" name="name">
+                                    <label class="focus-label">Employee Name</label>
+                                </div>
+                            </div>                       
+                            <div class="col-sm-6 col-md-4"> 
+                                <div class="form-group form-focus"><label class="focus-label">Date</label>
+                                    <div>                                
+                                        <input type="date" class="form-control floating" name="date" onfocus="(this.type = 'date')" onblur="if (!this.value) this.type = 'text'">
+                                    </div>
                                 </div>
                             </div>
-                        </div>                                             
-                    </div>
+                            <div class="col-sm-6 col-md-4">
+                                <button class="btn btn-success btn-block"> Search </button>  
+                            </div>
+                        </div>
+                    </form>
                     <!-- /Search Filter -->
 
                     <div class="row">

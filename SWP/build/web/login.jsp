@@ -50,8 +50,8 @@
                             <!-- Account Form -->
                             <form action="authentication?do=login" method="post">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input class="form-control" type="text" name="user">
+                                    <label>Username</label>
+                                    <input class="form-control" type="text" name="user" pattern="[a-zA-Z0-9]{1,12}">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -64,7 +64,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <input class="form-control" type="password" name="pass">
+                                    <input class="form-control" type="password" name="pass" pattern="[a-zA-Z0-9]{1,12}">
                                 </div>
                                 <div class="form-group text-center">
                                     <button class="btn btn-primary account-btn" type="submit" value="login">Login</button>

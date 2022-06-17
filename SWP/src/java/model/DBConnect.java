@@ -56,7 +56,7 @@ public class DBConnect {
     public ResultSet getData(String sql) throws Exception {
         try {
             Statement state = getConnection().createStatement(
-                    ResultSet.TYPE_SCROLL_SENSITIVE, 
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             return rs;
@@ -67,23 +67,25 @@ public class DBConnect {
     }
 
     public void closeConnection(Connection conn) {
-        try {
-            if (conn != null) {
+
+        if (conn != null) {
+            try {
                 conn.close();
+            } catch (Exception ex) {
             }
-        } catch (Exception ex) {
         }
     }
-    
+
     public void closePrepareStatement(PreparedStatement pre) {
-        try {
-            if (pre != null) {
+
+        if (pre != null) {
+            try {
                 pre.close();
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }
-    
+
     public void closeResultSet(ResultSet rs) {
         try {
             if (rs != null) {

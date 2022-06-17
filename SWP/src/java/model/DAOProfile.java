@@ -18,7 +18,7 @@ import java.util.List;
  * @author DELL
  */
 public class DAOProfile extends DBConnect {
-    
+
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
@@ -218,7 +218,8 @@ public class DAOProfile extends DBConnect {
 
     public List<profile> searchStaff1(String profile_id, String name) {
         String sql = "select * from profile where profile_id like '%" + profile_id
-                + "%' and first_name like '%" + name + "%'";
+                + "%' and first_name + last_name like '%" + name + "%'"
+                + " and report_to is not null";
         List<profile> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -247,8 +248,9 @@ public class DAOProfile extends DBConnect {
     }
 
     public List<profile> searchStaff2(String profile_id, String name, String job_id) {
-        String sql = "select * from profile where profile_id like '%" + profile_id
-                + "%' and job_id = " + job_id + " and first_name like '%" + name + "%'";
+        String sql = "select * from [profile] where profile_id like '%" + profile_id + "%'"
+                + " and job_id = " + job_id + " and first_name + last_name like '%" + name + "%' "
+                + "and report_to is not null";
         List<profile> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -275,7 +277,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
         List<profile> staff = dao.searchStaff1("QWER", "");

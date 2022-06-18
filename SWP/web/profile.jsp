@@ -348,7 +348,9 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience</h3>
+                                        <h3 class="card-title">Experience 
+                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
+                                        </h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
                                                 <c:forEach items="${listexp}" var="e">
@@ -363,7 +365,7 @@
                                                                 <c:forEach items="${listp}" var="p">
                                                                     <c:choose>
                                                                         <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>-->
                                                                             <td class="text-right">
                                                                                 <div class="dropdown dropdown-action" style="text-align: right;">
                                                                                     <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
@@ -391,7 +393,9 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Family Informations</h3>
+                                        <h3 class="card-title">Family Informations 
+                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
+                                        </h3>
                                         <div class="table-responsive">
                                             <table class="table table-nowrap">
                                                 <thead>
@@ -418,7 +422,7 @@
                                                                             <div class="dropdown dropdown-action">
                                                                                 <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_family_info_modal"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                                                     <!--<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
                                                                                 </div>
                                                                             </div>
@@ -987,7 +991,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Birth Date</label>
+                                                            <label>Birth Date <span class="text-danger">*</span></label>
                                                             <div class="form-group">
                                                                 <input class="form-control" name="dob" type="date" value="${pd.dob}">
                                                             </div>
@@ -995,7 +999,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Gender</label>
+                                                            <label>Gender <span class="text-danger">*</span></label>
                                                             <select class="select form-control" name="gender">
                                                                 <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
                                                                 <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
@@ -1008,7 +1012,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Address</label>
+                                                    <label>Address <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" name="address" value="${pd.address}">
                                                 </div>
                                             </div>
@@ -1082,7 +1086,7 @@
                             <form action="profileDetail" method="post">
                                 <input type="hidden" name="do" value="editPersonalInfo">
                                 <c:forEach items="${listpd}" var="pd">
-
+                                    <input type="hidden" name="profile_id" value="${pd.profile_id}">
                                     <div class="row">
 
                                         <!--                                        <div class="col-md-6">
@@ -1099,8 +1103,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Religion</label>s
-                                                <div class="cal-icon">
+                                                <label>Religion <span class="text-danger">*</span></label>
+                                                <div class="form-group">
                                                     <input class="form-control" type="text" name="religion" value="${pd.religion}">
                                                 </div>
                                             </div>
@@ -1126,14 +1130,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Bank name</label>
+                                                <label>Bank name <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Bank account No.</label>
-                                                <div class="cal-icon">
+                                                <label>Bank account No. <span class="text-danger">*</span></label>
+                                                <div class="form-group">
                                                     <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}">
                                                 </div>
                                             </div>
@@ -1150,12 +1154,12 @@
             </div>
             <!-- /Personal Info Modal -->
 
-            <!-- Family Info Modal -->
-            <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+            <!-- Add Family Info Modal -->
+            <div id="add_family_info_modal" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title"> Family Informations</h5>
+                            <h5 class="modal-title">Add Family Informations</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1163,14 +1167,110 @@
                         <div class="modal-body">
                             <form action="familyInfo">
                                 <div class="form-scroll">
-                                    <input type="text" name="do" value="editFamilyInfo">
-                                    
+                                    <input type="hidden" name="do" value="addFamilyInfo">
+
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title">Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <h3 class="card-title">Add Family Member 
+                                                <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
+                                            </h3>
                                             <div class="row">
                                                 <c:forEach items="${listf}" var="f">
-                                                    <input type="text" name="profile_id" value="${f.profile_id}">
+                                                    <input type="hidden" name="profile_id" value="${f.profile_id}">
+                                                </c:forEach>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="name" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Relationship <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="relationship" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Date of birth </label>
+                                                        <input class="form-control" type="date" name="dob" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="phone" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--                                    <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Name <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Relationship <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Phone <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="add-more">
+                                                                                    <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                                                                </div>
+                                                                            </div>-->
+                                </div>
+                                <div class="submit-section" style="margin-bottom: 25px;">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Add Family Info Modal -->
+
+            <!-- Edit Family Info Modal -->
+            <div id="edit_family_info_modal" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Family Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="familyInfo">
+                                <div class="form-scroll">
+                                    <input type="hidden" name="do" value="editFamilyInfo">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Edit Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row">
+                                                <c:forEach items="${listf}" var="f">
+                                                    <input type="hidden" name="profile_id" value="${f.profile_id}">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Name <span class="text-danger">*</span></label>
@@ -1185,7 +1285,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                            <label>Date of birth </label>
                                                             <input class="form-control" type="date" name="dob" value="${f.dob}">
                                                         </div>
                                                     </div>
@@ -1242,7 +1342,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Family Info Modal -->
+            <!-- /Edit Family Info Modal -->
 
             <!-- Emergency Contact Modal -->
             <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
@@ -1451,12 +1551,12 @@
             </div>
             <!-- /Education Modal -->
 
-            <!-- Edit Experience Modal -->
-            <div id="edit_experience_info" class="modal custom-modal fade" role="dialog">
+            <!-- Add Experience Modal -->
+            <div id="add_experience_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Experience Informations</h5>
+                            <h5 class="modal-title">Add Experience Informations</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -1464,17 +1564,134 @@
                         <div class="modal-body">
                             <form action="experience">
                                 <div class="form-scroll">
-                                    <input type="text" name="do" value="editExperience">
+                                    <input type="hidden" name="do" value="addExperience">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <h3 class="card-title">Add Experience Informations 
+                                                <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
+                                            </h3>
                                             <div class="row">
                                                 <c:forEach items="${listexp}" var="e">
-                                                    <input type="text" name="profile_id" value="${e.profile_id}">
+                                                    <input type="hidden" name="profile_id" value="${e.profile_id}">
+                                                </c:forEach>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="">Role <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" name="role" value="" placeholder="Enter your experience here">
+                                                    </div>
+                                                </div>
+                                                <!--                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="United States">
+                                                                                                        <label class="focus-label">Location</label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="Web Developer">
+                                                                                                        <label class="focus-label">Job Position</label>
+                                                                                                    </div>
+                                                                                                </div>-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label class="">Period From <span class="text-danger">*</span></label>
+                                                            <input type="date" class="form-control" name="start_date" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="form-group">
+                                                            <label class="">Period To</label>
+                                                            <input type="date" class="form-control" name="end_date" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="Digital Devlopment Inc">
+                                                                                            <label class="focus-label">Company Name</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="United States">
+                                                                                            <label class="focus-label">Location</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="Web Developer">
+                                                                                            <label class="focus-label">Job Position</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <div class="cal-icon">
+                                                                                                <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                                                            </div>
+                                                                                            <label class="focus-label">Period From</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <div class="cal-icon">
+                                                                                                <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                                                            </div>
+                                                                                            <label class="focus-label">Period To</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="add-more">
+                                                                                    <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Add Experience Modal -->
+
+            <!-- Edit Experience Modal -->
+            <div id="edit_experience_info" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Experience Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="experience">
+                                <div class="form-scroll">
+                                    <input type="hidden" name="do" value="editExperience">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Edit Experience Informations 
+                                                <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>
+                                            </h3>
+                                            <div class="row">
+                                                <c:forEach items="${listexp}" var="e">
+                                                    <input type="hidden" name="profile_id" value="${e.profile_id}">
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
                                                             <input type="text" class="form-control floating" name="role" value="${e.role}">
-                                                            <label class="focus-label">Role</label>
+                                                            <label class="focus-label">Role <span class="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <!--                                                <div class="col-md-6">
@@ -1491,16 +1708,16 @@
                                                                                                     </div>-->
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
-                                                            <div class="cal-icon">
-                                                                <input type="text" class="form-control floating datetimepicker" name="start_date" value="${e.start_date}">
+                                                            <div class="form-group">
+                                                                <input type="date" class="form-control floating" name="start_date" value="${e.start_date}">
                                                             </div>
-                                                            <label class="focus-label">Period From</label>
+                                                            <label class="focus-label">Period From <span class="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
-                                                            <div class="cal-icon">
-                                                                <input type="text" class="form-control floating datetimepicker" name="end_date" value="${e.end_date}">
+                                                            <div class="form-group">
+                                                                <input type="date" class="form-control floating" name="end_date" value="${e.end_date}">
                                                             </div>
                                                             <label class="focus-label">Period To</label>
                                                         </div>
@@ -1579,7 +1796,9 @@
                                 <div class="form-scroll">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <h3 class="card-title">Experience Informations 
+                                                <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
+                                            </h3>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">

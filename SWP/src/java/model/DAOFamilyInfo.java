@@ -10,17 +10,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
 public class DAOFamilyInfo extends DBConnect {
-    
+
     Connection conn = null;
-    PreparedStatement state = null;
+    PreparedStatement pre = null;
+    Statement state;
     ResultSet rs = null;
 
     public List<familyInfo> getIndividualFamilyInfo(String profile_id) {
@@ -28,8 +32,7 @@ public class DAOFamilyInfo extends DBConnect {
         String sql = "select * from [familyInfo] where profile_id = '" + profile_id + "'";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);
-            rs = state.executeQuery();
+            rs = getData(sql);
             while (rs.next()) {
                 flist.add(new familyInfo(
                         rs.getString(1),
@@ -39,11 +42,11 @@ public class DAOFamilyInfo extends DBConnect {
                         rs.getString(5)));
 
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
-            closePrepareStatement(state);
+            closeStatement(state);
             closeConnection(conn);
         }
         return flist;
@@ -60,14 +63,54 @@ public class DAOFamilyInfo extends DBConnect {
                 + "'" + f.getPhone() + "')";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.executeUpdate();
+            state = conn.createStatement();
+            state.executeUpdate(sql);
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
-            closePrepareStatement(state);
+            closeStatement(state);
+            closeConnection(conn);
+        }
+        return status;
+    }
+
+    public boolean deleteFamilyInfo(String profile_id) {
+        String sql = "delete from [familyInfo] where [profile_id] = '" + profile_id + "'";
+        try {
+            conn = getConnection();
+            state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean editFamilyInfo(familyInfo familyInfo) {
+        boolean status = false;
+        String sql = "update [familyInfo]\n"
+                + "set\n"
+                + "[name] = '" + familyInfo.getName() + "',\n"
+                + "relationship = '" + familyInfo.getRelationship() + "',\n"
+                + "dob = '" + familyInfo.getDob() + "',\n"
+                + "phone = '" + familyInfo.getPhone() + "'\n"
+                + "where profile_id = '" + familyInfo.getProfile_id() + "'";
+        conn = getConnection();
+        try {
+            state = conn.createStatement();
+            state.executeUpdate(sql);
+            status = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            status = false;
+        } finally {
+            closeStatement(state);
             closeConnection(conn);
         }
         return status;
@@ -79,31 +122,16 @@ public class DAOFamilyInfo extends DBConnect {
 //        for (familyInfo finfo : list) {
 //            System.out.println(finfo.toString());
 //        }
-        String profile_id = "MRNEW";
-        familyInfo f = new familyInfo(profile_id, "mrold", "father", "GETDATE()",
-                "012345678");
-        boolean statusf = dao.addFamilyInfo(f);
-        if (statusf) {
-            System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
-        } else {
-            System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
-        }
-    }
+//        String profile_id = "MRNEW";
+//        familyInfo f = new familyInfo(profile_id, "mrold", "father", "GETDATE()",
+//                "012345678");
+//        boolean statusf = dao.addFamilyInfo(f);
+//        if (statusf) {
+//            System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
+//        } else {
+//            System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
+//        }
 
-    public boolean deleteFamilyInfo(String profile_id) {
-        String sql = "delete from [familyInfo] where [profile_id] = '" + profile_id + "'";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.executeQuery();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        } finally {
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return true;
     }
 
 }

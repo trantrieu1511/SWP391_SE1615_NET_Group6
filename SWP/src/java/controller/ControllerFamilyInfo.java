@@ -5,6 +5,8 @@
  */
 package controller;
 
+import entity.account;
+import entity.familyInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.DAOFamilyInfo;
 
 /**
  *
@@ -34,21 +38,40 @@ public class ControllerFamilyInfo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String service = request.getParameter("do");
-            if(service.equals("editFamilyInfo")){
+            DAOFamilyInfo daoF = new DAOFamilyInfo();
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+
+            if (service.equals("editFamilyInfo")) {
                 String profile_id = request.getParameter("profile_id");
+                String name = request.getParameter("name");
                 String relationship = request.getParameter("relationship");
                 String dob = request.getParameter("dob");
                 String phone = request.getParameter("phone");
-                
-                out.print(profile_id);
-                out.print("<br>");
-                out.print(relationship);
-                out.print("<br>");
-                out.print(dob);
-                out.print("<br>");
-                out.print(phone);
+
+//                out.print(profile_id);
+//                out.print("<br>");
+//                out.print(name);
+//                out.print("<br>");
+//                out.print(relationship);
+//                out.print("<br>");
+//                out.print(dob);
+//                out.print("<br>");
+//                out.print(phone);
+                boolean statusf = daoF.editFamilyInfo(new familyInfo(profile_id, name, relationship, dob, phone));
+                if (statusf) {
+                    System.out.println("Successfully edited familyInfo of Staff with profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to edit familyInfo of Staff with profile_id = " + profile_id);
+                }
+
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
             }
-                
+
         }
     }
 

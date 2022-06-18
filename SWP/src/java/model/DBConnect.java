@@ -86,6 +86,16 @@ public class DBConnect {
         }
     }
 
+    public void closeStatement(Statement state) {
+
+        if (state != null) {
+            try {
+                state.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
     public void closeResultSet(ResultSet rs) {
 
         if (rs != null) {

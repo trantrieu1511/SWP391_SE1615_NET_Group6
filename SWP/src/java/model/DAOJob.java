@@ -18,11 +18,11 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOJob extends DBConnect {
-    
+
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-    
+
     public List<jobs> listAllJob() {
         List<jobs> list = new ArrayList<>();
         String sql = "select * from [jobs]";
@@ -46,7 +46,7 @@ public class DAOJob extends DBConnect {
         }
         return list;
     }
-    
+
     public jobs getJobByTitle(String title) {
         String sql = "select * from jobs where [job_title] = '" + title + "'";
         try {
@@ -69,7 +69,7 @@ public class DAOJob extends DBConnect {
         }
         return null;
     }
-    
+
     public jobs getJobById(int id) {
         String sql = "select * from jobs where [job_id] = " + id;
         try {
@@ -92,7 +92,7 @@ public class DAOJob extends DBConnect {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         DAOJob dao = new DAOJob();
         List<jobs> list = dao.listAllJob();

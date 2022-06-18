@@ -96,8 +96,8 @@ public class ControllerManager extends HttpServlet {
                     for (profile p : list) {
                         p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                        account acc2 = daoAcc.getAccount(p.getProfile_id());
-                        if (acc2 != null) {
+                        account accStaff = daoAcc.getAccount(p.getProfile_id());
+                        if (accStaff != null) {
                             p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
                             p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
                         }

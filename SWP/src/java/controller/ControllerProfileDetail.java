@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.account;
 import entity.profileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DAOExperience;
 import model.DAOFamilyInfo;
 import model.DAOProfileDetail;
@@ -38,6 +40,9 @@ public class ControllerProfileDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+
             String service = request.getParameter("do");
 
             DAOProfileDetail daoPd = new DAOProfileDetail();
@@ -47,23 +52,66 @@ public class ControllerProfileDetail extends HttpServlet {
             if (service.equals("editProfileInfo")) {
                 String profile_id = request.getParameter("profile_id");
                 String dob = request.getParameter("dob");
-                String gender = request.getParameter("gender");
+                boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
                 String address = request.getParameter("address");
-                String country = request.getParameter("country");
-                
-                out.print(profile_id);
-                out.print("<br>");
-                out.print(dob);
-                out.print("<br>");
-                out.print(gender);
-                out.print("<br>");
-                out.print(address);
-                out.print("<br>");
-                
-//                profileDetail pd = new profileDetail();
+
+//                out.print(profile_id);
+//                out.print("<br>");
+//                out.print(dob);
+//                out.print("<br>");
+//                out.print(gender);
+//                out.print("<br>");
+//                out.print(address);
+//                out.print("<br>");
+                boolean statusPfi = daoPd.editProfileDetail(
+                        new profileDetail(profile_id, dob, address, gender));
+                if (statusPfi) {
+                    System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to edit profileInfo of profile_id = " + profile_id);
+                }
+
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
             }
             if (service.equals("editPersonalInfo")) {
-                
+                String profile_id = request.getParameter("profile_id");
+                String country = request.getParameter("country");
+                String religion = request.getParameter("religion");
+                boolean isMarried = Boolean.parseBoolean(request.getParameter("isMarried"));
+                int children = Integer.parseInt(request.getParameter("children"));
+                String bank_name = request.getParameter("bank_name");
+                String bank_number = request.getParameter("bank_number");
+//                out.print(profile_id);
+//                out.print("<br>");
+//                out.print(country);
+//                out.print("<br>");
+//                out.print(religion);
+//                out.print("<br>");
+//                out.print(isMarried);
+//                out.print("<br>");
+//                out.print(children);
+//                out.print("<br>");
+//                out.print(bank_name);
+//                out.print("<br>");
+//                out.print(bank_number);
+                boolean statusPsInfo = daoPd.editPersonalDetail(
+                        new profileDetail(profile_id, country, religion,
+                                isMarried, children, bank_name, bank_number));
+                if (statusPsInfo) {
+                    System.out.println("Successfully edited personalInfo of profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to edit personalInfo of profile_id = " + profile_id);
+                }
+
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
             }
 
         } catch (Exception ex) {

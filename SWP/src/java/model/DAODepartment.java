@@ -18,7 +18,7 @@ import java.util.List;
  * @author Khanh
  */
 public class DAODepartment extends DBConnect {
-    
+
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
@@ -44,7 +44,7 @@ public class DAODepartment extends DBConnect {
         }
         return list;
     }
-    
+
     public departments getDepartmentByName(String name) {
         String sql = "select * from departments where [department_name] = '" + name + "'";
         try {
@@ -65,7 +65,7 @@ public class DAODepartment extends DBConnect {
         }
         return null;
     }
-    
+
     public departments getDepartmentByID(int id) {
         String sql = "select * from departments where [department_id] = " + id;
         try {
@@ -86,7 +86,7 @@ public class DAODepartment extends DBConnect {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         DAODepartment dao = new DAODepartment();
 //        List<departments> list = dao.listAllDepartment();

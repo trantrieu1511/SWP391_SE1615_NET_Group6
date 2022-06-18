@@ -5,6 +5,8 @@
  */
 package controller;
 
+import entity.account;
+import entity.experience;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.DAOExperience;
 
 /**
  *
@@ -33,19 +37,39 @@ public class ControllerExperience extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            DAOExperience daoExp = new DAOExperience();
+            HttpSession session = request.getSession();
+            account acc = (account) session.getAttribute("acc");
+
             String service = request.getParameter("do");
-            if(service.equals("editExperience")){
+            if (service.equals("editExperience")) {
+                String profile_id = request.getParameter("profile_id");
                 String role = request.getParameter("role");
                 String start_date = request.getParameter("start_date");
                 String end_date = request.getParameter("end_date");
-                
-                out.print(role);
-                out.print("<br>");
-                out.print(start_date);
-                out.print("<br>");
-                out.print(end_date);
+
+//                out.print(profile_id);
+//                out.print("<br>");
+//                out.print(role);
+//                out.print("<br>");
+//                out.print(start_date);
+//                out.print("<br>");
+//                out.print(end_date);
+                boolean statusExp = daoExp.editExperience(
+                        new experience(profile_id, role, start_date, end_date));
+                if (statusExp) {
+                    System.out.println("Successfully edited experience of profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to edit experience of profile_id = " + profile_id);
+                }
+
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
             }
-            
+
         }
     }
 

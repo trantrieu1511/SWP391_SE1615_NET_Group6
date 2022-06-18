@@ -21,7 +21,8 @@ import java.util.List;
 public class DAOExperience extends DBConnect {
 
     Connection conn = null;
-    PreparedStatement state = null;
+    PreparedStatement pre = null;
+    Statement state = null;
     ResultSet rs = null;
 
     public List<experience> listIndividualExperience(String profile_id) {
@@ -29,8 +30,8 @@ public class DAOExperience extends DBConnect {
         String sql = "select * from [experience] where profile_id = '" + profile_id + "'";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);
-            rs = state.executeQuery();
+            pre = conn.prepareStatement(sql);
+            rs = pre.executeQuery();
             while (rs.next()) {
                 elist.add(new experience(
                         rs.getString(1),
@@ -42,7 +43,7 @@ public class DAOExperience extends DBConnect {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
-            closePrepareStatement(state);
+            closePrepareStatement(pre);
             closeConnection(conn);
         }
         return elist;
@@ -58,17 +59,56 @@ public class DAOExperience extends DBConnect {
                 + "" + exp.getEnd_date() + ")";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.executeUpdate();
+            state = conn.createStatement();
+            state.executeUpdate(sql);
             status = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             status = false;
         } finally {
-            closePrepareStatement(state);
+            closeStatement(state);
             closeConnection(conn);
         }
         return status;
+    }
+
+    public boolean editExperience(experience exp) {
+        boolean status = false;
+        String sql = "update [experience]\n"
+                + "set\n"
+                + "[role] = '" + exp.getRole() + "',\n"
+                + "[start_date] = '" + exp.getStart_date() + "',\n"
+                + "[end_date] = '" + exp.getEnd_date() + "'\n"
+                + "where profile_id = '" + exp.getProfile_id() + "'";
+        conn = getConnection();
+        try {
+            state = conn.createStatement();
+            state.executeUpdate(sql);
+            status = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            status = false;
+        } finally {
+            closeStatement(state);
+            closeConnection(conn);
+        }
+        return status;
+    }
+
+    public boolean deleteExperience(String profile_id) {
+        String sql = "delete from [experience] where [profile_id] = '" + profile_id + "'";
+        try {
+            conn = getConnection();
+            state = conn.createStatement();
+            state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closeStatement(state);
+            closeConnection(conn);
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -77,31 +117,16 @@ public class DAOExperience extends DBConnect {
 //        for (experience exp : list) {
 //            System.out.println(exp.toString());
 //        }
-        String profile_id = "MRNEW";
-        experience exp = new experience(profile_id, "Enterrole", "GETDATE()",
-                "GETDATE()");
-        boolean statusexp = daoexp.addExperience(exp);
-        if (statusexp) {
-            System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
-        } else {
-            System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
-        }
+//        String profile_id = "MRNEW";
+//        experience exp = new experience(profile_id, "Enterrole", "GETDATE()",
+//                "GETDATE()");
+//        boolean statusexp = daoexp.addExperience(exp);
+//        if (statusexp) {
+//            System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
+//        } else {
+//            System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
+//        }
 
     }
 
-    public boolean deleteExperience(String profile_id) {
-        String sql = "delete from [experience] where [profile_id] = '" + profile_id + "'";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.executeQuery();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        } finally {
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return true;
-    }
 }

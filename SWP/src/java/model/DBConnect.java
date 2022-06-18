@@ -87,11 +87,12 @@ public class DBConnect {
     }
 
     public void closeResultSet(ResultSet rs) {
-        try {
-            if (rs != null) {
+
+        if (rs != null) {
+            try {
                 rs.close();
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }
 

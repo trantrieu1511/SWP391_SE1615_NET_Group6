@@ -41,7 +41,10 @@ public class ControllerProfileDetail extends HttpServlet {
             DAOFamilyInfo daof = new DAOFamilyInfo();
             DAOExperience daoexp = new DAOExperience();
 
-            if (service.equals("editProfileDetail")) {
+            if (service.equals("editProfileInfo")) {
+
+            }
+            if (service.equals("editPersonalInfo")) {
 
             }
 

@@ -18,6 +18,10 @@ public class profile {
     String department_name;
     double salary;
     String reportto;
+    String user_display;
+    String pass_display;
+    String isadmin_d;
+    String ismanager_d;
 
     public profile() {
     }
@@ -146,6 +150,38 @@ public class profile {
 
     public void setDepartment_name(String department_name) {
         this.department_name = department_name;
+    }
+
+    public String getUser_display() {
+        return user_display;
+    }
+
+    public void setUser_display(String user_display) {
+        this.user_display = user_display;
+    }
+
+    public String getPass_display() {
+        return pass_display;
+    }
+
+    public void setPass_display(String pass_display) {
+        this.pass_display = pass_display;
+    }
+
+    public String getIsadmin_d() {
+        return isadmin_d;
+    }
+
+    public void setIsadmin_d(String isadmin_d) {
+        this.isadmin_d = isadmin_d;
+    }
+
+    public String getIsmanager_d() {
+        return ismanager_d;
+    }
+
+    public void setIsmanager_d(String ismanager_d) {
+        this.ismanager_d = ismanager_d;
     }
 
     @Override

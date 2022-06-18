@@ -450,11 +450,11 @@
                                                         <c:choose>
                                                             <c:when test="${acc.pass!=sessionScope.acc.pass}">
                                                                 <div class="text">*************************</div>
-                                                                </c:when>
-                                                                <c:otherwise>
+                                                            </c:when>
+                                                            <c:otherwise>
                                                                 <div class="text">${acc.pass}</div>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </li>
                                                 </c:forEach>
                                             </ul>
@@ -952,114 +952,111 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="profileDetail" method="post">
+                                <input type="hidden" name="do" value="editProfileInfo">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="profile-img-wrap edit-img">
-                                            <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
-                                            <div class="fileupload btn">
-                                                <span class="btn-text">edit</span>
-                                                <input class="upload" type="file">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>First Name</label>
-                                                    <input type="text" class="form-control" value="John">
+                                    <c:forEach items="${listp}" var="p">
+                                        <c:forEach items="${listpd}" var="pd">
+                                            <div class="col-md-12">
+                                                <div class="profile-img-wrap edit-img">
+                                                    <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
+                                                    <div class="fileupload btn">
+                                                        <span class="btn-text">edit</span>
+                                                        <input class="upload" type="file">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Last Name</label>
-                                                    <input type="text" class="form-control" value="Doe">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Birth Date</label>
-                                                    <div class="cal-icon">
-                                                        <input class="form-control datetimepicker" type="text" value="05/06/1985">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>First Name</label>
+                                                            <input type="text" class="form-control" value="${p.first_name}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Last Name</label>
+                                                            <input type="text" class="form-control" value="${p.last_name}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Birth Date</label>
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="date" value="${pd.dob}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Gender</label>
+                                                            <select class="select form-control">
+                                                                <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
+                                                                <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Gender</label>
-                                                    <select class="select form-control">
-                                                        <option value="male selected">Male</option>
-                                                        <option value="female">Female</option>
-                                                    </select>
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" value="${pd.address}">
                                                 </div>
                                             </div>
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>State</label>
+                                                                                                <input type="text" class="form-control" value="New York">
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <input type="text" class="form-control" value="${pd.country}">
+                                                </div>
+                                            </div>
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>Pin Code</label>
+                                                                                                <input type="text" class="form-control" value="10523">
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Phone Number</label>
+                                                    <input type="text" class="form-control" value="${p.phone_number}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Department</label>
+                                                    <input type="text" class="form-control" value="${p.department_name}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Designation</label>
+                                                    <input type="text" class="form-control" value="${p.job_title}" readonly>
+                                                </div>
+                                            </div>
+                                            <c:choose>
+                                                <c:when test="${p.reportto!=null}">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Reports to</label>
+                                                            <input type="text" class="form-control" value="${p.reportto}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input type="text" class="form-control" value="4487 Snowbird Lane">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>State</label>
-                                            <input type="text" class="form-control" value="New York">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Country</label>
-                                            <input type="text" class="form-control" value="United States">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Pin Code</label>
-                                            <input type="text" class="form-control" value="10523">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input type="text" class="form-control" value="631-889-3206">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Department <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select Department</option>
-                                                <option>Web Development</option>
-                                                <option>IT Management</option>
-                                                <option>Marketing</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Designation <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>Select Designation</option>
-                                                <option>Web Designer</option>
-                                                <option>Web Developer</option>
-                                                <option>Android Developer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Reports To <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option>-</option>
-                                                <option>Wilmer Deluna</option>
-                                                <option>Lesley Grauer</option>
-                                                <option>Jeffery Lalor</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </c:forEach>
+                                </c:forEach>
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
@@ -1081,65 +1078,67 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Passport No</label>
-                                            <input type="text" class="form-control">
+                            <form action="profileDetail" method="post">
+                                <input type="hidden" name="do" value="editPersonalInfo">
+                                <c:forEach items="${listpd}" var="pd">
+
+                                    <div class="row">
+
+                                        <!--                                        <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Tel</label>
+                                                                                        <input class="form-control" type="text">
+                                                                                    </div>
+                                                                                </div>-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Nationality <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" value="${pd.country}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Passport Expiry Date</label>
-                                            <div class="cal-icon">
-                                                <input class="form-control datetimepicker" type="text">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Religion</label>s
+                                                <div class="cal-icon">
+                                                    <input class="form-control" type="text" value="${pd.religion}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Marital status <span class="text-danger">*</span></label>
+                                                <select class="select form-control">
+                                                    <option value="">-</option>
+                                                    <option value="false" ${pd.isMarried==false ? "selected" : ''} >Single</option>
+                                                    <option value="true" ${pd.isMarried==true ? "selected" : ''} >Married</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>No. of children </label>
+                                                <input class="form-control" type="text" value="${pd.children}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Tel</label>
-                                            <input class="form-control" type="text">
+                                    <h4 style="margin-bottom: 20px;">Bank Information</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Bank name</label>
+                                                <input type="text" class="form-control" value="${pd.bank_name}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Nationality <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Religion</label>
-                                            <div class="cal-icon">
-                                                <input class="form-control" type="text">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Bank account No.</label>
+                                                <div class="cal-icon">
+                                                    <input class="form-control" type="text" value="${pd.bank_number}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Marital status <span class="text-danger">*</span></label>
-                                            <select class="select form-control">
-                                                <option>-</option>
-                                                <option>Single</option>
-                                                <option>Married</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Employment of spouse</label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>No. of children </label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>

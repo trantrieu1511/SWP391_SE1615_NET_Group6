@@ -96,6 +96,8 @@ public class ControllerManager extends HttpServlet {
                     for (profile p : list) {
                         p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
+                        p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
                     }
                     request.setAttribute("filter", "yes");
                     request.setAttribute("list", list);
@@ -180,7 +182,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
                     }
 
-                    profileDetail pd = new profileDetail(profile_id, "GETDATE()",
+                    profileDetail pd = new profileDetail(profile_id, "'1900-01-01'",
                             "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
                     boolean statusPd = daopd.addProfileDetail(pd);
                     if (statusPd) {
@@ -190,7 +192,7 @@ public class ControllerManager extends HttpServlet {
                     }
 
                     familyInfo f = new familyInfo(profile_id, "N/A", "N/A",
-                            "GETDATE()", "N/A");
+                            "'1900-01-01'", "N/A");
                     boolean statusf = daof.addFamilyInfo(f);
                     if (statusf) {
                         System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
@@ -198,7 +200,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
                     }
 
-                    experience exp = new experience(profile_id, "N/A", "GETDATE()",
+                    experience exp = new experience(profile_id, "N/A", "'1900-01-01'",
                             "GETDATE()");
                     boolean statusexp = daoexp.addExperience(exp);
                     if (statusexp) {

@@ -63,7 +63,7 @@ CREATE TABLE [familyInfo] (
 
 CREATE TABLE [experience] (
     profile_id CHAR(5),
-	role VARCHAR(20) NOT NULL,
+	role VARCHAR(100) NOT NULL,
 	start_date DATE NOT NULL,
 	end_date DATE NULL,
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)

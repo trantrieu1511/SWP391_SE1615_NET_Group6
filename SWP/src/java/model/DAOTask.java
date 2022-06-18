@@ -29,7 +29,7 @@ public class DAOTask extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -63,5 +63,10 @@ public class DAOTask extends DBConnect {
             closeConnection(conn);
         }
         return list;
+    }
+    
+    public static void main(String[] args) {
+        DAOTask dao = new DAOTask();
+        System.out.println(dao.list(0));
     }
 }

@@ -86,7 +86,7 @@ public class DAOProject extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -102,7 +102,7 @@ public class DAOProject extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.executeQuery();
+            state.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -168,6 +168,6 @@ public class DAOProject extends DBConnect {
 
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
-        System.out.println(dao.getProject("ABCDE"));
+        System.out.println(dao.search("pro", "ABCDE"));
     }
 }

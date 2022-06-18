@@ -82,7 +82,7 @@ public class DAOAttendance extends DBConnect {
             state.setInt(3, id);
             state.setString(4, employee_id);
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -178,11 +178,6 @@ public class DAOAttendance extends DBConnect {
 
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
-//        List<attendance> list = dao.listAll("12345");
-//        for (attendance a : list) {
-//            System.out.println(a);
-//        }
-//        System.out.println(dao.getLastest("12345"));
-//        System.out.println(dao.listAllAttendanceofAnEmployee("12345"));
+        System.out.println(dao.search("17/06/2022", "QWERT"));
     }
 }

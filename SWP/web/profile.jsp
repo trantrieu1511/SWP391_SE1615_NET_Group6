@@ -348,19 +348,7 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Experience 
-                                            <c:forEach items="${listp}" var="p">
-                                                <c:choose>
-                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
-                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a>
-                                                        </c:when>
-                                                        <c:otherwise>
-
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-
-                                        </h3>
+                                        <h3 class="card-title">Experience</h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
                                                 <c:forEach items="${listexp}" var="e">
@@ -372,6 +360,25 @@
                                                             <div class="timeline-content">
                                                                 <a href="#/" class="name">${e.role}</a>
                                                                 <span class="time">${e.start_date} - Present (${e.end_date})</span>
+                                                                <c:forEach items="${listp}" var="p">
+                                                                    <c:choose>
+                                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                            <td class="text-right">
+                                                                                <div class="dropdown dropdown-action" style="text-align: right;">
+                                                                                    <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                        <!--<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:forEach>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -384,18 +391,7 @@
                             <div class="col-md-6 d-flex">
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
-                                        <h3 class="card-title">Family Informations 
-                                            <c:forEach items="${listp}" var="p">
-                                                <c:choose>
-                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>
-                                                        </c:when>
-                                                        <c:otherwise>
-
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-                                        </h3>
+                                        <h3 class="card-title">Family Informations</h3>
                                         <div class="table-responsive">
                                             <table class="table table-nowrap">
                                                 <thead>
@@ -414,15 +410,25 @@
                                                             <td>${f.relationship}</td>
                                                             <td>${f.dob}</td>
                                                             <td>${f.phone}</td>
-                                                            <!--                                                            <td class="text-right">
-                                                                                                                            <div class="dropdown dropdown-action">
-                                                                                                                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                                                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                                                                                    <a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                                                                    <a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </td>-->
+                                                            <c:forEach items="${listp}" var="p">
+                                                                <c:choose>
+                                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                        <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                        <td class="text-right">
+                                                                            <div class="dropdown dropdown-action">
+                                                                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <!--<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:forEach>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -1194,42 +1200,41 @@
                                         </div>
                                     </div>
 
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Date of birth <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="add-more">
-                                                <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Name <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Relationship <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Phone <span class="text-danger">*</span></label>
+                                                                                            <input class="form-control" type="text">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="add-more">
+                                                                                    <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                                                                </div>
+                                                                            </div>-->
                                 </div>
-                                <div class="submit-section">
+                                <div class="submit-section" style="margin-bottom: 25px;">
                                     <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </form>
@@ -1446,8 +1451,117 @@
             </div>
             <!-- /Education Modal -->
 
-            <!-- Experience Modal -->
-            <div id="experience_info" class="modal custom-modal fade" role="dialog">
+            <!-- Edit Experience Modal -->
+            <div id="edit_experience_info" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Experience Informations</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-scroll">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <input type="text" class="form-control floating" value="Digital Devlopment Inc">
+                                                        <label class="focus-label">Role</label>
+                                                    </div>
+                                                </div>
+                                                <!--                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="United States">
+                                                                                                        <label class="focus-label">Location</label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="Web Developer">
+                                                                                                        <label class="focus-label">Job Position</label>
+                                                                                                    </div>
+                                                                                                </div>-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <div class="cal-icon">
+                                                            <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                        </div>
+                                                        <label class="focus-label">Period From</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <div class="cal-icon">
+                                                            <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                        </div>
+                                                        <label class="focus-label">Period To</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div class="card">
+                                                                            <div class="card-body">
+                                                                                <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="Digital Devlopment Inc">
+                                                                                            <label class="focus-label">Company Name</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="United States">
+                                                                                            <label class="focus-label">Location</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <input type="text" class="form-control floating" value="Web Developer">
+                                                                                            <label class="focus-label">Job Position</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <div class="cal-icon">
+                                                                                                <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                                                            </div>
+                                                                                            <label class="focus-label">Period From</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="form-group form-focus">
+                                                                                            <div class="cal-icon">
+                                                                                                <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                                                            </div>
+                                                                                            <label class="focus-label">Period To</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="add-more">
+                                                                                    <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                </div>
+                                <div class="submit-section">
+                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Edit Experience Modal -->
+
+            <!-- View Experience Modal -->
+            <div id="view_experience_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1500,51 +1614,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" value="Digital Devlopment Inc">
-                                                        <label class="focus-label">Company Name</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" value="United States">
-                                                        <label class="focus-label">Location</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" value="Web Developer">
-                                                        <label class="focus-label">Job Position</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
-                                                        </div>
-                                                        <label class="focus-label">Period From</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
-                                                        </div>
-                                                        <label class="focus-label">Period To</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="add-more">
-                                                <a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>
@@ -1554,36 +1623,36 @@
                     </div>
                 </div>
             </div>
-            <!-- /Experience Modal -->
+            <!-- View Experience Modal -->
 
         </div>
         <!-- /Page Wrapper -->
 
-    </div>
-    <!-- /Main Wrapper -->
 
-    <!-- jQuery -->
-    <script src="js/jquery-3.5.1.min.js"></script>
+        <!-- /Main Wrapper -->
 
-    <!-- Bootstrap Core JS -->
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
 
-    <!-- Slimscroll JS -->
-    <script src="js/jquery.slimscroll.min.js"></script>
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 
-    <!-- Select2 JS -->
-    <script src="js/select2.min.js"></script>
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
 
-    <!-- Datetimepicker JS -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/bootstrap-datetimepicker.min.js"></script>
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
 
-    <!-- Tagsinput JS -->
-    <script src="plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
 
-    <!-- Custom JS -->
-    <script src="js/app.js"></script>
+        <!-- Tagsinput JS -->
+        <script src="plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 
-</body>
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+
+    </body>
 </html>

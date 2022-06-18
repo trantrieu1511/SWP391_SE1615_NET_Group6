@@ -77,19 +77,15 @@
                     var email = myArray[3];
                     var phone_number = myArray[4];
                     var hire_date = myArray[5];
-                    var department_id = myArray[6];
-                    var job_id = myArray[7];
-                    var username = myArray[8];
-                    var password = myArray[9];
-                    var reportto = myArray[10];
+                    var username = myArray[6];
+                    var password = myArray[7];
+                    var reportto = myArray[8];
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                     $(e.currentTarget).find('input[name="first_name"]').val(first_name);
                     $(e.currentTarget).find('input[name="last_name"]').val(last_name);
                     $(e.currentTarget).find('input[name="email"]').val(email);
                     $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
                     $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
-                    $(e.currentTarget).find('input[name="department_id2"]').val(department_id);
-                    $(e.currentTarget).find('input[name="job_id2"]').val(job_id);
                     $(e.currentTarget).find('input[name="username"]').val(username);
                     $(e.currentTarget).find('input[name="password"]').val(password);
                     $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
@@ -226,7 +222,7 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.department_id} ${o.job_id} ${o.user_display} ${o.pass_display} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.user_display} ${o.pass_display} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
@@ -418,7 +414,6 @@
                 </div>
                 <!-- /Add Employee Modal -->
 
-                <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
                 <!-- Edit Employee Modal -->
                 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -499,11 +494,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
-                                                <input type="text" name="department_id2" id="department_id3" value="1">
-                                                <select name="department_id" id="department_id2" required="">
+                                                <select class="select" name="department_id" id="department_id2" required="">
                                                     <option value="">Select Department</option>
                                                     <c:forEach items="${department}" var="o">
-                                                        <option value="${o.id}" ${document.getElementById('department_id3').nodeValue == o.id ? "selected" : ''}>${o.name}</option>
+                                                        <option value="${o.id}">${o.name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -514,7 +508,7 @@
                                                 <select class="select" name="job_id" id="job_id2" required="">
                                                     <option value="">Select Designation</option>
                                                     <c:forEach items="${job}" var="o">
-                                                        <option value="${o.id}" ${p.job_id==o.id ? "selected" : ''}>${o.title}</option>
+                                                        <option value="${o.id}">${o.title}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

@@ -18,6 +18,26 @@ public class profileDetail {
     String bank_name, bank_number;
 
     public profileDetail() {
+        
+    }
+    
+    //profile information
+    public profileDetail(String profile_id, String dob, String address, boolean gender) {
+        this.profile_id = profile_id;
+        this.dob = dob;
+        this.address = address;
+        this.gender = gender;
+    }
+    
+    //personal information
+    public profileDetail(String profile_id, String country, String religion, boolean isMarried, int children, String bank_name, String bank_number) {
+        this.profile_id = profile_id;
+        this.country = country;
+        this.religion = religion;
+        this.isMarried = isMarried;
+        this.children = children;
+        this.bank_name = bank_name;
+        this.bank_number = bank_number;
     }
 
     public profileDetail(String profile_id, String dob, String address, boolean gender, String country, String religion, boolean isMarried, int children, String bank_name, String bank_number) {

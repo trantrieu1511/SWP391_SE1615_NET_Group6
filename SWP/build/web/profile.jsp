@@ -963,6 +963,7 @@
                                 <div class="row">
                                     <c:forEach items="${listp}" var="p">
                                         <c:forEach items="${listpd}" var="pd">
+                                            <input type="hidden" name="profile_id" value="${p.profile_id}">
                                             <div class="col-md-12">
                                                 <div class="profile-img-wrap edit-img">
                                                     <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
@@ -988,14 +989,14 @@
                                                         <div class="form-group">
                                                             <label>Birth Date</label>
                                                             <div class="form-group">
-                                                                <input class="form-control" type="date" value="${pd.dob}">
+                                                                <input class="form-control" name="dob" type="date" value="${pd.dob}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Gender</label>
-                                                            <select class="select form-control">
+                                                            <select class="select form-control" name="gender">
                                                                 <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
                                                                 <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
                                                             </select>
@@ -1008,7 +1009,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input type="text" class="form-control" value="${pd.address}">
+                                                    <input type="text" class="form-control" name="address" value="${pd.address}">
                                                 </div>
                                             </div>
                                             <!--                                            <div class="col-md-6">
@@ -1017,12 +1018,6 @@
                                                                                                 <input type="text" class="form-control" value="New York">
                                                                                             </div>
                                                                                         </div>-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                    <input type="text" class="form-control" value="${pd.country}">
-                                                </div>
-                                            </div>
                                             <!--                                            <div class="col-md-6">
                                                                                             <div class="form-group">
                                                                                                 <label>Pin Code</label>
@@ -1099,21 +1094,21 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Nationality <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" value="${pd.country}">
+                                                <input class="form-control" type="text" name="country" value="${pd.country}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Religion</label>s
                                                 <div class="cal-icon">
-                                                    <input class="form-control" type="text" value="${pd.religion}">
+                                                    <input class="form-control" type="text" name="religion" value="${pd.religion}">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Marital status <span class="text-danger">*</span></label>
-                                                <select class="select form-control">
+                                                <select class="select form-control" name="isMarried">
                                                     <option value="">-</option>
                                                     <option value="false" ${pd.isMarried==false ? "selected" : ''} >Single</option>
                                                     <option value="true" ${pd.isMarried==true ? "selected" : ''} >Married</option>
@@ -1123,7 +1118,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>No. of children </label>
-                                                <input class="form-control" type="text" value="${pd.children}">
+                                                <input class="form-control" type="text" name="children" value="${pd.children}">
                                             </div>
                                         </div>
                                     </div>
@@ -1132,14 +1127,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Bank name</label>
-                                                <input type="text" class="form-control" value="${pd.bank_name}">
+                                                <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Bank account No.</label>
                                                 <div class="cal-icon">
-                                                    <input class="form-control" type="text" value="${pd.bank_number}">
+                                                    <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1166,36 +1161,41 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="familyInfo">
                                 <div class="form-scroll">
+                                    <input type="text" name="do" value="editFamilyInfo">
+                                    
                                     <div class="card">
                                         <div class="card-body">
                                             <h3 class="card-title">Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
+                                                <c:forEach items="${listf}" var="f">
+                                                    <input type="text" name="profile_id" value="${f.profile_id}">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Name <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text" name="name" value="${f.name}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Relationship <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text" name="relationship" value="${f.relationship}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Date of birth <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Date of birth <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="date" name="dob" value="${f.dob}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Phone <span class="text-danger">*</span></label>
+                                                            <input class="form-control" type="text" name="phone" value="${f.phone}">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                     </div>
@@ -1462,46 +1462,50 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="experience">
                                 <div class="form-scroll">
+                                    <input type="text" name="do" value="editExperience">
                                     <div class="card">
                                         <div class="card-body">
                                             <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" value="Digital Devlopment Inc">
-                                                        <label class="focus-label">Role</label>
-                                                    </div>
-                                                </div>
-                                                <!--                                                <div class="col-md-6">
-                                                                                                    <div class="form-group form-focus">
-                                                                                                        <input type="text" class="form-control floating" value="United States">
-                                                                                                        <label class="focus-label">Location</label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="col-md-6">
-                                                                                                    <div class="form-group form-focus">
-                                                                                                        <input type="text" class="form-control floating" value="Web Developer">
-                                                                                                        <label class="focus-label">Job Position</label>
-                                                                                                    </div>
-                                                                                                </div>-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" value="01/07/2007">
+                                                <c:forEach items="${listexp}" var="e">
+                                                    <input type="text" name="profile_id" value="${e.profile_id}">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus">
+                                                            <input type="text" class="form-control floating" name="role" value="${e.role}">
+                                                            <label class="focus-label">Role</label>
                                                         </div>
-                                                        <label class="focus-label">Period From</label>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group form-focus">
-                                                        <div class="cal-icon">
-                                                            <input type="text" class="form-control floating datetimepicker" value="08/06/2018">
+                                                    <!--                                                <div class="col-md-6">
+                                                                                                        <div class="form-group form-focus">
+                                                                                                            <input type="text" class="form-control floating" value="United States">
+                                                                                                            <label class="focus-label">Location</label>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-6">
+                                                                                                        <div class="form-group form-focus">
+                                                                                                            <input type="text" class="form-control floating" value="Web Developer">
+                                                                                                            <label class="focus-label">Job Position</label>
+                                                                                                        </div>
+                                                                                                    </div>-->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus">
+                                                            <div class="cal-icon">
+                                                                <input type="text" class="form-control floating datetimepicker" name="start_date" value="${e.start_date}">
+                                                            </div>
+                                                            <label class="focus-label">Period From</label>
                                                         </div>
-                                                        <label class="focus-label">Period To</label>
                                                     </div>
-                                                </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-focus">
+                                                            <div class="cal-icon">
+                                                                <input type="text" class="form-control floating datetimepicker" name="end_date" value="${e.end_date}">
+                                                            </div>
+                                                            <label class="focus-label">Period To</label>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                     </div>

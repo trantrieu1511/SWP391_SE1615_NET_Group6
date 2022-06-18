@@ -5,7 +5,9 @@
  */
 package controller;
 
+import entity.profileDetail;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,17 +37,33 @@ public class ControllerProfileDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            PrintWriter out = response.getWriter();
             String service = request.getParameter("do");
 
-            DAOProfileDetail daopd = new DAOProfileDetail();
-            DAOFamilyInfo daof = new DAOFamilyInfo();
-            DAOExperience daoexp = new DAOExperience();
+            DAOProfileDetail daoPd = new DAOProfileDetail();
+            DAOFamilyInfo daoF = new DAOFamilyInfo();
+            DAOExperience daoExp = new DAOExperience();
 
             if (service.equals("editProfileInfo")) {
-
+                String profile_id = request.getParameter("profile_id");
+                String dob = request.getParameter("dob");
+                String gender = request.getParameter("gender");
+                String address = request.getParameter("address");
+                String country = request.getParameter("country");
+                
+                out.print(profile_id);
+                out.print("<br>");
+                out.print(dob);
+                out.print("<br>");
+                out.print(gender);
+                out.print("<br>");
+                out.print(address);
+                out.print("<br>");
+                
+//                profileDetail pd = new profileDetail();
             }
             if (service.equals("editPersonalInfo")) {
-
+                
             }
 
         } catch (Exception ex) {

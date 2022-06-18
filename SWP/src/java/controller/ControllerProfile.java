@@ -49,13 +49,13 @@ public class ControllerProfile extends HttpServlet {
         try {
             String service = request.getParameter("do");
 
-            DAOProfile daop = new DAOProfile();
-            DAOProfileDetail daopd = new DAOProfileDetail();
-            DAOFamilyInfo daof = new DAOFamilyInfo();
-            DAOExperience daoexp = new DAOExperience();
-            DAOJob daoj = new DAOJob();
+            DAOProfile daoPf = new DAOProfile();
+            DAOProfileDetail daoPd = new DAOProfileDetail();
+            DAOFamilyInfo daoF = new DAOFamilyInfo();
+            DAOExperience daoExp = new DAOExperience();
+            DAOJob daoJ = new DAOJob();
             DAODepartment daoDp = new DAODepartment();
-            DAOAccount daoacc = new DAOAccount();
+            DAOAccount daoAcc = new DAOAccount();
 
             HttpSession session = request.getSession();
 
@@ -64,40 +64,40 @@ public class ControllerProfile extends HttpServlet {
                 response.sendRedirect("login.jsp");
             } else {
                 if (service.equals("getmyProfile")) {
-                    List<profile> listp = daop.getProfile(acc.getProfile_id());
-                    List<profileDetail> listpd = daopd.getIndividualProfileDetail(acc.getProfile_id());
-                    List<familyInfo> listf = daof.getIndividualFamilyInfo(acc.getProfile_id());
-                    List<experience> listexp = daoexp.listIndividualExperience(acc.getProfile_id());
-                    List<account> listacc = daoacc.getAccountwithList(acc.getProfile_id());
-                    for (profile p : listp) {
-                        p.setJob_title(daoj.getJobById(p.getJob_id()).getTitle());
+                    List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                    List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                    List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                    List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                    List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                    for (profile p : listPf) {
+                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                     }
-                    request.setAttribute("listp", listp);
-                    request.setAttribute("listpd", listpd);
-                    request.setAttribute("listf", listf);
-                    request.setAttribute("listexp", listexp);
-                    request.setAttribute("listacc", listacc);
+                    request.setAttribute("listp", listPf);
+                    request.setAttribute("listpd", listPd);
+                    request.setAttribute("listf", listF);
+                    request.setAttribute("listexp", listExp);
+                    request.setAttribute("listacc", listAcc);
 
                     RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                     dispatch.forward(request, response);
                 }
                 if (service.equals("getothersProfile")) {
                     String profile_id = request.getParameter("profile_id");
-                    List<profile> listp = daop.getProfile(profile_id);
-                    List<profileDetail> listpd = daopd.getIndividualProfileDetail(profile_id);
-                    List<familyInfo> listf = daof.getIndividualFamilyInfo(profile_id);
-                    List<experience> listexp = daoexp.listIndividualExperience(profile_id);
-                    List<account> listacc = daoacc.getAccountwithList(profile_id);
-                    for (profile p : listp) {
-                        p.setJob_title(daoj.getJobById(p.getJob_id()).getTitle());
+                    List<profile> listPf = daoPf.getProfile(profile_id);
+                    List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                    List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                    List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                    List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                    for (profile p : listPf) {
+                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                     }
-                    request.setAttribute("listp", listp);
-                    request.setAttribute("listpd", listpd);
-                    request.setAttribute("listf", listf);
-                    request.setAttribute("listexp", listexp);
-                    request.setAttribute("listacc", listacc);
+                    request.setAttribute("listp", listPf);
+                    request.setAttribute("listpd", listPd);
+                    request.setAttribute("listf", listF);
+                    request.setAttribute("listexp", listExp);
+                    request.setAttribute("listacc", listAcc);
 
                     RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                     dispatch.forward(request, response);

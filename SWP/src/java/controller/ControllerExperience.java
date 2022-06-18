@@ -33,6 +33,18 @@ public class ControllerExperience extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String service = request.getParameter("do");
+            if(service.equals("editExperience")){
+                String role = request.getParameter("role");
+                String start_date = request.getParameter("start_date");
+                String end_date = request.getParameter("end_date");
+                
+                out.print(role);
+                out.print("<br>");
+                out.print(start_date);
+                out.print("<br>");
+                out.print(end_date);
+            }
             
         }
     }

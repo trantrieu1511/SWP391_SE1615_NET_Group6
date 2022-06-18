@@ -63,10 +63,10 @@ public class ControllerManager extends HttpServlet {
             DAOJob daoJ = new DAOJob();
             DAOTask daoT = new DAOTask();
             DAOAccount daoAcc = new DAOAccount();
-            DAOProfileDetail daopd = new DAOProfileDetail();
-            DAOFamilyInfo daof = new DAOFamilyInfo();
-            DAOExperience daoexp = new DAOExperience();
-            DAOProject daopj = new DAOProject();
+            DAOProfileDetail daoPd = new DAOProfileDetail();
+            DAOFamilyInfo daoF = new DAOFamilyInfo();
+            DAOExperience daoExp = new DAOExperience();
+            DAOProject daoPj = new DAOProject();
 
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
@@ -76,9 +76,9 @@ public class ControllerManager extends HttpServlet {
             } else {
                 List<projects> listPj = null;
                 if (acc.isIsManager()) {
-                    listPj = daopj.getProject(acc.getProfile_id());
+                    listPj = daoPj.getProject(acc.getProfile_id());
                 } else {
-                    listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    listPj = daoPj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", listPj);
                 //profile user = daoPf.getByID(acc.getProfile_id());
@@ -96,8 +96,11 @@ public class ControllerManager extends HttpServlet {
                     for (profile p : list) {
                         p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                         p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                        p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                        p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                        account acc2 = daoAcc.getAccount(p.getProfile_id());
+                        if (acc2 != null) {
+                            p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
+                            p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                        }
                     }
                     request.setAttribute("filter", "yes");
                     request.setAttribute("list", list);
@@ -184,7 +187,7 @@ public class ControllerManager extends HttpServlet {
 
                     profileDetail pd = new profileDetail(profile_id, "'1900-01-01'",
                             "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
-                    boolean statusPd = daopd.addProfileDetail(pd);
+                    boolean statusPd = daoPd.addProfileDetail(pd);
                     if (statusPd) {
                         System.out.println("Successfully added new profileDetail for Staff with profile_id = " + profile_id);
                     } else {
@@ -193,7 +196,7 @@ public class ControllerManager extends HttpServlet {
 
                     familyInfo f = new familyInfo(profile_id, "N/A", "N/A",
                             "'1900-01-01'", "N/A");
-                    boolean statusf = daof.addFamilyInfo(f);
+                    boolean statusf = daoF.addFamilyInfo(f);
                     if (statusf) {
                         System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
                     } else {
@@ -202,7 +205,7 @@ public class ControllerManager extends HttpServlet {
 
                     experience exp = new experience(profile_id, "N/A", "'1900-01-01'",
                             "GETDATE()");
-                    boolean statusexp = daoexp.addExperience(exp);
+                    boolean statusexp = daoExp.addExperience(exp);
                     if (statusexp) {
                         System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
                     } else {

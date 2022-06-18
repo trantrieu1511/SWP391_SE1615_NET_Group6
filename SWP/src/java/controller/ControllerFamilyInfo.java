@@ -33,7 +33,22 @@ public class ControllerFamilyInfo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+            String service = request.getParameter("do");
+            if(service.equals("editFamilyInfo")){
+                String profile_id = request.getParameter("profile_id");
+                String relationship = request.getParameter("relationship");
+                String dob = request.getParameter("dob");
+                String phone = request.getParameter("phone");
+                
+                out.print(profile_id);
+                out.print("<br>");
+                out.print(relationship);
+                out.print("<br>");
+                out.print(dob);
+                out.print("<br>");
+                out.print(phone);
+            }
+                
         }
     }
 

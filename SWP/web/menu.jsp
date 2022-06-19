@@ -95,7 +95,7 @@
                                 <span>Employees</span>
                             </li>
                             <li class="submenu">
-                                <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
+                                <a href="#" class=""><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                         <li><a href="manager?do=list">All Employees</a></li>

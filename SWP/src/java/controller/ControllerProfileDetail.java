@@ -63,7 +63,7 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print("<br>");
 //                out.print(address);
 //                out.print("<br>");
-                boolean statusPfi = daoPd.editProfileDetail(
+                boolean statusPfi = daoPd.editProfileInfo(
                         new profileDetail(profile_id, dob, address, gender));
                 if (statusPfi) {
                     System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
@@ -98,7 +98,7 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print(bank_name);
 //                out.print("<br>");
 //                out.print(bank_number);
-                boolean statusPsInfo = daoPd.editPersonalDetail(
+                boolean statusPsInfo = daoPd.editPersonalInfo(
                         new profileDetail(profile_id, country, religion,
                                 isMarried, children, bank_name, bank_number));
                 if (statusPsInfo) {

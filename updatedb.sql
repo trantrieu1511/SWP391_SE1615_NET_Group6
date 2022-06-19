@@ -61,6 +61,7 @@ CREATE TABLE [familyInfo] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
+--drop table [experience]
 CREATE TABLE [experience] (
     profile_id CHAR(5),
 	role VARCHAR(100) NOT NULL,

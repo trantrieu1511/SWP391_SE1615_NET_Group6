@@ -371,7 +371,7 @@
                                                                                     <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                        <!--<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
+                                                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -423,7 +423,7 @@
                                                                                 <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                                     <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_family_info_modal"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                    <!--<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -1267,7 +1267,9 @@
 
                                     <div class="card">
                                         <div class="card-body">
-                                            <h3 class="card-title">Edit Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+                                            <h3 class="card-title">Edit Family Member 
+                                                <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
+                                            </h3>
                                             <div class="row">
                                                 <c:forEach items="${listf}" var="f">
                                                     <input type="hidden" name="profile_id" value="${f.profile_id}">
@@ -1683,7 +1685,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h3 class="card-title">Edit Experience Informations 
-                                                <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>
+                                                <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
                                                 <c:forEach items="${listexp}" var="e">
@@ -1847,6 +1849,64 @@
                 </div>
             </div>
             <!-- View Experience Modal -->
+
+            <!-- Delete Family Info Modal -->
+            <div class="modal custom-modal fade" id="delete_family_info" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="familyInfo" do="post">
+                                <input type="hidden" name="do" value="deleteFamilyInfo">
+                                <input type="hidden" name="profile_id">
+                                <div class="form-header">
+                                    <h3>Delete Family Info</h3>
+                                    <p>Are you sure want to delete?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Delete Family Info Modal -->
+
+            <!-- Delete Experience Modal -->
+            <div class="modal custom-modal fade" id="delete_experience" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="experience" do="post">
+                                <input type="hidden" name="do" value="deleteExperience">
+                                <input type="hidden" name="profile_id">
+                                <div class="form-header">
+                                    <h3>Delete Experience</h3>
+                                    <p>Are you sure want to delete?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Delete Experience Modal -->
 
         </div>
         <!-- /Page Wrapper -->

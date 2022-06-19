@@ -84,7 +84,7 @@ public class DAOProfileDetail extends DBConnect {
         return status;
     }
 
-    public boolean editProfileDetail(profileDetail pd) {
+    public boolean editProfileInfo(profileDetail pd) {
         boolean status = false;
         String sql = "update [profileDetail]\n"
                 + "set \n"
@@ -107,7 +107,7 @@ public class DAOProfileDetail extends DBConnect {
         return status;
     }
 
-    public boolean editPersonalDetail(profileDetail pd) {
+    public boolean editPersonalInfo(profileDetail pd) {
         boolean status = false;
         String sql = "update [profileDetail]\n"
                 + "set \n"

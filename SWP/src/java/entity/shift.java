@@ -46,5 +46,10 @@ public class shift {
     public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
+
+    @Override
+    public String toString() {
+        return "shift{" + "name=" + name + ", start_time=" + start_time + ", end_time=" + end_time + '}';
+    }
     
 }

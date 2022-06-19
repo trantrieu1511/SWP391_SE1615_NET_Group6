@@ -94,7 +94,10 @@ public class ControllerEmployee extends HttpServlet {
                 if (service.equals("searchAttendance")) {
                     String date_search = request.getParameter("date");
                     List<attendance> list = dao.search(date_search, employee_id);
-                    request.setAttribute("list", list);
+                    request.setAttribute("list_attendance", list);
+                    request.setAttribute("button", button);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
+                    dispath.forward(request, response);
                 }
 
                 if (service.equals("punchin")) {

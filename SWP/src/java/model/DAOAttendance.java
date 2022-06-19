@@ -9,8 +9,6 @@ import entity.attendance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +74,7 @@ public class DAOAttendance extends DBConnect {
                 + " where [shift_id]=? and [employee_id]=?";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);          
+            state = conn.prepareStatement(sql);            
             state.setString(1, time_out);
             state.setString(2, production_time);
             state.setInt(3, id);
@@ -151,8 +149,8 @@ public class DAOAttendance extends DBConnect {
     
     public List<attendance> search(String date, String profile_id) {
         List<attendance> list = new ArrayList<>();
-        String sql = "select * from attendance where employee_id = '" + 
-                profile_id + "' and date = '" + date + "'";
+        String sql = "select * from attendance where employee_id like '%"
+                + profile_id + "%' and date = '" + date + "'";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -175,9 +173,40 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
-
+    
+    public List<attendance> search2(String date, String name, String reportto) {
+        List<attendance> list = new ArrayList<>();
+        String sql = "select shift_id, date, time_in, time_out, production_time,"
+                + " last_name, report_to from attendance join "
+                + "profile on attendance.employee_id = profile.profile_id where "
+                + "date like '%" + date + "%' and last_name like '%" + name + "%'"
+                + "and report_to = '" + reportto + "'";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new attendance(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
-        System.out.println(dao.search("17/06/2022", "QWERT"));
+        System.out.println(dao.search2("", "gio", "ABCDE"));
     }
 }

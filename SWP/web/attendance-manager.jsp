@@ -82,7 +82,7 @@
                             <div class="col-sm-6 col-md-4"> 
                                 <div class="form-group form-focus"><label class="focus-label">Date</label>
                                     <div>                                
-                                        <input type="date" class="form-control floating" name="date" onfocus="(this.type = 'date')" onblur="if (!this.value) this.type = 'text'">
+                                        <input type="text" class="form-control floating datetimepicker" name="date">
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 <table class="table table-striped custom-table datatable" id="table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>Name</th>
                                             <th>Date </th>
                                             <th>Punch In</th>
                                             <th>Punch Out</th>

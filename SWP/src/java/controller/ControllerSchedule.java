@@ -66,7 +66,17 @@ public class ControllerSchedule extends HttpServlet {
                 RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                 dispath.forward(request, response);
             }
+            
+            if (service.equals("addShift")) {
+                String name = request.getParameter("name");
+                String start = request.getParameter("start");
+                String end = request.getParameter("end");
+                daos.add(name, start, end);
+                RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=shift");
+                dispath.forward(request, response);
+            }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }

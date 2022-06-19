@@ -84,8 +84,10 @@ public class ControllerProject extends HttpServlet {
                         listPj = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
                     }
                     List<clients> listC = daoc.listAllClients();
+                    String alert = "";
                     request.setAttribute("list", listPj);
-                    request.setAttribute("listC", listC);
+                    request.setAttribute("listC", listC); 
+                    request.setAttribute("alert", alert);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
@@ -108,7 +110,13 @@ public class ControllerProject extends HttpServlet {
                     } catch (ParseException ex) {
                         daopj.addProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
                     }
-                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    String alert = "New project added!";
+                    List<projects> listPj = daopj.getProject(acc.getProfile_id());
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("list", listPj);
+                    request.setAttribute("listC", listC); 
+                    request.setAttribute("alert", alert);
+                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
 
@@ -140,7 +148,13 @@ public class ControllerProject extends HttpServlet {
                 if (service.equals("delete")) {
                     String title = request.getParameter("title");
                     daopj.deleteProject(title);
-                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    String alert = "Project deleted!";
+                    request.setAttribute("alert", alert);
+                    List<projects> listPj = daopj.getProject(acc.getProfile_id());                  
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("list", listPj);
+                    request.setAttribute("listC", listC); 
+                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
 
@@ -162,7 +176,13 @@ public class ControllerProject extends HttpServlet {
                     } catch (ParseException ex) {
                         daopj.updateProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
                     }
-                    RequestDispatcher dispath = request.getRequestDispatcher("project?do=list");
+                    List<projects> listPj = daopj.getProject(acc.getProfile_id());                  
+                    List<clients> listC = daoc.listAllClients();
+                    String alert = "Project editted!";
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("list", listPj);
+                    request.setAttribute("listC", listC); 
+                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
 

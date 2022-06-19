@@ -88,8 +88,13 @@
                 });
             });        
         </script>
-
-
+        
+        <c:if test="${alert != ''}">
+        <script lang="Javascript">
+            alert("${alert}");
+        </script>
+        </c:if>
+        
     </head>
     <body>
         <!-- Main Wrapper -->

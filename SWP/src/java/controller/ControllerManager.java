@@ -84,6 +84,21 @@ public class ControllerManager extends HttpServlet {
                 //profile user = daoPf.getByID(acc.getProfile_id());
                 if (service.equals("attendance")) {
                     List<attendance> list = daoA.listAll(acc.getProfile_id());
+                    for (attendance a : list) {
+                        a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
+                    }
+                    request.setAttribute("list", list);
+                    RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("searchAttendance")) {
+                    String name = request.getParameter("name");
+                    String date_search = request.getParameter("date");
+                    List<attendance> list = daoA.search2(date_search, name, acc.getProfile_id());
+                    for (attendance a : list) {
+                        a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
+                    }
                     request.setAttribute("list", list);
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);

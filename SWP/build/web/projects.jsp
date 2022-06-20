@@ -229,7 +229,7 @@
                                                     <span class="text-danger">*</span>
                                                 </label>
                                                 <div>
-                                                    <input type="date" name="start_date" id="start_date" required onchange="check()">
+                                                    <input type="date" class="form-control" name="start_date" id="start_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>
@@ -237,7 +237,7 @@
                                             <div class="form-group">
                                                 <label>End Date<span class="text-danger">*</span></label>
                                                 <div>
-                                                    <input type="date" name="end_date" id="end_date" required onchange="check()">
+                                                    <input type="date" class="form-control" name="end_date" id="end_date" required onchange="check()">
                                                 </div>
                                             </div>
                                         </div>

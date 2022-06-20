@@ -35,7 +35,8 @@ public class DAOAttendance extends DBConnect {
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
-        } finally {
+        }
+        finally {
             closePrepareStatement(state);
             closeConnection(conn);
         }

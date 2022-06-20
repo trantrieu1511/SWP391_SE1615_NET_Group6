@@ -37,7 +37,7 @@ public class DAOJob extends DBConnect {
                         rs.getDouble(3),
                         rs.getDouble(4)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -60,7 +60,7 @@ public class DAOJob extends DBConnect {
                         rs.getDouble(3),
                         rs.getDouble(4));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -83,7 +83,7 @@ public class DAOJob extends DBConnect {
                         rs.getDouble(3),
                         rs.getDouble(4));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);

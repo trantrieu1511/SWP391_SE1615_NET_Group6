@@ -9,7 +9,6 @@ import entity.projects;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class DAOProject extends DBConnect {
                         rs.getString(6),
                         rs.getString(7)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -67,7 +66,7 @@ public class DAOProject extends DBConnect {
                         rs.getString(7));
             }
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -87,7 +86,7 @@ public class DAOProject extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.execute();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -103,7 +102,7 @@ public class DAOProject extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.execute();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -128,7 +127,7 @@ public class DAOProject extends DBConnect {
             state.setString(6, desc);
             state.setString(7, title);
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -156,7 +155,7 @@ public class DAOProject extends DBConnect {
                         rs.getString(6),
                         rs.getString(7)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);

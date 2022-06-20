@@ -10,9 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,8 +40,8 @@ public class DAOAccount extends DBConnect {
                         rs.getBoolean(4),
                         rs.getBoolean(5));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             closeResultSet(rs);
             closePrepareStatement(state);
@@ -63,8 +64,8 @@ public class DAOAccount extends DBConnect {
                         rs.getBoolean(4),
                         rs.getBoolean(5));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             closeResultSet(rs);
             closePrepareStatement(state);
@@ -86,8 +87,8 @@ public class DAOAccount extends DBConnect {
                         rs.getBoolean(4),
                         rs.getBoolean(5)));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             closeResultSet(rs);
             closePrepareStatement(state);
@@ -104,7 +105,7 @@ public class DAOAccount extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -123,7 +124,7 @@ public class DAOAccount extends DBConnect {
             state.setString(2, password);
             state.setString(3, profile_id);
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -139,7 +140,7 @@ public class DAOAccount extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.executeQuery();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {

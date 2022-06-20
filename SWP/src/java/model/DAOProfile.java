@@ -40,7 +40,7 @@ public class DAOProfile extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.executeQuery();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -67,7 +67,7 @@ public class DAOProfile extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -103,7 +103,7 @@ public class DAOProfile extends DBConnect {
             state.setString(9, pro.getReportto());
             state.setString(10, pro.getProfile_id());
             state.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -132,7 +132,7 @@ public class DAOProfile extends DBConnect {
                         rs.getDouble(9),
                         rs.getString(10)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -161,7 +161,7 @@ public class DAOProfile extends DBConnect {
                         rs.getDouble(9),
                         rs.getString(10)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -190,7 +190,7 @@ public class DAOProfile extends DBConnect {
                         rs.getDouble(9),
                         rs.getString(10));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -206,7 +206,7 @@ public class DAOProfile extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.executeQuery();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
@@ -237,7 +237,7 @@ public class DAOProfile extends DBConnect {
                         rs.getDouble(9),
                         rs.getString(10)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -268,7 +268,7 @@ public class DAOProfile extends DBConnect {
                         rs.getDouble(9),
                         rs.getString(10)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);

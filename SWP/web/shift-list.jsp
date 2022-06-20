@@ -194,24 +194,17 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="schedule" do="post">
+                                <input type="hidden" name="do" value="editShift">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="col-form-label">Shift Name <span class="text-danger">*</span></label>
                                             <div class="input-group time timepicker">
                                                 <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group" >
-                                            <label>Min Start Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                  
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Start Time <span class="text-danger">*</span></label>
@@ -219,23 +212,7 @@
                                                 <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>									
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Max Start Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>											
-                                        </div>
-                                    </div>		
-                                    <div class="col-md-4">
-                                        <div class="form-group" >
-                                            <label>Min End Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                            
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>End Time <span class="text-danger">*</span></label>
@@ -243,83 +220,7 @@
                                                 <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
                                             </div>									
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Max End Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>											
-                                        </div>
-                                    </div>	
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Break Time (In Minutes) </label>
-                                            <input type="text" class="form-control">											
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                            <label class="custom-control-label" for="customCheck3">Recurring Shift</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Repeat Every</label>
-                                            <select class="select">
-                                                <option value="">1 </option>
-                                                <option value="1">2</option>
-                                                <option value="2">3</option>
-                                                <option value="3">4</option>
-                                                <option  selected value="4">5</option>
-                                                <option value="3">6</option>
-                                            </select>
-                                            <label class="col-form-label">Week(s)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group wday-box">
-                                            <label class="checkbox-inline"><input type="checkbox" value="monday" class="days recurring" checked=""><span class="checkmark">M</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="tuesday" class="days recurring" checked=""><span class="checkmark">T</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="wednesday" class="days recurring" checked=""><span class="checkmark">W</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="thursday" class="days recurring" checked=""><span class="checkmark">T</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="friday" class="days recurring" checked=""><span class="checkmark">F</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="saturday" class="days recurring"><span class="checkmark">S</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" value="sunday" class="days recurring"><span class="checkmark">S</span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">End On <span class="text-danger">*</span></label>
-                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                            <label class="custom-control-label" for="customCheck4">Indefinite</label>
-                                        </div>
-                                    </div>								
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Add Tag </label>
-                                            <input type="text" class="form-control">											
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Add Note </label>
-                                            <textarea class="form-control"></textarea>											
-                                        </div>
-                                    </div>
+                                    </div>                                   
                                 </div>
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>

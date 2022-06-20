@@ -35,7 +35,7 @@ public class DAODepartment extends DBConnect {
                         rs.getInt(1),
                         rs.getString(2)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -56,7 +56,7 @@ public class DAODepartment extends DBConnect {
                         rs.getInt(1),
                         rs.getString(2));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -77,7 +77,7 @@ public class DAODepartment extends DBConnect {
                         rs.getInt(1),
                         rs.getString(2));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);

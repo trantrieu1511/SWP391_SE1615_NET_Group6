@@ -43,37 +43,47 @@ public class ControllerSchedule extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            DAOProject daopj = new DAOProject();
-            DAOProfile daoPf = new DAOProfile();
-            DAOShift daos = new DAOShift();
-            List<projects> list = null;
-            if (acc.isIsManager()) {
-                list = daopj.getProject(acc.getProfile_id());
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
             } else {
-                list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
-            }
-            request.setAttribute("project", list);
-            String service = request.getParameter("do");
+                DAOProject daopj = new DAOProject();
+                DAOProfile daoPf = new DAOProfile();
+                DAOShift daos = new DAOShift();
+                List<projects> list = null;
+                if (acc.isIsManager()) {
+                    list = daopj.getProject(acc.getProfile_id());
+                } else {
+                    list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                }
+                request.setAttribute("project", list);
+                String service = request.getParameter("do");
 
-            if (service.equals("list")) {
-                RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
-                dispath.forward(request, response);
-            }
+                if (service.equals("list")) {
+                    RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
+                    dispath.forward(request, response);
+                }
 
-            if (service.equals("shift")) {
-                List<shift> listS = daos.listShift();
-                request.setAttribute("list", listS);
-                RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
-                dispath.forward(request, response);
-            }
-            
-            if (service.equals("addShift")) {
-                String name = request.getParameter("name");
-                String start = request.getParameter("start");
-                String end = request.getParameter("end");
-                daos.add(name, start, end);
-                RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=shift");
-                dispath.forward(request, response);
+                if (service.equals("shift")) {
+                    List<shift> listS = daos.listShift();
+                    request.setAttribute("list", listS);
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("addShift")) {
+                    String name = request.getParameter("name");
+                    String start = request.getParameter("start");
+                    String end = request.getParameter("end");
+                    daos.add(name, start, end);
+                    RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=shift");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("editShift")) {
+                    String name = request.getParameter("name");
+                    String start = request.getParameter("start");
+                    String end = request.getParameter("end");
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

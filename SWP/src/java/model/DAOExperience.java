@@ -39,7 +39,7 @@ public class DAOExperience extends DBConnect {
                         rs.getString(3),
                         rs.getString(4)));
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
@@ -62,7 +62,7 @@ public class DAOExperience extends DBConnect {
             state = conn.createStatement();
             state.executeUpdate(sql);
             status = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
@@ -85,7 +85,7 @@ public class DAOExperience extends DBConnect {
             state = conn.createStatement();
             state.executeUpdate(sql);
             status = true;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
@@ -101,7 +101,7 @@ public class DAOExperience extends DBConnect {
             conn = getConnection();
             state = conn.createStatement();
             state.executeUpdate(sql);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {

@@ -98,42 +98,7 @@
 
                     <div class="row board-view-header">
                         <div class="col-4">
-                            <div class="pro-teams">
-                                <div class="pro-team-lead">
-                                    <h4>Lead</h4>
-                                    <div class="avatar-group">
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-11.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-01.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-16.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <a href="" class="avatar-title rounded-circle border border-white" data-toggle="modal" data-target="#assign_leader"><i class="fa fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pro-team-members">
-                                    <h4>Team</h4>
-                                    <div class="avatar-group">
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-02.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-09.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <img class="avatar-img rounded-circle border border-white" alt="User Image" src="img/profiles/avatar-12.jpg">
-                                        </div>
-                                        <div class="avatar">
-                                            <a href="" class="avatar-title rounded-circle border border-white" data-toggle="modal" data-target="#assign_user"><i class="fa fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="col-8 text-right">
                             <a href="project-view.jsp" class="btn btn-white float-right" title="View Board"><i class="fa fa-link"></i></a>
@@ -148,7 +113,7 @@
                                         <span class="status-title">Pending</span>
                                     </div>
                                     <div class="kanban-wrap">
-                                        <c:forEach items="${task.list(0)}" var="o">
+                                        <c:forEach items="${list0}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
@@ -170,7 +135,7 @@
                                                             <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
                                                         <span class="task-users">
-                                                            ${profile.getByID(o.assigned).getFirst_name()} ${profile.getByID(o.assigned).getLast_name()}
+                                                            ${o.assigned}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -187,7 +152,7 @@
                                         <span class="status-title">Progress</span>                                        
                                     </div>
                                     <div class="kanban-wrap">
-                                        <c:forEach items="${task.list(1)}" var="o">
+                                        <c:forEach items="${list1}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
@@ -223,7 +188,7 @@
                                         <span class="status-title">Review</span>                                      
                                     </div>
                                     <div class="kanban-wrap">
-                                        <c:forEach items="${task.list(2)}" var="o">
+                                        <c:forEach items="${list2}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
@@ -259,7 +224,7 @@
                                         <span class="status-title">Completed</span>                              
                                     </div>
                                     <div class="kanban-wrap">
-                                        <c:forEach items="${task.list(3)}" var="o">
+                                        <c:forEach items="${list3}" var="o">
                                         <div class="card panel">
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
@@ -310,7 +275,11 @@
                                     <input type="hidden" name="do" value="addTask">
                                     <div class="form-group">
                                         <label>Project</label>
-                                        <input type="text" class="form-control" name="project" readonly>
+                                        <select class="form-control select" name="title">
+                                            <c:forEach items="project" var="0">
+                                            <option>${o.title}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Task Name</label>
@@ -333,7 +302,7 @@
                                         <label>Assigned</label>
                                         <select class="select floating" name="assigned" required onchange="return trim(this)"> 
                                             <option> </option>
-                                            <c:forEach items="${profile.listAllStaff(sessionScope.acc.profile_id)}" var="o">
+                                            <c:forEach items="${listPf}" var="o">
                                             <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
                                             </c:forEach>
                                         </select>  

@@ -6,7 +6,9 @@
 package controller;
 
 import entity.account;
+import entity.profile;
 import entity.projects;
+import entity.task;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOProfile;
 import model.DAOProject;
+import model.DAOTask;
 
 /**
  *
@@ -41,17 +44,15 @@ public class ControllerTask extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
-            DAOProject daopj = new DAOProject();
-            DAOProfile daoPf = new DAOProfile();
-            List<projects> list = null;
-            if (acc.isIsManager()) {
-                list = daopj.getProject(acc.getProfile_id());
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
             } else {
-                list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                DAOProject daopj = new DAOProject();
+                DAOProfile daoPf = new DAOProfile();
+                DAOTask daot = new DAOTask();
+                String service = request.getParameter("do");
+                
             }
-            request.setAttribute("project", list);
-            RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
-            dispath.forward(request, response);
         } catch (Exception ex) {
             response.sendRedirect("error404.jsp");
         }

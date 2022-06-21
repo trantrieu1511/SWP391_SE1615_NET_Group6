@@ -135,6 +135,7 @@ function wrongpassalert2(msg) {
     }
 }
 
+
 function check() {
     var a = document.getElementById('start_date').value.split("/");
     var dt1 = new Date(parseInt(a[2], 10), parseInt(a[1], 10) - 1, parseInt(a[0], 10));
@@ -147,7 +148,7 @@ function check() {
         document.getElementById('create').style.opacity = (0.4);
     } else {
         document.getElementById('alert').style.color = 'green';
-        document.getElementById('alert').innerHTML ='🗹 Valid end date';
+        document.getElementById('alert').innerHTML = '🗹 Valid end date';
         document.getElementById('create').disabled = false;
         document.getElementById('create').style.opacity = (1);
     }
@@ -163,7 +164,7 @@ function check2() {
         document.getElementById('create2').style.opacity = (0.4);
     } else {
         document.getElementById('alert2').style.color = 'green';
-        document.getElementById('alert2').innerHTML ='🗹 Valid end date';
+        document.getElementById('alert2').innerHTML = '🗹 Valid end date';
         document.getElementById('create2').disabled = false;
         document.getElementById('create2').style.opacity = (1);
     }

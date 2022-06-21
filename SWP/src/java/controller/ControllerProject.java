@@ -95,22 +95,12 @@ public class ControllerProject extends HttpServlet {
                 if (service.equals("create")) {
                     String title = request.getParameter("title");
                     String client_id = request.getParameter("client");
-                    String start_date = request.getParameter("start_date");
-                    String end_date = request.getParameter("end_date");
+                    String period = request.getParameter("daterange");
                     String rate = request.getParameter("rate");
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
-                    try {
-                        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
-                        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-                        String sdate = dateFormat.format(start);
-                        String edate = dateFormat.format(end);
-                        daopj.addProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
-                    } catch (ParseException ex) {
-                        daopj.addProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
-                    }
-                    String alert = "New project added!";
+                    daopj.addProject(title, client_id, period, Double.parseDouble(rate), manager, desc);
+                    String alert = "New project saved!";
                     List<projects> listPj = daopj.getProject(acc.getProfile_id());
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("list", listPj);
@@ -129,9 +119,11 @@ public class ControllerProject extends HttpServlet {
                         listPj = daopj.search(title, daoPf.getByID(acc.getProfile_id()).getReportto());
                     }
                     request.setAttribute("title", title);
+                    String alert = "";
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
+                    request.setAttribute("alert", alert);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
 //                    out.println("<!DOCTYPE html>");
@@ -159,26 +151,17 @@ public class ControllerProject extends HttpServlet {
                 }
 
                 if (service.equals("edit")) {
+                    String oldTitle = request.getParameter("oldTitle");
                     String title = request.getParameter("title");
                     String client_id = request.getParameter("client");
-                    String start_date = request.getParameter("start_date");
-                    String end_date = request.getParameter("end_date");
+                    String period = request.getParameter("daterange");
                     String rate = request.getParameter("rate");
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
-                    try {
-                        Date start = new SimpleDateFormat("yyyy-MM-dd").parse(start_date);
-                        Date end = new SimpleDateFormat("yyyy-MM-dd").parse(end_date);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-                        String sdate = dateFormat.format(start);
-                        String edate = dateFormat.format(end);
-                        daopj.updateProject(title, client_id, sdate, edate, Double.parseDouble(rate), manager, desc);
-                    } catch (ParseException ex) {
-                        daopj.updateProject(title, client_id, start_date, end_date, Double.parseDouble(rate), manager, desc);
-                    }
+                    daopj.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
                     List<projects> listPj = daopj.getProject(acc.getProfile_id());                  
                     List<clients> listC = daoc.listAllClients();
-                    String alert = "Project editted!";
+                    String alert = "New information has been saved!";
                     request.setAttribute("alert", alert);
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC); 
@@ -189,9 +172,8 @@ public class ControllerProject extends HttpServlet {
                 if (service.equals("view")) {
                     String title = request.getParameter("title");
                     projects pj = daopj.getP(title);
-                    pj.setStart_date(format(pj.getStart_date()));
-                    pj.setEnd_date(format(pj.getEnd_date()));
-                    projects pro = daopj.getP(title);
+                    String sDate = format(pj.getPeriod().split(" ")[0]);
+                    String eDate = format(pj.getPeriod().split(" ")[2]);
                     List<task> list0 = daot.listProjectTask(0, title);
                     List<task> list1 = daot.listProjectTask(1, title);
                     List<task> list2 = daot.listProjectTask(2, title);
@@ -213,7 +195,44 @@ public class ControllerProject extends HttpServlet {
                     }
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("project", pj);
-                    request.setAttribute("pro", pro);
+                    request.setAttribute("start", sDate);
+                    request.setAttribute("end", eDate);
+                    request.setAttribute("list0", list0);
+                    request.setAttribute("list1", list1);
+                    request.setAttribute("list2", list2);
+                    request.setAttribute("list3", list3);
+                    request.setAttribute("lead", lead);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("listC", listC);
+                    RequestDispatcher dispath = request.getRequestDispatcher("project-view.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("editFromView")) {
+                    String oldTitle = request.getParameter("oldTitle");
+                    String title = request.getParameter("title");
+                    String client_id = request.getParameter("client");
+                    String period = request.getParameter("daterange");
+                    String rate = request.getParameter("rate");
+                    String manager = request.getParameter("manager");
+                    String desc = request.getParameter("description");
+                    daopj.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
+                    projects pj = daopj.getP(title);
+                    String sDate = format(pj.getPeriod().split(" ")[0]);
+                    String eDate = format(pj.getPeriod().split(" ")[2]);
+                    List<task> list0 = daot.listProjectTask(0, title);
+                    List<task> list1 = daot.listProjectTask(1, title);
+                    List<task> list2 = daot.listProjectTask(2, title);
+                    List<task> list3 = daot.listProjectTask(3, title);
+                    profile lead = daoPf.getByID(acc.getProfile_id());
+                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    for (profile p : listPf) {
+                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                    }
+                    List<clients> listC = daoc.listAllClients();
+                    request.setAttribute("project", pj);
+                    request.setAttribute("start", sDate);
+                    request.setAttribute("end", eDate);
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
                     request.setAttribute("list2", list2);
@@ -226,6 +245,7 @@ public class ControllerProject extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }

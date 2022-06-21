@@ -24,20 +24,20 @@ public class DAOProject extends DBConnect {
 
     public List<projects> getProject(String profile_id) {
         List<projects> list = new ArrayList<>();
-        String sql = "select * from projects where manager_id = '" + profile_id + "'";
+        String sql = "select * from projects where manager_id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getString(6),
-                        rs.getString(7)));
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -50,20 +50,20 @@ public class DAOProject extends DBConnect {
     }
 
     public projects getP(String title) {
-        String sql = "select * from projects where title = '" + title + "'";
+        String sql = "select * from projects where title = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getString(6),
-                        rs.getString(7));
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6));
             }
 
         } catch (Exception ex) {
@@ -76,15 +76,19 @@ public class DAOProject extends DBConnect {
         return null;
     }
 
-    public boolean addProject(String title, String client_id, String start_date,
-            String end_date, double rate, String manager_id, String desc) {
-        String sql = "insert into projects(title, client_id, start_date, "
-                + "end_date, rate, manager_id, description) values('" + title
-                + "', '" + client_id + "', '" + start_date + "', '" + end_date
-                + "', " + rate + ", '" + manager_id + "', '" + desc + "')";
+    public boolean addProject(String title, String client_id, String period, 
+            double rate, String manager_id, String desc) {
+        String sql = "insert into projects(title, client_id, period, "
+                + "rate, manager_id, description) values(?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
+            state.setString(2, client_id);
+            state.setString(3, period);
+            state.setDouble(4, rate);
+            state.setString(5, manager_id);
+            state.setString(6, desc);
             state.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -97,10 +101,11 @@ public class DAOProject extends DBConnect {
     }
 
     public boolean deleteProject(String title) {
-        String sql = "delete from projects where title = '" + title + "'";
+        String sql = "delete from projects where title = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
             state.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -112,16 +117,16 @@ public class DAOProject extends DBConnect {
         return true;
     }
 
-    public boolean updateProject(String title, String client_id, String start_date,
-            String end_date, double rate, String manager_id, String desc) {
-        String sql = "update projects set client_id = ?, start_date = ?"
-                + ", end_date = ?, rate = ?, manager_id = ?, description = ? where title = ?";
+    public boolean updateProject(String title, String newTitle, String client_id,
+            String period, double rate, String manager_id, String desc) {
+        String sql = "update projects set title = ?, client_id = ?, period = ?"
+                + ", rate = ?, manager_id = ?, description = ? where title = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, client_id);
-            state.setString(2, start_date);
-            state.setString(3, end_date);
+            state.setString(1, newTitle);
+            state.setString(2, client_id);
+            state.setString(3, period);
             state.setDouble(4, rate);
             state.setString(5, manager_id);
             state.setString(6, desc);
@@ -139,21 +144,22 @@ public class DAOProject extends DBConnect {
 
     public List<projects> search(String title, String id) {
         List<projects> list = new ArrayList<>();
-        String sql = "select * from projects where title like '%" + title + "%'"
-                + " and manager_id = '" + id + "'";
+        String sql = "select * from projects where title like '%?%'"
+                + " and manager_id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
+            state.setString(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getString(6),
-                        rs.getString(7)));
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

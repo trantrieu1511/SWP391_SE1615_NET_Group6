@@ -51,9 +51,42 @@ public class ControllerTask extends HttpServlet {
                 DAOProfile daoPf = new DAOProfile();
                 DAOTask daot = new DAOTask();
                 String service = request.getParameter("do");
-                
+                if (service.equals("view")) {
+                    String title = request.getParameter("title");
+                    List<task> list0 = daot.listProjectTask(0, title);
+                    List<task> list1 = daot.listProjectTask(1, title);
+                    List<task> list2 = daot.listProjectTask(2, title);
+                    List<task> list3 = daot.listProjectTask(3, title);
+                    List<profile> listPf = null;
+                    if (acc.isIsManager()) {
+                        listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    } else {
+                        listPf = daoPf.listAllStaff(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    }                   
+                    request.setAttribute("list0", list0);
+                    request.setAttribute("list1", list1);
+                    request.setAttribute("list2", list2);
+                    request.setAttribute("list3", list3);
+                    request.setAttribute("title", title);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("alert", "");
+                    RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
+                    dispath.forward(request, response);
+                }
+                if (service.equals("addTask")) {
+                    String project = request.getParameter("project");
+                    String name = request.getParameter("name");
+                    String priority = request.getParameter("priority");
+                    String deadline = request.getParameter("deadline");
+                    String assigned = request.getParameter("assigned");
+                    daot.add(name, Integer.parseInt(priority), deadline, 0, assigned, project);
+                    
+                    RequestDispatcher dispath = request.getRequestDispatcher("task?do=view&&title=" + project);
+                    dispath.forward(request, response);                    
+                }
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }

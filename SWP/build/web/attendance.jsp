@@ -45,6 +45,14 @@
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
+        
+        <script type="text/javascript">
+        $(function(){
+        $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+        });
+        })
+        </script>
 
     </head>
     <body>
@@ -127,7 +135,7 @@
                             <div class="col-sm-3">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input type="text" class="form-control floating datetimepicker" name="date">
+                                        <input type="text" class="form-control floating datetimepicker" pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}" name="date" onchange="return trim(this)">
                                     </div>
                                     <label class="focus-label">Date</label>
                                 </div>

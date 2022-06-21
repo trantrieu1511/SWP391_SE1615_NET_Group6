@@ -85,12 +85,12 @@ public class DAOProjectTest {
 
     @Test
     public void testAddProject2() {
-        assertFalse(dao.addProject("tiuwq2", "1    ", "20/06/2022", "30/07/2022", 10000, "ABCDE", "<p>Demo</p>"));
+        assertFalse(dao.addProject("tiuwq2", "1    ", "20/06/2022 - 30/07/2022", 10000, "ABCDE", "<p>Demo</p>"));
     }
 
     @Test
     public void testAddProject3() {
-        assertFalse(dao.addProject("flhwoifwh", "1    ", "20/06/2022", "30/07/2022", 10000, "yigd", "<p>Demo</p>"));
+        assertFalse(dao.addProject("flhwoifwh", "1    ", "20/06/2022 - 30/07/2022", 10000, "yigd", "<p>Demo</p>"));
     }
 
     /**

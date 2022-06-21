@@ -63,10 +63,21 @@
                     $(e.currentTarget).find('input[name="project"]').val(pj);
                 });
             });  
+            $(function(){
+                $('input[type="text"]').change(function(){
+                    this.value = $.trim(this.value);
+                });
+            })
         </script>
-        
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
+        
+        <c:if test="${alert != ''}">
+        <script lang="Javascript">
+            alert("${alert}");
+        </script>
         </c:if>
         
     </head>
@@ -86,7 +97,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h3 class="page-title">Hospital Admin</h3>
+                                <h3 class="page-title">${title}</h3>
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Task Board</li>
@@ -118,6 +129,7 @@
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
                                                     <span class="status-title">${o.name}</span>
+                                                    <c:if test="${sessionScope.acc.isManager == true}">
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -127,6 +139,7 @@
                                                             <a class="dropdown-item" href="#">Delete</a>
                                                         </div>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
@@ -134,18 +147,25 @@
                                                             <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
                                                             <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
+                                                        <c:if test="${sessionScope.acc.isManager == true}">
                                                         <span class="task-users">
                                                             ${o.assigned}
                                                         </span>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.acc.isManager == false}">
+                                                            <a href="task?do=updateStatus&&status=1">Accept</a>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         </c:forEach>
                                     </div>
+                                    <c:if test="${sessionScope.acc.isManager == true}">
                                     <div class="add-new-task">
                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal" data-id="${o.project}">Add New Task</a>
                                     </div>
+                                     </c:if>
                                 </div>
                                 <div class="kanban-list kanban-info">
                                     <div class="kanban-header">
@@ -157,6 +177,7 @@
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
                                                     <span class="status-title">${o.name}</span>
+                                                    <c:if test="${sessionScope.acc.isManager == true}">
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -166,6 +187,7 @@
                                                             <a class="dropdown-item" href="#">Delete</a>
                                                         </div>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
@@ -173,9 +195,14 @@
                                                             <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
                                                             <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
+                                                        <c:if test="${sessionScope.acc.isManager == true}">
                                                         <span class="task-users">
                                                             ${o.assigned}
                                                         </span>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.acc.isManager == false}">
+                                                            <a href="task?do=updateStatus&&status=2">Done</a>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,6 +220,7 @@
                                             <div class="kanban-box">
                                                 <div class="task-board-header">
                                                     <span class="status-title">${o.name}</span>
+                                                    <c:if test="${sessionScope.acc.isManager == true}">
                                                     <div class="dropdown kanban-task-action">
                                                         <a href="" data-toggle="dropdown">
                                                             <i class="fa fa-angle-down"></i>
@@ -202,6 +230,7 @@
                                                             <a class="dropdown-item" href="#">Delete</a>
                                                         </div>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="task-board-body">                                            
                                                     <div class="kanban-footer">
@@ -209,9 +238,12 @@
                                                             <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
                                                             <span class="task-priority badge bg-inverse-danger"></span>
                                                         </span>
+                                                        <c:if test="${sessionScope.acc.isManager == true}">
                                                         <span class="task-users">
                                                             ${o.assigned}
                                                         </span>
+                                                        <a href="task?do=updateStatus&&status=3">Accept</a>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
@@ -275,19 +307,15 @@
                                     <input type="hidden" name="do" value="addTask">
                                     <div class="form-group">
                                         <label>Project</label>
-                                        <select class="form-control select" name="title">
-                                            <c:forEach items="project" var="0">
-                                            <option>${o.title}</option>
-                                            </c:forEach>
-                                        </select>
+                                        <input type="text" value="${title}" readonly class="form-control" name="project" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Task Name</label>
-                                        <input type="text" class="form-control" name="name" required onchange="return trim(this)">
+                                        <input type="text" class="form-control" name="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Task Priority</label>
-                                        <select class="form-control select" name="priority" required onchange="return trim(this)">
+                                        <select class="form-control select" name="priority" required>
                                             <option>Select</option>
                                             <option value="0">High</option>
                                             <option value="1">Normal</option>
@@ -296,11 +324,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Due Date</label>
-                                        <input type="date" name="deadline" required onchange="return trim(this)"> 
+                                        <input type="text" class="form-control datetimepicker" onkeydown="event.preventDefault()" name="deadline" required> 
                                     </div>
                                     <div class="form-group">
                                         <label>Assigned</label>
-                                        <select class="select floating" name="assigned" required onchange="return trim(this)"> 
+                                        <select class="select floating" name="assigned" required 
                                             <option> </option>
                                             <c:forEach items="${listPf}" var="o">
                                             <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>

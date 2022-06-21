@@ -24,11 +24,16 @@ public class DAOTask extends DBConnect {
     
     public boolean add(String name, int priority, String deadline, int status, String assigned, String project) {
         String sql = "insert into task(name, priority, deadline, status, assigned, project)"
-                + " values('" + name + "', " + priority + ", '" + deadline + "', "
-                + status + ", '" + assigned + "', '" + project + "')";
+                + " values(?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, name);
+            state.setInt(2, priority);
+            state.setString(3, deadline);
+            state.setInt(4, status);
+            state.setString(5, assigned);
+            state.setString(6, project);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -42,10 +47,11 @@ public class DAOTask extends DBConnect {
     
     public List<task> list(int status) {
         List<task> list = new ArrayList<>();
-        String sql = "select * from task where status = " + status;
+        String sql = "select * from task where status = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setInt(1, status);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new task(rs.getString(1),
@@ -67,11 +73,12 @@ public class DAOTask extends DBConnect {
     
     public List<task> listProjectTask(int status, String title) {
         List<task> list = new ArrayList<>();
-        String sql = "select * from task where status = " + status + "and "
-                + "project = '" + title + "'";
+        String sql = "select * from task where status = ? and project = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setInt(1, status);
+            state.setString(2, title);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new task(rs.getString(1),
@@ -91,8 +98,26 @@ public class DAOTask extends DBConnect {
         return list;
     }
     
+    public boolean updateStatus(int status, String name) {
+        String sql = "update task set status = ? where name = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, status);
+            state.setString(2, name);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public static void main(String[] args) {
         DAOTask dao = new DAOTask();
-        System.out.println(dao.list(0));
+        System.out.println(dao.listProjectTask(0, "Project demo"));
     }
 }

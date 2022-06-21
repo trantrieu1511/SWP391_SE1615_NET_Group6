@@ -105,11 +105,12 @@ CREATE TABLE [schedule](
 	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
 );
 
+drop table projects
+
 CREATE TABLE [projects] (
    title VARCHAR (35) PRIMARY KEY,
    client_id CHAR(5),
-   start_date VARCHAR(20),
-   end_date VARCHAR(20),
+   period VARCHAR(50),
    rate DECIMAL(8,2),
    manager_id CHAR(5),
    description VARCHAR(255),
@@ -117,8 +118,10 @@ CREATE TABLE [projects] (
    FOREIGN KEY (manager_id) REFERENCES [profile] (profile_id),
 );
 
+drop table task
+
 CREATE TABLE [task] (
-    name VARCHAR(35),
+    name VARCHAR(35) PRIMARY KEY,
 	priority INT,
 	deadline VARCHAR(20),
 	status int,

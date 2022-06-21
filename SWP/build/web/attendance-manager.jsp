@@ -38,9 +38,47 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
         
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Chart JS -->
+        <script src="plugins/morris/morris.min.js"></script>
+        <script src="plugins/raphael/raphael.min.js"></script>
+        <script src="js/chart.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+        <script src="js/edit.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
+        
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
+        
+        <script type="text/javascript">
+        $(function(){
+        $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+        });
+        })
+        </script>
 
     </head>
     <body>
@@ -75,14 +113,14 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-4">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="name">
+                                    <input type="text" class="form-control floating" name="name" id="inp" pattern="[A-Za-z]{1,20}">
                                     <label class="focus-label">Employee Name</label>
                                 </div>
                             </div>                       
                             <div class="col-sm-6 col-md-4"> 
                                 <div class="form-group form-focus"><label class="focus-label">Date</label>
                                     <div>                                
-                                        <input type="text" class="form-control floating datetimepicker" name="date">
+                                        <input type="text" class="form-control floating datetimepicker" name="date" pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}" onchange="return trim(this)">
                                     </div>
                                 </div>
                             </div>
@@ -171,35 +209,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Chart JS -->
-        <script src="plugins/morris/morris.min.js"></script>
-        <script src="plugins/raphael/raphael.min.js"></script>
-        <script src="js/chart.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
-
-        <!-- Select2 JS -->
-        <script src="js/select2.min.js"></script>
-
-        <!-- Datetimepicker JS -->
-        <script src="js/moment.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Datatable JS -->
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script src="js/dataTables.bootstrap4.min.js"></script>
 
     </body>
 </html>

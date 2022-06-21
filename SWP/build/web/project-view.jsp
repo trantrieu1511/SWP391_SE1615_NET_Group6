@@ -31,9 +31,7 @@
 
         <!-- Datetimepicker CSS -->
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-        
-        <!-- Summernote CSS -->
-        <link rel="stylesheet" href="plugins/summernote/dist/summernote-bs4.css">
+        <link rel="stylesheet" href="css/daterangepicker.css">
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
@@ -54,15 +52,11 @@
         <!-- Datetimepicker JS -->
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Task JS -->
-        <script src="js/task.js"></script>
+        <script src="js/daterangepicker.min.js"></script>
         
-        <!-- Summernote JS -->
-        <script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
-
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        <script src="js/edit.js"></script>
         
         <!-- Model JS -->
         <script type="text/javascript">
@@ -72,25 +66,47 @@
             }
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id').trim();
-                    const myArray = text.split(" ");
-                    var title = myArray[0];
-                    var client_id = myArray[4];
-                    var start_date = myArray[1];
-                    var end_date = myArray[2];
-                    var rate = myArray[3];       
-                    $(e.currentTarget).find('#titleEdit').val(title);
-                    $(e.currentTarget).find('#clientEdit option[value="2    "]').attr('selected', 'selected');
-                    $(e.currentTarget).find('#start_date2').val(start_date);
-                    $(e.currentTarget).find('#end_date2').val(end_date);
-                    $(e.currentTarget).find('#rateEdit').val(rate);                  
+                    var text = $(e.relatedTarget).attr('name-id').trim();                    
+                    $(e.currentTarget).find('#oldTitle').val(text);
+                    $(e.currentTarget).find('#titleEdit').val(text);                                  
                 });
-            });              
+            });   
+            $(function () {
+                $("#edit_project").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id').trim();
+                    const myArray = text.split(" ");;
+                    var client_id = myArray[5];
+                    var period1 = myArray[0]; 
+                    var period2 = myArray[1];
+                    var period3 = myArray[2];
+                    var rate = myArray[3];  
+                    var desc = myArray[4];
+                    $(e.currentTarget).find('#clientEdit').val(client_id)
+                    $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
+                    $(e.currentTarget).find('#rateEdit').val(rate);  
+                    $(e.currentTarget).find('#desc').val(desc);                 
+                });
+            });            
+            $(function() {
+                $('input[name="daterange"]').daterangepicker({
+                    opens: 'left'
+                }, function(start, end, label) {
+                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+            });
         </script>
    
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
-        </c:if>      
+        </c:if>   
+        
+        <script type="text/javascript">
+        $(function(){
+        $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+        });
+        })
+        </script>
         
     </head>
     <body>
@@ -116,8 +132,8 @@
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${pro.title} ${pro.start_date} ${pro.end_date} ${pro.rate} ${pro.client}"><i class="fa fa-plus"></i> Edit Project</a>
-                                <a href="task-board.jsp" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${project.period} ${project.rate} ${project.description} ${project.client}" name-id="${project.title}"><i class="fa fa-plus"></i> Edit Project</a>
+                                <a href="task?do=view&&title=${project.title}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +145,6 @@
                                 <div class="card-body">
                                     <div class="project-title">
                                         <h5 class="card-title">${project.title}</h5>
-                                        <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span class="text-muted">open tasks, </span><span class="text-xs">5</span> <span class="text-muted">tasks completed</span></small>
                                     </div>
                                     <p>${project.description}</p>                                      
                                 </div>
@@ -207,11 +222,11 @@
                                             </tr>                                            
                                             <tr>
                                                 <td>Created:</td>
-                                                <td class="text-right">${project.start_date}</td>
+                                                <td class="text-right">${start}</td>
                                             </tr>
                                             <tr>
                                                 <td>Deadline:</td>
-                                                <td class="text-right">${project.end_date}</td>
+                                                <td class="text-right">${end}</td>
                                             </tr>                                           
                                             <tr>
                                                 <td>Client:</td>
@@ -274,17 +289,18 @@
                             </div>
                             <div class="modal-body">
                                 <form action="project" do="post">
-                                    <input type="hidden" name="do" value="edit">
+                                    <input type="hidden" name="do" value="editFromView">
+                                    <input type="hidden" name="oldTitle" id="oldTitle">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Project Name</label>
+                                                <label>Project Name<span class="text-danger">*</span></label>
                                                 <input class="form-control" type="text" id="titleEdit" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Client</label>
+                                                <label>Client<span class="text-danger">*</span></label>
                                                 <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
@@ -296,17 +312,11 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Start Date</label>
+                                                <label>Period
+                                                    <span class="text-danger">*</span>
+                                                </label>
                                                 <div>
-                                                    <input placeholder="start" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="start_date" id="start_date2" onchange="check2()">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>End Date</label>
-                                                <div>
-                                                    <input placeholder="end" type="text" class="form-control" onfocus="(this.type='date')" onblur="(this.type='text')" name="end_date" id="end_date2" onchange="check2()">
+                                                    <input type="text" class="form-control" name="daterange" id="daterange" onkeydown="event.preventDefault()" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -314,7 +324,7 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label>Rate</label>
+                                                <label>Rate<span class="text-danger">*</span></label>
                                                 <input class="form-control" type="text" name="rate" id="rateEdit" onchange="return trim(this)">
                                             </div>
                                         </div>                                                        
@@ -322,16 +332,15 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Add Project Leader</label>
+                                                <label>Add Project Leader<span class="text-danger">*</span></label>
                                                 <input class="form-control" type="text" name="manager" value="${sessionScope.acc.profile_id}" readonly>
                                             </div>
                                         </div>                                     
                                     </div>
                                     <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea rows="4" class="form-control summernote" placeholder="Enter your message here" name="description" required onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,255}"></textarea>
+                                        <label>Description<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="description" id="desc" required pattern="[0-9A-Za-z ]{1,255}">
                                     </div>
-                                    <span id="alert2"></span>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn" id="create2">Submit</button>
                                     </div>

@@ -12,8 +12,7 @@ package entity;
 public class projects {
     String title;
     String client;
-    String start_date;
-    String end_date;
+    String period;
     double rate;
     String manager;
     String description;
@@ -21,11 +20,10 @@ public class projects {
     public projects() {
     }
 
-    public projects(String title, String client, String start_date, String end_date, double rate, String manager, String description) {
+    public projects(String title, String client, String period, double rate, String manager, String description) {
         this.title = title;
         this.client = client;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.period = period;
         this.rate = rate;
         this.manager = manager;
         this.description = description;
@@ -47,20 +45,12 @@ public class projects {
         this.client = client;
     }
 
-    public String getStart_date() {
-        return start_date;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setStart_date(String start_date) {
-        this.start_date = start_date;
-    }
-
-    public String getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(String end_date) {
-        this.end_date = end_date;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public double getRate() {
@@ -89,7 +79,7 @@ public class projects {
 
     @Override
     public String toString() {
-        return "projects{" + "title=" + title + ", client=" + client + ", start_date=" + start_date + ", end_date=" + end_date + ", rate=" + rate + ", manager=" + manager + ", description=" + description + '}';
+        return "projects{" + "title=" + title + ", client=" + client + ", period=" + period + ", rate=" + rate + ", manager=" + manager + ", description=" + description + '}';
     }
     
 }

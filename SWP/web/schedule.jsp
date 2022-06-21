@@ -145,13 +145,10 @@
                                     <thead>
                                         <tr>
                                             <th>Scheduled Shift</th>
-                                            <th><%=date%></th>
-                                            <th><%=date2%></th>
-                                            <th><%=date3%></th>
-                                            <th><%=date4%></th>
-                                            <th><%=date5%></th>
-                                            <th><%=date6%></th>
-                                            <th><%=date7%></th>
+                                            <th>Date</th>
+                                            <th>Shift</th>
+                                            <th>From</th>
+                                            <th>To</th>                                          
                                         </tr>
                                     </thead>
                                     <tbody>

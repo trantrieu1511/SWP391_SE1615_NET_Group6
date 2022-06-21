@@ -192,10 +192,10 @@ public class ControllerProject extends HttpServlet {
                     pj.setStart_date(format(pj.getStart_date()));
                     pj.setEnd_date(format(pj.getEnd_date()));
                     projects pro = daopj.getP(title);
-                    List<task> list0 = daot.list(0);
-                    List<task> list1 = daot.list(1);
-                    List<task> list2 = daot.list(2);
-                    List<task> list3 = daot.list(3);
+                    List<task> list0 = daot.listProjectTask(0, title);
+                    List<task> list1 = daot.listProjectTask(1, title);
+                    List<task> list2 = daot.listProjectTask(2, title);
+                    List<task> list3 = daot.listProjectTask(3, title);
                     profile lead = null;
                     if (acc.isIsManager()) {
                         lead = daoPf.getByID(acc.getProfile_id());

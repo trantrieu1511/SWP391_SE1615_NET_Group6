@@ -40,11 +40,43 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+        
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="assets/js/html5shiv.min.js"></script>
                 <script src="assets/js/respond.min.js"></script>
         <![endif]-->
+        <script type="text/javascript">
+            $(function () {
+                $("#edit_family_info").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var name = myArray[1];
+                    var relationship = myArray[2];
+                    var dob = myArray[3];
+                    var phone = myArray[4];
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="name"]').val(name);
+                    $(e.currentTarget).find('input[name="relationship"]').val(relationship);
+                    $(e.currentTarget).find('input[name="dob"]').val(dob);
+                    $(e.currentTarget).find('input[name="phone"]').val(phone);
+                });
+            });
+            
+            $(function () {
+                $("#delete_family_info").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var name = myArray[1];
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="name"]').val(name);
+                });
+            });
+        </script>
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -282,9 +314,10 @@
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title">Emergency Contact</h3>
-                                        <h5 class="section-title">Primary</h5>
+                                        <!--<h5 class="section-title">Primary</h5>-->
                                         <ul class="personal-info">
                                             <c:forEach items="${listf}" var="f">
+                                                <hr>
                                                 <li>
                                                     <div class="title">Name</div>
                                                     <div class="text">${f.name}</div>
@@ -300,7 +333,7 @@
                                             </c:forEach>
                                         </ul>
                                         <hr>
-                                        <h5 class="section-title">Secondary</h5>
+<!--                                        <h5 class="section-title">Secondary</h5>
                                         <ul class="personal-info">
                                             <li>
                                                 <div class="title">Name</div>
@@ -314,7 +347,7 @@
                                                 <div class="title">Phone </div>
                                                 <div class="text"></div>
                                             </li>
-                                        </ul>
+                                        </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -399,16 +432,16 @@
                                         <div class="table-responsive">
                                             <table class="table table-nowrap">
                                                 <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Relationship</th>
+                                                        <th>Date of Birth</th>
+                                                        <th>Phone</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     <c:forEach items="${listf}" var="f">
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Relationship</th>
-                                                            <th>Date of Birth</th>
-                                                            <th>Phone</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
                                                         <tr>
                                                             <td>${f.name}</td>
                                                             <td>${f.relationship}</td>
@@ -422,8 +455,8 @@
                                                                             <div class="dropdown dropdown-action">
                                                                                 <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_family_info_modal"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-id="${f.profile_id} ${f.name} ${f.relationship} ${f.dob} ${f.phone}" data-target="#edit_family_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <a href="#" class="dropdown-item" data-id="${f.profile_id} ${f.name}" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -1165,7 +1198,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="familyInfo">
+                            <form action="familyInfo" method="post">
                                 <div class="form-scroll">
                                     <input type="hidden" name="do" value="addFamilyInfo">
 
@@ -1251,7 +1284,7 @@
             <!-- /Add Family Info Modal -->
 
             <!-- Edit Family Info Modal -->
-            <div id="edit_family_info_modal" class="modal custom-modal fade" role="dialog">
+            <div id="edit_family_info" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1271,33 +1304,31 @@
                                                 <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
-                                                <c:forEach items="${listf}" var="f">
-                                                    <input type="hidden" name="profile_id" value="${f.profile_id}">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Name <span class="text-danger">*</span></label>
-                                                            <input class="form-control" type="text" name="name" value="${f.name}">
-                                                        </div>
+                                                <input type="hidden" name="profile_id" value="">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="name" value="">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Relationship <span class="text-danger">*</span></label>
-                                                            <input class="form-control" type="text" name="relationship" value="${f.relationship}">
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Relationship <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="relationship" value="">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Date of birth </label>
-                                                            <input class="form-control" type="date" name="dob" value="${f.dob}">
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Date of birth </label>
+                                                        <input class="form-control" type="date" name="dob" value="">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Phone <span class="text-danger">*</span></label>
-                                                            <input class="form-control" type="text" name="phone" value="${f.phone}">
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" name="phone" value="">
                                                     </div>
-                                                </c:forEach>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1858,6 +1889,7 @@
                             <form action="familyInfo" do="post">
                                 <input type="hidden" name="do" value="deleteFamilyInfo">
                                 <input type="hidden" name="profile_id">
+                                <input type="hidden" name="name">
                                 <div class="form-header">
                                     <h3>Delete Family Info</h3>
                                     <p>Are you sure want to delete?</p>

@@ -56,7 +56,7 @@ public class DAOFamilyInfo extends DBConnect {
                 + "'" + f.getProfile_id() + "',"
                 + "'" + f.getName() + "',"
                 + "'" + f.getRelationship() + "',"
-                + "" + f.getDob() + ","
+                + "'" + f.getDob() + "',"
                 + "'" + f.getPhone() + "')";
         try {
             conn = getConnection();
@@ -73,8 +73,10 @@ public class DAOFamilyInfo extends DBConnect {
         return status;
     }
 
-    public boolean deleteFamilyInfo(String profile_id) {
-        String sql = "delete from [familyInfo] where [profile_id] = '" + profile_id + "'";
+    public boolean deleteFamilyInfo(String profile_id, String name) {
+        String sql = "delete from [familyInfo]\n"
+                + "where profile_id = '" + profile_id + "'\n "
+                + "and [name] = '" + name + "'";
         try {
             conn = getConnection();
             state = conn.createStatement();
@@ -97,7 +99,8 @@ public class DAOFamilyInfo extends DBConnect {
                 + "relationship = '" + familyInfo.getRelationship() + "',\n"
                 + "dob = '" + familyInfo.getDob() + "',\n"
                 + "phone = '" + familyInfo.getPhone() + "'\n"
-                + "where profile_id = '" + familyInfo.getProfile_id() + "'";
+                + "where profile_id = '" + familyInfo.getProfile_id() + "'\n"
+                + "and [name] = '" + familyInfo.getName() + "'";
         conn = getConnection();
         try {
             state = conn.createStatement();
@@ -128,6 +131,9 @@ public class DAOFamilyInfo extends DBConnect {
 //        } else {
 //            System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
 //        }
+        String name = "Nguyen Thi Oanh";
+        String[] parts = name.split(" ");
+        System.out.println(parts[0] + parts[1] + parts[2]);
 
     }
 

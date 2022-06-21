@@ -58,13 +58,49 @@ public class ControllerFamilyInfo extends HttpServlet {
 //                out.print(dob);
 //                out.print("<br>");
 //                out.print(phone);
-                boolean statusf = daoF.editFamilyInfo(new familyInfo(profile_id, name, relationship, dob, phone));
-                if (statusf) {
-                    System.out.println("Successfully edited familyInfo of Staff with profile_id = " + profile_id);
+                boolean statusEdit = daoF.editFamilyInfo(new familyInfo(profile_id, name, relationship, dob, phone));
+                if (statusEdit) {
+                    System.out.println("Successfully edited familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
                 } else {
-                    System.out.println("Fail to edit familyInfo of Staff with profile_id = " + profile_id);
+                    System.out.println("Fail to edit familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
                 }
 
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
+            }
+            if (service.equals("addFamilyInfo")) {
+                String profile_id = acc.getProfile_id();
+                String name = request.getParameter("name");
+                String relationship = request.getParameter("relationship");
+                String dob = request.getParameter("dob");
+                String phone = request.getParameter("phone");
+
+                boolean statusAdd = daoF.addFamilyInfo(
+                        new familyInfo(profile_id, name, relationship, dob, phone));
+                if (statusAdd) {
+                    System.out.println("Successfully added new familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to add new familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
+                }
+
+                if (acc.getProfile_id().equals(profile_id)) {
+                    response.sendRedirect("profile?do=getmyProfile");
+                } else {
+                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                }
+            }
+            if (service.equals("deleteFamilyInfo")) {
+                String name = request.getParameter("name");
+                String profile_id = request.getParameter("profile_id");
+                boolean statusDelete = daoF.deleteFamilyInfo(profile_id, name);
+                if (statusDelete) {
+                    System.out.println("Successfully deleted familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
+                } else {
+                    System.out.println("Fail to delete familyInfo (name = "+name+") of Staff with profile_id = " + profile_id);
+                }
                 if (acc.getProfile_id().equals(profile_id)) {
                     response.sendRedirect("profile?do=getmyProfile");
                 } else {

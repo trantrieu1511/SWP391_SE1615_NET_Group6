@@ -42,7 +42,8 @@
 
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
-        
+        <script src="js/edit.js"></script>
+
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="assets/js/html5shiv.min.js"></script>
@@ -54,28 +55,60 @@
                     var text = $(e.relatedTarget).attr('data-id');
                     const myArray = text.split(" ");
                     var id = myArray[0];
-                    var name = myArray[1];
-                    var relationship = myArray[2];
-                    var dob = myArray[3];
-                    var phone = myArray[4];
+                    var cur_name = $(e.relatedTarget).attr('data-name');
+                    var relationship = myArray[1];
+                    var dob = myArray[2];
+                    var phone = myArray[3];
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                    $(e.currentTarget).find('input[name="name"]').val(name);
+                    $(e.currentTarget).find('input[name="name"]').val(cur_name);
+                    $(e.currentTarget).find('input[name="cur_name"]').val(cur_name);
                     $(e.currentTarget).find('input[name="relationship"]').val(relationship);
                     $(e.currentTarget).find('input[name="dob"]').val(dob);
                     $(e.currentTarget).find('input[name="phone"]').val(phone);
                 });
             });
-            
             $(function () {
-                $("#delete_family_info").on("show.bs.modal", function (e) {
+                $("#edit_experience_info").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id');
                     const myArray = text.split(" ");
+                    var cur_role = $(e.relatedTarget).attr('data-role');
                     var id = myArray[0];
-                    var name = myArray[1];
+                    var start_date = myArray[1];
+                    var end_date = myArray[2];
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="cur_role"]').val(cur_role);
+                    $(e.currentTarget).find('input[name="role"]').val(cur_role);
+                    $(e.currentTarget).find('input[name="start_date"]').val(start_date);
+                    $(e.currentTarget).find('input[name="end_date"]').val(end_date);
+                });
+            });
+
+            $(function () {
+                $("#delete_family_info").on("show.bs.modal", function (e) {
+                    var id = $(e.relatedTarget).attr('data-id');
+                    var name = $(e.relatedTarget).attr('data-name');
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                     $(e.currentTarget).find('input[name="name"]').val(name);
                 });
             });
+
+            $(function () {
+                $("#delete_experience").on("show.bs.modal", function (e) {
+                    var id = $(e.relatedTarget).attr('data-id');
+                    var role = $(e.relatedTarget).attr('data-role');
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="role"]').val(role);
+                });
+            });
+
+            function checkAddress() {
+                if (document.getElementById('address1').value != "") {
+                    alert("Edit successfully!")
+                } else {
+                    alert("Cannot input blank, please enter an address!");
+                }
+            }
+
         </script>
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
@@ -199,7 +232,7 @@
                                     <c:forEach items="${listp}" var="p">
                                         <c:choose>
                                             <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#" ><i class="fa fa-pencil"></i></a></div>
                                                     </c:when>
                                                     <c:otherwise>
 
@@ -333,21 +366,21 @@
                                             </c:forEach>
                                         </ul>
                                         <hr>
-<!--                                        <h5 class="section-title">Secondary</h5>
-                                        <ul class="personal-info">
-                                            <li>
-                                                <div class="title">Name</div>
-                                                <div class="text"></div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Relationship</div>
-                                                <div class="text"></div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Phone </div>
-                                                <div class="text"></div>
-                                            </li>
-                                        </ul>-->
+                                        <!--                                        <h5 class="section-title">Secondary</h5>
+                                                                                <ul class="personal-info">
+                                                                                    <li>
+                                                                                        <div class="title">Name</div>
+                                                                                        <div class="text"></div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="title">Relationship</div>
+                                                                                        <div class="text"></div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="title">Phone </div>
+                                                                                        <div class="text"></div>
+                                                                                    </li>
+                                                                                </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +415,18 @@
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title">Experience 
-                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
+                                            <c:forEach items="${listp}" var="p">
+                                                <c:choose>
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
+
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                            
                                         </h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
@@ -403,8 +447,8 @@
                                                                                 <div class="dropdown dropdown-action" style="text-align: right;">
                                                                                     <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id} ${e.start_date} ${e.end_date}" data-role="${e.role}" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id}" data-role="${e.role}" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -427,7 +471,18 @@
                                 <div class="card profile-box flex-fill">
                                     <div class="card-body">
                                         <h3 class="card-title">Family Informations 
-                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
+                                            <c:forEach items="${listp}" var="p">
+                                                <c:choose>
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
+
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+
                                         </h3>
                                         <div class="table-responsive">
                                             <table class="table table-nowrap">
@@ -455,8 +510,8 @@
                                                                             <div class="dropdown dropdown-action">
                                                                                 <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-id="${f.profile_id} ${f.name} ${f.relationship} ${f.dob} ${f.phone}" data-target="#edit_family_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                    <a href="#" class="dropdown-item" data-id="${f.profile_id} ${f.name}" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-id="${f.profile_id} ${f.relationship} ${f.dob} ${f.phone}" data-name="${f.name}" data-target="#edit_family_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <a href="#" class="dropdown-item" data-id="${f.profile_id}" data-name="${f.name}" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -1046,7 +1101,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Address <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="address" value="${pd.address}">
+                                                    <input type="text" class="form-control" id="address1" name="address" value="${pd.address}">
                                                 </div>
                                             </div>
                                             <!--                                            <div class="col-md-6">
@@ -1096,7 +1151,7 @@
                                     </c:forEach>
                                 </c:forEach>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="checkAddress()">
                                 </div>
                             </form>
                         </div>
@@ -1297,7 +1352,6 @@
                             <form action="familyInfo">
                                 <div class="form-scroll">
                                     <input type="hidden" name="do" value="editFamilyInfo">
-
                                     <div class="card">
                                         <div class="card-body">
                                             <h3 class="card-title">Edit Family Member 
@@ -1309,6 +1363,7 @@
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="name" value="">
+                                                        <input class="form-control" type="hidden" name="cur_name" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -1710,7 +1765,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="experience">
+                            <form action="experience" method="post">
                                 <div class="form-scroll">
                                     <input type="hidden" name="do" value="editExperience">
                                     <div class="card">
@@ -1719,11 +1774,11 @@
                                                 <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
-                                                <c:forEach items="${listexp}" var="e">
-                                                    <input type="hidden" name="profile_id" value="${e.profile_id}">
+                                                    <input type="hidden" name="profile_id" value="">
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
-                                                            <input type="text" class="form-control floating" name="role" value="${e.role}">
+                                                            <input type="text" class="form-control floating" name="role" value="">
+                                                            <input type="hidden" class="form-control floating" name="cur_role" value="">
                                                             <label class="focus-label">Role <span class="text-danger">*</span></label>
                                                         </div>
                                                     </div>
@@ -1742,7 +1797,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
                                                             <div class="form-group">
-                                                                <input type="date" class="form-control floating" name="start_date" value="${e.start_date}">
+                                                                <input type="date" class="form-control floating" name="start_date" value="">
                                                             </div>
                                                             <label class="focus-label">Period From <span class="text-danger">*</span></label>
                                                         </div>
@@ -1750,12 +1805,11 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-focus">
                                                             <div class="form-group">
-                                                                <input type="date" class="form-control floating" name="end_date" value="${e.end_date}">
+                                                                <input type="date" class="form-control floating" name="end_date" value="">
                                                             </div>
                                                             <label class="focus-label">Period To</label>
                                                         </div>
                                                     </div>
-                                                </c:forEach>
                                             </div>
                                         </div>
                                     </div>
@@ -1919,6 +1973,7 @@
                             <form action="experience" do="post">
                                 <input type="hidden" name="do" value="deleteExperience">
                                 <input type="hidden" name="profile_id">
+                                <input type="hidden" name="role">
                                 <div class="form-header">
                                     <h3>Delete Experience</h3>
                                     <p>Are you sure want to delete?</p>

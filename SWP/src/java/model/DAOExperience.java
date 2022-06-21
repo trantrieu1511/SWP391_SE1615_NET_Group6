@@ -54,9 +54,9 @@ public class DAOExperience extends DBConnect {
         String sql = "insert into [experience]\n"
                 + "values ("
                 + "'" + exp.getProfile_id() + "', "
-                + "'" + exp.getRole() + "',"
-                + "" + exp.getStart_date() + ","
-                + "" + exp.getEnd_date() + ")";
+                + "'" + exp.getRole() + "', "
+                + "'" + exp.getStart_date() + "', "
+                + "'" + exp.getEnd_date() + "')";
         try {
             conn = getConnection();
             state = conn.createStatement();
@@ -72,31 +72,37 @@ public class DAOExperience extends DBConnect {
         return status;
     }
 
-    public boolean editExperience(experience exp) {
-        boolean status = false;
+    public boolean editExperience(experience exp, String cur_role) {
         String sql = "update [experience]\n"
                 + "set\n"
-                + "[role] = '" + exp.getRole() + "',\n"
-                + "[start_date] = '" + exp.getStart_date() + "',\n"
-                + "[end_date] = '" + exp.getEnd_date() + "'\n"
-                + "where profile_id = '" + exp.getProfile_id() + "'";
+                + "[role] = ?,\n"
+                + "[start_date] = ?,\n"
+                + "[end_date] = ?\n"
+                + "where profile_id = ?\n"
+                + "and [role] = ?";
         conn = getConnection();
         try {
-            state = conn.createStatement();
-            state.executeUpdate(sql);
-            status = true;
+            pre = conn.prepareStatement(sql);
+            pre.setString(1, exp.getRole());
+            pre.setString(2, exp.getStart_date());
+            pre.setString(3, exp.getEnd_date());
+            pre.setString(4, exp.getProfile_id());
+            pre.setString(5, cur_role);
+            pre.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
-            status = false;
+            return false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(pre);
             closeConnection(conn);
         }
-        return status;
+        return true;
     }
 
-    public boolean deleteExperience(String profile_id) {
-        String sql = "delete from [experience] where [profile_id] = '" + profile_id + "'";
+    public boolean deleteExperience(String profile_id, String role) {
+        String sql = "delete from [experience] where "
+                + "[profile_id] = '" + profile_id + "' "
+                + "and [role] = '" + role + "'";
         try {
             conn = getConnection();
             state = conn.createStatement();

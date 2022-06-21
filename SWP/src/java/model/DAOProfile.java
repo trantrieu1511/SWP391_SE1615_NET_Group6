@@ -150,7 +150,8 @@ public class DAOProfile extends DBConnect {
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new profile(rs.getString(1),
+                list.add(new profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),

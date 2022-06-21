@@ -91,20 +91,26 @@ public class DAOFamilyInfo extends DBConnect {
         return true;
     }
 
-    public boolean editFamilyInfo(familyInfo familyInfo) {
+    public boolean editFamilyInfo(familyInfo familyInfo, String cur_name) {
         boolean status = false;
         String sql = "update [familyInfo]\n"
                 + "set\n"
-                + "[name] = '" + familyInfo.getName() + "',\n"
-                + "relationship = '" + familyInfo.getRelationship() + "',\n"
-                + "dob = '" + familyInfo.getDob() + "',\n"
-                + "phone = '" + familyInfo.getPhone() + "'\n"
-                + "where profile_id = '" + familyInfo.getProfile_id() + "'\n"
-                + "and [name] = '" + familyInfo.getName() + "'";
+                + "[name] = ?,\n"
+                + "relationship = ?,\n"
+                + "dob = ?,\n"
+                + "phone = ?\n"
+                + "where profile_id = ?\n"
+                + "and [name] = ?";
         conn = getConnection();
         try {
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            pre = conn.prepareStatement(sql);
+            pre.setString(1, familyInfo.getName());
+            pre.setString(2, familyInfo.getRelationship());
+            pre.setString(3, familyInfo.getDob());
+            pre.setString(4, familyInfo.getPhone());
+            pre.setString(5, familyInfo.getProfile_id());
+            pre.setString(6, cur_name);
+            pre.executeUpdate();
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();

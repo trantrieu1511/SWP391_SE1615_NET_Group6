@@ -37,16 +37,20 @@ public class ControllerExperience extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String service = request.getParameter("do");
             DAOExperience daoExp = new DAOExperience();
             HttpSession session = request.getSession();
             account acc = (account) session.getAttribute("acc");
 
-            String service = request.getParameter("do");
-            if (service.equals("editExperience")) {
-                String profile_id = request.getParameter("profile_id");
-                String role = request.getParameter("role");
-                String start_date = request.getParameter("start_date");
-                String end_date = request.getParameter("end_date");
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
+            } else {
+                if (service.equals("editExperience")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String role = request.getParameter("role");
+                    String cur_role = request.getParameter("cur_role");
+                    String start_date = request.getParameter("start_date");
+                    String end_date = request.getParameter("end_date");
 
 //                out.print(profile_id);
 //                out.print("<br>");
@@ -55,21 +59,62 @@ public class ControllerExperience extends HttpServlet {
 //                out.print(start_date);
 //                out.print("<br>");
 //                out.print(end_date);
-                boolean statusExp = daoExp.editExperience(
-                        new experience(profile_id, role, start_date, end_date));
-                if (statusExp) {
-                    System.out.println("Successfully edited experience of profile_id = " + profile_id);
-                } else {
-                    System.out.println("Fail to edit experience of profile_id = " + profile_id);
-                }
+//                out.print("<br>");
+//                out.print(cur_role);
 
-                if (acc.getProfile_id().equals(profile_id)) {
-                    response.sendRedirect("profile?do=getmyProfile");
-                } else {
-                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    boolean statusEdit = daoExp.editExperience(
+                            new experience(profile_id, role, start_date, end_date),
+                            cur_role);
+                    if (statusEdit) {
+                        System.out.println("Successfully edited experience of profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to edit experience of profile_id = " + profile_id);
+                    }
+
+                    if (acc.getProfile_id().equals(profile_id)) {
+                        response.sendRedirect("profile?do=getmyProfile");
+                    } else {
+                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    }
+                }
+                if (service.equals("addExperience")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String role = request.getParameter("role");
+                    String start_date = request.getParameter("start_date");
+                    String end_date = request.getParameter("end_date");
+
+                    boolean statusAdd = daoExp.addExperience(
+                            new experience(profile_id, role, start_date, end_date));
+                    if (statusAdd) {
+                        System.out.println("Successfully added new experience of profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to add new experience of profile_id = " + profile_id);
+                    }
+
+                    if (acc.getProfile_id().equals(profile_id)) {
+                        response.sendRedirect("profile?do=getmyProfile");
+                    } else {
+                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    }
+                }
+                if (service.equals("deleteExperience")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String role = request.getParameter("role");
+
+                    boolean statusDelete = daoExp.deleteExperience(profile_id, role);
+                    if (statusDelete) {
+                        System.out.println("Successfully deleted experience of profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to delete experience of profile_id = " + profile_id);
+                    }
+
+                    if (acc.getProfile_id().equals(profile_id)) {
+                        response.sendRedirect("profile?do=getmyProfile");
+                    } else {
+                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    }
                 }
             }
-
         }
     }
 

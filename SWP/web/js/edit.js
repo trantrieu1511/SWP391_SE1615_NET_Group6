@@ -135,6 +135,7 @@ function wrongpassalert2(msg) {
     }
 }
 
+
 function check() {
     var a = document.getElementById('start_date').value;
     var b = document.getElementById('end_date').value;
@@ -145,7 +146,7 @@ function check() {
         document.getElementById('create').style.opacity = (0.4);
     } else {
         document.getElementById('alert').style.color = 'green';
-        document.getElementById('alert').innerHTML ='🗹 Valid end date';
+        document.getElementById('alert').innerHTML = '🗹 Valid end date';
         document.getElementById('create').disabled = false;
         document.getElementById('create').style.opacity = (1);
     }
@@ -161,7 +162,7 @@ function check2() {
         document.getElementById('create2').style.opacity = (0.4);
     } else {
         document.getElementById('alert2').style.color = 'green';
-        document.getElementById('alert2').innerHTML ='🗹 Valid end date';
+        document.getElementById('alert2').innerHTML = '🗹 Valid end date';
         document.getElementById('create2').disabled = false;
         document.getElementById('create2').style.opacity = (1);
     }

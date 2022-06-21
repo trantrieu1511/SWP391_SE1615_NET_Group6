@@ -49,11 +49,22 @@ public class ControllerProfileDetail extends HttpServlet {
             DAOFamilyInfo daoF = new DAOFamilyInfo();
             DAOExperience daoExp = new DAOExperience();
 
-            if (service.equals("editProfileInfo")) {
-                String profile_id = request.getParameter("profile_id");
-                String dob = request.getParameter("dob");
-                boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-                String address = request.getParameter("address");
+            if (acc == null) {
+                response.sendRedirect("login.jsp");
+            } else {
+                if (service.equals("editProfileInfo")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String dob = request.getParameter("dob");
+                    boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+                    String address = request.getParameter("address").trim();
+                    if (address.equals("")) {
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
+                        return;
+                    }
 
 //                out.print(profile_id);
 //                out.print("<br>");
@@ -63,28 +74,28 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print("<br>");
 //                out.print(address);
 //                out.print("<br>");
-                boolean statusPfi = daoPd.editProfileInfo(
-                        new profileDetail(profile_id, dob, address, gender));
-                if (statusPfi) {
-                    System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
-                } else {
-                    System.out.println("Fail to edit profileInfo of profile_id = " + profile_id);
-                }
+                    boolean statusPfi = daoPd.editProfileInfo(
+                            new profileDetail(profile_id, dob, address, gender));
+                    if (statusPfi) {
+                        System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to edit profileInfo of profile_id = " + profile_id);
+                    }
 
-                if (acc.getProfile_id().equals(profile_id)) {
-                    response.sendRedirect("profile?do=getmyProfile");
-                } else {
-                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    if (acc.getProfile_id().equals(profile_id)) {
+                        response.sendRedirect("profile?do=getmyProfile");
+                    } else {
+                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    }
                 }
-            }
-            if (service.equals("editPersonalInfo")) {
-                String profile_id = request.getParameter("profile_id");
-                String country = request.getParameter("country");
-                String religion = request.getParameter("religion");
-                boolean isMarried = Boolean.parseBoolean(request.getParameter("isMarried"));
-                int children = Integer.parseInt(request.getParameter("children"));
-                String bank_name = request.getParameter("bank_name");
-                String bank_number = request.getParameter("bank_number");
+                if (service.equals("editPersonalInfo")) {
+                    String profile_id = request.getParameter("profile_id");
+                    String country = request.getParameter("country").trim();
+                    String religion = request.getParameter("religion").trim();
+                    boolean isMarried = Boolean.parseBoolean(request.getParameter("isMarried"));
+                    int children = Integer.parseInt(request.getParameter("children").trim());
+                    String bank_name = request.getParameter("bank_name").trim();
+                    String bank_number = request.getParameter("bank_number").trim();
 //                out.print(profile_id);
 //                out.print("<br>");
 //                out.print(country);
@@ -98,19 +109,20 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print(bank_name);
 //                out.print("<br>");
 //                out.print(bank_number);
-                boolean statusPsInfo = daoPd.editPersonalInfo(
-                        new profileDetail(profile_id, country, religion,
-                                isMarried, children, bank_name, bank_number));
-                if (statusPsInfo) {
-                    System.out.println("Successfully edited personalInfo of profile_id = " + profile_id);
-                } else {
-                    System.out.println("Fail to edit personalInfo of profile_id = " + profile_id);
-                }
+                    boolean statusPsInfo = daoPd.editPersonalInfo(
+                            new profileDetail(profile_id, country, religion,
+                                    isMarried, children, bank_name, bank_number));
+                    if (statusPsInfo) {
+                        System.out.println("Successfully edited personalInfo of profile_id = " + profile_id);
+                    } else {
+                        System.out.println("Fail to edit personalInfo of profile_id = " + profile_id);
+                    }
 
-                if (acc.getProfile_id().equals(profile_id)) {
-                    response.sendRedirect("profile?do=getmyProfile");
-                } else {
-                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    if (acc.getProfile_id().equals(profile_id)) {
+                        response.sendRedirect("profile?do=getmyProfile");
+                    } else {
+                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                    }
                 }
             }
 

@@ -34,7 +34,6 @@
         
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
-
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/jquery.ui.touch-punch.min.js"></script>
 
@@ -153,7 +152,7 @@
                                                         </span>
                                                         </c:if>
                                                         <c:if test="${sessionScope.acc.isManager == false}">
-                                                            <a href="task?do=updateStatus&&status=1">Accept</a>
+                                                            <a href="task?do=updateStatus&&name=${o.name}&&status=1">Accept</a>
                                                         </c:if>
                                                     </div>
                                                 </div>
@@ -303,18 +302,18 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <form action="manager" do="post">
-                                    <input type="hidden" name="do" value="addTask">
+                                <form action="task" do="post">
+                                    <input type="hidden" name="do" value="newTask">
                                     <div class="form-group">
-                                        <label>Project</label>
+                                        <label>Project<span class="text-danger">*</span></label>
                                         <input type="text" value="${title}" readonly class="form-control" name="project" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Task Name</label>
+                                        <label>Task Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="name" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Task Priority</label>
+                                        <label>Task Priority<span class="text-danger">*</span></label>
                                         <select class="form-control select" name="priority" required>
                                             <option>Select</option>
                                             <option value="0">High</option>
@@ -323,11 +322,11 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Due Date</label>
+                                        <label>Due Date<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control datetimepicker" onkeydown="event.preventDefault()" name="deadline" required> 
                                     </div>
                                     <div class="form-group">
-                                        <label>Assigned</label>
+                                        <label>Assigned<span class="text-danger">*</span></label>
                                         <select class="select floating" name="assigned" required 
                                             <option> </option>
                                             <c:forEach items="${listPf}" var="o">

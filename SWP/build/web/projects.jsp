@@ -72,18 +72,22 @@
                 $("#edit_project").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id').trim();
                     const myArray = text.split(" ");;
-                    var client_id = myArray[5];
+                    var client_id = myArray[4];
                     var period1 = myArray[0]; 
                     var period2 = myArray[1];
                     var period3 = myArray[2];
                     var rate = myArray[3];  
-                    var desc = myArray[4];
-                    $(e.currentTarget).find('#clientEdit').val(client_id)
+                    document.getElementById('clientEdit').value=client_id;
                     $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
-                    $(e.currentTarget).find('#rateEdit').val(rate);  
-                    $(e.currentTarget).find('#desc').val(desc);                 
+                    $(e.currentTarget).find('#rateEdit').val(rate);            
                 });
             });   
+            $(function () {
+                $("#edit_project").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('desc-id').trim();                    
+                    $(e.currentTarget).find('#desc').val(text);                                  
+                });
+            }); 
             $(function () {
                 $("#delete_project").on("show.bs.modal", function (e) {
                     var title = $(e.relatedTarget).attr('data-id');
@@ -152,7 +156,7 @@
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
                                     <input type="text" class="form-control floating" name="title" pattern="[0-9A-Za-z ]{1,35}">
-                                    <label class="focus-label">Project Title</label>
+                                    <label class="focus-label">${search}</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">                      
@@ -175,7 +179,7 @@
                                     <div class="dropdown dropdown-action profile-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right"> 
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.description} ${o.client}" name-id="${o.title}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.client}" name-id="${o.title}" desc-id="${o.description}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>                         
                                         </div>
                                     </div>
@@ -307,7 +311,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Client<span class="text-danger">*</span></label>
-                                                <select class="select" id="clientEdit" name="client">
+                                                <select class="form-control" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>

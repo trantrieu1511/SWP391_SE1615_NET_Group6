@@ -70,21 +70,25 @@
                     $(e.currentTarget).find('#oldTitle').val(text);
                     $(e.currentTarget).find('#titleEdit').val(text);                                  
                 });
-            });   
+            }); 
+            $(function () {
+                $("#edit_project").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('desc-id').trim();                    
+                    $(e.currentTarget).find('#desc').val(text);                                  
+                });
+            }); 
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id').trim();
                     const myArray = text.split(" ");;
-                    var client_id = myArray[5];
+                    var client_id = myArray[4];
                     var period1 = myArray[0]; 
                     var period2 = myArray[1];
                     var period3 = myArray[2];
                     var rate = myArray[3];  
-                    var desc = myArray[4];
-                    $(e.currentTarget).find('#clientEdit').val(client_id)
+                    document.getElementById('clientEdit').value=client_id;
                     $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
-                    $(e.currentTarget).find('#rateEdit').val(rate);  
-                    $(e.currentTarget).find('#desc').val(desc);                 
+                    $(e.currentTarget).find('#rateEdit').val(rate);                 
                 });
             });            
             $(function() {
@@ -132,7 +136,7 @@
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${project.period} ${project.rate} ${project.description} ${project.client}" name-id="${project.title}"><i class="fa fa-plus"></i> Edit Project</a>
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${project.period} ${project.rate} ${project.client}" name-id="${project.title}" desc-id=" ${project.description}"><i class="fa fa-plus"></i> Edit Project</a>
                                 <a href="task?do=view&&title=${project.title}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
@@ -301,7 +305,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Client<span class="text-danger">*</span></label>
-                                                <select class="select" id="clientEdit" name="client">
+                                                <select class="form-control" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>

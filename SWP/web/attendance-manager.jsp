@@ -78,10 +78,19 @@
         this.value = $.trim(this.value);
         });
         })
+        $('#table').dataTable({
+            "fnDrawCallback":function(){
+                if ( $('#table_paginate span span.paginate_button').size()) {
+                    $('#table_paginate')[0].style.display = "block";
+                } else {
+                    $('#table_paginate')[0].style.display = "none";
+                }
+            }
+        });​
         </script>
 
     </head>
-    <body>
+    <body onload="pagination()">
         <!-- Main Wrapper -->
         <div class="main-wrapper">
             
@@ -197,6 +206,17 @@
                                     }
                                 }
 
+                            }
+                        }
+                        function pagination() {
+                            var table, count, entry;
+                            table = document.getElementById("table");
+                            count = table.getElementsByTagName("tr").length+1;
+                            entry = document.getElementById("table_length").value;
+                            if (count <= entry) {
+                                document.getElementById("table_paginate").style.display = none;
+                            } esle {
+                                document.getElementById("table_paginate").style.display = block;
                             }
                         }
                     </script> 

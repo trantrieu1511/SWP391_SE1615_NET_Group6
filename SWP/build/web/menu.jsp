@@ -98,6 +98,7 @@
                                 <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a href="project?do=list">Projects</a></li>
+                                    <li><a href="task?do=view&&title= ">Task board</a></li>
                                 </ul>
                             </li>
                             <li> 

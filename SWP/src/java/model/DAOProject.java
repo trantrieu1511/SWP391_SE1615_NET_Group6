@@ -144,13 +144,13 @@ public class DAOProject extends DBConnect {
 
     public List<projects> search(String title, String id) {
         List<projects> list = new ArrayList<>();
-        String sql = "select * from projects where title like '%?%'"
+        String sql = "select * from projects where title like ?"
                 + " and manager_id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, title);
-            state.setString(1, id);
+            state.setString(1, "%" + title + "%");
+            state.setString(2, id);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new projects(

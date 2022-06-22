@@ -88,6 +88,7 @@ public class ControllerProject extends HttpServlet {
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC); 
                     request.setAttribute("alert", alert);
+                    request.setAttribute("search", "Project title");
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
@@ -124,17 +125,9 @@ public class ControllerProject extends HttpServlet {
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
                     request.setAttribute("alert", alert);
+                    request.setAttribute("search", title);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
-//                    out.println("<!DOCTYPE html>");
-//                    out.println("<html>");
-//                    out.println("<head>");
-//                    out.println("<title>Servlet ControllerEmployee</title>");
-//                    out.println("</head>");
-//                    out.println("<body>");
-//                    out.println("<h1>" + title + lead + "</h1>");
-//                    out.println("</body>");
-//                    out.println("</html>");
                 }
 
                 if (service.equals("delete")) {

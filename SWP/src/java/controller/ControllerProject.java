@@ -86,7 +86,7 @@ public class ControllerProject extends HttpServlet {
                     List<clients> listC = daoc.listAllClients();
                     String alert = "";
                     request.setAttribute("list", listPj);
-                    request.setAttribute("listC", listC); 
+                    request.setAttribute("listC", listC);
                     request.setAttribute("alert", alert);
                     request.setAttribute("search", "Project title");
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
@@ -105,7 +105,7 @@ public class ControllerProject extends HttpServlet {
                     List<projects> listPj = daopj.getProject(acc.getProfile_id());
                     List<clients> listC = daoc.listAllClients();
                     request.setAttribute("list", listPj);
-                    request.setAttribute("listC", listC); 
+                    request.setAttribute("listC", listC);
                     request.setAttribute("alert", alert);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
@@ -132,15 +132,26 @@ public class ControllerProject extends HttpServlet {
 
                 if (service.equals("delete")) {
                     String title = request.getParameter("title");
-                    daopj.deleteProject(title);
-                    String alert = "Project deleted!";
-                    request.setAttribute("alert", alert);
-                    List<projects> listPj = daopj.getProject(acc.getProfile_id());                  
-                    List<clients> listC = daoc.listAllClients();
-                    request.setAttribute("list", listPj);
-                    request.setAttribute("listC", listC); 
-                    RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
-                    dispath.forward(request, response);
+                    boolean del = daopj.deleteProject(title);
+                    if (del == true) {
+                        String alert = "Project deleted!";
+                        request.setAttribute("alert", alert);
+                        List<projects> listPj = daopj.getProject(acc.getProfile_id());
+                        List<clients> listC = daoc.listAllClients();
+                        request.setAttribute("list", listPj);
+                        request.setAttribute("listC", listC);
+                        RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
+                        dispath.forward(request, response);
+                    } else {
+                        String alert = "Cannot delete project having tasks!";
+                        request.setAttribute("alert", alert);
+                        List<projects> listPj = daopj.getProject(acc.getProfile_id());
+                        List<clients> listC = daoc.listAllClients();
+                        request.setAttribute("list", listPj);
+                        request.setAttribute("listC", listC);
+                        RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
+                        dispath.forward(request, response);
+                    }
                 }
 
                 if (service.equals("edit")) {
@@ -152,12 +163,12 @@ public class ControllerProject extends HttpServlet {
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
                     daopj.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
-                    List<projects> listPj = daopj.getProject(acc.getProfile_id());                  
+                    List<projects> listPj = daopj.getProject(acc.getProfile_id());
                     List<clients> listC = daoc.listAllClients();
                     String alert = "New information has been saved!";
                     request.setAttribute("alert", alert);
                     request.setAttribute("list", listPj);
-                    request.setAttribute("listC", listC); 
+                    request.setAttribute("listC", listC);
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
@@ -200,7 +211,7 @@ public class ControllerProject extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("project-view.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("editFromView")) {
                     String oldTitle = request.getParameter("oldTitle");
                     String title = request.getParameter("title");

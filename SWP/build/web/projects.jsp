@@ -305,7 +305,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Project Name<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" id="titleEdit" name="title" onchange="return trim(this)" pattern="[0-9A-Za-z ]{1,35}">
+                                                <input class="form-control" type="text" id="titleEdit" name="title" pattern="[0-9A-Za-z ]{1,35}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -335,7 +335,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label>Rate<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="rate" id="rateEdit" onchange="return trim(this)">
+                                                <input class="form-control" type="text" name="rate" id="rateEdit">
                                             </div>
                                         </div>                                                        
                                     </div>

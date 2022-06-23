@@ -135,25 +135,6 @@ function wrongpassalert2(msg) {
     }
 }
 
-
-function check() {
-    var a = document.getElementById('start_date').value.split("/");
-    var dt1 = new Date(parseInt(a[2], 10), parseInt(a[1], 10) - 1, parseInt(a[0], 10));
-    var b = document.getElementById('end_date').value.split("/");
-    var dt2 = new Date(parseInt(b[2], 10), parseInt(b[1], 10) - 1, parseInt(b[0], 10));
-    if ((dt1.getTime() > (dt2.getTime()))) {
-        document.getElementById('alert').style.color = 'red';
-        document.getElementById('alert').innerHTML = '☒ Invalid end date';
-        document.getElementById('create').disabled = true;
-        document.getElementById('create').style.opacity = (0.4);
-    } else {
-        document.getElementById('alert').style.color = 'green';
-        document.getElementById('alert').innerHTML = '🗹 Valid end date';
-        document.getElementById('create').disabled = false;
-        document.getElementById('create').style.opacity = (1);
-    }
-}
-
 function check2() {
     var a = document.getElementById('start_date2').value;
     var b = document.getElementById('end_date2').value;

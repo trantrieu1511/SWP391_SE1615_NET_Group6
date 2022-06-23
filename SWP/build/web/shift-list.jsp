@@ -58,9 +58,39 @@
 
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        
+        <script type="text/javascript">
+        $(function(){
+        $('input[type="text"]').change(function(){
+        this.value = $.trim(this.value);
+        });
+        })
+        function checkTime() {
+    var a = document.getElementById('start').value + ':00';
+    var b = document.getElementById('end').value + ':00';
+    if (a > b) {
+        document.getElementById('alert').style.color = 'red';
+        document.getElementById('alert').innerHTML = '☒ Invalid time range';
+        document.getElementById('create').disabled = true;
+        document.getElementById('create').style.opacity = (0.4);
+    } else {
+        document.getElementById('alert').style.color = 'green';
+        document.getElementById('alert').innerHTML = '🗹 Valid time range';
+        document.getElementById('create').disabled = false;
+        document.getElementById('create').style.opacity = (1);
+    }
+}
+$(document).ready(function() {
+    $('#table').datatable( {
+        "paging":   false,
+        "ordering": false,
+        "info":     false
+    } );
+} );
+        </script>
 
     </head>
-    <body>
+    <body onload="f()">
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
@@ -95,7 +125,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table">
+                                <table class="table table-striped custom-table datatable">
                                     <thead>
                                         <tr>
                                             <th>Shift Name</th>                                           
@@ -150,31 +180,32 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Shift Name <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control" name="name" pattern="[0-9A-Za-z ]{1,15}" required onchange="return trim(this)"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                            <label class="col-form-label">Shift Name<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" name="name" pattern="[0-9A-Za-z ]{1,15}" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Start Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker" id="timepicker">
-                                                <input class="form-control" type="time" name="start" required onchange="return trim(this)">
+                                            <label>Start Time<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" type="time" name="start" id="start" required onchange="checkTime()">
                                             </div>									
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>End Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control" type="time" name="end" required onchange="return trim(this)">
+                                            <label>End Time<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" type="time" name="end" id="end" required onchange="checkTime()">
                                             </div>									
                                         </div>
                                     </div>
                                 </div>
+                                <span id="alert"></span>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button id="create" class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -199,32 +230,33 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-form-label">Shift Name <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                            <label class="col-form-label">Shift Name<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" name="name" pattern="[0-9A-Za-z ]{1,15}" required>
                                             </div>
                                         </div>
-                                    </div>                                  
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Start Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                            <label>Start Time<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" type="time" name="start" id="start" required onchange="checkTime()">
                                             </div>									
                                         </div>
-                                    </div>                            
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>End Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                            <label>End Time<span class="text-danger">*</span></label>
+                                            <div>
+                                                <input class="form-control" type="time" name="end" id="end" required onchange="checkTime()">
                                             </div>									
                                         </div>
-                                    </div>                                   
+                                    </div>
                                 </div>
+                                <span id="alert"></span>
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
-                                </div>
+                                    <button id="create" class="btn btn-primary submit-btn">Submit</button>
+                                </div>                              
                             </form>
                         </div>
                     </div>

@@ -173,6 +173,6 @@ public class DAOProject extends DBConnect {
 
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
-        System.out.println(dao.search("pro", "ABCDE"));
+        System.out.println(dao.deleteProject("Project demo"));
     }
 }

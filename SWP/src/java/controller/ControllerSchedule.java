@@ -6,6 +6,7 @@
 package controller;
 
 import entity.account;
+import entity.profile;
 import entity.projects;
 import entity.shift;
 import java.io.IOException;
@@ -65,7 +66,10 @@ public class ControllerSchedule extends HttpServlet {
 
                 if (service.equals("shift")) {
                     List<shift> listS = daos.listShift();
+                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("alert", "");
                     RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                     dispath.forward(request, response);
                 }
@@ -75,7 +79,10 @@ public class ControllerSchedule extends HttpServlet {
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
                     daos.add(name, start, end);
-                    RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=shift");
+                    List<shift> listS = daos.listShift();
+                    request.setAttribute("list", listS);
+                    request.setAttribute("alert", "New shift saved!");
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                     dispath.forward(request, response);
                 }
 
@@ -83,6 +90,35 @@ public class ControllerSchedule extends HttpServlet {
                     String name = request.getParameter("name");
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
+                    String oldName = request.getParameter("oldName");
+                    daos.edit(name, start, end, oldName);
+                    List<shift> listS = daos.listShift();
+                    request.setAttribute("list", listS);
+                    request.setAttribute("alert", "All changes saved!");
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("deleteShift")) {
+                    String name = request.getParameter("name");
+                    boolean del = daos.delete(name);
+                    if (del == true) {
+                        List<shift> listS = daos.listShift();
+                        request.setAttribute("list", listS);
+                        request.setAttribute("alert", "Shift deleted from database!");
+                        RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                        dispath.forward(request, response);
+                    } else {
+                        List<shift> listS = daos.listShift();
+                        request.setAttribute("list", listS);
+                        request.setAttribute("alert", "Cannot delete shift in active!");
+                        RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                        dispath.forward(request, response);
+                    }
+                }
+                
+                if (service.equals("assignShift")) {
+                    
                 }
             }
         } catch (Exception ex) {

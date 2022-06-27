@@ -100,14 +100,23 @@
                     $(e.currentTarget).find('input[name="role"]').val(role);
                 });
             });
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
 
-            function checkAddress() {
+            function checkEditPfInfo() {
                 if (document.getElementById('address1').value != "") {
                     alert("Edit successfully!")
                 } else {
-                    alert("Cannot input blank, please enter an address!");
+                    alert("Cannot input blank, please enter all values!");
                 }
             }
+//            function codeAddress() {
+//                alert('ok');
+//            }
+//            window.onload = codeAddress;
 
         </script>
         <c:if test="${sessionScope.acc == null}">
@@ -426,7 +435,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
-                                            
+
                                         </h3>
                                         <div class="experience-box">
                                             <ul class="experience-list">
@@ -1081,7 +1090,7 @@
                                                         <div class="form-group">
                                                             <label>Birth Date <span class="text-danger">*</span></label>
                                                             <div class="form-group">
-                                                                <input class="form-control" name="dob" type="date" value="${pd.dob}">
+                                                                <input class="form-control" name="dob" type="date" required="" value="${pd.dob}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1101,7 +1110,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Address <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="address1" name="address" value="${pd.address}">
+                                                    <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}">
                                                 </div>
                                             </div>
                                             <!--                                            <div class="col-md-6">
@@ -1151,7 +1160,7 @@
                                     </c:forEach>
                                 </c:forEach>
                                 <div class="submit-section">
-                                    <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="checkAddress()">
+                                    <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="checkEditPfInfo()" value="submit">
                                 </div>
                             </form>
                         </div>
@@ -1774,42 +1783,42 @@
                                                 <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
-                                                    <input type="hidden" name="profile_id" value="">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group form-focus">
-                                                            <input type="text" class="form-control floating" name="role" value="">
-                                                            <input type="hidden" class="form-control floating" name="cur_role" value="">
-                                                            <label class="focus-label">Role <span class="text-danger">*</span></label>
-                                                        </div>
+                                                <input type="hidden" name="profile_id" value="">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <input type="text" class="form-control floating" name="role" value="">
+                                                        <input type="hidden" class="form-control floating" name="cur_role" value="">
+                                                        <label class="focus-label">Role <span class="text-danger">*</span></label>
                                                     </div>
-                                                    <!--                                                <div class="col-md-6">
-                                                                                                        <div class="form-group form-focus">
-                                                                                                            <input type="text" class="form-control floating" value="United States">
-                                                                                                            <label class="focus-label">Location</label>
-                                                                                                        </div>
+                                                </div>
+                                                <!--                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="United States">
+                                                                                                        <label class="focus-label">Location</label>
                                                                                                     </div>
-                                                                                                    <div class="col-md-6">
-                                                                                                        <div class="form-group form-focus">
-                                                                                                            <input type="text" class="form-control floating" value="Web Developer">
-                                                                                                            <label class="focus-label">Job Position</label>
-                                                                                                        </div>
-                                                                                                    </div>-->
-                                                    <div class="col-md-6">
-                                                        <div class="form-group form-focus">
-                                                            <div class="form-group">
-                                                                <input type="date" class="form-control floating" name="start_date" value="">
-                                                            </div>
-                                                            <label class="focus-label">Period From <span class="text-danger">*</span></label>
+                                                                                                </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <div class="form-group form-focus">
+                                                                                                        <input type="text" class="form-control floating" value="Web Developer">
+                                                                                                        <label class="focus-label">Job Position</label>
+                                                                                                    </div>
+                                                                                                </div>-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <div class="form-group">
+                                                            <input type="date" class="form-control floating" name="start_date" value="">
                                                         </div>
+                                                        <label class="focus-label">Period From <span class="text-danger">*</span></label>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group form-focus">
-                                                            <div class="form-group">
-                                                                <input type="date" class="form-control floating" name="end_date" value="">
-                                                            </div>
-                                                            <label class="focus-label">Period To</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-focus">
+                                                        <div class="form-group">
+                                                            <input type="date" class="form-control floating" name="end_date" value="">
                                                         </div>
+                                                        <label class="focus-label">Period To</label>
                                                     </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

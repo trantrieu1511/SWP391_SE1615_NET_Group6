@@ -281,9 +281,12 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        List<profile> staff = dao.searchStaff1("QWER", "");
-        for (profile object : staff) {
-            System.out.println(object.toString());
-        }
+//        List<profile> staff = dao.searchStaff1("QWER", "");
+//        for (profile object : staff) {
+//            System.out.println(object.toString());
+//        }
+//        String StringA = "      Nguyen Van A  ";
+//        String StringB = "BBBB";
+//        System.out.println(StringB+StringA.trim());
     }
 }

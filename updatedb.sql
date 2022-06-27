@@ -105,7 +105,7 @@ CREATE TABLE [schedule](
 	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
 );
 
-drop table projects
+--drop table projects
 
 CREATE TABLE [projects] (
    title VARCHAR (35) PRIMARY KEY,

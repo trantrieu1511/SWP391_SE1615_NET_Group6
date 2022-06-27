@@ -69,7 +69,7 @@ public class DAOProfileDetail extends DBConnect {
             state.setInt(8, pd.getChildren());
             state.setString(9, pd.getBank_name());
             state.setString(10, pd.getBank_number());
-            state.execute();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -95,7 +95,7 @@ public class DAOProfileDetail extends DBConnect {
             state.setString(2, pd.getAddress());
             state.setBoolean(3, pd.isGender());
             state.setString(4, pd.getProfile_id());
-            state.executeUpdate(sql);
+            state.executeUpdate();
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -127,7 +127,7 @@ public class DAOProfileDetail extends DBConnect {
             state.setString(5, pd.getBank_name());
             state.setString(6, pd.getBank_number());
             state.setString(7, pd.getProfile_id());
-            state.execute();
+            state.executeUpdate();
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -145,7 +145,7 @@ public class DAOProfileDetail extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
-            state.execute();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

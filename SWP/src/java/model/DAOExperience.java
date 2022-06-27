@@ -58,6 +58,7 @@ public class DAOExperience extends DBConnect {
             state.setString(3, exp.getStart_date());
             state.setString(4, exp.getEnd_date());
             status = true;
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
@@ -76,8 +77,8 @@ public class DAOExperience extends DBConnect {
                 + "[end_date] = ?\n"
                 + "where profile_id = ?\n"
                 + "and [role] = ?";
-        conn = getConnection();
         try {
+            conn = getConnection();
             state= conn.prepareStatement(sql);
             state.setString(1, exp.getRole());
             state.setString(2, exp.getStart_date());
@@ -100,6 +101,25 @@ public class DAOExperience extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.setString(2, role);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    public boolean deleteAllExperience(String profile_id) {
+        String sql = "delete from [experience] where [profile_id] = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

@@ -146,7 +146,7 @@ public class DAOAccount extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

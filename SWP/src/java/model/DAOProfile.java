@@ -37,8 +37,8 @@ public class DAOProfile extends DBConnect {
             state.setString(6, pro.getHire_date());
             state.setInt(7, pro.getDepartment_id());
             state.setInt(8, pro.getJob_id());
-            state.setDouble(9, pro.getSalary());         
-            state.executeQuery();
+            state.setDouble(9, pro.getSalary());
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -64,7 +64,7 @@ public class DAOProfile extends DBConnect {
             state.setString(6, pro.getHire_date());
             state.setInt(7, pro.getDepartment_id());
             state.setInt(8, pro.getJob_id());
-            state.setDouble(9, pro.getSalary());  
+            state.setDouble(9, pro.getSalary());
             state.setString(10, pro.getReportto());
             state.executeUpdate();
         } catch (Exception ex) {
@@ -210,7 +210,7 @@ public class DAOProfile extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
-            state.executeQuery();
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -222,7 +222,7 @@ public class DAOProfile extends DBConnect {
     }
 
     public List<profile> searchStaff1(String profile_id, String name) {
-        String sql = "select * from profile where profile_id like '?' and "
+        String sql = "select * from profile where profile_id like ? and "
                 + "first_name + last_name like ? and report_to is not null";
         List<profile> list = new ArrayList<>();
         try {
@@ -261,11 +261,12 @@ public class DAOProfile extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, "%" + profile_id + "%");
-            state.setString(2, "%" + job_id + "%");
+            state.setString(2, job_id);
             state.setString(3, "%" + name + "%");
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new profile(rs.getString(1),
+                list.add(new profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),

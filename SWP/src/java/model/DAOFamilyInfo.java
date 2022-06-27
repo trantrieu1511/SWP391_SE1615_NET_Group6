@@ -60,7 +60,8 @@ public class DAOFamilyInfo extends DBConnect {
             state.setString(2, f.getName());
             state.setString(3, f.getRelationship());
             state.setString(4, f.getDob());
-            state.setString(5, f.getPhone());           
+            state.setString(5, f.getPhone());     
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
@@ -80,6 +81,25 @@ public class DAOFamilyInfo extends DBConnect {
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
             state.setString(2, name);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public boolean deleteAllFamilyInfo(String profile_id) {
+        String sql = "delete from [familyInfo]\n"
+                + "where profile_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

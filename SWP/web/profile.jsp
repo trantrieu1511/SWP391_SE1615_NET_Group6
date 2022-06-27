@@ -177,7 +177,14 @@
                                                         <c:forEach items="${listpd}" var="pd">
                                                             <li>
                                                                 <div class="title">Phone:</div>
-                                                                <div class="text">${p.phone_number}</a></div>
+                                                                <c:choose>
+                                                                    <c:when test="${p.phone_number == ''}">
+                                                                        <div class="text">N/A</div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div class="text">${p.phone_number}</a></div>
+                                                                        </c:otherwise> 
+                                                                    </c:choose>
                                                             </li>
                                                             <li>
                                                                 <div class="title">Email:</div>
@@ -1090,7 +1097,7 @@
                                                         <div class="form-group">
                                                             <label>Birth Date <span class="text-danger">*</span></label>
                                                             <div class="form-group">
-                                                                <input class="form-control" name="dob" type="date" required="" value="${pd.dob}">
+                                                                <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1125,12 +1132,20 @@
                                                                                                 <input type="text" class="form-control" value="10523">
                                                                                             </div>
                                                                                         </div>-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Phone Number</label>
-                                                    <input type="text" class="form-control" value="${p.phone_number}" readonly>
-                                                </div>
-                                            </div>
+                                            <c:choose>
+                                                <c:when test="${p.phone_number == ''}">
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Phone Number</label>
+                                                            <input type="text" class="form-control" value="${p.phone_number}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </c:otherwise> 
+                                            </c:choose>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Department</label>

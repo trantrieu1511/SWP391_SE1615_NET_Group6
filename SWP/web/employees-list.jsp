@@ -80,6 +80,8 @@
                     var username = myArray[6];
                     var password = myArray[7];
                     var reportto = myArray[8];
+                    var depart_id = myArray[9];
+                    var job_id = myArray[10];
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                     $(e.currentTarget).find('input[name="first_name"]').val(first_name);
                     $(e.currentTarget).find('input[name="last_name"]').val(last_name);
@@ -89,6 +91,8 @@
                     $(e.currentTarget).find('input[name="username"]').val(username);
                     $(e.currentTarget).find('input[name="password"]').val(password);
                     $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
+                    document.getElementById('department_id2').value = depart_id;
+                    document.getElementById('job_id2').value = job_id;
                 });
             });
             $(function () {
@@ -105,10 +109,29 @@
             });
         </script>
 
+        <c:choose>
+            <c:when test="${alert != ''}">
+                <script type="text/javascript">
+                alert("${alert}");
+                </script>
+            </c:when>
+            <c:otherwise>
+
+            </c:otherwise>
+        </c:choose>
+
+        <script type="text/javascript">
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
+        </script>
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
-             
+
     </head>
 
     <body onpageshow="checkPasswordonpageshow()">
@@ -223,7 +246,7 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.user_display} ${o.pass_display} ${o.reportto}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${o.profile_id} ${o.first_name} ${o.last_name} ${o.email} ${o.phone_number} ${o.hire_date} ${o.user_display} ${o.pass_display} ${o.reportto} ${o.department_id} ${o.job_id}" data-target="#edit_employee"> <i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
@@ -366,7 +389,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div><input class="form-control" type="date" name="hire_date" id="hire_date" required></div>
+                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" id="hire_date" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -406,7 +429,7 @@
                                     </div>
                                     <span id="wrong_pass_alert"></span>
                                     <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="wrong_pass_alert('New staff added successfully!');">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
                                     </div>
                                 </form>
                             </div>
@@ -477,7 +500,7 @@
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div><input class="form-control" type="date" name="hire_date" id="hire_date2" required></div>
+                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" id="hire_date2" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -495,7 +518,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Department <span class="text-danger">*</span></label>
-                                                <select class="select" name="department_id" id="department_id2" required="">
+                                                <select class="form-control" name="department_id" id="department_id2" required="">
                                                     <option value="">Select Department</option>
                                                     <c:forEach items="${department}" var="o">
                                                         <option value="${o.id}">${o.name}</option>
@@ -506,7 +529,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Designation <span class="text-danger">*</span></label>
-                                                <select class="select" name="job_id" id="job_id2" required="">
+                                                <select class="form-control" name="job_id" id="job_id2" required="">
                                                     <option value="">Select Designation</option>
                                                     <c:forEach items="${job}" var="o">
                                                         <option value="${o.id}">${o.title}</option>
@@ -517,7 +540,7 @@
                                     </div>
                                     <span id="wrong_pass_alert2"></span>
                                     <div class="submit-section">
-                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" onclick="wrongpassalert2('Edit succeeded!');">
+                                        <input type="submit" class="btn btn-primary submit-btn" id="create2" value="submit">
                                     </div>
                                 </form>
                             </div>

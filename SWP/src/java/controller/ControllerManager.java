@@ -293,8 +293,8 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
                     }
 
-                    experience exp = new experience(profile_id, "N/A", "'1900-01-01'",
-                            "GETDATE()");
+                    experience exp = new experience(profile_id, "N/A", "1900-01-01",
+                            "1900-01-01");
                     boolean statusexp = daoExp.addExperience(exp);
                     if (statusexp) {
                         System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
@@ -302,7 +302,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
                     }
 
-                    RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list");
+                    RequestDispatcher dispath = request.getRequestDispatcher("manager?do=list&add=true");
                     dispath.forward(request, response);
                 }
 

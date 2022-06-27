@@ -1278,7 +1278,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="familyInfo" method="post">
-                                <div class="form-scroll">
+                                <div class="form-scroll" style="padding-bottom: 150px;">
                                     <input type="hidden" name="do" value="addFamilyInfo">
 
                                     <div class="card">
@@ -1287,31 +1287,31 @@
                                                 <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
-                                                <c:forEach items="${listf}" var="f">
-                                                    <input type="hidden" name="profile_id" value="${f.profile_id}">
+                                                <c:forEach items="${listp}" var="p">
+                                                    <input type="hidden" name="profile_id" value="${p.profile_id}">
                                                 </c:forEach>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name" value="">
+                                                        <input class="form-control" type="text" name="name" value="" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="relationship" value="">
+                                                        <input class="form-control" type="text" name="relationship" value="" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Date of birth </label>
-                                                        <input class="form-control" type="date" name="dob" value="">
+                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="phone" value="">
+                                                        <input class="form-control" type="text" name="phone" value="" required="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1374,7 +1374,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="familyInfo">
-                                <div class="form-scroll">
+                                <div class="form-scroll" style="padding-bottom: 150px;">
                                     <input type="hidden" name="do" value="editFamilyInfo">
                                     <div class="card">
                                         <div class="card-body">
@@ -1386,26 +1386,26 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name" value="">
+                                                        <input class="form-control" type="text" name="name" value="" required="">
                                                         <input class="form-control" type="hidden" name="cur_name" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="relationship" value="">
+                                                        <input class="form-control" type="text" name="relationship" value="" required="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Date of birth </label>
-                                                        <input class="form-control" type="date" name="dob" value="">
+                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="phone" value="">
+                                                        <input class="form-control" type="text" name="phone" value="" required="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1683,8 +1683,8 @@
                                                 <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                             </h3>
                                             <div class="row">
-                                                <c:forEach items="${listexp}" var="e">
-                                                    <input type="hidden" name="profile_id" value="${e.profile_id}">
+                                                <c:forEach items="${listp}" var="p">
+                                                    <input type="hidden" name="profile_id" value="${p.profile_id}">
                                                 </c:forEach>
                                                 <div class="col-md-6">
                                                     <div class="form-group">

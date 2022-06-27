@@ -9,8 +9,6 @@ import entity.experience;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +19,17 @@ import java.util.List;
 public class DAOExperience extends DBConnect {
 
     Connection conn = null;
-    PreparedStatement pre = null;
-    Statement state = null;
+    PreparedStatement state = null;
     ResultSet rs = null;
 
     public List<experience> listIndividualExperience(String profile_id) {
         List<experience> elist = new ArrayList<>();
-        String sql = "select * from [experience] where profile_id = '" + profile_id + "'";
+        String sql = "select * from [experience] where profile_id = ?";
         try {
             conn = getConnection();
-            pre = conn.prepareStatement(sql);
-            rs = pre.executeQuery();
+            state= conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
             while (rs.next()) {
                 elist.add(new experience(
                         rs.getString(1),
@@ -43,7 +41,7 @@ public class DAOExperience extends DBConnect {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
-            closePrepareStatement(pre);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return elist;
@@ -51,22 +49,20 @@ public class DAOExperience extends DBConnect {
 
     public boolean addExperience(experience exp) {
         boolean status = false;
-        String sql = "insert into [experience]\n"
-                + "values ("
-                + "'" + exp.getProfile_id() + "', "
-                + "'" + exp.getRole() + "', "
-                + "'" + exp.getStart_date() + "', "
-                + "'" + exp.getEnd_date() + "')";
+        String sql = "insert into [experience] values (?,?,?,?)";
         try {
             conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            state = conn.prepareStatement(sql);
+            state.setString(1, exp.getProfile_id());
+            state.setString(2, exp.getRole());
+            state.setString(3, exp.getStart_date());
+            state.setString(4, exp.getEnd_date());
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return status;
@@ -82,36 +78,33 @@ public class DAOExperience extends DBConnect {
                 + "and [role] = ?";
         conn = getConnection();
         try {
-            pre = conn.prepareStatement(sql);
-            pre.setString(1, exp.getRole());
-            pre.setString(2, exp.getStart_date());
-            pre.setString(3, exp.getEnd_date());
-            pre.setString(4, exp.getProfile_id());
-            pre.setString(5, cur_role);
-            pre.executeUpdate();
+            state= conn.prepareStatement(sql);
+            state.setString(1, exp.getRole());
+            state.setString(2, exp.getStart_date());
+            state.setString(3, exp.getEnd_date());
+            state.setString(4, exp.getProfile_id());
+            state.setString(5, cur_role);
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
-            closePrepareStatement(pre);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return true;
     }
 
     public boolean deleteExperience(String profile_id, String role) {
-        String sql = "delete from [experience] where "
-                + "[profile_id] = '" + profile_id + "' "
-                + "and [role] = '" + role + "'";
+        String sql = "delete from [experience] where [profile_id] = ? and [role] = ?";
         try {
             conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            state = conn.prepareStatement(sql);
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return true;

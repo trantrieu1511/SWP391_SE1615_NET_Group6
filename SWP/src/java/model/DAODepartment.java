@@ -9,7 +9,6 @@ import entity.departments;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +45,11 @@ public class DAODepartment extends DBConnect {
     }
 
     public departments getDepartmentByName(String name) {
-        String sql = "select * from departments where [department_name] = '" + name + "'";
+        String sql = "select * from departments where [department_name] = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, name);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new departments(
@@ -67,10 +67,11 @@ public class DAODepartment extends DBConnect {
     }
 
     public departments getDepartmentByID(int id) {
-        String sql = "select * from departments where [department_id] = " + id;
+        String sql = "select * from departments where [department_id] = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setInt(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new departments(

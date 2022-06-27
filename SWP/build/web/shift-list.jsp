@@ -141,7 +141,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table datatable">
+                                    <table class="table table-striped custom-table">
                                         <thead>
                                             <tr>
                                                 <th>Shift Name</th>                                           
@@ -364,15 +364,6 @@
                                                 <option>${o.name}</option>
                                             </c:forEach>  
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Accept Extra Hours </label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                                                <label class="custom-control-label" for="customSwitch1"></label>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -9,11 +9,8 @@ import entity.account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,11 +23,12 @@ public class DAOAccount extends DBConnect {
     ResultSet rs = null;
     
     public account login(String user, String pass) {
-        String sql = "select * from [account] where [username] = '" + user
-                + "' and [password] = '" + pass + "'";
+        String sql = "select * from [account] where [username] = ? and [password] = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, user);
+            state.setString(2, pass);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new account(
@@ -51,10 +49,11 @@ public class DAOAccount extends DBConnect {
     }
     
     public account getAccount(String profile_id) {
-        String sql = "select * from [account] where profile_id = '" + profile_id + "'";
+        String sql = "select * from [account] where profile_id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new account(
@@ -76,9 +75,12 @@ public class DAOAccount extends DBConnect {
     
     public List<account> getAccountwithList(String profile_id) {
         List<account> list = new ArrayList<>();
-        String sql = "select * from [account] where profile_id = '" + profile_id + "'";
+        String sql = "select * from [account] where profile_id = ?";
         try {
-            ResultSet rs = getData(sql);
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new account(
                         rs.getString(1),
@@ -99,11 +101,15 @@ public class DAOAccount extends DBConnect {
     
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isadmin, ismanager)"
-                + "values('" + profile_id + "', '" + username + "', '" + password
-                + "', " + 0 + ", " + 0 + ")";
+                + "values(?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.setString(2, username);
+            state.setString(3, password);
+            state.setInt(4, 0);
+            state.setInt(5, 0);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -135,10 +141,11 @@ public class DAOAccount extends DBConnect {
     }
     
     public boolean deleteAccount(String profile_id) {
-        String sql = "delete from account where profile_id = '" + profile_id + "'";
+        String sql = "delete from account where profile_id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
             state.executeQuery();
         } catch (Exception ex) {
             ex.printStackTrace();

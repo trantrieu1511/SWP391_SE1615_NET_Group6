@@ -20,16 +20,17 @@ import java.util.List;
 public class DAOFamilyInfo extends DBConnect {
 
     Connection conn = null;
-    PreparedStatement pre = null;
-    Statement state;
+    PreparedStatement state = null;
     ResultSet rs = null;
 
     public List<familyInfo> getIndividualFamilyInfo(String profile_id) {
         List<familyInfo> flist = new ArrayList<>();
-        String sql = "select * from [familyInfo] where profile_id = '" + profile_id + "'";
+        String sql = "select * from [familyInfo] where profile_id = ?";
         try {
             conn = getConnection();
-            rs = getData(sql);
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
             while (rs.next()) {
                 flist.add(new familyInfo(
                         rs.getString(1),
@@ -43,56 +44,53 @@ public class DAOFamilyInfo extends DBConnect {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return flist;
     }
 
     public boolean addFamilyInfo(familyInfo f) {
-        boolean status = false;
         String sql = "insert into [familyInfo]\n"
-                + "values ("
-                + "'" + f.getProfile_id() + "',"
-                + "'" + f.getName() + "',"
-                + "'" + f.getRelationship() + "',"
-                + "'" + f.getDob() + "',"
-                + "'" + f.getPhone() + "')";
+                + "values (?,?,?,?,?)";
         try {
             conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
-            status = true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            status = false;
-        } finally {
-            closeStatement(state);
-            closeConnection(conn);
-        }
-        return status;
-    }
-
-    public boolean deleteFamilyInfo(String profile_id, String name) {
-        String sql = "delete from [familyInfo]\n"
-                + "where profile_id = '" + profile_id + "'\n "
-                + "and [name] = '" + name + "'";
-        try {
-            conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            state = conn.prepareStatement(sql);
+            state.setString(1, f.getProfile_id());
+            state.setString(2, f.getName());
+            state.setString(3, f.getRelationship());
+            state.setString(4, f.getDob());
+            state.setString(5, f.getPhone());           
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean deleteFamilyInfo(String profile_id, String name) {
+        String sql = "delete from [familyInfo]\n"
+                + "where profile_id = ?\n "
+                + "and [name] = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.setString(2, name);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return true;
     }
 
     public boolean editFamilyInfo(familyInfo familyInfo, String cur_name) {
-        boolean status = false;
         String sql = "update [familyInfo]\n"
                 + "set\n"
                 + "[name] = ?,\n"
@@ -100,26 +98,25 @@ public class DAOFamilyInfo extends DBConnect {
                 + "dob = ?,\n"
                 + "phone = ?\n"
                 + "where profile_id = ?\n"
-                + "and [name] = ?";
-        conn = getConnection();
+                + "and [name] = ?";       
         try {
-            pre = conn.prepareStatement(sql);
-            pre.setString(1, familyInfo.getName());
-            pre.setString(2, familyInfo.getRelationship());
-            pre.setString(3, familyInfo.getDob());
-            pre.setString(4, familyInfo.getPhone());
-            pre.setString(5, familyInfo.getProfile_id());
-            pre.setString(6, cur_name);
-            pre.executeUpdate();
-            status = true;
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, familyInfo.getName());
+            state.setString(2, familyInfo.getRelationship());
+            state.setString(3, familyInfo.getDob());
+            state.setString(4, familyInfo.getPhone());
+            state.setString(5, familyInfo.getProfile_id());
+            state.setString(6, cur_name);
+            state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
-            status = false;
+            return false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
-        return status;
+        return true;
     }
 
     public static void main(String[] args) {

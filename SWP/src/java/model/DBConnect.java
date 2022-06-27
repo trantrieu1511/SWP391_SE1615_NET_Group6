@@ -18,21 +18,6 @@ import java.sql.Statement;
  */
 public class DBConnect {
 
-    //  public Connection conn = null;
-//    public DBConnect(String URL, String userName, String password) {
-//        try {
-//            // URL: connection string: address, port, database of server
-//            // call drivers
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            // connection
-//            Connection conn = DriverManager.getConnection(URL, userName, password);
-//            System.out.println("connected");
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
     public Connection getConnection() {
         Connection conn = null;
         try {
@@ -50,9 +35,6 @@ public class DBConnect {
         return conn;
     }
 
-//    public DBConnect() {
-//        this("jdbc:sqlserver://localhost:1433;databaseName=SWP_HRMS_GRP6_3", "sa", "12345678");
-//    }
     public ResultSet getData(String sql) throws Exception {
         try {
             Statement state = getConnection().createStatement(
@@ -81,16 +63,6 @@ public class DBConnect {
         if (pre != null) {
             try {
                 pre.close();
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    public void closeStatement(Statement state) {
-
-        if (state != null) {
-            try {
-                state.close();
             } catch (Exception e) {
             }
         }

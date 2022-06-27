@@ -20,17 +20,17 @@ import java.util.List;
 public class DAOProfileDetail extends DBConnect {
 
     Connection conn = null;
-    PreparedStatement pre = null;
-    Statement state = null;
+    PreparedStatement state = null;
     ResultSet rs = null;
 
     public List<profileDetail> getIndividualProfileDetail(String profile_id) {
         List<profileDetail> pdlist = new ArrayList<profileDetail>();
-        String sql = "select * from [profileDetail] where profile_id = '" + profile_id + "'";
+        String sql = "select * from [profileDetail] where profile_id = ?";
         try {
             conn = getConnection();
-            pre = conn.prepareStatement(sql);
-            rs = pre.executeQuery();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
             while (rs.next()) {
                 pdlist.add(new profileDetail(
                         rs.getString(1),
@@ -48,59 +48,60 @@ public class DAOProfileDetail extends DBConnect {
             ex.printStackTrace();
         } finally {
             closeResultSet(rs);
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return pdlist;
     }
 
     public boolean addProfileDetail(profileDetail pd) {
-        boolean status = false;
-        String sql = "insert into [profileDetail]\n"
-                + "values ("
-                + "'" + pd.getProfile_id() + "', "
-                + "" + pd.getDob() + ", "
-                + "'" + pd.getAddress() + "', "
-                + "'" + pd.isGender() + "', "
-                + "'" + pd.getCountry() + "', "
-                + "'" + pd.getReligion() + "', "
-                + "'" + pd.isIsMarried() + "', "
-                + "" + pd.getChildren() + ", "
-                + "'" + pd.getBank_name() + "', "
-                + "'" + pd.getBank_number() + "')";
+        String sql = "insert into [profileDetail] values (?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
-            pre = conn.prepareStatement(sql);
-            pre.executeUpdate();
-            status = true;
+            state = conn.prepareStatement(sql);
+            state.setString(1, pd.getProfile_id());
+            state.setString(2, pd.getDob());
+            state.setString(3, pd.getAddress());
+            state.setBoolean(4, pd.isGender());
+            state.setString(5, pd.getCountry());
+            state.setString(6, pd.getReligion());
+            state.setBoolean(7, pd.isIsMarried());
+            state.setInt(8, pd.getChildren());
+            state.setString(9, pd.getBank_name());
+            state.setString(10, pd.getBank_number());
+            state.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
-            status = false;
+            return false;
         } finally {
-            closePrepareStatement(pre);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
-        return status;
+        return true;
     }
 
     public boolean editProfileInfo(profileDetail pd) {
         boolean status = false;
         String sql = "update [profileDetail]\n"
                 + "set \n"
-                + "dob = '" + pd.getDob() + "',\n"
-                + "address = '" + pd.getAddress() + "',\n"
-                + "gender = '" + pd.isGender() + "'"
-                + "where profile_id = '" + pd.getProfile_id() + "'";
+                + "dob = ?,\n"
+                + "address = ?,\n"
+                + "gender = ?"
+                + "where profile_id = ?";
         try {
             conn = getConnection();
-            state = conn.createStatement();
+            state = conn.prepareStatement(sql);           
+            state.setString(1, pd.getDob());
+            state.setString(2, pd.getAddress());
+            state.setBoolean(3, pd.isGender());
+            state.setString(4, pd.getProfile_id());
             state.executeUpdate(sql);
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return status;
@@ -108,41 +109,48 @@ public class DAOProfileDetail extends DBConnect {
 
     public boolean editPersonalInfo(profileDetail pd) {
         boolean status = false;
-        String sql = "update [profileDetail]\n"
-                + "set \n"
-                + "country = '" + pd.getCountry() + "',\n"
-                + "religion = '" + pd.getReligion() + "',\n"
-                + "isMarried = '" + pd.isIsMarried() + "',\n"
-                + "children = " + pd.getChildren() + ",\n"
-                + "bank_name = '" + pd.getBank_name() + "',\n"
-                + "bank_number = '" + pd.getBank_number() + "'\n"
-                + "where profile_id = '" + pd.getProfile_id() + "'";
+        String sql = "update [profileDetail] set \n"
+                + "country = ?,\n"
+                + "religion = ?,\n"
+                + "isMarried = ?,\n"
+                + "children = ?,\n"
+                + "bank_name = ?,\n"
+                + "bank_number = ?\n"
+                + "where profile_id = ?";
         try {
             conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            state = conn.prepareStatement(sql);           
+            state.setString(1, pd.getCountry());
+            state.setString(2, pd.getReligion());
+            state.setBoolean(3, pd.isIsMarried());
+            state.setInt(4, pd.getChildren());
+            state.setString(5, pd.getBank_name());
+            state.setString(6, pd.getBank_number());
+            state.setString(7, pd.getProfile_id());
+            state.execute();
             status = true;
         } catch (Exception ex) {
             ex.printStackTrace();
             status = false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return status;
     }
 
     public boolean deleteProfileDetail(String profile_id) {
-        String sql = "delete from [profileDetail] where [profile_id] = '" + profile_id + "'";
+        String sql = "delete from [profileDetail] where [profile_id] = ?";
         try {
             conn = getConnection();
-            state = conn.createStatement();
-            state.executeUpdate(sql);
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         } finally {
-            closeStatement(state);
+            closePrepareStatement(state);
             closeConnection(conn);
         }
         return true;

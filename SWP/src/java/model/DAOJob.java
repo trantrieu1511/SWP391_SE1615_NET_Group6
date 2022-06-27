@@ -9,7 +9,6 @@ import entity.jobs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +47,11 @@ public class DAOJob extends DBConnect {
     }
 
     public jobs getJobByTitle(String title) {
-        String sql = "select * from jobs where [job_title] = '" + title + "'";
+        String sql = "select * from jobs where [job_title] = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new jobs(
@@ -71,10 +71,11 @@ public class DAOJob extends DBConnect {
     }
 
     public jobs getJobById(int id) {
-        String sql = "select * from jobs where [job_id] = " + id;
+        String sql = "select * from jobs where [job_id] = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setInt(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
                 return new jobs(

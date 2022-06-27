@@ -103,6 +103,6 @@ public class DAOShift extends DBConnect {
     
     public static void main(String[] args) {
         DAOShift dao = new DAOShift();
-        System.out.println(dao.listShift());
+        System.out.println(dao.delete("e21e"));
     }
 }

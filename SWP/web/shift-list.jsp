@@ -59,42 +59,16 @@
         <!-- Custom JS -->
         <script src="js/app.js"></script>
 
+        <!-- Kendo-UI -->
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.2.621/styles/kendo.default-ocean-blue.min.css" />
+        <script src="https://kendo.cdn.telerik.com/2022.2.621/js/kendo.all.min.js"></script>
+        
         <script type="text/javascript">
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });
-            })
-            function checkTime() {
-                var a = document.getElementById('start').value + ':00';
-                var b = document.getElementById('end').value + ':00';
-                if (a > b) {
-                    document.getElementById('alert').style.color = 'red';
-                    document.getElementById('alert').innerHTML = '☒ Invalid time range';
-                    document.getElementById('create').disabled = true;
-                    document.getElementById('create').style.opacity = (0.4);
-                } else {
-                    document.getElementById('alert').style.color = 'green';
-                    document.getElementById('alert').innerHTML = '🗹 Valid time range';
-                    document.getElementById('create').disabled = false;
-                    document.getElementById('create').style.opacity = (1);
-                }
-            }
-            function checkTime2() {
-                var a = document.getElementById('start2').value + ':00';
-                var b = document.getElementById('end2').value + ':00';
-                if (a > b) {
-                    document.getElementById('alert2').style.color = 'red';
-                    document.getElementById('alert2').innerHTML = '☒ Invalid time range';
-                    document.getElementById('create2').disabled = true;
-                    document.getElementById('create2').style.opacity = (0.4);
-                } else {
-                    document.getElementById('alert2').style.color = 'green';
-                    document.getElementById('alert2').innerHTML = '🗹 Valid time range';
-                    document.getElementById('create2').disabled = false;
-                    document.getElementById('create2').style.opacity = (1);
-                }
-            }
+            })            
             $(function () {
                 $("#edit_shift").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id');
@@ -104,18 +78,18 @@
             });
             $(function () {
                 $("#edit_shift").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id');
+                    var text = $(e.relatedTarget).attr('data-time');
                     const myArray = text.split(" ");
-                    var start = myArray[0];
-                    var end = myArray[1];
+                    var start = myArray[0] + myArray[1];
+                    var end = myArray[2] + myArray[3];
                     $(e.currentTarget).find('input[name="start"]').val(start);
                     $(e.currentTarget).find('input[name="end"]').val(end);
                 });
             });
             $(function () {
                 $("#delete_shift").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('data-id');
-                    $(e.currentTarget).find('input[name="name"]').val(text);
+                    var text = $(e.relatedTarget).attr('data-name');
+                    $(e.currentTarget).find('input[name="shift"]').val(text);
                 });
             });
             $(function () {
@@ -127,13 +101,7 @@
                     });
                 });
             });
-        </script>
-
-        <c:if test="${alert != ''}">
-            <script lang="Javascript">
-            alert("${alert}");
-            </script>
-        </c:if>
+        </script>       
 
     </head>
     <body>
@@ -193,7 +161,7 @@
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_shift" data-id="${o.name}" data-time="${o.start_time} ${o.end_time}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee" data-id="${o.name}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_shift" data-name="${o.name}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -238,7 +206,7 @@
                                         <div class="form-group">
                                             <label>Start Time<span class="text-danger">*</span></label>
                                             <div>
-                                                <input class="form-control" type="time" name="start" id="start" required onchange="checkTime()">
+                                                <input class="form-control" name="start" id="start" required>
                                             </div>									
                                         </div>
                                     </div>
@@ -246,7 +214,7 @@
                                         <div class="form-group">
                                             <label>End Time<span class="text-danger">*</span></label>
                                             <div>
-                                                <input class="form-control" type="time" name="end" id="end" required onchange="checkTime()">
+                                                <input class="form-control" name="end" id="end" required>
                                             </div>									
                                         </div>
                                     </div>
@@ -260,6 +228,32 @@
                     </div>
                 </div>
             </div>
+            <script>
+                $(document).ready(function() {
+                    function startChange() {
+                        var startTime = start.value();
+
+                        if (startTime) {
+                            startTime = new Date(startTime);
+
+                            end.max(startTime);
+
+                            startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+
+                            end.min(startTime);
+                            end.value(startTime);
+                        }
+                    }
+
+                    //init start timepicker
+                    var start = $("#start").kendoTimePicker({
+                        change: startChange
+                    }).data("kendoTimePicker");
+
+                    //init end timepicker
+                    var end = $("#end").kendoTimePicker().data("kendoTimePicker");
+                });
+            </script>
             <!-- /Add Shift Modal -->
 
             <!-- Edit Shift Modal -->
@@ -289,7 +283,7 @@
                                         <div class="form-group">
                                             <label>Start Time<span class="text-danger">*</span></label>
                                             <div>
-                                                <input class="form-control" type="time" name="start" id="start2" required onchange="checkTime()">
+                                                <input class="form-control" name="start" id="start2" required>
                                             </div>									
                                         </div>
                                     </div>
@@ -297,20 +291,46 @@
                                         <div class="form-group">
                                             <label>End Time<span class="text-danger">*</span></label>
                                             <div>
-                                                <input class="form-control" type="time" name="end" id="end2" required onchange="checkTime()">
+                                                <input class="form-control" name="end" id="end2" required>
                                             </div>									
                                         </div>
                                     </div>
                                 </div>
-                                <span id="alert2"></span>
+                                <span id="alert"></span>
                                 <div class="submit-section">
-                                    <button id="create2" class="btn btn-primary submit-btn">Submit</button>
+                                    <button id="create" class="btn btn-primary submit-btn">Submit</button>
                                 </div>                              
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $(document).ready(function() {
+                    function startChange() {
+                        var startTime = start.value();
+
+                        if (startTime) {
+                            startTime = new Date(startTime);
+
+                            end.max(startTime);
+
+                            startTime.setMinutes(startTime.getMinutes() + this.options.interval);
+
+                            end.min(startTime);
+                            end.value(startTime);
+                        }
+                    }
+
+                    //init start timepicker
+                    var start = $("#start2").kendoTimePicker({
+                        change: startChange
+                    }).data("kendoTimePicker");
+
+                    //init end timepicker
+                    var end = $("#end2").kendoTimePicker().data("kendoTimePicker");
+                });
+            </script>
             <!-- /Edit Shift Modal -->
 
             <!-- Add Schedule Modal -->
@@ -367,13 +387,13 @@
             <!-- /Add Schedule Modal -->
 
             <!-- Delete Shift Modal -->
-            <div class="modal custom-modal fade" id="delete_employee" role="dialog">
+            <div class="modal custom-modal fade" id="delete_shift" role="dialog">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
                             <form action="schedule" do="post">
                                 <input type="hidden" name="do" value="deleteShift">
-                                <input type="hidden" name="name">
+                                <input type="hidden" name="shift">
                                 <div class="form-header">
                                     <h3>Delete Shift</h3>
                                     <p>Are you sure want to delete?</p>
@@ -381,7 +401,7 @@
                                 <div class="modal-btn delete-action">
                                     <div class="row">
                                         <div class="col-6">
-                                            <a href="#;" name="name" class="btn btn-primary continue-btn">Delete</a>
+                                            <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
                                         </div>
                                         <div class="col-6">
                                             <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -397,6 +417,10 @@
 
         </div>
         <!-- /Main Wrapper -->       
-
+            <c:if test="${alert != ''}">
+                <script lang="Javascript">
+            alert("${alert}");
+                </script>
+            </c:if>
     </body>
 </html>

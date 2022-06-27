@@ -64,6 +64,43 @@ public class DAOShift extends DBConnect {
         return true;
     }
     
+    public boolean edit(String name, String start, String end, String oldName) {
+        String sql = "update shift set name=?,start_time=?,end_time=? where name=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, name);
+            state.setString(2, start);
+            state.setString(3, end);
+            state.setString(4, oldName);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public boolean  delete(String name) {
+        String sql = "delete from shift where name = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, name);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public static void main(String[] args) {
         DAOShift dao = new DAOShift();
         System.out.println(dao.listShift());

@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.attendance;
+import entity.Attendance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ public class DAOAttendance extends DBConnect {
         return true;
     }
 
-    public attendance getLastest(String employee_id) {
+    public Attendance getLastest(String employee_id) {
         String sql = "  select top 1 [shift_id], [date], [time_in], [time_out], "
                 + "[production_time], [employee_id] from attendance where "
                 + "[employee_id] = ? order by shift_id desc";
@@ -55,7 +55,7 @@ public class DAOAttendance extends DBConnect {
             state.setString(1, employee_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new attendance(
+                return new Attendance(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -94,8 +94,8 @@ public class DAOAttendance extends DBConnect {
         return true;
     }
 
-    public List<attendance> listAll(String id) {
-        List<attendance> list = new ArrayList<>();
+    public List<Attendance> listAll(String id) {
+        List<Attendance> list = new ArrayList<>();
         String sql = "select [shift_id], [date], [time_in], [time_out],"
                 + " [production_time], [employee_id], [report_to] "
                 + "from attendance join profile on attendance.employee_id = "
@@ -106,7 +106,7 @@ public class DAOAttendance extends DBConnect {
             state.setString(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new attendance(
+                list.add(new Attendance(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -125,8 +125,8 @@ public class DAOAttendance extends DBConnect {
         return list;
     }
 
-    public List<attendance> listAllAttendanceofAnEmployee(String employee_id) {
-        List<attendance> list = new ArrayList<>();
+    public List<Attendance> listAllAttendanceofAnEmployee(String employee_id) {
+        List<Attendance> list = new ArrayList<>();
         String sql = "select * from attendance where [employee_id]=?";
         try {
             conn = getConnection();
@@ -134,7 +134,7 @@ public class DAOAttendance extends DBConnect {
             state.setString(1, employee_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new attendance(
+                list.add(new Attendance(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -152,8 +152,8 @@ public class DAOAttendance extends DBConnect {
         return list;
     }
 
-    public List<attendance> search(String date, String profile_id) {
-        List<attendance> list = new ArrayList<>();
+    public List<Attendance> search(String date, String profile_id) {
+        List<Attendance> list = new ArrayList<>();
         String sql = "select * from attendance where employee_id like ? and date = ?";
         try {
             conn = getConnection();
@@ -162,7 +162,7 @@ public class DAOAttendance extends DBConnect {
             state.setString(2, date);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new attendance(
+                list.add(new Attendance(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -180,8 +180,8 @@ public class DAOAttendance extends DBConnect {
         return list;
     }
 
-    public List<attendance> search2(String date, String name, String reportto) {
-        List<attendance> list = new ArrayList<>();
+    public List<Attendance> search2(String date, String name, String reportto) {
+        List<Attendance> list = new ArrayList<>();
         String sql = "select shift_id, date, time_in, time_out, production_time,"
                 + " employee_id, report_to from attendance join "
                 + "profile on attendance.employee_id = profile.profile_id where "
@@ -194,7 +194,7 @@ public class DAOAttendance extends DBConnect {
             state.setString(3, reportto);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new attendance(
+                list.add(new Attendance(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -216,8 +216,8 @@ public class DAOAttendance extends DBConnect {
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
         DAOProfile daoPf = new DAOProfile();
-        List<attendance> list = dao.search2("", "gio", "ABCDE");
-        for (attendance a : list) {
+        List<Attendance> list = dao.search2("", "gio", "ABCDE");
+        for (Attendance a : list) {
             a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
         }
         System.out.println(list);

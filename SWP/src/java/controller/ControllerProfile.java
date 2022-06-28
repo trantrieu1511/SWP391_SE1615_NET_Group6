@@ -5,11 +5,11 @@
  */
 package controller;
 
-import entity.account;
-import entity.experience;
-import entity.familyInfo;
-import entity.profile;
-import entity.profileDetail;
+import entity.Account;
+import entity.Experience;
+import entity.FamilyInfo;
+import entity.Profile;
+import entity.ProfileDetail;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -59,7 +59,7 @@ public class ControllerProfile extends HttpServlet {
 
             HttpSession session = request.getSession();
 
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
@@ -74,12 +74,12 @@ public class ControllerProfile extends HttpServlet {
                     Object deleteF = request.getParameter("deleteF");
                     if (editPf != null) {
                         String alert = "profile information edited successfully!";
-                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
-                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
@@ -94,12 +94,12 @@ public class ControllerProfile extends HttpServlet {
                         dispatch.forward(request, response);
                     } else if (editPs != null) {
                         String alert = "personal information edited successfully!";
-                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
-                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
@@ -234,12 +234,12 @@ public class ControllerProfile extends HttpServlet {
                         dispatch.forward(request, response);
                     } else {
                         String alert = "";
-                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
-                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
@@ -266,12 +266,12 @@ public class ControllerProfile extends HttpServlet {
                     if (editPf != null) {
                         String alert = "profile information edited successfully!";
                         String profile_id = request.getParameter("profile_id");
-                        List<profile> listPf = daoPf.getProfile(profile_id);
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
-                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(profile_id);
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
@@ -287,12 +287,12 @@ public class ControllerProfile extends HttpServlet {
                     } else if (editPs != null) {
                         String alert = "personal information edited successfully!";
                         String profile_id = request.getParameter("profile_id");
-                        List<profile> listPf = daoPf.getProfile(profile_id);
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
-                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(profile_id);
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }
@@ -434,12 +434,12 @@ public class ControllerProfile extends HttpServlet {
                     } else {
                         String alert = "";
                         String profile_id = request.getParameter("profile_id");
-                        List<profile> listPf = daoPf.getProfile(profile_id);
-                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
-                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
-                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
-                        for (profile p : listPf) {
+                        List<Profile> listPf = daoPf.getProfile(profile_id);
+                        List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
                         }

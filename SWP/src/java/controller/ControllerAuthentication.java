@@ -5,7 +5,7 @@
  */
 package controller;
 
-import entity.account;
+import entity.Account;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +41,7 @@ public class ControllerAuthentication extends HttpServlet {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
                 DAOAccount dao = new DAOAccount();
-                account a = dao.login(username, password);
+                Account a = dao.login(username, password);
                 if (a == null) {
                     request.setAttribute("mess", "Wrong username or password");
                     RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");

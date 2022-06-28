@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.task;
+import entity.Task;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ public class DAOTask extends DBConnect {
         return true;
     }
     
-    public task getByName(String name) {
+    public Task getByName(String name) {
         String sql = "select * from task where name = ?";
         try {
             conn = getConnection();
@@ -53,7 +53,7 @@ public class DAOTask extends DBConnect {
             state.setString(1, name);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new task(rs.getString(1),
+                return new Task(rs.getString(1),
                         rs.getInt(2),
                         rs.getString(3),
                         rs.getInt(4),
@@ -70,8 +70,8 @@ public class DAOTask extends DBConnect {
         return null;
     }
     
-    public List<task> list(int status) {
-        List<task> list = new ArrayList<>();
+    public List<Task> list(int status) {
+        List<Task> list = new ArrayList<>();
         String sql = "select * from task where status = ?";
         try {
             conn = getConnection();
@@ -79,7 +79,7 @@ public class DAOTask extends DBConnect {
             state.setInt(1, status);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new task(rs.getString(1),
+                list.add(new Task(rs.getString(1),
                         rs.getInt(2),
                         rs.getString(3),
                         rs.getInt(4),
@@ -96,8 +96,8 @@ public class DAOTask extends DBConnect {
         return list;
     }
     
-    public List<task> listProjectTask(int status, String title) {
-        List<task> list = new ArrayList<>();
+    public List<Task> listProjectTask(int status, String title) {
+        List<Task> list = new ArrayList<>();
         String sql = "select * from task where status = ? and project like ?";
         try {
             conn = getConnection();
@@ -106,7 +106,7 @@ public class DAOTask extends DBConnect {
             state.setString(2, "%" + title + "%");
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new task(rs.getString(1),
+                list.add(new Task(rs.getString(1),
                         rs.getInt(2),
                         rs.getString(3),
                         rs.getInt(4),

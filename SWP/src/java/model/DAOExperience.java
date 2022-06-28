@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.experience;
+import entity.Experience;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +22,8 @@ public class DAOExperience extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<experience> listIndividualExperience(String profile_id) {
-        List<experience> elist = new ArrayList<>();
+    public List<Experience> listIndividualExperience(String profile_id) {
+        List<Experience> elist = new ArrayList<>();
         String sql = "select * from [experience] where profile_id = ?";
         try {
             conn = getConnection();
@@ -31,7 +31,7 @@ public class DAOExperience extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                elist.add(new experience(
+                elist.add(new Experience(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -47,7 +47,7 @@ public class DAOExperience extends DBConnect {
         return elist;
     }
 
-    public boolean addExperience(experience exp) {
+    public boolean addExperience(Experience exp) {
         boolean status = false;
         String sql = "insert into [experience] values (?,?,?,?)";
         try {
@@ -69,7 +69,7 @@ public class DAOExperience extends DBConnect {
         return status;
     }
 
-    public boolean editExperience(experience exp, String cur_role) {
+    public boolean editExperience(Experience exp, String cur_role) {
         String sql = "update [experience]\n"
                 + "set\n"
                 + "[role] = ?,\n"
@@ -133,17 +133,17 @@ public class DAOExperience extends DBConnect {
     public static void main(String[] args) {
         DAOExperience daoexp = new DAOExperience();
 //        List<experience> list = dao.listIndividualExperience("ABCDE");
-//        for (experience exp : list) {
+//        for (Experience exp : list) {
 //            System.out.println(exp.toString());
 //        }
 //        String profile_id = "MRNEW";
-//        experience exp = new experience(profile_id, "Enterrole", "GETDATE()",
+//        Experience exp = new Experience(profile_id, "Enterrole", "GETDATE()",
 //                "GETDATE()");
 //        boolean statusexp = daoexp.addExperience(exp);
 //        if (statusexp) {
-//            System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
+//            System.out.println("Successfully added new Experience for Staff with profile_id = " + profile_id);
 //        } else {
-//            System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
+//            System.out.println("Fail to added new Experience for Staff with profile_id = " + profile_id);
 //        }
 
     }

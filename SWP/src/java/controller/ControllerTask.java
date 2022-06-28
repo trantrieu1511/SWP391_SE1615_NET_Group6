@@ -5,10 +5,9 @@
  */
 package controller;
 
-import entity.account;
-import entity.profile;
-import entity.projects;
-import entity.task;
+import entity.Account;
+import entity.Profile;
+import entity.Task;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -43,26 +42,25 @@ public class ControllerTask extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                DAOProject daopj = new DAOProject();
-                DAOProfile daoPf = new DAOProfile();
-                DAOTask daot = new DAOTask();
+                DAOProfile daoProfile = new DAOProfile();
+                DAOTask daoTask = new DAOTask();
                 String service = request.getParameter("do");
                 
                 if (service.equals("view")) {
                     String title = request.getParameter("title");
-                    List<task> list0 = daot.listProjectTask(0, title);
-                    List<task> list1 = daot.listProjectTask(1, title);
-                    List<task> list2 = daot.listProjectTask(2, title);
-                    List<task> list3 = daot.listProjectTask(3, title);
-                    List<profile> listPf = null;
+                    List<Task> list0 = daoTask.listProjectTask(0, title);
+                    List<Task> list1 = daoTask.listProjectTask(1, title);
+                    List<Task> list2 = daoTask.listProjectTask(2, title);
+                    List<Task> list3 = daoTask.listProjectTask(3, title);
+                    List<Profile> listPf = null;
                     if (acc.isIsManager()) {
-                        listPf = daoPf.listAllStaff(acc.getProfile_id());
+                        listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     } else {
-                        listPf = daoPf.listAllStaff(daoPf.getByID(acc.getProfile_id()).getReportto());
+                        listPf = daoProfile.listAllStaff(daoProfile.getByID(acc.getProfile_id()).getReportto());
                     }                   
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
@@ -81,13 +79,13 @@ public class ControllerTask extends HttpServlet {
                     int priority = Integer.parseInt(request.getParameter("priority"));
                     String deadline = request.getParameter("deadline");
                     String assigned = request.getParameter("assigned");                  
-                    daot.add(name, priority, deadline, 0, assigned, project);
+                    daoTask.add(name, priority, deadline, 0, assigned, project);
                                 
-                    List<task> list0 = daot.listProjectTask(0, project);
-                    List<task> list1 = daot.listProjectTask(1, project);
-                    List<task> list2 = daot.listProjectTask(2, project);
-                    List<task> list3 = daot.listProjectTask(3, project);
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Task> list0 = daoTask.listProjectTask(0, project);
+                    List<Task> list1 = daoTask.listProjectTask(1, project);
+                    List<Task> list2 = daoTask.listProjectTask(2, project);
+                    List<Task> list3 = daoTask.listProjectTask(3, project);
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     String alert = "New task saved!!";
                                       
                     request.setAttribute("list0", list0);
@@ -104,14 +102,14 @@ public class ControllerTask extends HttpServlet {
                 if (service.equals("updateStatus")) {
                     String name = request.getParameter("name");
                     int status = Integer.parseInt(request.getParameter("status"));
-                    daot.updateStatus(status, name);
-                    String project = daot.getByName(name).getProject();
+                    daoTask.updateStatus(status, name);
+                    String project = daoTask.getByName(name).getProject();
                     
-                    List<task> list0 = daot.listProjectTask(0, project);
-                    List<task> list1 = daot.listProjectTask(1, project);
-                    List<task> list2 = daot.listProjectTask(2, project);
-                    List<task> list3 = daot.listProjectTask(3, project);
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Task> list0 = daoTask.listProjectTask(0, project);
+                    List<Task> list1 = daoTask.listProjectTask(1, project);
+                    List<Task> list2 = daoTask.listProjectTask(2, project);
+                    List<Task> list3 = daoTask.listProjectTask(3, project);
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     String alert = "Task status updated!";
                                       
                     request.setAttribute("list0", list0);

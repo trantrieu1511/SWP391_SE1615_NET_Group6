@@ -5,8 +5,8 @@
  */
 package controller;
 
-import entity.account;
-import entity.profileDetail;
+import entity.Account;
+import entity.ProfileDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,7 +41,7 @@ public class ControllerProfileDetail extends HttpServlet {
         try {
             PrintWriter out = response.getWriter();
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
 
             String service = request.getParameter("do");
 
@@ -66,8 +66,7 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print("<br>");
 //                out.print(address);
 //                out.print("<br>");
-                    boolean statusPfi = daoPd.editProfileInfo(
-                            new profileDetail(profile_id, dob, address, gender));
+                    boolean statusPfi = daoPd.editProfileInfo(new ProfileDetail(profile_id, dob, address, gender));
                     if (statusPfi) {
                         System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
                         if (acc.getProfile_id().equals(profile_id)) {
@@ -106,8 +105,7 @@ public class ControllerProfileDetail extends HttpServlet {
 //                out.print(bank_name);
 //                out.print("<br>");
 //                out.print(bank_number);
-                    boolean statusPsInfo = daoPd.editPersonalInfo(
-                            new profileDetail(profile_id, country, religion,
+                    boolean statusPsInfo = daoPd.editPersonalInfo(new ProfileDetail(profile_id, country, religion,
                                     isMarried, children, bank_name, bank_number));
                     if (statusPsInfo) {
                         System.out.println("Successfully edited personalInfo of profile_id = " + profile_id);

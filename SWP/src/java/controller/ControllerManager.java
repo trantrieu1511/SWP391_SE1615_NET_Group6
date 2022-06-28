@@ -5,17 +5,16 @@
  */
 package controller;
 
-import entity.account;
-import entity.attendance;
-import entity.departments;
-import entity.experience;
-import entity.familyInfo;
-import entity.jobs;
-import entity.profile;
-import entity.profileDetail;
-import entity.projects;
+import entity.Account;
+import entity.Attendance;
+import entity.Departments;
+import entity.Experience;
+import entity.FamilyInfo;
+import entity.Jobs;
+import entity.Profile;
+import entity.ProfileDetail;
+import entity.Projects;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -58,37 +57,37 @@ public class ControllerManager extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
-            DAOAttendance daoA = new DAOAttendance();
-            DAOProfile daoPf = new DAOProfile();
-            DAODepartment daoDp = new DAODepartment();
-            DAOJob daoJ = new DAOJob();
-            DAOTask daoT = new DAOTask();
-            DAOAccount daoAcc = new DAOAccount();
-            DAOProfileDetail daoPd = new DAOProfileDetail();
-            DAOFamilyInfo daoF = new DAOFamilyInfo();
-            DAOExperience daoExp = new DAOExperience();
-            DAOProject daoPj = new DAOProject();
+            DAOAttendance daoAttendance = new DAOAttendance();
+            DAOProfile daoProfile = new DAOProfile();
+            DAODepartment daoDepartment = new DAODepartment();
+            DAOJob daoJob = new DAOJob();
+            DAOTask daoTask = new DAOTask();
+            DAOAccount daoAccount = new DAOAccount();
+            DAOProfileDetail daoProfileDetail = new DAOProfileDetail();
+            DAOFamilyInfo daoFamilyInfo = new DAOFamilyInfo();
+            DAOExperience daoExperience = new DAOExperience();
+            DAOProject daoProject = new DAOProject();
 
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
 
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                List<projects> listPj = null;
+                List<Projects> listPj = null;
                 if (acc.isIsManager()) {
-                    listPj = daoPj.getProject(acc.getProfile_id());
+                    listPj = daoProject.getProject(acc.getProfile_id());
                 } else {
-                    listPj = daoPj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    listPj = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", listPj);
                 //profile user = daoPf.getByID(acc.getProfile_id());
                 if (service.equals("attendance")) {
-                    List<attendance> list = daoA.listAll(acc.getProfile_id());
-                    for (attendance a : list) {
-                        a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
+                    List<Attendance> listAttendance = daoAttendance.listAll(acc.getProfile_id());
+                    for (Attendance a : listAttendance) {
+                        a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
-                    request.setAttribute("list", list);
+                    request.setAttribute("list", listAttendance);
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);
                 }
@@ -96,11 +95,11 @@ public class ControllerManager extends HttpServlet {
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date_search = request.getParameter("date");
-                    List<attendance> list = daoA.search2(date_search, name, acc.getProfile_id());
-                    for (attendance a : list) {
-                        a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
+                    List<Attendance> listAttendance = daoAttendance.search2(date_search, name, acc.getProfile_id());
+                    for (Attendance a : listAttendance) {
+                        a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
-                    request.setAttribute("list", list);
+                    request.setAttribute("list", listAttendance);
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);
                 }
@@ -111,16 +110,16 @@ public class ControllerManager extends HttpServlet {
                     Object delete = request.getParameter("delete");
                     if (edit != null) { //edit
                         String alert = "New staff information have been saved!";
-                        List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                            account accStaff = daoAcc.getAccount(p.getProfile_id());
+                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
                             if (accStaff != null) {
-                                p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
                             }
                         }
                         request.setAttribute("filter", "yes");
@@ -132,16 +131,16 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     } else if (add != null) { //add
                         String alert = "Successfully added new staff information!";
-                        List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                            account accStaff = daoAcc.getAccount(p.getProfile_id());
+                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
                             if (accStaff != null) {
-                                p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
                             }
                         }
                         request.setAttribute("filter", "yes");
@@ -153,16 +152,16 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     } else if (delete != null) { //delete
                         String alert = "Delete staff successfully!";
-                        List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                            account accStaff = daoAcc.getAccount(p.getProfile_id());
+                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
                             if (accStaff != null) {
-                                p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
                             }
                         }
                         request.setAttribute("filter", "yes");
@@ -174,16 +173,16 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     } else {
                         String alert = "";
-                        List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
-                        List<departments> listDp = daoDp.listAllDepartment();
-                        List<jobs> listJ = daoJ.listAllJob();
-                        for (profile p : list) {
-                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                            account accStaff = daoAcc.getAccount(p.getProfile_id());
+                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
                             if (accStaff != null) {
-                                p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
                             }
                         }
                         request.setAttribute("filter", "yes");
@@ -196,17 +195,17 @@ public class ControllerManager extends HttpServlet {
                     }
                 }
                 if (service.equals("addFail")) {
-                    String alert = "Add failed! ID has been used by another employee, please enter again!";
-                    List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
-                    List<departments> listDp = daoDp.listAllDepartment();
-                    List<jobs> listJ = daoJ.listAllJob();
-                    for (profile p : list) {
-                        p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                        p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
-                        account accStaff = daoAcc.getAccount(p.getProfile_id());
+                    String alert = "ID has been used by another employee, please enter again!";
+                    List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                    List<Departments> listDp = daoDepartment.listAllDepartment();
+                    List<Jobs> listJ = daoJob.listAllJob();
+                    for (Profile p : list) {
+                        p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                        p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                        Account accStaff = daoAccount.getAccount(p.getProfile_id());
                         if (accStaff != null) {
-                            p.setUser_display(daoAcc.getAccount(p.getProfile_id()).getUser());
-                            p.setPass_display(daoAcc.getAccount(p.getProfile_id()).getPass());
+                            p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                            p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
                         }
                     }
                     request.setAttribute("filter", "yes");
@@ -225,21 +224,21 @@ public class ControllerManager extends HttpServlet {
                 }
 
                 if (service.equals("filter")) {
-                    String eid = request.getParameter("eid").trim();
-                    String ename = request.getParameter("ename").trim();
-                    String ejob = request.getParameter("ejob").trim();
-                    List<profile> list = null;
-                    List<departments> listDp = daoDp.listAllDepartment();
-                    List<jobs> listJ = daoJ.listAllJob();
+                    String eid = request.getParameter("eid");
+                    String ename = request.getParameter("ename");
+                    String ejob = request.getParameter("ejob");
+                    List<Profile> list = null;
+                    List<Departments> listDp = daoDepartment.listAllDepartment();
+                    List<Jobs> listJ = daoJob.listAllJob();
 
                     if (ejob.equals("")) {
                         String alert = "";
-                        list = daoPf.searchStaff1(eid, ename);
+                        list = daoProfile.searchStaff1(eid, ename);
                         if (list == null) {
                             alert = "No search result found!";
-                            for (profile p : list) {
-                                p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                            for (Profile p : list) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
                             }
 
                             request.setAttribute("list", list);
@@ -251,9 +250,9 @@ public class ControllerManager extends HttpServlet {
                             dispath.forward(request, response);
                         } else {
                             alert = "";
-                            for (profile p : list) {
-                                p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                            for (Profile p : list) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
                             }
 
                             request.setAttribute("list", list);
@@ -267,12 +266,12 @@ public class ControllerManager extends HttpServlet {
 
                     } else {
                         String alert = "";
-                        list = daoPf.searchStaff2(eid, ename, ejob);
+                        list = daoProfile.searchStaff2(eid, ename, ejob);
                         if (list == null) {
                             alert = "No search result found!";
-                            for (profile p : list) {
-                                p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                            for (Profile p : list) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
                             }
 
                             request.setAttribute("list", list);
@@ -284,9 +283,9 @@ public class ControllerManager extends HttpServlet {
                             dispath.forward(request, response);
                         } else {
                             alert = "";
-                            for (profile p : list) {
-                                p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                            for (Profile p : list) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
                             }
 
                             request.setAttribute("list", list);
@@ -316,41 +315,41 @@ public class ControllerManager extends HttpServlet {
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
 
-                    profile pro = new profile(profile_id, first_name, last_name,
+                    Profile pro = new Profile(profile_id, first_name, last_name,
                             email, phone_number, hire_date, job_id, department_id,
                             salary, ReportsTo);
-                    boolean statusPro = daoPf.addStaff(pro);
+                    boolean statusPro = daoProfile.addStaff(pro);
                     if (statusPro) {
                         System.out.println("Successfully added new Staff with profile_id = " + profile_id);
 
-                        boolean statusAcc = daoAcc.addAccount(profile_id, username, password);
+                        boolean statusAcc = daoAccount.addAccount(profile_id, username, password);
                         if (statusAcc) {
                             System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
                         } else {
                             System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
                         }
 
-                        profileDetail pd = new profileDetail(profile_id, "01/01/1900",
+                        ProfileDetail pd = new ProfileDetail(profile_id, "01/01/1900",
                                 "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
-                        boolean statusPd = daoPd.addProfileDetail(pd);
+                        boolean statusPd = daoProfileDetail.addProfileDetail(pd);
                         if (statusPd) {
                             System.out.println("Successfully added new profileDetail for Staff with profile_id = " + profile_id);
                         } else {
                             System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
                         }
 
-                        familyInfo f = new familyInfo(profile_id, "N/A", "N/A",
+                        FamilyInfo f = new FamilyInfo(profile_id, "N/A", "N/A",
                                 "01/01/1900", "N/A");
-                        boolean statusf = daoF.addFamilyInfo(f);
+                        boolean statusf = daoFamilyInfo.addFamilyInfo(f);
                         if (statusf) {
                             System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
                         } else {
                             System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
                         }
 
-                        experience exp = new experience(profile_id, "N/A", "1900-01-01",
+                        Experience exp = new Experience(profile_id, "N/A", "1900-01-01",
                                 "1900-01-01");
-                        boolean statusexp = daoExp.addExperience(exp);
+                        boolean statusexp = daoExperience.addExperience(exp);
                         if (statusexp) {
                             System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
                         } else {
@@ -377,12 +376,12 @@ public class ControllerManager extends HttpServlet {
                     int job_id = Integer.parseInt(request.getParameter("job_id"));
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
                     double salary = 0;
-//                    int department_id = daoDp.getDepartmentByName(department_name).getId();
+//                    int department_id = daoDepartment.getDepartmentByName(department_name).getId();
 //                    int job_id = daoJob.getJobByTitle(job_title).getId();
 
 //                    PrintWriter out = response.getWriter();
 //                    out.print(hire_date);
-                    boolean statusPro = daoPf.editStaff(new profile(profile_id,
+                    boolean statusPro = daoProfile.editStaff(new Profile(profile_id,
                             first_name, last_name, email, phone_number, hire_date,
                             job_id, department_id, salary, ReportsTo));
                     if (statusPro) {
@@ -391,7 +390,7 @@ public class ControllerManager extends HttpServlet {
                         System.out.println("Fail to edit Staff with profile_id = " + profile_id);
                     }
 
-                    boolean statusAcc = daoAcc.editAccount(profile_id, username, password);
+                    boolean statusAcc = daoAccount.editAccount(profile_id, username, password);
                     if (statusAcc) {
                         System.out.println("Successfully edited account of profile_id = " + profile_id);
                     } else {
@@ -403,35 +402,35 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
-                    boolean statusAcc = daoAcc.deleteAccount(profile_id);
+                    boolean statusAcc = daoAccount.deleteAccount(profile_id);
                     if (statusAcc) {
                         System.out.println("Successfully deleted account of profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete account of profile_id = " + profile_id);
                     }
 
-                    boolean statusPd = daoPd.deleteProfileDetail(profile_id);
+                    boolean statusPd = daoProfileDetail.deleteProfileDetail(profile_id);
                     if (statusPd) {
                         System.out.println("Successfully deleted profileDetail with profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete profileDetail with profile_id = " + profile_id);
                     }
 
-                    boolean statusF = daoF.deleteAllFamilyInfo(profile_id);
+                    boolean statusF = daoFamilyInfo.deleteAllFamilyInfo(profile_id);
                     if (statusF) {
                         System.out.println("Successfully deleted familyInfo of profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete familyInfo of profile_id = " + profile_id);
                     }
 
-                    boolean statusExp = daoExp.deleteAllExperience(profile_id);
+                    boolean statusExp = daoExperience.deleteAllExperience(profile_id);
                     if (statusExp) {
                         System.out.println("Successfully deleted experience of profile_id = " + profile_id);
                     } else {
                         System.out.println("Fail to delete experience of profile_id = " + profile_id);
                     }
 
-                    boolean statusPf = daoPf.deleteProfile(profile_id);
+                    boolean statusPf = daoProfile.deleteProfile(profile_id);
                     if (statusPf) {
                         System.out.println("Successfully deleted profile of profile_id = " + profile_id);
                     } else {
@@ -448,14 +447,14 @@ public class ControllerManager extends HttpServlet {
                     int status = 0;
                     String assigned = request.getParameter("assigned");
                     String project = request.getParameter("project");
-                    daoT.add(name, priority, deadline, status, assigned, project);
+                    daoTask.add(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
 
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date = request.getParameter("date");
-                    List<attendance> list = daoA.search(name, date);
+                    List<Attendance> list = daoAttendance.search(name, date);
                     request.setAttribute("list", list);
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);

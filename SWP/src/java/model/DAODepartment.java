@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.departments;
+import entity.Departments;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,15 +22,15 @@ public class DAODepartment extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<departments> listAllDepartment() {
-        List<departments> list = new ArrayList<>();
+    public List<Departments> listAllDepartment() {
+        List<Departments> list = new ArrayList<>();
         String sql = "select * from [departments]";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new departments(
+                list.add(new Departments(
                         rs.getInt(1),
                         rs.getString(2)));
             }
@@ -44,7 +44,7 @@ public class DAODepartment extends DBConnect {
         return list;
     }
 
-    public departments getDepartmentByName(String name) {
+    public Departments getDepartmentByName(String name) {
         String sql = "select * from departments where [department_name] = ?";
         try {
             conn = getConnection();
@@ -52,7 +52,7 @@ public class DAODepartment extends DBConnect {
             state.setString(1, name);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new departments(
+                return new Departments(
                         rs.getInt(1),
                         rs.getString(2));
             }
@@ -66,7 +66,7 @@ public class DAODepartment extends DBConnect {
         return null;
     }
 
-    public departments getDepartmentByID(int id) {
+    public Departments getDepartmentByID(int id) {
         String sql = "select * from departments where [department_id] = ?";
         try {
             conn = getConnection();
@@ -74,7 +74,7 @@ public class DAODepartment extends DBConnect {
             state.setInt(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new departments(
+                return new Departments(
                         rs.getInt(1),
                         rs.getString(2));
             }
@@ -91,10 +91,10 @@ public class DAODepartment extends DBConnect {
     public static void main(String[] args) {
         DAODepartment dao = new DAODepartment();
 //        List<departments> list = dao.listAllDepartment();
-//        for (departments a : list) {
+//        for (Departments a : list) {
 //            System.err.println(a.getName());
 //        }
-        departments department = dao.getDepartmentByID(1);
+        Departments department = dao.getDepartmentByID(1);
         System.out.println(department.toString());
     }
 }

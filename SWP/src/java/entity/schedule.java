@@ -14,6 +14,11 @@ public class schedule extends shift {
 
     public schedule() {
     }
+    
+    public schedule(String profile, String name) {
+        this.name = name;
+        this.profile = profile;
+    }
 
     public schedule(String profile, String name, String start_time, String end_time) {
         super(name, start_time, end_time);

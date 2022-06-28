@@ -91,16 +91,15 @@ CREATE TABLE [attendance] (
 );
 
 CREATE TABLE [shift](
-    name VARCHAR(15) PRIMARY KEY,
-	start_time VARCHAR(20),
-	end_time VARCHAR(20),
+    name VARCHAR(15) PRIMARY KEY NOT NULL,
+	start_time VARCHAR(20) NOT NULL,
+	end_time VARCHAR(20) NOT NULL,
 
 );
 
 CREATE TABLE [schedule](
     profile_id CHAR(5),
-	shift_name VARCHAR(15),
-	date VARCHAR(15),
+	shift_name VARCHAR(255),
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id),
 	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
 );
@@ -117,8 +116,6 @@ CREATE TABLE [projects] (
    FOREIGN KEY (client_id) REFERENCES [clients] (client_id),
    FOREIGN KEY (manager_id) REFERENCES [profile] (profile_id),
 );
-
-drop table task
 
 CREATE TABLE [task] (
     name VARCHAR(35) PRIMARY KEY,

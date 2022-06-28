@@ -8,8 +8,11 @@ package controller;
 import entity.account;
 import entity.profile;
 import entity.projects;
+import entity.schedule;
 import entity.shift;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOProfile;
 import model.DAOProject;
+import model.DAOSchedule;
 import model.DAOShift;
 
 /**
@@ -50,6 +54,7 @@ public class ControllerSchedule extends HttpServlet {
                 DAOProject daopj = new DAOProject();
                 DAOProfile daoPf = new DAOProfile();
                 DAOShift daos = new DAOShift();
+                DAOSchedule daoSch = new DAOSchedule();
                 List<projects> list = null;
                 if (acc.isIsManager()) {
                     list = daopj.getProject(acc.getProfile_id());
@@ -60,6 +65,36 @@ public class ControllerSchedule extends HttpServlet {
                 String service = request.getParameter("do");
 
                 if (service.equals("list")) {
+                    List<shift> listS = daos.listShift();
+                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<schedule> listSch = daoSch.listAllScheduleOfStaff();
+                    List<String[]> listShiftArray = new ArrayList<String[]>();
+                    for (schedule sch : listSch) {
+                        String[] temp = sch.getName().split(" ");
+                        listShiftArray.add(temp);
+                    }
+                    List<boolean[]> listBool = new ArrayList<boolean[]>();
+                    for (String[] strTemp : listShiftArray) {
+                        boolean[] temp = new boolean[listS.size()];
+                        for (int i = 0; i < listS.size(); i++) {
+                            for (int j = 0; j < strTemp.length; j++) {
+                                if (listS.get(i).getName().equals(strTemp[j])) {
+                                    temp[i] = true;
+                                }
+                            }
+                        }
+                        listBool.add(temp);
+                    }
+                    for (int i = 0; i < listPf.size(); i++) {
+                        String temp = "";
+                        for (int j = 0; j < listBool.get(i).length; j++) {
+                            temp += listBool.get(i)[j] + " ";
+                        }
+                        // Department_name used as shiftStatus(true/false)
+                        listPf.get(i).setDepartment_name(temp);
+                    }
+                    request.setAttribute("listS", listS);
+                    request.setAttribute("listPf", listPf);
                     RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
                     dispath.forward(request, response);
                 }
@@ -124,9 +159,25 @@ public class ControllerSchedule extends HttpServlet {
                         dispath.forward(request, response);
                     }
                 }
-                
+
                 if (service.equals("assignShift")) {
-                    
+                    String Profile_id = request.getParameter("profile");
+                    String[] shift = request.getParameterValues("shift");
+                    String shiftStatus = "";
+                    List<shift> listS = daos.listShift();
+                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    request.setAttribute("list", listS);
+                    request.setAttribute("listPf", listPf);
+                    for (int i = 0; i < shift.length; i++) {
+                        shiftStatus += shift[i] + " ";
+                    }
+                    if (daoSch.checkExist(Profile_id)) {
+                        request.setAttribute("alert", "This staff already has an assigned schedule!");
+                    } else {
+                        daoSch.addSchedule(Profile_id, shiftStatus.trim());
+                    }
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                    dispath.forward(request, response);
                 }
             }
         } catch (Exception ex) {

@@ -99,8 +99,13 @@
                         placeholder: "Select an option",
                         allowClear: false
                     });
+                    $('input[type=checkbox]').on('change', function (e) {
+                        if ($('input[type=checkbox]:checked').length > 3) {
+                            $(this).prop('checked', false);
+                        }
+                    });
                 });
-            });
+            });                
         </script>       
 
     </head>
@@ -138,6 +143,7 @@
                         <!-- /Page Header -->
 
                         <!-- Content Starts -->
+                        <h4><a href="schedule?do=list" style="text-decoration: none; color: grey"> <-- Back</a></h4>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
@@ -344,27 +350,32 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form action="schedule" do="post">
+                                <input type="hidden" name="do" value="assignShift">
                                 <div class="row">                                    
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">Employee Name <span class="text-danger">*</span></label>
-                                            <select class="select" id="profile">
-                                            <c:forEach items="${listPf}" var="o">
-                                                <option>${o.first_name} ${o.last_name}</option>
+                                            <select class="select" name="profile" id="profile">
+                                                <option value="" disabled selected hidden></option>
+                                            <c:forEach items="${listPf}" var="o">                                               
+                                                <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
                                             </c:forEach>  
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                            <c:forEach items="${list}" var="o">
-                                                <option>${o.name}</option>
-                                            </c:forEach>  
-                                            </select>
-                                        </div>
+                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>                                           
+                                        <c:forEach items="${list}" var="o">    
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="${o.name}" name="shift">
+                                                <label class="form-check-label">
+                                                    ${o.name}
+                                                </label>
+                                            </div>
+                                        </c:forEach>  
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="submit-section">

@@ -7,23 +7,6 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%!
-    DateFormat df = new SimpleDateFormat("EEE-d-MMM-yyyy");
-    String date = df.format(new java.util.Date()).trim();
-
-    public String addOneDay(String date) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("EEE-d-MMM-yyyy");
-        LocalDate day = LocalDate.parse(date, df);
-        return df.format(day.plusDays(1));
-    }
-    String date2 = addOneDay(date);
-    String date3 = addOneDay(date2);
-    String date4 = addOneDay(date3);
-    String date5 = addOneDay(date4);
-    String date6 = addOneDay(date5);
-    String date7 = addOneDay(date6);
-%>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -58,6 +41,52 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
+        
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="js/select2.min.js"></script>
+
+        <!-- Datetimepicker JS -->
+        <script src="js/moment.min.js"></script>
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
+        
+        <script type="text/javascript">
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })   
+            $(function () {
+                $("#add_schedule").on("show.bs.modal", function (e) {                   
+                    $("#profile").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
+                    $('input[type=checkbox]').on('change', function (e) {
+                        if ($('input[type=checkbox]:checked').length > 3) {
+                            $(this).prop('checked', false);
+                        }
+                    });
+                });
+            });             
+        </script>
         
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
@@ -103,34 +132,11 @@
                                 <label class="focus-label">Employee</label>
                             </div>
                         </div>
-
                         <div class="col-sm-6 col-md-3"> 
-                            <div class="form-group form-focus select-focus">
-                                <select class="select floating"> 
-                                    <option>All Department</option>
-                                    <option value="1">Finance</option>
-                                    <option value="2">Finance and Management</option>
-                                    <option value="3">Hr & Finance</option>
-                                    <option value="4">ITech</option>
-                                </select>
-                                <label class="focus-label">Department</label>
-                            </div>
                         </div>
-                        <div class="col-sm-6 col-md-2">  
-                            <div class="form-group form-focus focused">
-                                <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text">
-                                </div>
-                                <label class="focus-label">From</label>
-                            </div>
+                        <div class="col-sm-6 col-md-2">                             
                         </div>
-                        <div class="col-sm-6 col-md-2">  
-                            <div class="form-group form-focus focused">
-                                <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text">
-                                </div>
-                                <label class="focus-label">To</label>
-                            </div>
+                        <div class="col-sm-6 col-md-2">                             
                         </div>
                         <div class="col-sm-6 col-md-2">  
                             <a href="#" class="btn btn-success btn-block"> Search </a>  
@@ -139,566 +145,43 @@
                     <!-- Search Filter -->
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable">
+                                <table class="table table-striped custom-table datatable table-nowrap mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Scheduled Shift</th>
-                                            <th>Date</th>
-                                            <th>Shift</th>
-                                            <th>From</th>
-                                            <th>To</th>                                          
+                                            <th>Employee</th>
+                                            <c:forEach items="${listS}" var="o">
+                                            <th>${o.name}</th>
+                                            </c:forEach> 
+                                            <th class="text-right no-sort">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-02.jpg"></a>
-                                                    <a href="profile.html">John Doe <span>Web Designer</span></a>
-                                                </h2>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
+                                        <c:forEach items="${listPf}" var="o">
+                                        <tr>                                           
+                                            <td>                                          
+                                                <h2><a href="profile.html">${o.first_name} ${o.last_name}</a></h2>                                           
+                                            </td>     
+                                            <c:forEach items="${o.department_name.split(' ')}" var="p">
+                                                <c:if test="${p == 'true'}">
+                                                    <td><i class="fa fa-check text-success"></i></td>
+                                                </c:if>
+                                                <c:if test="${p == 'false'}">
+                                                    <td><i class="fa fa-close text-danger"></i></td>
+                                                </c:if>
+                                            </c:forEach>  
+                                                    <td class="text-right">
+                                                        <div class="dropdown dropdown-action">
+                                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_schedule"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_schedule"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-09.jpg"></a>
-                                                    <a href="profile.html">Richard Miles <span>Web Developer</span></a>
-                                                </h2>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-10.jpg"></a>
-                                                    <a href="profile.html">John Smith <span>Android Developer</span></a>
-                                                </h2>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-05.jpg"></a>
-                                                    <a href="profile.html">Mike Litorus <span>IOS Developer</span></a>
-                                                </h2>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-11.jpg"></a>
-                                                    <a href="profile.html">Wilmer Deluna <span>Team Leader</span></a>
-                                                </h2>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-12.jpg"></a>
-                                                    <a href="profile.html">Jeffrey Warden <span>Web Developer</span></a>
-                                                </h2>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-13.jpg"></a>
-                                                    <a href="profile.html">Bernardo Galaviz <span>Web Developer</span></a>
-                                                </h2>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <h2>
-                                                        <a href="#" data-toggle="modal" data-target="#edit_schedule" style="border:2px dashed #1eb53a">
-                                                            <span class="username-info m-b-10">6:30 am - 9:30 pm ( 14 hrs 15 mins)</span>
-                                                            <span class="userrole-info">Web Designer - SMARTHR</span>
-                                                        </a>
-                                                    </h2>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="user-add-shedule-list">
-                                                    <a href="#" data-toggle="modal" data-target="#add_schedule">
-                                                        <span><i class="fa fa-plus"></i></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -723,125 +206,34 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Department <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select</option>
-                                                <option value="">Development</option>
-                                                <option value="1">Finance</option>
-                                                <option value="2">Finance and Management</option>
-                                                <option value="3">Hr & Finance</option>
-                                                <option value="4">ITech</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                            <form action="schedule" do="post">
+                                <input type="hidden" name="do" value="assignShift">
+                                <div class="row">                                    
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">Employee Name <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select </option>
-                                                <option value="1">Richard Miles </option>
-                                                <option value="2">John Smith</option>
-                                                <option value="3">Mike Litorus </option>
-                                                <option value="4">Wilmer Deluna</option>
+                                            <select class="select" name="profile" id="profile">
+                                                <option value="" disabled selected hidden></option>
+                                            <c:forEach items="${listPf}" var="o">                                               
+                                                <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
+                                            </c:forEach>  
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">Date</label>
-                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select </option>
-                                                <option value="1">10'o clock Shift</option>
-                                                <option value="2">10:30 shift</option>
-                                                <option value="3">Daily Shift </option>
-                                                <option value="4">New Shift</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Min Start Time  <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
+                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>                                           
+                                        <c:forEach items="${listS}" var="o">    
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="${o.name}" name="shift">
+                                                <label class="form-check-label">
+                                                    ${o.name}
+                                                </label>
                                             </div>
-                                        </div>
+                                        </c:forEach>  
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Start Time  <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Max Start Time  <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Min End Time  <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">End Time   <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Max End Time <span class="text-danger">*</span></label>
-                                            <div class="input-group time timepicker">
-                                                <input class="form-control"><span class="input-group-append input-group-addon"><span class="input-group-text"><i class="fa fa-clock-o"></i></span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Break Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Accept Extra Hours </label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                                                <label class="custom-control-label" for="customSwitch1"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Publish </label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch2" checked="">
-                                                <label class="custom-control-label" for="customSwitch2"></label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
@@ -853,7 +245,7 @@
             <!-- /Add Schedule Modal -->
 
             <!-- Edit Schedule Modal -->
-            <div id="edit_schedule" class="modal custom-modal fade" role="dialog">
+<!--            <div id="edit_schedule" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1027,34 +419,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!-- /Edit Schedule Modal -->
         </div>
         <!-- /Main Wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Select2 JS -->
-        <script src="js/select2.min.js"></script>
-
-        <!-- Datetimepicker JS -->
-        <script src="js/moment.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-
-        <!-- Datatable JS -->
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script src="js/dataTables.bootstrap4.min.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
 
     </body>
 </html>

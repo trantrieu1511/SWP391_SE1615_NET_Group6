@@ -12,7 +12,6 @@ import entity.schedule;
 import entity.shift;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -175,7 +174,25 @@ public class ControllerSchedule extends HttpServlet {
                         request.setAttribute("alert", "This staff already has an assigned schedule!");
                     } else {
                         daoSch.addSchedule(Profile_id, shiftStatus.trim());
+                        request.setAttribute("alert", "Schedule saved!");
                     }
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("editSchedule")) {
+                    String Profile_id = request.getParameter("profile");
+                    String[] shift = request.getParameterValues("shift");
+                    String shiftStatus = "";
+                    List<shift> listS = daos.listShift();
+                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    request.setAttribute("list", listS);
+                    request.setAttribute("listPf", listPf);
+                    for (int i = 0; i < shift.length; i++) {
+                        shiftStatus += shift[i] + " ";
+                    }
+                    daoSch.updateSchedule(Profile_id, shiftStatus);
+                    request.setAttribute("alert", "Changes saved!");
                     RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                     dispath.forward(request, response);
                 }

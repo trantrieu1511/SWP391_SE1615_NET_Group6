@@ -61,9 +61,11 @@ public class DAOSchedule extends DBConnect {
         }
         if (list.isEmpty()) {
             return false;
-        } else return true;
+        } else {
+            return true;
+        }
     }
-    
+
     public boolean countSchedule(String profile_id) {
         List<schedule> list = new ArrayList<>();
         String sql = "select * from schedule where profile_id=?";
@@ -85,9 +87,11 @@ public class DAOSchedule extends DBConnect {
         }
         if (list.size() < 3) {
             return false;
-        } else return true;
+        } else {
+            return true;
+        }
     }
-    
+
     public List<schedule> listAllScheduleOfStaff() {
         List<schedule> list = new ArrayList<>();
         String sql = "select * from schedule";
@@ -107,5 +111,40 @@ public class DAOSchedule extends DBConnect {
             closeConnection(conn);
         }
         return list;
+    }
+
+    public boolean deleteSchedule(String profile_id) {
+        String sql = "delete from schedule where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.execute();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean updateSchedule(String profile_id, String shift_status) {
+        String sql = "update schedule set shift_name=? where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, shift_status);
+            state.setString(2, profile_id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
     }
 }

@@ -85,7 +85,33 @@
                         }
                     });
                 });
-            });             
+            });  
+            $(function () {
+                $("#edit_schedule").on("show.bs.modal", function (e) {   
+                    var text = $(e.relatedTarget).attr('data-id');
+                    $("#profile_edit").val(text);
+                    $("#profile_edit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
+                    $('input[type=checkbox]').on('change', function (e) {
+                        if ($('input[type=checkbox]:checked').length > 3) {
+                            $(this).prop('checked', false);
+                        }
+                    });
+                });
+            }); 
+            $(function(){
+                $('#add_schedule').on('hidden.bs.modal', function(){
+                    $(this).find('form')[0].reset();
+                });
+            })
+            $(function(){
+                $('#edit_schedule').on('hidden.bs.modal', function(){
+                    $(this).find('form')[0].reset();
+                });
+            });
         </script>
         
         <c:if test="${sessionScope.acc == null}">
@@ -175,7 +201,7 @@
                                                         <div class="dropdown dropdown-action">
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_schedule"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_schedule" data-id="${o.profile_id}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_schedule"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                             </div>
                                                         </div>
@@ -212,7 +238,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">Employee Name <span class="text-danger">*</span></label>
-                                            <select class="select" name="profile" id="profile">
+                                            <select name="profile" id="profile">
                                                 <option value="" disabled selected hidden></option>
                                             <c:forEach items="${listPf}" var="o">                                               
                                                 <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
@@ -245,7 +271,7 @@
             <!-- /Add Schedule Modal -->
 
             <!-- Edit Schedule Modal -->
-<!--            <div id="edit_schedule" class="modal custom-modal fade" role="dialog">
+            <div id="edit_schedule" class="modal custom-modal fade" role="dialog">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -255,163 +281,34 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Department <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select</option>
-                                                <option selected value="">Development</option>
-                                                <option value="1">Finance</option>
-                                                <option value="2">Finance and Management</option>
-                                                <option value="3">Hr & Finance</option>
-                                                <option value="4">ITech</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                            <form action="schedule" do="post" id="form_edit">
+                                <input type="hidden" name="do" value="editSchedule">
+                                <div class="row">                                    
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-form-label">Employee Name <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select </option>
-                                                <option selected value="1">Richard Miles </option>
-                                                <option value="2">John Smith</option>
-                                                <option value="3">Mike Litorus </option>
-                                                <option value="4">Wilmer Deluna</option>
+                                            <select class="select" name="profile" id="profile_edit">
+                                                <option value="" disabled selected hidden></option>
+                                            <c:forEach items="${listPf}" var="o">                                               
+                                                <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
+                                            </c:forEach>  
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="col-form-label">Date <span class="text-danger">*</span></label>
-                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>
-                                            <select class="select">
-                                                <option value="">Select </option>
-                                                <option value="1">10'o clock Shift</option>
-                                                <option value="2">10:30 shift</option>
-                                                <option value="3">Daily Shift </option>
-                                                <option  selected value="4">New Shift</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Min Start Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="06:11 am">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Start Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="06:30 am">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Max Start Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="08:12 am">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Min End Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="09:12 pm">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">End Time   <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="09:30 pm">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Max End Time <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="09:45 pm">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Break Time  <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="45">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                            <label class="custom-control-label" for="customCheck1">Recurring Shift</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Repeat Every</label>
-                                            <select class="select">
-                                                <option value="">1 </option>
-                                                <option value="1">2</option>
-                                                <option value="2">3</option>
-                                                <option value="3">4</option>
-                                                <option  selected value="4">5</option>
-                                                <option value="3">6</option>
-                                            </select>
-                                            <label class="col-form-label">Week(s)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group wday-box">
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="monday" class="days recurring" checked="" onclick="return false;"><span class="checkmark">M</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="tuesday" class="days recurring" checked="" onclick="return false;"><span class="checkmark">T</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="wednesday" class="days recurring" checked="" onclick="return false;"><span class="checkmark">W</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="thursday" class="days recurring" checked="" onclick="return false;"><span class="checkmark">T</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="friday" class="days recurring" checked="" onclick="return false;"><span class="checkmark">F</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="saturday" class="days recurring" onclick="return false;"><span class="checkmark">S</span></label>
-
-                                            <label class="checkbox-inline"><input type="checkbox" name="week_days[]" value="sunday" class="days recurring" onclick="return false;"><span class="checkmark">S</span></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-form-label">End On <span class="text-danger">*</span></label>
-                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">Indefinite</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Accept Extra Hours </label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="">
-                                                <label class="custom-control-label" for="customSwitch3"></label>
+                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>                                           
+                                        <c:forEach items="${listS}" var="o">    
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="${o.name}" name="shift">
+                                                <label class="form-check-label">
+                                                    ${o.name}
+                                                </label>
                                             </div>
-                                        </div>
+                                        </c:forEach>  
                                     </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Publish </label>
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch4" checked="">
-                                                <label class="custom-control-label" for="customSwitch4"></label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="submit-section">
                                     <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
@@ -419,7 +316,7 @@
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <!-- /Edit Schedule Modal -->
         </div>
         <!-- /Main Wrapper -->

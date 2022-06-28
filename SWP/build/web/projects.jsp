@@ -77,7 +77,12 @@
                     var period2 = myArray[1];
                     var period3 = myArray[2];
                     var rate = myArray[3];  
-                    document.getElementById('clientEdit').value=client_id;
+                    $("#clientEdit").val(client_id);
+                    $("#clientEdit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
                     $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
                     $(e.currentTarget).find('#rateEdit').val(rate);            
                 });
@@ -311,7 +316,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>Client<span class="text-danger">*</span></label>
-                                                <select class="form-control" id="clientEdit" name="client">
+                                                <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
                                                     <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
                                                     </c:forEach>

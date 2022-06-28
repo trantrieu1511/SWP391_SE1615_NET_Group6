@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.familyInfo;
+import entity.FamilyInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +23,8 @@ public class DAOFamilyInfo extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<familyInfo> getIndividualFamilyInfo(String profile_id) {
-        List<familyInfo> flist = new ArrayList<>();
+    public List<FamilyInfo> getIndividualFamilyInfo(String profile_id) {
+        List<FamilyInfo> flist = new ArrayList<>();
         String sql = "select * from [familyInfo] where profile_id = ?";
         try {
             conn = getConnection();
@@ -32,7 +32,7 @@ public class DAOFamilyInfo extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                flist.add(new familyInfo(
+                flist.add(new FamilyInfo(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -50,7 +50,7 @@ public class DAOFamilyInfo extends DBConnect {
         return flist;
     }
 
-    public boolean addFamilyInfo(familyInfo f) {
+    public boolean addFamilyInfo(FamilyInfo f) {
         String sql = "insert into [familyInfo]\n"
                 + "values (?,?,?,?,?)";
         try {
@@ -110,7 +110,7 @@ public class DAOFamilyInfo extends DBConnect {
         return true;
     }
 
-    public boolean editFamilyInfo(familyInfo familyInfo, String cur_name) {
+    public boolean editFamilyInfo(FamilyInfo familyInfo, String cur_name) {
         String sql = "update [familyInfo]\n"
                 + "set\n"
                 + "[name] = ?,\n"
@@ -142,17 +142,17 @@ public class DAOFamilyInfo extends DBConnect {
     public static void main(String[] args) {
         DAOFamilyInfo dao = new DAOFamilyInfo();
 //        List<familyInfo> list = dao.getIndividualFamilyInfo("ABCDE");
-//        for (familyInfo finfo : list) {
+//        for (FamilyInfo finfo : list) {
 //            System.out.println(finfo.toString());
 //        }
 //        String profile_id = "MRNEW";
-//        familyInfo f = new familyInfo(profile_id, "mrold", "father", "GETDATE()",
+//        FamilyInfo f = new FamilyInfo(profile_id, "mrold", "father", "GETDATE()",
 //                "012345678");
 //        boolean statusf = dao.addFamilyInfo(f);
 //        if (statusf) {
-//            System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
+//            System.out.println("Successfully added new FamilyInfo for Staff with profile_id = " + profile_id);
 //        } else {
-//            System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
+//            System.out.println("Fail to added new FamilyInfo for Staff with profile_id = " + profile_id);
 //        }
         String name = "Nguyen Thi Oanh";
         String[] parts = name.split(" ");

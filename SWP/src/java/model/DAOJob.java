@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.jobs;
+import entity.Jobs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,15 +22,15 @@ public class DAOJob extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<jobs> listAllJob() {
-        List<jobs> list = new ArrayList<>();
+    public List<Jobs> listAllJob() {
+        List<Jobs> list = new ArrayList<>();
         String sql = "select * from [jobs]";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new jobs(
+                list.add(new Jobs(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -46,7 +46,7 @@ public class DAOJob extends DBConnect {
         return list;
     }
 
-    public jobs getJobByTitle(String title) {
+    public Jobs getJobByTitle(String title) {
         String sql = "select * from jobs where [job_title] = ?";
         try {
             conn = getConnection();
@@ -54,7 +54,7 @@ public class DAOJob extends DBConnect {
             state.setString(1, title);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new jobs(
+                return new Jobs(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -70,7 +70,7 @@ public class DAOJob extends DBConnect {
         return null;
     }
 
-    public jobs getJobById(int id) {
+    public Jobs getJobById(int id) {
         String sql = "select * from jobs where [job_id] = ?";
         try {
             conn = getConnection();
@@ -78,7 +78,7 @@ public class DAOJob extends DBConnect {
             state.setInt(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new jobs(
+                return new Jobs(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -96,7 +96,7 @@ public class DAOJob extends DBConnect {
 
     public static void main(String[] args) {
         DAOJob dao = new DAOJob();
-        List<jobs> list = dao.listAllJob();
+        List<Jobs> list = dao.listAllJob();
         System.err.println(list);
     }
 }

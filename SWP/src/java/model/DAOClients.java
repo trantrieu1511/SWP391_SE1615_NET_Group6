@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.clients;
+import entity.Clients;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,15 +22,15 @@ public class DAOClients extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
     
-    public List<clients> listAllClients() {
-        List<clients> list = new ArrayList<>();
+    public List<Clients> listAllClients() {
+        List<Clients> list = new ArrayList<>();
         String sql = "select * from clients";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new clients(
+                list.add(new Clients(
                         rs.getString(1), 
                         rs.getString(2),
                         rs.getString(3),

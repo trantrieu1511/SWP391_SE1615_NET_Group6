@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.shift;
+import entity.Shift;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,15 +22,15 @@ public class DAOShift extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
     
-    public List<shift> listShift() {
-        List<shift> list = new ArrayList<>();
+    public List<Shift> listShift() {
+        List<Shift> list = new ArrayList<>();
         String sql ="select * from shift";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new shift(
+                list.add(new Shift(
                         rs.getString(1), 
                         rs.getString(2),
                         rs.getString(3)));

@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.account;
+import entity.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class DAOAccount extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
     
-    public account login(String user, String pass) {
+    public Account login(String user, String pass) {
         String sql = "select * from [account] where [username] = ? and [password] = ?";
         try {
             conn = getConnection();
@@ -31,7 +31,7 @@ public class DAOAccount extends DBConnect {
             state.setString(2, pass);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new account(
+                return new Account(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -48,7 +48,7 @@ public class DAOAccount extends DBConnect {
         return null;
     }
     
-    public account getAccount(String profile_id) {
+    public Account getAccount(String profile_id) {
         String sql = "select * from [account] where profile_id = ?";
         try {
             conn = getConnection();
@@ -56,7 +56,7 @@ public class DAOAccount extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new account(
+                return new Account(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -73,8 +73,8 @@ public class DAOAccount extends DBConnect {
         return null;
     }
     
-    public List<account> getAccountwithList(String profile_id) {
-        List<account> list = new ArrayList<>();
+    public List<Account> getAccountwithList(String profile_id) {
+        List<Account> list = new ArrayList<>();
         String sql = "select * from [account] where profile_id = ?";
         try {
             conn = getConnection();
@@ -82,7 +82,7 @@ public class DAOAccount extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new account(
+                list.add(new Account(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),

@@ -5,8 +5,8 @@
  */
 package controller;
 
-import entity.account;
-import entity.familyInfo;
+import entity.Account;
+import entity.FamilyInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,7 +40,7 @@ public class ControllerFamilyInfo extends HttpServlet {
             String service = request.getParameter("do");
             DAOFamilyInfo daoF = new DAOFamilyInfo();
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
 
             if (acc == null) {
                 response.sendRedirect("login.jsp");
@@ -62,8 +62,7 @@ public class ControllerFamilyInfo extends HttpServlet {
 //                out.print(dob);
 //                out.print("<br>");
 //                out.print(phone);
-                    boolean statusEdit = daoF.editFamilyInfo(
-                            new familyInfo(profile_id, name, relationship, dob, phone),
+                    boolean statusEdit = daoF.editFamilyInfo(new FamilyInfo(profile_id, name, relationship, dob, phone),
                             cur_name);
                     if (statusEdit) {
                         System.out.println("Successfully edited familyInfo (name = " + name + ") of profile_id = " + profile_id);
@@ -84,8 +83,7 @@ public class ControllerFamilyInfo extends HttpServlet {
                     String dob = request.getParameter("dob");
                     String phone = request.getParameter("phone");
 
-                    boolean statusAdd = daoF.addFamilyInfo(
-                            new familyInfo(profile_id, name, relationship, dob, phone));
+                    boolean statusAdd = daoF.addFamilyInfo(new FamilyInfo(profile_id, name, relationship, dob, phone));
                     if (statusAdd) {
                         System.out.println("Successfully added new familyInfo (name = " + name + ") of profile_id = " + profile_id);
                     } else {

@@ -5,11 +5,11 @@
  */
 package controller;
 
-import entity.account;
-import entity.profile;
-import entity.projects;
-import entity.schedule;
-import entity.shift;
+import entity.Account;
+import entity.Profile;
+import entity.Projects;
+import entity.Schedule;
+import entity.Shift;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class ControllerSchedule extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
@@ -54,7 +54,7 @@ public class ControllerSchedule extends HttpServlet {
                 DAOProfile daoPf = new DAOProfile();
                 DAOShift daos = new DAOShift();
                 DAOSchedule daoSch = new DAOSchedule();
-                List<projects> list = null;
+                List<Projects> list = null;
                 if (acc.isIsManager()) {
                     list = daopj.getProject(acc.getProfile_id());
                 } else {
@@ -64,11 +64,11 @@ public class ControllerSchedule extends HttpServlet {
                 String service = request.getParameter("do");
 
                 if (service.equals("list")) {
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
-                    List<schedule> listSch = daoSch.listAllScheduleOfStaff();
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Schedule> listSch = daoSch.listAllScheduleOfStaff();
                     List<String[]> listShiftArray = new ArrayList<String[]>();
-                    for (schedule sch : listSch) {
+                    for (Schedule sch : listSch) {
                         String[] temp = sch.getName().split(" ");
                         listShiftArray.add(temp);
                     }
@@ -99,8 +99,8 @@ public class ControllerSchedule extends HttpServlet {
                 }
 
                 if (service.equals("shift")) {
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "");
@@ -113,8 +113,8 @@ public class ControllerSchedule extends HttpServlet {
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
                     daos.add(name, start, end);
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "New shift saved!");
@@ -128,8 +128,8 @@ public class ControllerSchedule extends HttpServlet {
                     String end = request.getParameter("end");
                     String oldName = request.getParameter("oldName");
                     daos.edit(name, start, end, oldName);
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "All changes saved!");
@@ -141,16 +141,16 @@ public class ControllerSchedule extends HttpServlet {
                     String name = request.getParameter("shift");
                     boolean del = daos.delete(name);
                     if (del == true) {
-                        List<shift> listS = daos.listShift();
-                        List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                        List<Shift> listS = daos.listShift();
+                        List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                         request.setAttribute("list", listS);
                         request.setAttribute("listPf", listPf);
                         request.setAttribute("alert", "Shift deleted from database!");
                         RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                         dispath.forward(request, response);
                     } else {
-                        List<shift> listS = daos.listShift();
-                        List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                        List<Shift> listS = daos.listShift();
+                        List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                         request.setAttribute("list", listS);
                         request.setAttribute("listPf", listPf);
                         request.setAttribute("alert", "Cannot delete shift in active!");
@@ -163,8 +163,8 @@ public class ControllerSchedule extends HttpServlet {
                     String Profile_id = request.getParameter("profile");
                     String[] shift = request.getParameterValues("shift");
                     String shiftStatus = "";
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     for (int i = 0; i < shift.length; i++) {
@@ -184,8 +184,8 @@ public class ControllerSchedule extends HttpServlet {
                     String Profile_id = request.getParameter("profile");
                     String[] shift = request.getParameterValues("shift");
                     String shiftStatus = "";
-                    List<shift> listS = daos.listShift();
-                    List<profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daos.listShift();
+                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     for (int i = 0; i < shift.length; i++) {

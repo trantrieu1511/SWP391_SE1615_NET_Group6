@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.projects;
+import entity.Projects;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +22,8 @@ public class DAOProject extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<projects> getProject(String profile_id) {
-        List<projects> list = new ArrayList<>();
+    public List<Projects> getProject(String profile_id) {
+        List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where manager_id = ?";
         try {
             conn = getConnection();
@@ -31,7 +31,7 @@ public class DAOProject extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new projects(
+                list.add(new Projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -49,7 +49,7 @@ public class DAOProject extends DBConnect {
         return list;
     }
 
-    public projects getP(String title) {
+    public Projects getP(String title) {
         String sql = "select * from projects where title = ?";
         try {
             conn = getConnection();
@@ -57,7 +57,7 @@ public class DAOProject extends DBConnect {
             state.setString(1, title);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new projects(
+                return new Projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -142,8 +142,8 @@ public class DAOProject extends DBConnect {
         return true;
     }
 
-    public List<projects> search(String title, String id) {
-        List<projects> list = new ArrayList<>();
+    public List<Projects> search(String title, String id) {
+        List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where title like ?"
                 + " and manager_id = ?";
         try {
@@ -153,7 +153,7 @@ public class DAOProject extends DBConnect {
             state.setString(2, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new projects(
+                list.add(new Projects(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),

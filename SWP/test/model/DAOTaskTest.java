@@ -24,7 +24,7 @@ public class DAOTaskTest {
      */
     @Test
     public void testAdd1() {
-        //assertTrue(dao.add("task-demo", 0, "20/06/2022", 0, "QWERT", "project_demo"));
+        //assertTrue(dao.add("Task-demo", 0, "20/06/2022", 0, "QWERT", "project_demo"));
     }
     
     @Test

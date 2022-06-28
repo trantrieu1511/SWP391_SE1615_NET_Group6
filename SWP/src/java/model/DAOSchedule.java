@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.schedule;
+import entity.Schedule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +41,7 @@ public class DAOSchedule extends DBConnect {
     }
 
     public boolean checkExist(String profile_id) {
-        List<schedule> list = new ArrayList<>();
+        List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedule where profile_id=?";
         try {
             conn = getConnection();
@@ -49,7 +49,7 @@ public class DAOSchedule extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new schedule(
+                list.add(new Schedule(
                         rs.getString(1),
                         rs.getString(2)));
             }
@@ -67,7 +67,7 @@ public class DAOSchedule extends DBConnect {
     }
 
     public boolean countSchedule(String profile_id) {
-        List<schedule> list = new ArrayList<>();
+        List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedule where profile_id=?";
         try {
             conn = getConnection();
@@ -75,7 +75,7 @@ public class DAOSchedule extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new schedule(
+                list.add(new Schedule(
                         rs.getString(1),
                         rs.getString(2)));
             }
@@ -92,15 +92,15 @@ public class DAOSchedule extends DBConnect {
         }
     }
 
-    public List<schedule> listAllScheduleOfStaff() {
-        List<schedule> list = new ArrayList<>();
+    public List<Schedule> listAllScheduleOfStaff() {
+        List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedule";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new schedule(
+                list.add(new Schedule(
                         rs.getString(1),
                         rs.getString(2)));
             }

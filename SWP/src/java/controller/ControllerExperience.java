@@ -5,8 +5,8 @@
  */
 package controller;
 
-import entity.account;
-import entity.experience;
+import entity.Account;
+import entity.Experience;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,7 +40,7 @@ public class ControllerExperience extends HttpServlet {
             String service = request.getParameter("do");
             DAOExperience daoExp = new DAOExperience();
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
 
             if (acc == null) {
                 response.sendRedirect("login.jsp");
@@ -62,8 +62,7 @@ public class ControllerExperience extends HttpServlet {
 //                out.print("<br>");
 //                out.print(cur_role);
 
-                    boolean statusEdit = daoExp.editExperience(
-                            new experience(profile_id, role, start_date, end_date),
+                    boolean statusEdit = daoExp.editExperience(new Experience(profile_id, role, start_date, end_date),
                             cur_role);
                     if (statusEdit) {
                         System.out.println("Successfully edited experience of profile_id = " + profile_id);
@@ -83,8 +82,7 @@ public class ControllerExperience extends HttpServlet {
                     String start_date = request.getParameter("start_date");
                     String end_date = request.getParameter("end_date");
 
-                    boolean statusAdd = daoExp.addExperience(
-                            new experience(profile_id, role, start_date, end_date));
+                    boolean statusAdd = daoExp.addExperience(new Experience(profile_id, role, start_date, end_date));
                     if (statusAdd) {
                         System.out.println("Successfully added new experience of profile_id = " + profile_id);
                     } else {

@@ -5,7 +5,7 @@
  */
 package model;
 
-import entity.profileDetail;
+import entity.ProfileDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +23,8 @@ public class DAOProfileDetail extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<profileDetail> getIndividualProfileDetail(String profile_id) {
-        List<profileDetail> pdlist = new ArrayList<profileDetail>();
+    public List<ProfileDetail> getIndividualProfileDetail(String profile_id) {
+        List<ProfileDetail> pdlist = new ArrayList<ProfileDetail>();
         String sql = "select * from [profileDetail] where profile_id = ?";
         try {
             conn = getConnection();
@@ -32,7 +32,7 @@ public class DAOProfileDetail extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                pdlist.add(new profileDetail(
+                pdlist.add(new ProfileDetail(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -54,7 +54,7 @@ public class DAOProfileDetail extends DBConnect {
         return pdlist;
     }
 
-    public boolean addProfileDetail(profileDetail pd) {
+    public boolean addProfileDetail(ProfileDetail pd) {
         String sql = "insert into [profileDetail] values (?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
@@ -80,7 +80,7 @@ public class DAOProfileDetail extends DBConnect {
         return true;
     }
 
-    public boolean editProfileInfo(profileDetail pd) {
+    public boolean editProfileInfo(ProfileDetail pd) {
         boolean status = false;
         String sql = "update [profileDetail]\n"
                 + "set \n"
@@ -106,7 +106,7 @@ public class DAOProfileDetail extends DBConnect {
         return status;
     }
 
-    public boolean editPersonalInfo(profileDetail pd) {
+    public boolean editPersonalInfo(ProfileDetail pd) {
         boolean status = false;
         String sql = "update [profileDetail] set \n"
                 + "country = ?,\n"
@@ -158,17 +158,17 @@ public class DAOProfileDetail extends DBConnect {
     public static void main(String[] args) {
         DAOProfileDetail daopd = new DAOProfileDetail();
 //        List<profileDetail> list = dao.getIndividualProfileDetail("ABCDE");
-//        for (profileDetail pdetail : list) {
+//        for (ProfileDetail pdetail : list) {
 //            System.out.println(pdetail.toString());
 //        }
 //        String profile_id = "MRNEW";
-//        profileDetail pd = new profileDetail(profile_id, "GETDATE()",
+//        ProfileDetail pd = new ProfileDetail(profile_id, "GETDATE()",
 //                "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
 //        boolean statusPd = daopd.addProfileDetail(pd);
 //        if (statusPd) {
-//            System.out.println("Successfully added new profileDetail for Staff with profile_id = " + profile_id);
+//            System.out.println("Successfully added new ProfileDetail for Staff with profile_id = " + profile_id);
 //        } else {
-//            System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
+//            System.out.println("Fail to added new ProfileDetail for Staff with profile_id = " + profile_id);
 //        }
     }
 }

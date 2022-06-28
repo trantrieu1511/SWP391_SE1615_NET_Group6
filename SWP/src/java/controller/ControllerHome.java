@@ -5,8 +5,8 @@
  */
 package controller;
 
-import entity.account;
-import entity.projects;
+import entity.Account;
+import entity.Projects;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -45,11 +45,11 @@ public class ControllerHome extends HttpServlet {
             DAOProfile daoPf = new DAOProfile();
 
             HttpSession session = request.getSession();
-            account acc = (account) session.getAttribute("acc");
+            Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                List<projects> list = null;
+                List<Projects> list = null;
                 if (acc.isIsManager()) {
                     list = daoPj.getProject(acc.getProfile_id());
                 } else {

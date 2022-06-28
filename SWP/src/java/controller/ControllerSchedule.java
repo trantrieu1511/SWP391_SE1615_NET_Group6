@@ -50,23 +50,23 @@ public class ControllerSchedule extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                DAOProject daopj = new DAOProject();
-                DAOProfile daoPf = new DAOProfile();
-                DAOShift daos = new DAOShift();
-                DAOSchedule daoSch = new DAOSchedule();
+                DAOProject daoProject = new DAOProject();
+                DAOProfile daoProfile = new DAOProfile();
+                DAOShift daoShift = new DAOShift();
+                DAOSchedule daoSchedule = new DAOSchedule();
                 List<Projects> list = null;
                 if (acc.isIsManager()) {
-                    list = daopj.getProject(acc.getProfile_id());
+                    list = daoProject.getProject(acc.getProfile_id());
                 } else {
-                    list = daopj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    list = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", list);
                 String service = request.getParameter("do");
 
                 if (service.equals("list")) {
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
-                    List<Schedule> listSch = daoSch.listAllScheduleOfStaff();
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
+                    List<Schedule> listSch = daoSchedule.listAllScheduleOfStaff();
                     List<String[]> listShiftArray = new ArrayList<String[]>();
                     for (Schedule sch : listSch) {
                         String[] temp = sch.getName().split(" ");
@@ -99,8 +99,8 @@ public class ControllerSchedule extends HttpServlet {
                 }
 
                 if (service.equals("shift")) {
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "");
@@ -112,9 +112,9 @@ public class ControllerSchedule extends HttpServlet {
                     String name = request.getParameter("name");
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
-                    daos.add(name, start, end);
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    daoShift.add(name, start, end);
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "New shift saved!");
@@ -127,9 +127,9 @@ public class ControllerSchedule extends HttpServlet {
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
                     String oldName = request.getParameter("oldName");
-                    daos.edit(name, start, end, oldName);
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    daoShift.edit(name, start, end, oldName);
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "All changes saved!");
@@ -139,18 +139,18 @@ public class ControllerSchedule extends HttpServlet {
 
                 if (service.equals("deleteShift")) {
                     String name = request.getParameter("shift");
-                    boolean del = daos.delete(name);
+                    boolean del = daoShift.delete(name);
                     if (del == true) {
-                        List<Shift> listS = daos.listShift();
-                        List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                        List<Shift> listS = daoShift.listShift();
+                        List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                         request.setAttribute("list", listS);
                         request.setAttribute("listPf", listPf);
                         request.setAttribute("alert", "Shift deleted from database!");
                         RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                         dispath.forward(request, response);
                     } else {
-                        List<Shift> listS = daos.listShift();
-                        List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                        List<Shift> listS = daoShift.listShift();
+                        List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                         request.setAttribute("list", listS);
                         request.setAttribute("listPf", listPf);
                         request.setAttribute("alert", "Cannot delete shift in active!");
@@ -163,17 +163,17 @@ public class ControllerSchedule extends HttpServlet {
                     String Profile_id = request.getParameter("profile");
                     String[] shift = request.getParameterValues("shift");
                     String shiftStatus = "";
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     for (int i = 0; i < shift.length; i++) {
                         shiftStatus += shift[i] + " ";
                     }
-                    if (daoSch.checkExist(Profile_id)) {
+                    if (daoSchedule.checkExist(Profile_id)) {
                         request.setAttribute("alert", "This staff already has an assigned schedule!");
                     } else {
-                        daoSch.addSchedule(Profile_id, shiftStatus.trim());
+                        daoSchedule.addSchedule(Profile_id, shiftStatus.trim());
                         request.setAttribute("alert", "Schedule saved!");
                     }
                     RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
@@ -184,15 +184,27 @@ public class ControllerSchedule extends HttpServlet {
                     String Profile_id = request.getParameter("profile");
                     String[] shift = request.getParameterValues("shift");
                     String shiftStatus = "";
-                    List<Shift> listS = daos.listShift();
-                    List<Profile> listPf = daoPf.listAllStaff(acc.getProfile_id());
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
                     for (int i = 0; i < shift.length; i++) {
                         shiftStatus += shift[i] + " ";
                     }
-                    daoSch.updateSchedule(Profile_id, shiftStatus);
+                    daoSchedule.updateSchedule(Profile_id, shiftStatus);
                     request.setAttribute("alert", "Changes saved!");
+                    RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("deleteSchedule")) {
+                    String Profile_id = request.getParameter("profile");
+                    daoSchedule.deleteSchedule(Profile_id);
+                    request.setAttribute("alert", "Schedule deleted!");
+                    List<Shift> listS = daoShift.listShift();
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
+                    request.setAttribute("list", listS);
+                    request.setAttribute("listPf", listPf);
                     RequestDispatcher dispath = request.getRequestDispatcher("shift-list.jsp");
                     dispath.forward(request, response);
                 }

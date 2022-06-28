@@ -420,7 +420,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Delete Employee Modal -->
+            <!-- /Delete Shift Modal -->
 
         </div>
         <!-- /Main Wrapper -->       

@@ -112,6 +112,12 @@
                     $(this).find('form')[0].reset();
                 });
             });
+            $(function(){
+                $('#delete_schedule').on('hidden.bs.modal', function(){
+                    var text = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="schedule"]').val(text);
+                });
+            });
         </script>
         
         <c:if test="${sessionScope.acc == null}">
@@ -202,7 +208,7 @@
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_schedule" data-id="${o.profile_id}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_schedule"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_schedule" data-id="${o.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -318,6 +324,36 @@
                 </div>
             </div>
             <!-- /Edit Schedule Modal -->
+            
+            <!-- Delete Shift Modal -->
+            <div class="modal custom-modal fade" id="delete_schedule" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="schedule" do="post">
+                                <input type="hidden" name="do" value="deleteSchedule">
+                                <input type="hidden" name="schedule">
+                                <div class="form-header">
+                                    <h3>Delete Shift</h3>
+                                    <p>Are you sure want to delete?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Delete Shift Modal -->
+            
         </div>
         <!-- /Main Wrapper -->
 

@@ -289,8 +289,12 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        profile pro = new profile("QYYTA", "demo", "demo", "demo", "demo", "demo", 1, 1, 1, "ABCDE");
-        dao.addStaff(pro);
+        List<profile> list = dao.searchStaff1("s", "");
+        for (profile object : list) {
+            System.out.println(object.toString());
+        }
+//        profile pro = new profile("QYYTA", "demo", "demo", "demo", "demo", "demo", 1, 1, 1, "ABCDE");
+//        dao.addStaff(pro);
 //        List<profile> staff = dao.searchStaff1("QWER", "");
 //        for (profile object : staff) {
 //            System.out.println(object.toString());

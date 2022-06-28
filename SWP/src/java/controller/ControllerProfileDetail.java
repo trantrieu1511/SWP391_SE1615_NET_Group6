@@ -54,17 +54,9 @@ public class ControllerProfileDetail extends HttpServlet {
             } else {
                 if (service.equals("editProfileInfo")) {
                     String profile_id = request.getParameter("profile_id");
-                    String dob = request.getParameter("dob");
+                    String dob = request.getParameter("dob").trim();
                     boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
                     String address = request.getParameter("address").trim();
-                    if (address.equals("")) {
-                        if (acc.getProfile_id().equals(profile_id)) {
-                            response.sendRedirect("profile?do=getmyProfile");
-                        } else {
-                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                        }
-                        return;
-                    }
 
 //                out.print(profile_id);
 //                out.print("<br>");
@@ -78,15 +70,20 @@ public class ControllerProfileDetail extends HttpServlet {
                             new profileDetail(profile_id, dob, address, gender));
                     if (statusPfi) {
                         System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&editPf=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editPf=true");
+                        }
                     } else {
                         System.out.println("Fail to edit profileInfo of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
                 if (service.equals("editPersonalInfo")) {
                     String profile_id = request.getParameter("profile_id");
@@ -114,15 +111,20 @@ public class ControllerProfileDetail extends HttpServlet {
                                     isMarried, children, bank_name, bank_number));
                     if (statusPsInfo) {
                         System.out.println("Successfully edited personalInfo of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&editPs=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editPs=true");
+                        }
                     } else {
                         System.out.println("Fail to edit personalInfo of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
             }
 

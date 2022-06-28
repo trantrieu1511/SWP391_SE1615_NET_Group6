@@ -119,6 +119,12 @@
 //            window.onload = codeAddress;
 
         </script>
+        <c:if test="${alert != ''}">
+            <script type="text/javascript">
+                alert("${alert}");
+            </script>
+        </c:if>
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -516,7 +522,14 @@
                                                         <tr>
                                                             <td>${f.name}</td>
                                                             <td>${f.relationship}</td>
-                                                            <td>${f.dob}</td>
+                                                            <c:choose>
+                                                                <c:when test="${!f.dob.equals('')}">
+                                                                    <td>${f.dob}</td>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <td>N/A</td>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                             <td>${f.phone}</td>
                                                             <c:forEach items="${listp}" var="p">
                                                                 <c:choose>
@@ -1097,7 +1110,7 @@
                                                         <div class="form-group">
                                                             <label>Birth Date <span class="text-danger">*</span></label>
                                                             <div class="form-group">
-                                                                <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
+                                                                <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" onkeydown="event.preventDefault()" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1175,7 +1188,7 @@
                                     </c:forEach>
                                 </c:forEach>
                                 <div class="submit-section">
-                                    <input type="submit" class="btn btn-primary submit-btn" id="create" onclick="checkEditPfInfo()" value="submit">
+                                    <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
                                 </div>
                             </form>
                         </div>
@@ -1210,14 +1223,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Nationality <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="country" value="${pd.country}">
+                                                <input class="form-control" type="text" name="country" value="${pd.country}" required="" pattern="[A-Za-z ]{1,20}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Religion <span class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <input class="form-control" type="text" name="religion" value="${pd.religion}">
+                                                    <input class="form-control" type="text" name="religion" value="${pd.religion}" required="" pattern="[A-Za-z ]{1,20}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1225,7 +1238,6 @@
                                             <div class="form-group">
                                                 <label>Marital status <span class="text-danger">*</span></label>
                                                 <select class="select form-control" name="isMarried">
-                                                    <option value="">-</option>
                                                     <option value="false" ${pd.isMarried==false ? "selected" : ''} >Single</option>
                                                     <option value="true" ${pd.isMarried==true ? "selected" : ''} >Married</option>
                                                 </select>
@@ -1243,14 +1255,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Bank name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}">
+                                                <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}" required="" pattern="[A-Za-z ]{1,20}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Bank account No. <span class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}">
+                                                    <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}" required="" pattern="[0-9]{12}">
                                                 </div>
                                             </div>
                                         </div>
@@ -1293,25 +1305,25 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name" value="" required="">
+                                                        <input class="form-control" type="text" name="name" value="" required placeholder="enter family member name" pattern="[A-Za-z ]{1,50}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="relationship" value="" required="">
+                                                        <input class="form-control" type="text" name="relationship" value="" required placeholder="enter family member relationship" pattern="[A-Za-z ]{1,20}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Date of birth </label>
-                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
+                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" placeholder="pick a date of birth" onkeydown="event.preventDefault()" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="phone" value="" required="">
+                                                        <input class="form-control" type="text" name="phone" value="" required placeholder="enter phone number" pattern="[0-9]{10}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1386,26 +1398,26 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="name" value="" required="">
+                                                        <input class="form-control" type="text" name="name" value="" required="" placeholder="enter family member name" pattern="[A-Za-z ]{1,50}">
                                                         <input class="form-control" type="hidden" name="cur_name" value="">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="relationship" value="" required="">
+                                                        <input class="form-control" type="text" name="relationship" value="" required="" placeholder="enter family member relationship" pattern="[A-Za-z ]{1,20}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Date of birth </label>
-                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
+                                                        <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="dob" value="" placeholder="pick a date of birth" onkeydown="event.preventDefault()" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Phone <span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" name="phone" value="" required="">
+                                                        <input class="form-control" type="text" name="phone" value="" required="" placeholder="enter phone number" pattern="[0-9]{10}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1675,7 +1687,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="experience">
-                                <div class="form-scroll">
+                                <div class="form-scroll" style="padding-bottom: 150px">
                                     <input type="hidden" name="do" value="addExperience">
                                     <div class="card">
                                         <div class="card-body">
@@ -1689,7 +1701,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="">Role <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" name="role" value="" placeholder="Enter your experience here">
+                                                        <input type="text" class="form-control" name="role" value="" required="" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Enter your experience here">
                                                     </div>
                                                 </div>
                                                 <!--                                                <div class="col-md-6">
@@ -1708,7 +1720,7 @@
                                                     <div class="form-group">
                                                         <div class="form-group">
                                                             <label class="">Period From <span class="text-danger">*</span></label>
-                                                            <input type="date" class="form-control" name="start_date" value="">
+                                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="start_date" value="" placeholder="pick a start date" onkeydown="event.preventDefault()" required="" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1716,7 +1728,7 @@
                                                     <div class="form-group">
                                                         <div class="form-group">
                                                             <label class="">Period To</label>
-                                                            <input type="date" class="form-control" name="end_date" value="">
+                                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="end_date" value="" placeholder="pick a end date" onkeydown="event.preventDefault()" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1790,7 +1802,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="experience" method="post">
-                                <div class="form-scroll">
+                                <div class="form-scroll" style="padding-bottom: 150px">
                                     <input type="hidden" name="do" value="editExperience">
                                     <div class="card">
                                         <div class="card-body">
@@ -1801,7 +1813,7 @@
                                                 <input type="hidden" name="profile_id" value="">
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
-                                                        <input type="text" class="form-control floating" name="role" value="">
+                                                        <input type="text" class="form-control floating" required="" value="" placeholder="Enter your experience here" name="role" pattern="[A-Za-z0-9 ]{1,100}">
                                                         <input type="hidden" class="form-control floating" name="cur_role" value="">
                                                         <label class="focus-label">Role <span class="text-danger">*</span></label>
                                                     </div>
@@ -1821,7 +1833,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="form-group">
-                                                            <input type="date" class="form-control floating" name="start_date" value="">
+                                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="start_date" value="" placeholder="pick a start date" onkeydown="event.preventDefault()" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                         </div>
                                                         <label class="focus-label">Period From <span class="text-danger">*</span></label>
                                                     </div>
@@ -1829,7 +1841,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <div class="form-group">
-                                                            <input type="date" class="form-control floating" name="end_date" value="">
+                                                            <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="end_date" value="" placeholder="pick a end date" onkeydown="event.preventDefault()" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                         </div>
                                                         <label class="focus-label">Period To</label>
                                                     </div>

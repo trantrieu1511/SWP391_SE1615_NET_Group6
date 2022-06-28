@@ -345,57 +345,58 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="first_name" id="first_name" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" type="text" name="first_name" id="first_name" required placeholder="enter firstname less than 13 characters" pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="last_name" id="last_name" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="enter lastname less than 13 characters" pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="username" id="username" required pattern="[a-zA-Z0-9]{1,12}">
+                                                <input class="form-control" type="text" name="username" id="username" required placeholder="enter username less than 13 characters" pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="email" name="email" id="email" required>
+                                                <input class="form-control" type="email" name="email" id="email" placeholder="e.g: abc@mail.com" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="password" id="password" 
-                                                       onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkconfirmPassword(this)" placeholder="enter password with maximum length of 12" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
+                                            <span id="wrong_pass_alert"></span>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                       onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkPassword(this)" required placeholder="re-enter password" pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required pattern="[A-Z]{5}">
+                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required placeholder="enter id with 5 uppercase char format" pattern="[A-Z]{5}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" id="hire_date" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
+                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" placeholder="pick a joining date" onkeydown="event.preventDefault()" id="hire_date" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" type="text" name="phone_number" id="phone_number" pattern="[0-9]{10}">
+                                                <input class="form-control" type="text" name="phone_number" id="phone_number" placeholder="enter phone number" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">
@@ -427,7 +428,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span id="wrong_pass_alert"></span>
+                                    
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
                                     </div>
@@ -455,58 +456,59 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" placeholder="enter firstname less than 13 characters" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name</label>
-                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" placeholder="enter lastname less than 13 characters" required pattern="[A-Za-z]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="username" id="username2" required pattern="[a-zA-Z0-9]{1,12}">
+                                                <input class="form-control" value="" type="text" name="username" id="username2" placeholder="enter username less than 13 characters" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="email" id="email2" required>
+                                                <input class="form-control" value="" type="email" name="email" id="email2" placeholder="e.g: abc@mail.com" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="password2" 
-                                                       onkeyup="checkConfirmPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkConfirmPassword2(this)" placeholder="enter password with maximum length of 12" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
+                                            <span id="wrong_pass_alert2"></span>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="confirm_password2" 
-                                                       onkeyup="checkPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkPassword2(this)" placeholder="re-enter password" required pattern="[a-zA-Z0-9]{1,12}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" required
-                                                       pattern="[A-Z]{5}">
+                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" 
+                                                       placeholder="enter id with 5 uppercase char format" required pattern="[A-Z]{5}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" name="hire_date" id="hire_date2" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
+                                                <div class="cal-icon"><input class="form-control datetimepicker" type="text" placeholder="pick a joining date" onkeydown="event.preventDefault()" name="hire_date" id="hire_date2" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" pattern="[0-9]{10}">
+                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" placeholder="enter phone number" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">
@@ -538,7 +540,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span id="wrong_pass_alert2"></span>
+                                    
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create2" value="submit">
                                     </div>

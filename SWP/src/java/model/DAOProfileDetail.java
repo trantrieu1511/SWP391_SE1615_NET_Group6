@@ -86,15 +86,14 @@ public class DAOProfileDetail extends DBConnect {
                 + "set \n"
                 + "dob = ?,\n"
                 + "address = ?,\n"
-                + "gender = ?"
+                + "gender = '" + pd.isGender() + "'"
                 + "where profile_id = ?";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);           
+            state = conn.prepareStatement(sql);
             state.setString(1, pd.getDob());
             state.setString(2, pd.getAddress());
-            state.setBoolean(3, pd.isGender());
-            state.setString(4, pd.getProfile_id());
+            state.setString(3, pd.getProfile_id());
             state.executeUpdate();
             status = true;
         } catch (Exception ex) {
@@ -119,7 +118,7 @@ public class DAOProfileDetail extends DBConnect {
                 + "where profile_id = ?";
         try {
             conn = getConnection();
-            state = conn.prepareStatement(sql);           
+            state = conn.prepareStatement(sql);
             state.setString(1, pd.getCountry());
             state.setString(2, pd.getReligion());
             state.setBoolean(3, pd.isIsMarried());

@@ -112,7 +112,7 @@
         <c:choose>
             <c:when test="${alert != ''}">
                 <script type="text/javascript">
-                alert("${alert}");
+                    alert("${alert}");
                 </script>
             </c:when>
             <c:otherwise>
@@ -345,32 +345,50 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="first_name" id="first_name" required placeholder="enter firstname less than 13 characters" pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" type="text" name="first_name" id="first_name" required pattern="[A-Za-z]{1,12}"
+                                                       title="FirstName not contain: 
+                                                       special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
+                                                       allow uppercase and lowercase letters, max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="enter lastname less than 13 characters" pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" type="text" name="last_name" id="last_name" required pattern="[A-Za-z]{1,12}"
+                                                       title="LastName not contain: 
+                                                       special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
+                                                       allow uppercase and lowercase letters, max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" name="username" id="username" required placeholder="enter username less than 13 characters" pattern="[a-zA-Z0-9]{1,12}">
+                                                <input class="form-control" type="text" name="username" id="username" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Username not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="email" name="email" id="email" placeholder="e.g: abc@mail.com" required>
+                                                <input class="form-control" type="text" name="email" id="email" placeholder="e.g: abc@mail.com" required pattern="[a-zA-Z0-9]{1,12}[@][a-z]{1,6}[.][a-z]{1,6}"
+                                                       title="email not allow: 
+                                                       special character other than @ and . and spacing characters;  
+                                                       allow uppercase, lowercase letters and numeric characters (0-9);
+                                                       maximum length of parts of email: 
+                                                       username: 12, mail server: 6, domain: 6; 
+                                                       max length: 26">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="password" id="password" 
-                                                       onkeyup="checkconfirmPassword(this)" placeholder="enter password with maximum length of 12" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkconfirmPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Password not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                             <span id="wrong_pass_alert"></span>
                                         </div>
@@ -378,13 +396,17 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="password" name="confirm_password" id="confirm_password"
-                                                       onkeyup="checkPassword(this)" required placeholder="re-enter password" pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkPassword(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Confirm Password not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required placeholder="enter id with 5 uppercase char format" pattern="[A-Z]{5}">
+                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required pattern="[A-Z]{5}"
+                                                       title="Staff ID must be 5 character with uppercase">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -396,7 +418,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" type="text" name="phone_number" id="phone_number" placeholder="enter phone number" pattern="[0-9]{10}">
+                                                <input class="form-control" type="text" name="phone_number" id="phone_number" title="phone number must be 10-digit number" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">
@@ -428,7 +450,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
                                     </div>
@@ -456,32 +478,50 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" placeholder="enter firstname less than 13 characters" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" value="" type="text" name="first_name" id="first_name2" required pattern="[A-Za-z]{1,12}"
+                                                       title="FirstName not contain: 
+                                                       special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
+                                                       allow uppercase and lowercase letters, max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Last Name</label>
-                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" placeholder="enter lastname less than 13 characters" required pattern="[A-Za-z]{1,12}">
+                                                <input class="form-control" value="" type="text" name="last_name" id="last_name2" required pattern="[A-Za-z]{1,12}"
+                                                       title="LastName not contain: 
+                                                       special character e.g: !@#$%^&,. etc.., spacing and numeric characters (0-9);  
+                                                       allow uppercase and lowercase letters, max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="text" name="username" id="username2" placeholder="enter username less than 13 characters" required pattern="[a-zA-Z0-9]{1,12}">
+                                                <input class="form-control" value="" type="text" name="username" id="username2" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Username not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                                <input class="form-control" value="" type="email" name="email" id="email2" placeholder="e.g: abc@mail.com" required>
+                                                <input class="form-control" value="" type="email" name="email" id="email2" placeholder="e.g: abc@mail.com" required
+                                                       title="email not allow: 
+                                                       special character other than @ and . and spacing characters;  
+                                                       allow uppercase, lowercase letters and numeric characters (0-9);
+                                                       maximum length of parts of email: 
+                                                       username: 12, mail server: 6, domain: 6; 
+                                                       max length: 26">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="password2" 
-                                                       onkeyup="checkConfirmPassword2(this)" placeholder="enter password with maximum length of 12" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkConfirmPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Password not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                             <span id="wrong_pass_alert2"></span>
                                         </div>
@@ -489,14 +529,17 @@
                                             <div class="form-group">
                                                 <label class="col-form-label">Confirm Password</label>
                                                 <input class="form-control" value="" type="password" name="password" id="confirm_password2" 
-                                                       onkeyup="checkPassword2(this)" placeholder="re-enter password" required pattern="[a-zA-Z0-9]{1,12}">
+                                                       onkeyup="checkPassword2(this)" required pattern="[a-zA-Z0-9]{1,12}"
+                                                       title="Confirm Password not contain: 
+                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                       allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
                                             <div class="form-group">
                                                 <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
                                                 <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" 
-                                                       placeholder="enter id with 5 uppercase char format" required pattern="[A-Z]{5}">
+                                                       required pattern="[A-Z]{5}" title="Staff ID must be 5 character with uppercase">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  
@@ -508,7 +551,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" placeholder="enter phone number" pattern="[0-9]{10}">
+                                                <input class="form-control" value="" type="text" name="phone_number" id="phone_number2" title="phone number must be 10 digit number" pattern="[0-9]{10}">
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6">
@@ -540,7 +583,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create2" value="submit">
                                     </div>

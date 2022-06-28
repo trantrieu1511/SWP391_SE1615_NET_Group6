@@ -109,7 +109,7 @@ public class ControllerManager extends HttpServlet {
                     Object edit = request.getParameter("edit");
                     Object add = request.getParameter("add");
                     Object delete = request.getParameter("delete");
-                    if (edit != null && add == null && delete == null) { //edit
+                    if (edit != null) { //edit
                         String alert = "New staff information have been saved!";
                         List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -130,7 +130,7 @@ public class ControllerManager extends HttpServlet {
                         request.setAttribute("job", listJ);
                         RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                         dispath.forward(request, response);
-                    } else if (edit == null && add != null && delete == null) { //add
+                    } else if (add != null) { //add
                         String alert = "Successfully added new staff information!";
                         List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -151,7 +151,7 @@ public class ControllerManager extends HttpServlet {
                         request.setAttribute("job", listJ);
                         RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                         dispath.forward(request, response);
-                    } else if (edit == null && add == null && delete != null) { //delete
+                    } else if (delete != null) { //delete
                         String alert = "Delete staff successfully!";
                         List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
                         List<departments> listDp = daoDp.listAllDepartment();
@@ -196,7 +196,7 @@ public class ControllerManager extends HttpServlet {
                     }
                 }
                 if (service.equals("addFail")) {
-                    String alert = "ID has been used by another employee, please enter again!";
+                    String alert = "Add failed! ID has been used by another employee, please enter again!";
                     List<profile> list = daoPf.listAllStaff(acc.getProfile_id());
                     List<departments> listDp = daoDp.listAllDepartment();
                     List<jobs> listJ = daoJ.listAllJob();
@@ -225,9 +225,9 @@ public class ControllerManager extends HttpServlet {
                 }
 
                 if (service.equals("filter")) {
-                    String eid = request.getParameter("eid");
-                    String ename = request.getParameter("ename");
-                    String ejob = request.getParameter("ejob");
+                    String eid = request.getParameter("eid").trim();
+                    String ename = request.getParameter("ename").trim();
+                    String ejob = request.getParameter("ejob").trim();
                     List<profile> list = null;
                     List<departments> listDp = daoDp.listAllDepartment();
                     List<jobs> listJ = daoJ.listAllJob();

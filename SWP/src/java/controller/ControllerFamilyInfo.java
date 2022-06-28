@@ -67,15 +67,20 @@ public class ControllerFamilyInfo extends HttpServlet {
                             cur_name);
                     if (statusEdit) {
                         System.out.println("Successfully edited familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&editF=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editF=true");
+                        }
                     } else {
                         System.out.println("Fail to edit familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
                 if (service.equals("addFamilyInfo")) {
                     String profile_id = request.getParameter("profile_id");
@@ -88,15 +93,20 @@ public class ControllerFamilyInfo extends HttpServlet {
                             new familyInfo(profile_id, name, relationship, dob, phone));
                     if (statusAdd) {
                         System.out.println("Successfully added new familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&addF=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&addF=true");
+                        }
                     } else {
                         System.out.println("Fail to add new familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
                 if (service.equals("deleteFamilyInfo")) {
                     String name = request.getParameter("name");
@@ -104,14 +114,20 @@ public class ControllerFamilyInfo extends HttpServlet {
                     boolean statusDelete = daoF.deleteFamilyInfo(profile_id, name);
                     if (statusDelete) {
                         System.out.println("Successfully deleted familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&deleteF=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&deleteF=true");
+                        }
                     } else {
                         System.out.println("Fail to delete familyInfo (name = " + name + ") of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
+
                 }
             }
         }

@@ -66,7 +66,13 @@ public class ControllerProfile extends HttpServlet {
                 if (service.equals("getmyProfile")) {
                     Object editPf = request.getParameter("editPf");
                     Object editPs = request.getParameter("editPs");
-                    if (editPf != null && editPs == null) {
+                    Object addExp = request.getParameter("addExp");
+                    Object editExp = request.getParameter("editExp");
+                    Object deleteExp = request.getParameter("deleteExp");
+                    Object addF = request.getParameter("addF");
+                    Object editF = request.getParameter("editF");
+                    Object deleteF = request.getParameter("deleteF");
+                    if (editPf != null) {
                         String alert = "profile information edited successfully!";
                         List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
                         List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
@@ -86,8 +92,128 @@ public class ControllerProfile extends HttpServlet {
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
-                    } else if (editPf == null && editPs != null) {
+                    } else if (editPs != null) {
                         String alert = "personal information edited successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (addExp != null) {
+                        String alert = "add new experience successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (editExp != null) {
+                        String alert = "edit experience successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (deleteExp != null) {
+                        String alert = "delete experience successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (addF != null) {
+                        String alert = "add new familyInfo successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (editF != null) {
+                        String alert = "edit familyInfo successfully!";
+                        List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
+                        List<experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
+                        List<account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (deleteF != null) {
+                        String alert = "delete familyInfo successfully!";
                         List<profile> listPf = daoPf.getProfile(acc.getProfile_id());
                         List<profileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<familyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
@@ -126,13 +252,18 @@ public class ControllerProfile extends HttpServlet {
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
-
                     }
                 }
                 if (service.equals("getothersProfile")) {
                     Object editPf = request.getParameter("editPf");
                     Object editPs = request.getParameter("editPs");
-                    if (editPf != null && editPs == null) {
+                    Object addExp = request.getParameter("addExp");
+                    Object editExp = request.getParameter("editExp");
+                    Object deleteExp = request.getParameter("deleteExp");
+                    Object addF = request.getParameter("addF");
+                    Object editF = request.getParameter("editF");
+                    Object deleteF = request.getParameter("deleteF");
+                    if (editPf != null) {
                         String alert = "profile information edited successfully!";
                         String profile_id = request.getParameter("profile_id");
                         List<profile> listPf = daoPf.getProfile(profile_id);
@@ -153,8 +284,134 @@ public class ControllerProfile extends HttpServlet {
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
-                    } else if (editPf == null && editPs != null) {
+                    } else if (editPs != null) {
                         String alert = "personal information edited successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (addExp != null) {
+                        String alert = "add new experience successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (editExp != null) {
+                        String alert = "edit experience successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (deleteExp != null) {
+                        String alert = "delete experience successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (addF != null) {
+                        String alert = "add new familyInfo successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (editF != null) {
+                        String alert = "edit familyInfo successfully!";
+                        String profile_id = request.getParameter("profile_id");
+                        List<profile> listPf = daoPf.getProfile(profile_id);
+                        List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
+                        List<familyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
+                        List<experience> listExp = daoExp.listIndividualExperience(profile_id);
+                        List<account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        for (profile p : listPf) {
+                            p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
+                        }
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("listp", listPf);
+                        request.setAttribute("listpd", listPd);
+                        request.setAttribute("listf", listF);
+                        request.setAttribute("listexp", listExp);
+                        request.setAttribute("listacc", listAcc);
+
+                        RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
+                        dispatch.forward(request, response);
+                    } else if (deleteF != null) {
+                        String alert = "delete familyInfo successfully!";
                         String profile_id = request.getParameter("profile_id");
                         List<profile> listPf = daoPf.getProfile(profile_id);
                         List<profileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
@@ -196,12 +453,6 @@ public class ControllerProfile extends HttpServlet {
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
                     }
-
-                }
-                if (service.equals("editPfInfo")) {
-
-                }
-                if (service.equals("editPsInfo")) {
 
                 }
             }

@@ -61,21 +61,25 @@ public class ControllerExperience extends HttpServlet {
 //                out.print(end_date);
 //                out.print("<br>");
 //                out.print(cur_role);
-
                     boolean statusEdit = daoExp.editExperience(
                             new experience(profile_id, role, start_date, end_date),
                             cur_role);
                     if (statusEdit) {
                         System.out.println("Successfully edited experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&editExp=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editExp=true");
+                        }
                     } else {
                         System.out.println("Fail to edit experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
                 if (service.equals("addExperience")) {
                     String profile_id = request.getParameter("profile_id");
@@ -87,15 +91,20 @@ public class ControllerExperience extends HttpServlet {
                             new experience(profile_id, role, start_date, end_date));
                     if (statusAdd) {
                         System.out.println("Successfully added new experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&addExp=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&addExp=true");
+                        }
                     } else {
                         System.out.println("Fail to add new experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
                 if (service.equals("deleteExperience")) {
                     String profile_id = request.getParameter("profile_id");
@@ -104,15 +113,20 @@ public class ControllerExperience extends HttpServlet {
                     boolean statusDelete = daoExp.deleteExperience(profile_id, role);
                     if (statusDelete) {
                         System.out.println("Successfully deleted experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile&deleteExp=true");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&deleteExp=true");
+                        }
                     } else {
                         System.out.println("Fail to delete experience of profile_id = " + profile_id);
+                        if (acc.getProfile_id().equals(profile_id)) {
+                            response.sendRedirect("profile?do=getmyProfile");
+                        } else {
+                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                        }
                     }
 
-                    if (acc.getProfile_id().equals(profile_id)) {
-                        response.sendRedirect("profile?do=getmyProfile");
-                    } else {
-                        response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                    }
                 }
             }
         }

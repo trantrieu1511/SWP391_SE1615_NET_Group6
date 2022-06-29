@@ -10,6 +10,7 @@ package entity;
  * @author Khanh
  */
 public class Clients {
+
     String client_id;
     String first_name;
     String last_name;
@@ -81,5 +82,5 @@ public class Clients {
     public String toString() {
         return "clients{" + "client_id=" + client_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", company=" + company + '}';
     }
-    
+
 }

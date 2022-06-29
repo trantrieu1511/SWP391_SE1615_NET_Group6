@@ -236,7 +236,7 @@ public class ControllerManager extends HttpServlet {
                     if (ejob.equals("")) {
                         String alert = "";
                         list = daoProfile.searchStaff1(eid, ename);
-                        if (list == null) {
+                        if (list.isEmpty()) {
                             alert = "No search result found!";
                             for (Profile p : list) {
                                 p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
@@ -269,7 +269,7 @@ public class ControllerManager extends HttpServlet {
                     } else {
                         String alert = "";
                         list = daoProfile.searchStaff2(eid, ename, ejob);
-                        if (list == null) {
+                        if (list.isEmpty()) {
                             alert = "No search result found!";
                             for (Profile p : list) {
                                 p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());

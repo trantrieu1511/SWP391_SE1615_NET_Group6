@@ -32,7 +32,7 @@
 
                             <a class="dropdown-item" href="profile?do=getmyProfile">My Profile</a>
                             <c:if test="${sessionScope.acc.isAdmin == true}">
-                            <a class="dropdown-item" href="settings.html">Settings</a>
+                                <a class="dropdown-item" href="settings.html">Settings</a>
                             </c:if>
                             <a class="dropdown-item" href="authentication?do=logout">Logout</a>
                         </div>
@@ -53,8 +53,10 @@
                     </div>
                 </div>
                 <!-- /Mobile Menu -->
-
             </div>
+            <!-- /Header -->
+
+            <!-- Sidebar -->
             <div class="sidebar" id="sidebar">
                 <div class="sidebar-inner slimscroll">
                     <div id="sidebar-menu" class="sidebar-menu">
@@ -66,11 +68,11 @@
                                 <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <c:if test="${sessionScope.acc.isManager == true}">
-                                    <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc.isManager == false}">
-                                    <li><a href="employee?do=dashboard">Dashboard (Employee)</a></li>
-                                    </c:if>
+                                        <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
+                                        </c:if>
+                                        <c:if test="${sessionScope.acc.isManager == false}">
+                                        <li><a href="employee?do=dashboard">Dashboard (Employee)</a></li>
+                                        </c:if>
                                 </ul>
                             </li>
                             <li class="menu-title"> 
@@ -82,7 +84,7 @@
                                     <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                         <li><a href="manager?do=list">All Employees</a></li>
                                         </c:if>
-                                    <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
+                                        <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                         <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                         </c:if>
                                     <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
@@ -92,7 +94,7 @@
                                 </ul>
                             </li>
                             <li> 
-                                <a href="clients.jsp"><i class="la la-users"></i> <span>Clients</span></a>
+                                <a href="client?do=list"><i class="la la-users"></i> <span>Clients</span></a>
                             </li>
                             <li class="submenu">
                                 <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>

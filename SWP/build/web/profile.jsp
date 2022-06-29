@@ -1131,7 +1131,7 @@
                                                 <div class="form-group">
                                                     <label>Address <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}"
-                                                           title="Address not contain: 
+                                                           title="Address not contain: Unicode characters, 
                                                            special character e.g: !@#$%^&,. etc..;  
                                                            allow uppercase, lowercase letters, 
                                                            allow spacing and numeric characters (0-9), max length: 100">
@@ -1228,7 +1228,7 @@
                                             <div class="form-group">
                                                 <label>Nationality <span class="text-danger">*</span></label>
                                                 <input class="form-control" type="text" name="country" value="${pd.country}" required="" pattern="[A-Za-z ]{1,20}"
-                                                       title="Nationality not contain: 
+                                                       title="Nationality not contain: Unicode characters, 
                                                        special character e.g: !@#$%^&,. etc.. ; 
                                                        allow uppercase, lowercase letters,
                                                        allow spacing and numeric characters (0-9),
@@ -1240,7 +1240,7 @@
                                                 <label>Religion <span class="text-danger">*</span></label>
                                                 <div class="form-group">
                                                     <input class="form-control" type="text" name="religion" value="${pd.religion}" required="" pattern="[A-Za-z ]{1,20}"
-                                                           title="Religion not contain: 
+                                                           title="Religion not contain: Unicode characters, 
                                                            special character e.g: !@#$%^&,. etc.. ; 
                                                            allow uppercase, lowercase letters,
                                                            allow spacing and numeric characters (0-9),
@@ -1261,9 +1261,8 @@
                                             <div class="form-group">
                                                 <label>No. of children </label>
                                                 <input class="form-control" type="text" name="children" value="${pd.children}" pattern="[0-9]{1,2}"
-                                                       title="No. of children not allow: 
-                                                       special character e.g: !@#$%^&,. etc.. and spacing characters; 
-                                                       only allow and numeric characters (0-9),
+                                                       title="No. of children  
+                                                       must be numeric characters (0-9), not allow spacing characters
                                                        max length: 2">
                                             </div>
                                         </div>
@@ -1274,7 +1273,7 @@
                                             <div class="form-group">
                                                 <label>Bank name <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}" required="" pattern="[A-Za-z ]{1,20}"
-                                                       title="Bank name not contain: 
+                                                       title="Bank name not contain: Unicode characters, 
                                                        special character e.g: !@#$%^&,. etc.. ; 
                                                        allow uppercase, lowercase letters,
                                                        allow spacing and numeric characters (0-9),
@@ -1286,7 +1285,7 @@
                                                 <label>Bank account No. <span class="text-danger">*</span></label>
                                                 <div class="form-group">
                                                     <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}" required="" pattern="[0-9]{12}"
-                                                           title="Bank account No. not allow: 
+                                                           title="Bank account No. not allow:  
                                                            special character e.g: !@#$%^&,. etc.. and spacing characters; 
                                                            only allow and numeric characters (0-9),
                                                            max length: 12">
@@ -1333,7 +1332,7 @@
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="name" value="" required placeholder="enter family member name" pattern="[A-Za-z ]{1,50}"
-                                                               title="Name of family member not contain: 
+                                                               title="Name of family member not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc.. and  
                                                                numeric character: 0-9; max length: 20 and allow spacing characters">
                                                     </div>
@@ -1342,7 +1341,7 @@
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="relationship" value="" required placeholder="enter family member relationship" pattern="[A-Za-z ]{1,20}"
-                                                               title="Relationship of family member not contain: 
+                                                               title="Relationship of family member not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc.. and 
                                                                numeric character: 0-9; max length: 20 and allow spacing characters">
                                                     </div>
@@ -1432,7 +1431,7 @@
                                                     <div class="form-group">
                                                         <label>Name <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="name" value="" required="" placeholder="enter family member name" pattern="[A-Za-z ]{1,50}"
-                                                               title="Name of family member not contain: 
+                                                               title="Name of family member not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc.. and  
                                                                numeric character: 0-9; max length: 20 and allow spacing characters">
                                                         <input class="form-control" type="hidden" name="cur_name" value="">
@@ -1442,7 +1441,7 @@
                                                     <div class="form-group">
                                                         <label>Relationship <span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" name="relationship" value="" required="" placeholder="enter family member relationship" pattern="[A-Za-z ]{1,20}"
-                                                               title="Name of family member not contain: 
+                                                               title="Name of family member not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc.. and  
                                                                numeric character: 0-9; max length: 20 and allow spacing characters">
                                                     </div>
@@ -1741,7 +1740,7 @@
                                                     <div class="form-group">
                                                         <label class="">Role <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" name="role" value="" required="" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Enter your experience here"
-                                                               title="Role not contain: 
+                                                               title="Role not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc..; max length: 100, 
                                                                allow spacing, numeric characters (0-9), uppercase and lowercase letters">
                                                     </div>
@@ -1856,7 +1855,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-focus">
                                                         <input type="text" class="form-control floating" required="" value="" placeholder="Enter your experience here" name="role" pattern="[A-Za-z0-9 ]{1,100}"
-                                                               title="Role not contain: 
+                                                               title="Role not contain: Unicode characters, 
                                                                special character e.g: !@#$%^& etc..; max length: 100, 
                                                                allow spacing, numeric characters (0-9), uppercase and lowercase letters">
                                                         <input type="hidden" class="form-control floating" name="cur_role" value="">

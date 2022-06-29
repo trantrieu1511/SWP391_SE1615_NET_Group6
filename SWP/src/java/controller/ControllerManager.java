@@ -108,6 +108,7 @@ public class ControllerManager extends HttpServlet {
                     Object edit = request.getParameter("edit");
                     Object add = request.getParameter("add");
                     Object delete = request.getParameter("delete");
+                    Object addFail = request.getParameter("addFail");
                     if (edit != null) { //edit
                         String alert = "New staff information have been saved!";
                         List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
@@ -131,6 +132,27 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     } else if (add != null) { //add
                         String alert = "Successfully added new staff information!";
+                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                            if (accStaff != null) {
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                            }
+                        }
+                        request.setAttribute("filter", "yes");
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("list", list);
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        dispath.forward(request, response);
+                    } else if (addFail != null) { //add failed
+                        String alert = "ID has been used by another employee, please enter again!";
                         List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
                         List<Departments> listDp = daoDepartment.listAllDepartment();
                         List<Jobs> listJ = daoJob.listAllJob();
@@ -193,28 +215,6 @@ public class ControllerManager extends HttpServlet {
                         RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                         dispath.forward(request, response);
                     }
-                }
-                if (service.equals("addFail")) {
-                    String alert = "ID has been used by another employee, please enter again!";
-                    List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                    List<Departments> listDp = daoDepartment.listAllDepartment();
-                    List<Jobs> listJ = daoJob.listAllJob();
-                    for (Profile p : list) {
-                        p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                        p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                        Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                        if (accStaff != null) {
-                            p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                            p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                        }
-                    }
-                    request.setAttribute("filter", "yes");
-                    request.setAttribute("alert", alert);
-                    request.setAttribute("list", list);
-                    request.setAttribute("department", listDp);
-                    request.setAttribute("job", listJ);
-                    RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                    dispath.forward(request, response);
                 }
 
                 if (service.equals("dashboard")) {
@@ -358,7 +358,7 @@ public class ControllerManager extends HttpServlet {
                         response.sendRedirect("manager?do=list&add=true");
                     } else {
                         System.out.println("Fail to add new Staff with profile_id = " + profile_id);
-                        response.sendRedirect("manager?do=addFail");
+                        response.sendRedirect("manager?do=list&addFail=true");
                     }
 
                 }

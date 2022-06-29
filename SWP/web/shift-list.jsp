@@ -106,11 +106,6 @@
                     });
                 });
             });      
-            $(function(){
-                $('#add_schedule').on('hidden.bs.modal', function(){
-                    $(this).find('form')[0].reset();
-                });
-            });
         </script>       
 
     </head>
@@ -141,7 +136,6 @@
                                 </div>
                                 <div class="col-auto float-right ml-auto">
                                     <a href="#" class="btn add-btn m-r-5" data-toggle="modal" data-target="#add_shift">Add Shifts</a>
-                                    <a href="#" class="btn add-btn m-r-5" data-toggle="modal" data-target="#add_schedule"> Assign Shifts</a>
                                 </div>
                             </div>
                         </div>
@@ -343,55 +337,6 @@
                 });
             </script>
             <!-- /Edit Shift Modal -->
-
-            <!-- Add Schedule Modal -->
-            <div id="add_schedule" class="modal custom-modal fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Add Schedule</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="schedule" do="post">
-                                <input type="hidden" name="do" value="assignShift">
-                                <div class="row">                                    
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Employee Name <span class="text-danger">*</span></label>
-                                            <select class="select" name="profile" id="profile">
-                                                <option value="" disabled selected hidden></option>
-                                            <c:forEach items="${listPf}" var="o">                                               
-                                                <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
-                                            </c:forEach>  
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="col-form-label">Shifts <span class="text-danger">*</span></label>                                           
-                                        <c:forEach items="${list}" var="o">    
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="${o.name}" name="shift">
-                                                <label class="form-check-label">
-                                                    ${o.name}
-                                                </label>
-                                            </div>
-                                        </c:forEach>  
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Add Schedule Modal -->
 
             <!-- Delete Shift Modal -->
             <div class="modal custom-modal fade" id="delete_shift" role="dialog">

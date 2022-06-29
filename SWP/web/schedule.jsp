@@ -112,10 +112,10 @@
                     $(this).find('form')[0].reset();
                 });
             });
-            $(function(){
-                $('#delete_schedule').on('hidden.bs.modal', function(){
+            $(function () {
+                $("#delete_schedule").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id');
-                    $(e.currentTarget).find('input[name="schedule"]').val(text);
+                    $(e.currentTarget).find('input[name="profile"]').val(text);
                 });
             });
         </script>
@@ -332,7 +332,7 @@
                         <div class="modal-body">
                             <form action="schedule" do="post">
                                 <input type="hidden" name="do" value="deleteSchedule">
-                                <input type="hidden" name="schedule">
+                                <input type="hidden" name="profile">
                                 <div class="form-header">
                                     <h3>Delete Shift</h3>
                                     <p>Are you sure want to delete?</p>

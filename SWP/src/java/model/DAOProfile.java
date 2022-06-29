@@ -114,7 +114,7 @@ public class DAOProfile extends DBConnect {
     }
 
     public List<Profile> listAllStaff(String id) {
-        String sql = "select * from [profile] where report_to = ?";
+        String sql = "select * from [profile] where report_to = ? order by profile_id asc";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();

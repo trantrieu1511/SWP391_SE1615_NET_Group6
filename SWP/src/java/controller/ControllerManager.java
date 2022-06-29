@@ -33,6 +33,7 @@ import model.DAOJob;
 import model.DAOProfile;
 import model.DAOProfileDetail;
 import model.DAOProject;
+import model.DAOSchedule;
 import model.DAOTask;
 
 /**
@@ -67,6 +68,7 @@ public class ControllerManager extends HttpServlet {
             DAOFamilyInfo daoFamilyInfo = new DAOFamilyInfo();
             DAOExperience daoExperience = new DAOExperience();
             DAOProject daoProject = new DAOProject();
+            DAOSchedule daoSchedule = new DAOSchedule();
 
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
@@ -319,6 +321,7 @@ public class ControllerManager extends HttpServlet {
                             email, phone_number, hire_date, job_id, department_id,
                             salary, ReportsTo);
                     boolean statusPro = daoProfile.addStaff(pro);
+                    daoSchedule.addSchedule(profile_id, " ");
                     if (statusPro) {
                         System.out.println("Successfully added new Staff with profile_id = " + profile_id);
 

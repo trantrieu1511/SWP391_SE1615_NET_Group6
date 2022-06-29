@@ -5,7 +5,6 @@
  */
 package model;
 
-
 import entity.Jobs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

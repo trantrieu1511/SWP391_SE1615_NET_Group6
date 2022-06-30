@@ -212,6 +212,28 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
+    
+    public List<Attendance> todayAttendance(String date) {
+        List<Attendance> list = new ArrayList<>();
+        String sql = "select distinct employee_id from attendance where date = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, date);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Attendance(
+                        rs.getString(1)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();

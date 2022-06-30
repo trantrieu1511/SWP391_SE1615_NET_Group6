@@ -152,14 +152,19 @@ function check2() {
 }
 
 $('#table').dataTable({
-    "fnDrawCallback": function(oSettings) {
+    "fnDrawCallback": function (oSettings) {
         if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {
             $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
         } else {
-             $(oSettings.nTableWrapper).find('.dataTables_paginate').show();
+            $(oSettings.nTableWrapper).find('.dataTables_paginate').show();
         }
     }
 });
+
+function generatePDf() {
+    const element = document.getElementById('PDF');
+    html2pdf().from(element).save();
+}
 
 
 

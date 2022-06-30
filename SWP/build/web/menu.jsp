@@ -82,6 +82,9 @@
                                     <li><a href="manager?do=list">All Employees</a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
+                                    <li><a href="manager?do=list">All Employees</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                     <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                     </c:if>
                                 <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
@@ -99,27 +102,41 @@
                             <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a href="project?do=list">Projects</a></li>
-                                <li><a href="task?do=view&&title=">Task board</a></li>
+                                <li><a href="task?do=view&&title= ">Task board</a></li>
                             </ul>
                         </li>
                         <li> 
                             <a href="leads.jsp"><i class="la la-user-secret"></i> <span>Leads</span></a>
                         </li>
-                        <li class="menu-title"> 
-                            <span>HR</span>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#" class="active subdrop"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
-                            <ul style="display: block;">
-                                <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == true}">
+                        <c:if test="${sessionScope.acc.isManager == true}">
+                            <li class="menu-title"> 
+                                <span>HR</span>
+                            </li>
+                            <li class="submenu">
+                                <a href="#" class="active subdrop"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
+                                <ul style="display: block;">
                                     <li><a href="salary.jsp"> Employee Salary </a></li>
-
-                                </c:if>
-                                <li><a href="salary-view.jsp"> Payslip </a></li>
-                                <li><a href="payroll-items.jsp"> Payroll Items </a></li>
-                            </ul>
-                        </li>
+                                    <li><a href="salary-view.jsp"> Payslip </a></li>
+                                    <li><a href="payroll-items.jsp"> Payroll Items </a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <!--                                    <li><a href="expense-reports.html"> Expense Report </a></li>
+                                                                        <li><a href="invoice-reports.html"> Invoice Report </a></li>
+                                                                        <li><a href="payments-reports.html"> Payments Report </a></li>-->
+                                    <li><a href="project-reports.html"> Project Report </a></li>
+                                    <li><a href="task-reports.html"> Task Report </a></li>
+                                    <!--                                    <li><a href="user-reports.html"> User Report </a></li>-->
+                                    <li><a href="employee-reports.html"> Employee Report </a></li>
+                                    <!--                                    <li><a href="payslip-reports.html"> Payslip Report </a></li>
+                                                                        <li><a href="attendance-reports.html"> Attendance Report </a></li>
+                                                                        <li><a href="leave-reports.html"> Leave Report </a></li>-->
+                                    <li><a href="report?do=daily"> Daily Report </a></li>
+                                </ul>
+                            </li>
+                        </c:if>
                         <li class="menu-title"> 
                             <span>Administration</span>
                         </li>                
@@ -127,5 +144,6 @@
                 </div>
             </div>
         </div>
-        <!-- /Sidebar -->
-    </body>
+    </div>
+    <!-- /Sidebar -->
+</body>

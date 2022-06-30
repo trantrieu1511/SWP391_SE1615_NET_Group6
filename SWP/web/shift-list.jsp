@@ -113,8 +113,6 @@
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
-          
-
             <jsp:include page="menu.jsp"></jsp:include>
 
                 <!-- Page Wrapper -->

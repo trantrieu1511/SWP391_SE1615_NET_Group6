@@ -38,6 +38,22 @@ CREATE TABLE [account] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
+CREATE TABLE [salary] (
+    profile_id CHAR(5),
+	basic_salary DECIMAL (8, 2) NOT NULL,
+	HRA DECIMAL (8, 2) DEFAULT NULL,
+	conveyance DECIMAL (8, 2) DEFAULT NULL,
+	allowance DECIMAL (8, 2) DEFAULT NULL,
+	medical_allowance DECIMAL (8, 2) DEFAULT NULL,
+	TDS DECIMAL (8, 2) DEFAULT NULL,
+	ESI DECIMAL (8, 2) DEFAULT NULL,
+	PF DECIMAL (8, 2) DEFAULT NULL,
+	leave DECIMAL (8, 2) DEFAULT NULL,
+	loan DECIMAL (8, 2) DEFAULT NULL,
+	professional_tax DECIMAL (8, 2) DEFAULT NULL,
+	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
+);
+
 CREATE TABLE [profileDetail] (
     profile_id CHAR(5),
 	dob VARCHAR(20) NOT NULL,

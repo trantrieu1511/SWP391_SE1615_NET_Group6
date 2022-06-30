@@ -20,6 +20,10 @@ public class Attendance {
 
     public Attendance() {
     }
+    
+    public Attendance(String employee_id) {
+        this.employee_id = employee_id;
+    }
 
     public Attendance(int id, String date, String time_in, String time_out, String production_time, String employee_id, String reportto) {
         this.id = id;

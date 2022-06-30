@@ -77,8 +77,8 @@ public class ControllerSchedule extends HttpServlet {
                     List<Shift> listS = daoShift.listShift();
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     List<Schedule> listSch = daoSchedule.listAllScheduleOfStaff();
-                    List<String[]> listShiftArray = new ArrayList<String[]>();
-                    for (Schedule sch : listSch) {
+                    List<String[]> listShiftArray = new ArrayList<>();
+                    listSch.forEach((sch) -> {
                         if (sch.getName() != " ") {
                             String[] temp = sch.getName().split(" ");
                             listShiftArray.add(temp);
@@ -86,9 +86,9 @@ public class ControllerSchedule extends HttpServlet {
                             String[] temp = {" "};
                             listShiftArray.add(temp);
                         }
-                    }
-                    List<boolean[]> listBool = new ArrayList<boolean[]>();
-                    for (String[] strTemp : listShiftArray) {
+                    });
+                    List<boolean[]> listBool = new ArrayList<>();
+                    listShiftArray.stream().map((strTemp) -> {
                         boolean[] temp = new boolean[listS.size()];
                         for (int i = 0; i < listS.size(); i++) {
                             for (int j = 0; j < strTemp.length; j++) {
@@ -97,8 +97,10 @@ public class ControllerSchedule extends HttpServlet {
                                 }
                             }
                         }
+                        return temp;
+                    }).forEachOrdered((temp) -> {
                         listBool.add(temp);
-                    }
+                    });
                     for (int i = 0; i < listPf.size(); i++) {
                         String temp = "";
                         for (int j = 0; j < listBool.get(i).length; j++) {

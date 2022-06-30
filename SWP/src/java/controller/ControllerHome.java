@@ -41,26 +41,29 @@ public class ControllerHome extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
 
-            DAOProject daoPj = new DAOProject();
-            DAOProfile daoPf = new DAOProfile();
+            DAOProject daoProject = new DAOProject();
+            DAOProfile daoProfile = new DAOProfile();
 
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
+            // check session for user logged in
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
                 List<Projects> list = null;
+                // list project for manager/employee
                 if (acc.isIsManager()) {
-                    list = daoPj.getProject(acc.getProfile_id());
+                    list = daoProject.getProject(acc.getProfile_id());
                 } else {
-                    list = daoPj.getProject(daoPf.getByID(acc.getProfile_id()).getReportto());
+                    list = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
-
                 request.setAttribute("project", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");
                 dispath.forward(request, response);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
+            // error page
             response.sendRedirect("error404.jsp");
         }
     }

@@ -72,10 +72,11 @@ public class ControllerManager extends HttpServlet {
 
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
-
+            // check session for user logged in
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
+                // list project for manager/employee
                 List<Projects> listPj = null;
                 if (acc.isIsManager()) {
                     listPj = daoProject.getProject(acc.getProfile_id());
@@ -83,7 +84,8 @@ public class ControllerManager extends HttpServlet {
                     listPj = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", listPj);
-                //profile user = daoPf.getByID(acc.getProfile_id());
+                
+                // attendance 
                 if (service.equals("attendance")) {
                     List<Attendance> listAttendance = daoAttendance.listAll(acc.getProfile_id());
                     for (Attendance a : listAttendance) {
@@ -94,6 +96,7 @@ public class ControllerManager extends HttpServlet {
                     dispath.forward(request, response);
                 }
 
+                // search attendance
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date_search = request.getParameter("date");
@@ -218,9 +221,9 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     }
                 }
-
+                
+                // homepage
                 if (service.equals("dashboard")) {
-                    request.getSession(false);
                     RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
                     dispath.forward(request, response);
                 }

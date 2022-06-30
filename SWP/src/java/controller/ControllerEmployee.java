@@ -52,12 +52,15 @@ public class ControllerEmployee extends HttpServlet {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
 
+            // global variables declared for attendance
             String date = "";
             String time_in = "";
             String time_out = "";
             String production_time = "";
             String employee_id = "";
             String button = "in";
+            
+            // check session for user logged in
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
@@ -71,10 +74,12 @@ public class ControllerEmployee extends HttpServlet {
                 
                 employee_id = acc.getProfile_id();;
 
+                // home
                 if(service.equals("dashboard")){
                     response.sendRedirect("employee-dashboard.jsp");
                 }
                 
+                // attendance
                 if (service.equals("attendance")) {
                     List<Attendance> list = daoAttendance.listAllAttendanceofAnEmployee(employee_id);
                     Attendance temp = daoAttendance.getLastest(employee_id);
@@ -89,7 +94,8 @@ public class ControllerEmployee extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
-
+                
+                // search attendance
                 if (service.equals("searchAttendance")) {
                     String date_search = request.getParameter("date");
                     List<Attendance> list = daoAttendance.search(date_search, employee_id);
@@ -98,7 +104,8 @@ public class ControllerEmployee extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
-
+                
+                // punch in
                 if (service.equals("punchin")) {
                     date = df.format(new java.util.Date());
                     time_in = hf.format(new java.util.Date());
@@ -115,6 +122,7 @@ public class ControllerEmployee extends HttpServlet {
                     dispath.forward(request, response);
                 }
 
+                // punch out
                 if (service.equals("punchout")) {
                     time_out = hf.format(new java.util.Date());
                     Attendance temp = daoAttendance.getLastest(employee_id);
@@ -147,18 +155,10 @@ public class ControllerEmployee extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
-                /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ControllerEmployee</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ControllerEmployee at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
+            // error page
             response.sendRedirect("error404.jsp");
         }
     }

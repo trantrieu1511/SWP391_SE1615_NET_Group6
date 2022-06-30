@@ -112,6 +112,30 @@ public class DAOSchedule extends DBConnect {
         }
         return list;
     }
+    
+    public List<Schedule> searchSchedule(String name) {
+        List<Schedule> list = new ArrayList<>();
+        String sql = "select schedule.profile_id, shift_name from schedule join "
+                + "profile on schedule.profile_id = profile.profile_id where "
+                + "first_name + last_name like ? order by profile.profile_id asc";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, "%" + name + "%");
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Schedule(
+                        rs.getString(1),
+                        rs.getString(2)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
     public boolean updateSchedule(String profile_id, String shift_status) {
         String sql = "update schedule set shift_name=? where profile_id=?";

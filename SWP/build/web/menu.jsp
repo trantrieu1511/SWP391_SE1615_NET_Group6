@@ -90,7 +90,9 @@
                                     <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
                                     <li><a href="departments.jsp">Departments</a></li>
                                     <li><a href="designations.jsp">Designations</a></li>
+                                    <c:if test="${sessionScope.acc.isManager == true}">
                                     <li><a href="schedule?do=list">Shift & Schedule</a></li>
+                                    </c:if>
                                 </ul>
                             </li>
                             <li> 

@@ -123,6 +123,13 @@
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
+        
+        <c:if test="${alert != ''}">
+            <script lang="Javascript">
+            alert("${alert}");
+            </script>
+        </c:if>
+                
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -156,24 +163,28 @@
                     <!-- /Page Header -->
 
                     <!-- Content Starts -->
+                    
                     <!-- Search Filter -->
-                    <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <input type="text" class="form-control floating">
-                                <label class="focus-label">Employee</label>
+                    <form action="schedule" do="post">
+                        <input type="hidden" name="do" value="search">
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" name="name" pattern="[0-9A-Za-z ]{1,35}">
+                                    <label class="focus-label">Employee</label>
+                                </div>
                             </div>
+                            <div class="col-sm-6 col-md-3"> 
+                            </div>
+                            <div class="col-sm-6 col-md-2">                             
+                            </div>
+                            <div class="col-sm-6 col-md-2">                             
+                            </div>
+                            <div class="col-sm-6 col-md-2">  
+                                <button class="btn btn-success btn-block"> Search </button>  
+                            </div>     
                         </div>
-                        <div class="col-sm-6 col-md-3"> 
-                        </div>
-                        <div class="col-sm-6 col-md-2">                             
-                        </div>
-                        <div class="col-sm-6 col-md-2">                             
-                        </div>
-                        <div class="col-sm-6 col-md-2">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
-                    </div>
+                    </form>
                     <!-- Search Filter -->
 
                     <div class="row">

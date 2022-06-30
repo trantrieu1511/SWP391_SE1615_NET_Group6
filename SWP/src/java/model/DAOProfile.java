@@ -286,6 +286,38 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
+    
+    public List<Profile> searchStaff3(String name, String profile_id) {
+        String sql = "select * from profile where first_name + last_name like "
+                + "? and report_to = ?";
+        List<Profile> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, "%" + name + "%");
+            state.setString(2, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Profile(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getDouble(9),
+                        rs.getString(10)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();

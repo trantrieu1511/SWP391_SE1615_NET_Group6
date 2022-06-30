@@ -27,8 +27,6 @@ import model.DAOAttendance;
 import model.DAODepartment;
 import model.DAOProfile;
 import model.DAOProject;
-import model.DAOSchedule;
-import model.DAOShift;
 
 /**
  *
@@ -100,6 +98,59 @@ public class ControllerReport extends HttpServlet {
                     request.setAttribute("totalEmployee", totalEmployee);
                     request.setAttribute("list", listStr);
                     request.setAttribute("listDepartment", listDepartment);
+                    request.setAttribute("filter", "no");
+                    request.setAttribute("nameFilter", "Employee");
+                    request.setAttribute("departmentFilter", "select a department");
+                    RequestDispatcher dispath = request.getRequestDispatcher("daily-report.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("searchDailyReport")) {
+                    String name = request.getParameter("name");
+                    String department = request.getParameter("department");
+                    List<Profile> listProfile = new ArrayList<>();
+                    if (department != null) {
+                        listProfile = daoProfile.searchStaff4(name, Integer.parseInt(department), acc.getProfile_id());
+                    } else {
+                        listProfile = daoProfile.searchStaff3(name, acc.getProfile_id());
+                    }
+                    int totalEmployee = listProfile.size();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = new Date();
+                    List<Attendance> listAttendance = daoAttendance.todayAttendance(formatter.format(date));
+                    int present = listAttendance.size();
+                    int absent = totalEmployee - present;
+                    List<String[]> listStr = new ArrayList<>();
+                    listProfile.stream().map((p) -> {
+                        String[] temp = new String[10];
+                        temp[0] = p.getProfile_id();
+                        temp[1] = p.getFirst_name() + " " + p.getLast_name();
+                        temp[2] = formatter.format(date);
+                        temp[3] = dAODepartment.getDepartmentByID(p.getDepartment_id()).getName();
+                        String status;
+                        if (listAttendance.contains(p.getProfile_id())) {
+                            status = "Present";
+                        } else {
+                            status = "Absent";
+                        }
+                        temp[4] = status;
+                        return temp;
+                    }).forEachOrdered((temp) -> {
+                        listStr.add(temp);
+                    });
+                    List<Departments> listDepartment = dAODepartment.listAllDepartment();
+                    request.setAttribute("present", present);
+                    request.setAttribute("absent", absent);
+                    request.setAttribute("totalEmployee", totalEmployee);
+                    request.setAttribute("list", listStr);
+                    request.setAttribute("listDepartment", listDepartment);
+                    request.setAttribute("filter", "yes");
+                    request.setAttribute("nameFilter", name);
+                    if (department != null) {
+                        request.setAttribute("departmentFilter", department);
+                    } else {
+                        request.setAttribute("departmentFilter", "select a department");
+                    }
                     RequestDispatcher dispath = request.getRequestDispatcher("daily-report.jsp");
                     dispath.forward(request, response);
                 }

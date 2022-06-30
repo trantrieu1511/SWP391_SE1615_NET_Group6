@@ -98,42 +98,40 @@
                     </div>
                     <!-- Search Filter -->
                     <form action="report" do="post">
+                        <input type="hidden" name="do" value="searchDailyReport">
                         <div class="row filter-row mb-4">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input class="form-control floating" type="text">
-                                    <label class="focus-label">Employee</label>
+                                    <input class="form-control floating" name="name" type="text">
+                                    <label class="focus-label">${nameFilter}</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
+                                    <select class="select floating" name="department" id="department"> 
                                         <option value="" disabled selected hidden></option>
                                         <c:forEach items="${listDepartment}" var="o">
-                                        <option>${o.name}</option>  
+                                            <option value="${o.id}">${o.name}</option>  
                                         </c:forEach>
                                     </select>
-                                    <label class="focus-label">Department</label>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
-                                    </div>
-                                    <label class="focus-label">From</label>
-                                </div>
+                            <div class="col-sm-6 col-md-3">                                  
                             </div>                            
                             <div class="col-sm-6 col-md-3">  
-                                <a href="#" class="btn btn-success btn-block"> Search </a>  
+                                <button class="btn btn-success btn-block"> Search </button>  
                             </div>     
                         </div>
                     </form>
                     <!-- /Search Filter -->
+                    
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table mb-0 datatable">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="report?do=daily" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
                                             <th>Employee</th>
@@ -253,6 +251,16 @@
                 
                 html2pdf(element, opt);
             }
+            $( document ).ready(function() {
+            <c:if test="${departmentFilter != 'select a department'}">
+                            $("#department").val(${departmentFilter});
+            </c:if>
+                $("#department").select2({
+                        width: '100%',
+                        placeholder: "${departmentFilter}",
+                        allowClear: false
+                    });
+                });            
         </script>
 
     </body>

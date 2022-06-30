@@ -250,7 +250,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="schedule" do="post">
-                                <input type="hidden" name="do" value="assignShift">
+                                <input type="hidden" name="do" value="editSchedule">
                                 <div class="row">                                    
                                     <div class="col-md-12">
                                         <div class="form-group">

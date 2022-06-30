@@ -65,12 +65,13 @@ public class ControllerSchedule extends HttpServlet {
 
                 if (service.equals("list")) {
                     String action = request.getParameter("action");
-                    String alert;
-                    if (action.equals("edit")) {
+                    String alert = "";
+                    
+                    if (action != null && action.equals("edit")) {
                         alert = "All changes saved!";
-                    } else if (action.equals("delete")) {
+                    } else if (action != null && action.equals("delete")) {
                         alert = "Schedule has been deleted from database!";
-                    } else {
+                    } else if (action == null) {
                         alert = "";
                     }
                     List<Shift> listS = daoShift.listShift();

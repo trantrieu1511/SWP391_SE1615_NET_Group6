@@ -7,6 +7,7 @@ package controller;
 
 import entity.Account;
 import entity.Clients;
+import entity.Company;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOClients;
+import model.DAOCompany;
 
 /**
  *
@@ -43,6 +45,7 @@ public class ControllerClient extends HttpServlet {
             PrintWriter out = response.getWriter();
             String service = request.getParameter("do");
             DAOClients daoCl = new DAOClients();
+            DAOCompany daoCpn = new DAOCompany();
             Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
                 response.sendRedirect("login.jsp");
@@ -54,36 +57,61 @@ public class ControllerClient extends HttpServlet {
                     Object delete = request.getParameter("delete");
                     if (add != null) {
                         String alert = "Successfully added new client!";
-                        List<Clients> list = daoCl.listAllClients();
-                        request.setAttribute("listcl", list);
+                        List<Clients> listCl = daoCl.listAllClients();
+                        List<Company> listCpn = daoCpn.listAllCompany();
+                        for (Clients c : listCl) {
+                            c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                        }
+                        request.setAttribute("listcl", listCl);
+                        request.setAttribute("listcpn", listCpn);
                         request.setAttribute("alert", alert);
                         RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                         dispatch.forward(request, response);
                     } else if (addFail != null) {
                         String alert = "Add new client failed! Client-ID has been used by another Client, please try again!";
-                        List<Clients> list = daoCl.listAllClients();
-                        request.setAttribute("listcl", list);
+                        List<Clients> listCl = daoCl.listAllClients();
+                        List<Company> listCpn = daoCpn.listAllCompany();
+                        for (Clients c : listCl) {
+                            c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                        }
+                        request.setAttribute("listcl", listCl);
+                        request.setAttribute("listcpn", listCpn);
                         request.setAttribute("alert", alert);
                         RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                         dispatch.forward(request, response);
                     } else if (edit != null) {
                         String alert = "Successfully edited client!";
-                        List<Clients> list = daoCl.listAllClients();
-                        request.setAttribute("listcl", list);
+                        List<Clients> listCl = daoCl.listAllClients();
+                        List<Company> listCpn = daoCpn.listAllCompany();
+                        for (Clients c : listCl) {
+                            c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                        }
+                        request.setAttribute("listcl", listCl);
+                        request.setAttribute("listcpn", listCpn);
                         request.setAttribute("alert", alert);
                         RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                         dispatch.forward(request, response);
                     } else if (delete != null) {
                         String alert = "Successfully deleted client!";
-                        List<Clients> list = daoCl.listAllClients();
-                        request.setAttribute("listcl", list);
+                        List<Clients> listCl = daoCl.listAllClients();
+                        List<Company> listCpn = daoCpn.listAllCompany();
+                        for (Clients c : listCl) {
+                            c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                        }
+                        request.setAttribute("listcl", listCl);
+                        request.setAttribute("listcpn", listCpn);
                         request.setAttribute("alert", alert);
                         RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                         dispatch.forward(request, response);
                     } else {
                         String alert = "";
-                        List<Clients> list = daoCl.listAllClients();
-                        request.setAttribute("listcl", list);
+                        List<Clients> listCl = daoCl.listAllClients();
+                        List<Company> listCpn = daoCpn.listAllCompany();
+                        for (Clients c : listCl) {
+                            c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                        }
+                        request.setAttribute("listcl", listCl);
+                        request.setAttribute("listcpn", listCpn);
                         request.setAttribute("alert", alert);
                         RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                         dispatch.forward(request, response);
@@ -91,36 +119,75 @@ public class ControllerClient extends HttpServlet {
 
                 }
                 if (service.equals("filter")) {
-                    String client_id = request.getParameter("cid");
-                    String client_name = request.getParameter("cname");
+                    String client_id = request.getParameter("cid").trim();
+                    String client_name = request.getParameter("cname").trim();
+                    String client_company = request.getParameter("ccompany");
 
-                    List<Clients> listSearch = daoCl.searchClient(client_id, client_name);
-                    if (listSearch.isEmpty()) {
-                        String alert = "There are no search result found!";
-                        request.setAttribute("listcl", listSearch);
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("filter", "no");
-                        RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                        dispatch.forward(request, response);
+                    List<Company> listCpn = daoCpn.listAllCompany();
+                    if (client_company.equals("")) {
+                        List<Clients> listSearch = daoCl.searchClient1(client_id, client_name);
+                        if (listSearch.isEmpty()) {
+                            String alert = "There are no search result found!";
+                            for (Clients c : listSearch) {
+                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                            }
+                            request.setAttribute("listcl", listSearch);
+                            request.setAttribute("listcpn", listCpn);
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("filter", "no");
+                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
+                            dispatch.forward(request, response);
+                        } else {
+                            String alert = "";
+                            for (Clients c : listSearch) {
+                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                            }
+                            request.setAttribute("listcl", listSearch);
+                            request.setAttribute("listcpn", listCpn);
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("filter", "no");
+                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
+                            dispatch.forward(request, response);
+                        }
                     } else {
-                        String alert = "";
-                        request.setAttribute("listcl", listSearch);
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("filter", "no");
-                        RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                        dispatch.forward(request, response);
+                        List<Clients> listSearch = daoCl.searchClient2(client_id, client_name, client_company);
+                        if (listSearch.isEmpty()) {
+                            String alert = "There are no search result found!";
+                            for (Clients c : listSearch) {
+                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                            }
+                            request.setAttribute("listcl", listSearch);
+                            request.setAttribute("listcpn", listCpn);
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("filter", "no");
+                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
+                            dispatch.forward(request, response);
+                        } else {
+                            String alert = "";
+                            for (Clients c : listSearch) {
+                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                            }
+                            request.setAttribute("listcl", listSearch);
+                            request.setAttribute("listcpn", listCpn);
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("filter", "no");
+                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
+                            dispatch.forward(request, response);
+                        }
                     }
+
                 }
                 if (service.equals("addClient")) {
                     String client_id = request.getParameter("client_id");
                     String first_name = request.getParameter("first_name").trim();
                     String last_name = request.getParameter("last_name").trim();
-                    String company = request.getParameter("company").trim();
+                    String company_id_str = request.getParameter("company_id").trim();
+                    int company_id = Integer.parseInt(company_id_str);
                     String email = request.getParameter("email").trim();
                     String phone_number = request.getParameter("phone_number").trim();
 
                     boolean statusAdd = daoCl.addClient(new Clients(client_id,
-                            first_name, last_name, email, phone_number, company));
+                            first_name, last_name, email, phone_number, company_id));
                     if (statusAdd) {
                         System.out.println("Successfully added new Client with client_id = " + client_id);
                         response.sendRedirect("client?do=list&add=true");
@@ -133,12 +200,13 @@ public class ControllerClient extends HttpServlet {
                     String client_id = request.getParameter("client_id");
                     String first_name = request.getParameter("first_name").trim();
                     String last_name = request.getParameter("last_name").trim();
-                    String company = request.getParameter("company").trim();
+                    String company_id_str = request.getParameter("company_id").trim();
+                    int company_id = Integer.parseInt(company_id_str);
                     String email = request.getParameter("email").trim();
                     String phone_number = request.getParameter("phone_number").trim();
 
                     boolean statusEdit = daoCl.editClient(new Clients(client_id,
-                            first_name, last_name, email, phone_number, company));
+                            first_name, last_name, email, phone_number, company_id));
                     if (statusEdit) {
                         System.out.println("Successfully edited Client with client_id = " + client_id);
                     } else {

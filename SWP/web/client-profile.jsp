@@ -98,7 +98,7 @@
                                                 <div class="col-md-5">
                                                     <div class="profile-info-left">
                                                     <c:forEach items="${listcp}" var="cp">
-                                                        <h3 class="user-name m-t-0">${cp.company}</h3>
+                                                        <h3 class="user-name m-t-0">${cp.company_name}</h3>
                                                         <h5 class="company-role m-t-0 mb-0">${cp.first_name} ${cp.last_name}</h5>
                                                         <!--                                                        <small class="text-muted">CEO</small>-->
                                                         <div class="staff-id">Employee ID : ${cp.client_id}</div>
@@ -111,11 +111,18 @@
                                                     <c:forEach items="${listcp}" var="cp">
                                                         <li>
                                                             <span class="title">Phone:</span>
-                                                            <span class="text">${cp.phone_number}</a></span>
+                                                            <c:choose>
+                                                                <c:when test="${cp.phone_number.equals('')}">
+                                                                    <span class="text">N/A</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span class="text">${cp.phone_number}</span>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                         </li>
                                                         <li>
                                                             <span class="title">Email:</span>
-                                                            <span class="text">${cp.email}</a></span>
+                                                            <span class="text">${cp.email}</span>
                                                         </li>
                                                     </c:forEach>
                                                     <li>

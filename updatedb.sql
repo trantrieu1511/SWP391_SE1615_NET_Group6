@@ -70,13 +70,20 @@ CREATE TABLE [experience] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
+--drop table clients
 CREATE TABLE [clients] (
     client_id CHAR(5) PRIMARY KEY,
 	first_name VARCHAR (20) DEFAULT NULL,
 	last_name VARCHAR (25) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) DEFAULT NULL,
-	company VARCHAR(25) NOT NULL,	
+	company VARCHAR(25) NOT NULL,
+	FOREIGN KEY (company) REFERENCES [company] (company_id)
+);
+
+CREATE TABLE [company] (
+    company_id INT IDENTITY(1,1) PRIMARY KEY,
+	company_name VARCHAR (25) NOT NULL,
 );
 
 

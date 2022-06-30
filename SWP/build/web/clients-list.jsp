@@ -75,13 +75,13 @@
                     var last_name = myArray[2];
                     var email = myArray[3];
                     var phone_number = myArray[4];
-                    var company = myArray[5];
+                    var company_id = myArray[5];
                     $(e.currentTarget).find('input[name="client_id"]').val(id);
                     $(e.currentTarget).find('input[name="first_name"]').val(first_name);
                     $(e.currentTarget).find('input[name="last_name"]').val(last_name);
                     $(e.currentTarget).find('input[name="email"]').val(email);
                     $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
-                    $(e.currentTarget).find('input[name="company"]').val(company);
+                    document.getElementById('company_id2').value = company_id;
 
                 });
             });
@@ -165,16 +165,17 @@
                                 <label class="focus-label">Client Name</label>
                             </div>
                         </div>
-                        <!--                    <div class="col-sm-6 col-md-3"> 
-                                                <div class="form-group form-focus select-focus">
-                                                    <select class="select floating"> 
-                                                        <option>Select Company</option>
-                                                        <option>Global Technologies</option>
-                                                        <option>Delta Infotech</option>
-                                                    </select>
-                                                    <label class="focus-label">Company</label>
-                                                </div>
-                                            </div>-->
+                        <div class="col-sm-6 col-md-3"> 
+                            <div class="form-group form-focus select-focus">
+                                <select class="select floating" name="ccompany"> 
+                                    <option value="">Select Company</option>
+                                    <c:forEach items="${listcpn}" var="cpn">
+                                        <option value="${cpn.id}">${cpn.name}</option>
+                                    </c:forEach>
+                                </select>
+                                <label class="focus-label">Company</label>
+                            </div>
+                        </div>
                         <div class="col-sm-6 col-md-3">  
                             <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
                         </div>     
@@ -208,7 +209,7 @@
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <!--<a href="client-profile.html" class="avatar"><img src="img/profiles/avatar-19.jpg" alt=""></a>-->
-                                                    <a href="client?do=getclientProfile&client_id=${cl.client_id}">${cl.company}</a>
+                                                    <a href="client?do=getclientProfile&client_id=${cl.client_id}">${cl.company_name}</a>
                                                 </h2>
                                             </td>
                                             <td>${cl.client_id}</td>
@@ -236,7 +237,7 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${cl.client_id} ${cl.first_name} ${cl.last_name} ${cl.email} ${cl.phone_number} ${cl.company}" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${cl.client_id} ${cl.first_name} ${cl.last_name} ${cl.email} ${cl.phone_number} ${cl.company_id}" data-target="#edit_client"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-id="${cl.client_id}" data-target="#delete_client"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
@@ -328,19 +329,29 @@
                                             <input class="form-control" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number">
                                         </div>
                                     </div>
+                                    <!--                                    <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                                                                                <input class="form-control" type="text" name="company" required placeholder="Enter Company Name" pattern="[A-Za-z ]{1,25}"
+                                                                                       title="Company Name not contain: Unicode characters, 
+                                                                                       special character e.g: !@#$%^& etc.. ,
+                                                                                       numeric character: 0-9; allow spacing characters; max length: 25">
+                                                                            </div>
+                                                                        </div>-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="company" required placeholder="Enter Company Name" pattern="[A-Za-z ]{1,25}"
-                                                   title="Company Name not contain: Unicode characters, 
-                                                   special character e.g: !@#$%^& etc.. ,
-                                                   numeric character: 0-9; allow spacing characters; max length: 25">
+                                            <select class="select" name="company_id" id="company_id" required="">
+                                                <option value="">Select Company</option>
+                                                <c:forEach items="${listcpn}" var="cpn">
+                                                    <option value="${cpn.id}">${cpn.name}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="submit-section">
-                                    <button class="btn btn-primary submit-btn">Submit</button>
+                                    <button class="btn btn-primary submit-btn">add</button>
                                 </div>
                             </form>
                         </div>
@@ -425,13 +436,24 @@
                                             <input class="form-control" value="" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number">
                                         </div>
                                     </div>
+                                    <!--                                    <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                                                                                <input class="form-control" type="text" value="" name="company" required placeholder="Enter Company Name" pattern="[A-Za-z ]{1,25}"
+                                                                                       title="Company Name not contain: Unicode characters, 
+                                                                                       special character e.g: !@#$%^& etc.. ,
+                                                                                       numeric character: 0-9; allow spacing characters; max length: 25">
+                                                                            </div>
+                                                                        </div>-->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" value="" name="company" required placeholder="Enter Company Name" pattern="[A-Za-z ]{1,25}"
-                                                   title="Company Name not contain: Unicode characters, 
-                                                   special character e.g: !@#$%^& etc.. ,
-                                                   numeric character: 0-9; allow spacing characters; max length: 25">
+                                            <select class="form-control" name="company_id" id="company_id2" required="">
+                                                <option value="">Select Company</option>
+                                                <c:forEach items="${listcpn}" var="cpn">
+                                                    <option value="${cpn.id}">${cpn.name}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -36,7 +36,7 @@ public class DAOClients extends DBConnect {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getInt(6)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +63,7 @@ public class DAOClients extends DBConnect {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getInt(6)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class DAOClients extends DBConnect {
         return list;
     }
 
-    public List<Clients> searchClient(String id, String name) {
+    public List<Clients> searchClient1(String id, String name) {
         String sql = "select * from [clients] where client_id like ? "
                 + "and first_name + last_name like ?";
         List<Clients> list = new ArrayList<>();
@@ -92,7 +92,38 @@ public class DAOClients extends DBConnect {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getInt(6)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Clients> searchClient2(String id, String name, String company_id) {
+        String sql = "select * from [clients] where client_id like ?"
+                + " and first_name + last_name like ?"
+                + " and company_id = ?";
+        List<Clients> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, "%" + id + "%");
+            state.setString(2, "%" + name + "%");
+            state.setString(3, company_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Clients(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -115,7 +146,7 @@ public class DAOClients extends DBConnect {
             state.setString(3, client.getLast_name());
             state.setString(4, client.getEmail());
             state.setString(5, client.getPhone_number());
-            state.setString(6, client.getCompany());
+            state.setInt(6, client.getCompany_id());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -134,7 +165,7 @@ public class DAOClients extends DBConnect {
                 + "last_name = ?,\n"
                 + "email = ?,\n"
                 + "phone_number = ?,\n"
-                + "company = ?\n"
+                + "company_id = ?\n"
                 + "where client_id = ?";
         try {
             conn = getConnection();
@@ -143,7 +174,7 @@ public class DAOClients extends DBConnect {
             state.setString(2, client.getLast_name());
             state.setString(3, client.getEmail());
             state.setString(4, client.getPhone_number());
-            state.setString(5, client.getCompany());
+            state.setInt(5, client.getCompany_id());
             state.setString(6, client.getClient_id());
             state.executeUpdate();
         } catch (Exception ex) {

@@ -16,18 +16,19 @@ public class Clients {
     String last_name;
     String email;
     String phone_number;
-    String company;
+    int company_id;
+    String company_name;
 
     public Clients() {
     }
 
-    public Clients(String client_id, String first_name, String last_name, String email, String phone_number, String company) {
+    public Clients(String client_id, String first_name, String last_name, String email, String phone_number, int company_id) {
         this.client_id = client_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
-        this.company = company;
+        this.company_id = company_id;
     }
 
     public String getClient_id() {
@@ -70,17 +71,25 @@ public class Clients {
         this.phone_number = phone_number;
     }
 
-    public String getCompany() {
-        return company;
+    public int getCompany_id() {
+        return company_id;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompany_id(int company_id) {
+        this.company_id = company_id;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 
     @Override
     public String toString() {
-        return "clients{" + "client_id=" + client_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", company=" + company + '}';
+        return "Clients{" + "client_id=" + client_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", company_id=" + company_id + ", company_name=" + company_name + '}';
     }
 
 }

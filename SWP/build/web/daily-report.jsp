@@ -164,10 +164,11 @@
                         </div>
                     </div>
 
-                    <div hidden>
+                    <div hidden id="PDF">
+                        <h1>Attendance report (${list.get(1)[1]})</h1>
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table" id="PDF">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>Employee</th>

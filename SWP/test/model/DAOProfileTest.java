@@ -86,5 +86,19 @@ public class DAOProfileTest {
     @Test
     public void testMain() {
     }
+
+    /**
+     * Test of searchStaff3 method, of class DAOProfile.
+     */
+    @Test
+    public void testSearchStaff3() {
+    }
+
+    /**
+     * Test of searchStaff4 method, of class DAOProfile.
+     */
+    @Test
+    public void testSearchStaff4() {
+    }
     
 }

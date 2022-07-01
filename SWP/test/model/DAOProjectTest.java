@@ -129,4 +129,39 @@ public class DAOProjectTest {
         assertEquals("[]", dao.search("ybc", "ABCDE").toString());
     }
 
+    /**
+     * Test of getProject method, of class DAOProject.
+     */
+    @Test
+    public void testGetProject() {
+    }
+
+    /**
+     * Test of getP method, of class DAOProject.
+     */
+    @Test
+    public void testGetP() {
+    }
+
+    /**
+     * Test of addProject method, of class DAOProject.
+     */
+    @Test
+    public void testAddProject() {
+    }
+
+    /**
+     * Test of search method, of class DAOProject.
+     */
+    @Test
+    public void testSearch() {
+    }
+
+    /**
+     * Test of main method, of class DAOProject.
+     */
+    @Test
+    public void testMain() {
+    }
+
 }

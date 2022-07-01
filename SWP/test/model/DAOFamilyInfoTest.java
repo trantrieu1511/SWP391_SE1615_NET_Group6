@@ -44,5 +44,19 @@ public class DAOFamilyInfoTest {
     @Test
     public void testDeleteFamilyInfo() {
     }
+
+    /**
+     * Test of deleteAllFamilyInfo method, of class DAOFamilyInfo.
+     */
+    @Test
+    public void testDeleteAllFamilyInfo() {
+    }
+
+    /**
+     * Test of editFamilyInfo method, of class DAOFamilyInfo.
+     */
+    @Test
+    public void testEditFamilyInfo() {
+    }
     
 }

@@ -55,5 +55,47 @@ public class DAOTaskTest {
     public void testList2() {
         assertEquals("[]", dao.list(1).toString());
     }
+
+    /**
+     * Test of add method, of class DAOTask.
+     */
+    @Test
+    public void testAdd() {
+    }
+
+    /**
+     * Test of getByName method, of class DAOTask.
+     */
+    @Test
+    public void testGetByName() {
+    }
+
+    /**
+     * Test of list method, of class DAOTask.
+     */
+    @Test
+    public void testList() {
+    }
+
+    /**
+     * Test of listProjectTask method, of class DAOTask.
+     */
+    @Test
+    public void testListProjectTask() {
+    }
+
+    /**
+     * Test of updateStatus method, of class DAOTask.
+     */
+    @Test
+    public void testUpdateStatus() {
+    }
+
+    /**
+     * Test of main method, of class DAOTask.
+     */
+    @Test
+    public void testMain() {
+    }
                
 }

@@ -23,5 +23,33 @@ public class DAOShiftTest {
     @Test
     public void testListShift() {
     }
+
+    /**
+     * Test of add method, of class DAOShift.
+     */
+    @Test
+    public void testAdd() {
+    }
+
+    /**
+     * Test of edit method, of class DAOShift.
+     */
+    @Test
+    public void testEdit() {
+    }
+
+    /**
+     * Test of delete method, of class DAOShift.
+     */
+    @Test
+    public void testDelete() {
+    }
+
+    /**
+     * Test of main method, of class DAOShift.
+     */
+    @Test
+    public void testMain() {
+    }
     
 }

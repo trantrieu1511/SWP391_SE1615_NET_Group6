@@ -506,7 +506,7 @@
                             <div class="modal-body">
                                 <form action="salary" method="post">
                                     <input type="hidden" name="do" value="deleteSalary">
-                                    <input type="text" name="profile_id">
+                                    <input type="hidden" name="profile_id">
                                     <div class="form-header">
                                         <h3>Delete Salary</h3>
                                         <p>Are you sure want to delete?</p>

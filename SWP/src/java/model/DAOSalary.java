@@ -201,6 +201,7 @@ public class DAOSalary extends DBConnect {
                 + "where profile_id = ?";
         try {
             conn = getConnection();
+            state = conn.prepareStatement(sql);
             state.setDouble(1, salary.getBasic_salary());
             state.setDouble(2, salary.getDA());
             state.setDouble(3, salary.getHRA());
@@ -229,6 +230,7 @@ public class DAOSalary extends DBConnect {
         String sql = "delete from salary where profile_id = ?";
         try {
             conn = getConnection();
+            state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
             state.executeUpdate();
         } catch (Exception ex) {

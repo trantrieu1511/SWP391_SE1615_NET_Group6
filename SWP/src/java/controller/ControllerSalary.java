@@ -253,33 +253,6 @@ public class ControllerSalary extends HttpServlet {
                     double loan = Double.parseDouble(request.getParameter("loan").trim());
                     double professional_tax = Double.parseDouble(request.getParameter("professional_tax").trim());
 
-//                    out.print(profile_id);
-//                    out.print("<br>");
-//                    out.print(basic_salary);
-//                    out.print("<br>");
-//                    out.print(DA);
-//                    out.print("<br>");
-//                    out.print(HRA);
-//                    out.print("<br>");
-//                    out.print(conveyance);
-//                    out.print("<br>");
-//                    out.print(allowance);
-//                    out.print("<br>");
-//                    out.print(medical_allowance);
-//                    out.print("<br>");
-//                    out.print(TDS);
-//                    out.print("<br>");
-//                    out.print(ESI);
-//                    out.print("<br>");
-//                    out.print(PF);
-//                    out.print("<br>");
-//                    out.print(leave);
-//                    out.print("<br>");
-//                    out.print(loan);
-//                    out.print("<br>");
-//                    out.print(professional_tax);
-//                    out.print("<br>");
-//                    out.print(create_date);
                     boolean statusEdit = daoSalary.editEmployeeSalary(
                             new Salary(profile_id, basic_salary, DA, HRA,
                                     conveyance, allowance, medical_allowance,

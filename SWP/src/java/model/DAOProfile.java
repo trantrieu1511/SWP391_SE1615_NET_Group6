@@ -24,7 +24,7 @@ public class DAOProfile extends DBConnect {
 
     public boolean addManager(Profile pro) {
         String sql = "insert into [profile](profile_id, first_name, last_name, "
-                + "email ,phone_number, hire_date, department_id, job_id, salary)"
+                + "email ,phone_number, hire_date, department_id, job_id)"
                 + "values (?,?,?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
@@ -37,7 +37,6 @@ public class DAOProfile extends DBConnect {
             state.setString(6, pro.getHire_date());
             state.setInt(7, pro.getDepartment_id());
             state.setInt(8, pro.getJob_id());
-            state.setDouble(9, pro.getSalary());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -51,8 +50,8 @@ public class DAOProfile extends DBConnect {
 
     public boolean addStaff(Profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,"
-                + "phone_number,hire_date,department_id,job_id,salary,report_to)"
-                + " values (?,?,?,?,?,?,?,?,?,?)";
+                + "phone_number,hire_date,department_id,job_id,report_to)"
+                + " values (?,?,?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -64,8 +63,7 @@ public class DAOProfile extends DBConnect {
             state.setString(6, pro.getHire_date());
             state.setInt(7, pro.getDepartment_id());
             state.setInt(8, pro.getJob_id());
-            state.setDouble(9, pro.getSalary());
-            state.setString(10, pro.getReportto());
+            state.setString(9, pro.getReportto());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,7 +84,6 @@ public class DAOProfile extends DBConnect {
                 + "hire_date = ?, "
                 + "department_id = ?, "
                 + "job_id = ?, "
-                + "salary = ?, "
                 + "report_to = ? "
                 + "where profile_id = ?";
         try {
@@ -99,9 +96,8 @@ public class DAOProfile extends DBConnect {
             state.setString(5, pro.getHire_date());
             state.setInt(6, pro.getDepartment_id());
             state.setInt(7, pro.getJob_id());
-            state.setDouble(8, pro.getSalary());
-            state.setString(9, pro.getReportto());
-            state.setString(10, pro.getProfile_id());
+            state.setString(8, pro.getReportto());
+            state.setString(9, pro.getProfile_id());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -122,7 +118,8 @@ public class DAOProfile extends DBConnect {
             state.setString(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Profile(rs.getString(1),
+                list.add(new Profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -130,8 +127,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -161,8 +157,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -191,8 +186,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10));
+                        rs.getString(9));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -232,7 +226,8 @@ public class DAOProfile extends DBConnect {
             state.setString(2, "%" + name + "%");
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Profile(rs.getString(1),
+                list.add(new Profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -240,8 +235,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -274,8 +268,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -286,7 +279,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public List<Profile> searchStaff3(String name, String profile_id) {
         String sql = "select * from profile where first_name + last_name like "
                 + "? and report_to = ?";
@@ -298,7 +291,8 @@ public class DAOProfile extends DBConnect {
             state.setString(2, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Profile(rs.getString(1),
+                list.add(new Profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -306,8 +300,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -318,7 +311,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public List<Profile> searchStaff4(String name, int department, String profile_id) {
         String sql = "select * from profile where first_name + last_name like "
                 + "? and report_to = ? and department_id = ?";
@@ -331,7 +324,8 @@ public class DAOProfile extends DBConnect {
             state.setInt(3, department);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Profile(rs.getString(1),
+                list.add(new Profile(
+                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -339,8 +333,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getDouble(9),
-                        rs.getString(10)));
+                        rs.getString(9)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -367,5 +360,5 @@ public class DAOProfile extends DBConnect {
 //        String StringA = "      Nguyen Van A  ";
 //        String StringB = "BBBB";
 //        System.out.println(StringB+StringA.trim());
-    } 
+    }
 }

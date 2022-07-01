@@ -21,8 +21,7 @@ CREATE TABLE [profile] (
 	phone_number VARCHAR (20) NULL,
 	hire_date VARCHAR (20) NOT NULL,
 	job_id INT NULL,
-	department_id INT NULL,	
-	salary DECIMAL (8, 2) NOT NULL,
+	department_id INT NULL,
 	report_to CHAR(5) NULL,
 	FOREIGN KEY (job_id) REFERENCES jobs (job_id),
 	FOREIGN KEY (department_id) REFERENCES departments (department_id),
@@ -38,9 +37,11 @@ CREATE TABLE [account] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
+--drop table salary
 CREATE TABLE [salary] (
     profile_id CHAR(5),
 	basic_salary DECIMAL (8, 2) NOT NULL,
+	DA DECIMAL (8, 2) DEFAULT NULL,
 	HRA DECIMAL (8, 2) DEFAULT NULL,
 	conveyance DECIMAL (8, 2) DEFAULT NULL,
 	allowance DECIMAL (8, 2) DEFAULT NULL,
@@ -51,6 +52,7 @@ CREATE TABLE [salary] (
 	leave DECIMAL (8, 2) DEFAULT NULL,
 	loan DECIMAL (8, 2) DEFAULT NULL,
 	professional_tax DECIMAL (8, 2) DEFAULT NULL,
+	create_date varchar(20) NOT NULL
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 

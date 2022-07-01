@@ -84,7 +84,7 @@ public class ControllerManager extends HttpServlet {
                     listPj = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", listPj);
-                
+
                 // attendance 
                 if (service.equals("attendance")) {
                     List<Attendance> listAttendance = daoAttendance.listAll(acc.getProfile_id());
@@ -221,7 +221,7 @@ public class ControllerManager extends HttpServlet {
                         dispath.forward(request, response);
                     }
                 }
-                
+
                 // homepage
                 if (service.equals("dashboard")) {
                     RequestDispatcher dispath = request.getRequestDispatcher("manager-dashboard.jsp");
@@ -318,11 +318,10 @@ public class ControllerManager extends HttpServlet {
                     String ReportsTo = request.getParameter("ReportsTo");
                     int job_id = Integer.parseInt(request.getParameter("job_id"));
                     int department_id = Integer.parseInt(request.getParameter("department_id"));
-                    double salary = 0;
 
                     Profile pro = new Profile(profile_id, first_name, last_name,
                             email, phone_number, hire_date, job_id, department_id,
-                            salary, ReportsTo);
+                            ReportsTo);
                     boolean statusPro = daoProfile.addStaff(pro);
                     daoSchedule.addSchedule(profile_id, " ");
                     if (statusPro) {
@@ -389,7 +388,7 @@ public class ControllerManager extends HttpServlet {
 //                    out.print(hire_date);
                     boolean statusPro = daoProfile.editStaff(new Profile(profile_id,
                             first_name, last_name, email, phone_number, hire_date,
-                            job_id, department_id, salary, ReportsTo));
+                            job_id, department_id, ReportsTo));
                     if (statusPro) {
                         System.out.println("Successfully edited Staff with profile_id = " + profile_id);
                     } else {

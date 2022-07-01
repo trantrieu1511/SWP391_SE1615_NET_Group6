@@ -17,11 +17,11 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOAccount extends DBConnect {
-    
+
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-    
+
     public Account login(String user, String pass) {
         String sql = "select * from [account] where [username] = ? and [password] = ?";
         try {
@@ -47,7 +47,7 @@ public class DAOAccount extends DBConnect {
         }
         return null;
     }
-    
+
     public Account getAccount(String profile_id) {
         String sql = "select * from [account] where profile_id = ?";
         try {
@@ -72,7 +72,7 @@ public class DAOAccount extends DBConnect {
         }
         return null;
     }
-    
+
     public List<Account> getAccountwithList(String profile_id) {
         List<Account> list = new ArrayList<>();
         String sql = "select * from [account] where profile_id = ?";
@@ -98,7 +98,7 @@ public class DAOAccount extends DBConnect {
         }
         return list;
     }
-    
+
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isadmin, ismanager)"
                 + "values(?,?,?,?,?)";
@@ -120,7 +120,7 @@ public class DAOAccount extends DBConnect {
         }
         return true;
     }
-    
+
     public boolean editAccount(String profile_id, String username, String password) {
         String sql = "update account set username=?, password=? where profile_id=?";
         try {
@@ -139,7 +139,7 @@ public class DAOAccount extends DBConnect {
         }
         return true;
     }
-    
+
     public boolean deleteAccount(String profile_id) {
         String sql = "delete from account where profile_id = ?";
         try {
@@ -156,7 +156,7 @@ public class DAOAccount extends DBConnect {
         }
         return true;
     }
-    
+
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
         dao.addAccount("12345", "1", "1");

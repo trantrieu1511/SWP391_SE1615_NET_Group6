@@ -10,13 +10,13 @@ package entity;
  * @author DELL
  */
 public class Profile {
+
     String profile_id, first_name, last_name, email, phone_number;
     String hire_date;
     int job_id;
     String job_title;
     int department_id;
     String department_name;
-    double salary;
     String reportto;
     String user_display;
     String pass_display;
@@ -26,7 +26,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, String department_name, double salary, String reportto) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, String department_name, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -37,11 +37,10 @@ public class Profile {
         this.job_title = job_title;
         this.department_id = department_id;
         this.department_name = department_name;
-        this.salary = salary;
         this.reportto = reportto;
     }
 
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, double salary, String reportto) {
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -50,11 +49,8 @@ public class Profile {
         this.hire_date = hire_date;
         this.job_id = job_id;
         this.department_id = department_id;
-        this.salary = salary;
         this.reportto = reportto;
     }
-
-    
 
     public String getProfile_id() {
         return profile_id;
@@ -128,14 +124,6 @@ public class Profile {
         this.job_title = job_title;
     }
 
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
     public String getReportto() {
         return reportto;
     }
@@ -186,8 +174,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", job_title=" + job_title + ", department_id=" + department_id + ", department_name=" + department_name + ", salary=" + salary + ", reportto=" + reportto + '}';
+        return "profile{" + "profile_id=" + profile_id + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", phone_number=" + phone_number + ", hire_date=" + hire_date + ", job_id=" + job_id + ", job_title=" + job_title + ", department_id=" + department_id + ", department_name=" + department_name + ", reportto=" + reportto + '}';
     }
 
-   
 }

@@ -119,4 +119,60 @@ public class DAOAttendanceTest {
     public void testSearch2() {
         assertEquals("[]", dao.search("00/00/0000", "00000").toString());
     }
+
+    /**
+     * Test of add method, of class DAOAttendance.
+     */
+    @Test
+    public void testAdd() {
+    }
+
+    /**
+     * Test of getLastest method, of class DAOAttendance.
+     */
+    @Test
+    public void testGetLastest() {
+    }
+
+    /**
+     * Test of update method, of class DAOAttendance.
+     */
+    @Test
+    public void testUpdate() {
+    }
+
+    /**
+     * Test of listAll method, of class DAOAttendance.
+     */
+    @Test
+    public void testListAll() {
+    }
+
+    /**
+     * Test of listAllAttendanceofAnEmployee method, of class DAOAttendance.
+     */
+    @Test
+    public void testListAllAttendanceofAnEmployee() {
+    }
+
+    /**
+     * Test of search method, of class DAOAttendance.
+     */
+    @Test
+    public void testSearch() {
+    }
+
+    /**
+     * Test of todayAttendance method, of class DAOAttendance.
+     */
+    @Test
+    public void testTodayAttendance() {
+    }
+
+    /**
+     * Test of main method, of class DAOAttendance.
+     */
+    @Test
+    public void testMain() {
+    }
 }

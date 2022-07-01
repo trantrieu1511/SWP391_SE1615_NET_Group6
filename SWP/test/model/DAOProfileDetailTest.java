@@ -44,5 +44,19 @@ public class DAOProfileDetailTest {
     @Test
     public void testDeleteProfileDetail() {
     }
+
+    /**
+     * Test of editProfileInfo method, of class DAOProfileDetail.
+     */
+    @Test
+    public void testEditProfileInfo() {
+    }
+
+    /**
+     * Test of editPersonalInfo method, of class DAOProfileDetail.
+     */
+    @Test
+    public void testEditPersonalInfo() {
+    }
     
 }

@@ -44,5 +44,19 @@ public class DAOExperienceTest {
     @Test
     public void testDeleteExperience() {
     }
+
+    /**
+     * Test of editExperience method, of class DAOExperience.
+     */
+    @Test
+    public void testEditExperience() {
+    }
+
+    /**
+     * Test of deleteAllExperience method, of class DAOExperience.
+     */
+    @Test
+    public void testDeleteAllExperience() {
+    }
     
 }

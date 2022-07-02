@@ -571,16 +571,16 @@
                                                 <ul class="personal-info">                                                    
                                                     <li>
                                                         <div class="title" style="margin-right: 0px">Username:</div>
-                                                        <div class="text">${account.user}</div>
+                                                        <div class="text">${acc.user}</div>
                                                     </li>
                                                     <li>
                                                         <div class="title" style="margin-right: 0px">Password</div>
                                                         <c:choose>
-                                                            <c:when test="${account.pass!=sessionScope.acc.pass}">
+                                                            <c:when test="${acc.pass!=sessionScope.acc.pass}">
                                                                 <div class="text">*************************</div>
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <div class="text">${account.pass}</div>
+                                                                <div class="text">${acc.pass}</div>
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </li>

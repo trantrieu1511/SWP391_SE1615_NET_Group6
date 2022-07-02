@@ -52,6 +52,12 @@ public class Profile {
         this.reportto = reportto;
     }
 
+    public Profile(String profile_id, String first_name, String last_name) {//constructor for choose staff option in add Salary
+        this.profile_id = profile_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public String getProfile_id() {
         return profile_id;
     }

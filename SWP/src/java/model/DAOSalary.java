@@ -31,7 +31,7 @@ public class DAOSalary extends DBConnect {
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1"
+                + "where a.isadmin != 1\n"
                 + "order by p.profile_id asc";
         List<Salary> list = new ArrayList<>();
         try {
@@ -48,7 +48,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(6),
                         rs.getInt(7),
                         rs.getInt(8),
-                        rs.getString(8),
+                        rs.getString(9),
                         rs.getDouble(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
@@ -65,6 +65,151 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> listIndividualSalaryAndProfile(String profile_id) {
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin != 1\n"
+                + "and p.profile_id = ?\n"
+                + "order by p.profile_id asc";
+        List<Salary> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> listStaffNeedSalary() {
+        String sql = "select p.profile_id, p.first_name, p.last_name, s.basic_salary\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0 \n"
+                + "and s.basic_salary is null\n"
+                + "order by p.profile_id asc";
+        List<Salary> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4))
+                );
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate(String erole, String ename, String from, String to) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and a.ismanager = ?\n"
+                + "and p.first_name + p.last_name like ?\n"
+                + "and s.create_date BETWEEN ? and ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, erole);
+            state.setString(2, "%" + ename + "%");
+            state.setString(3, from);
+            state.setString(4, to);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -96,20 +241,28 @@ public class DAOSalary extends DBConnect {
             while (rs.next()) {
                 list.add(new Salary(
                         rs.getString(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getDouble(7),
-                        rs.getDouble(8),
-                        rs.getDouble(9),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
                         rs.getDouble(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
                         rs.getDouble(14),
-                        rs.getString(15)
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
                 ));
             }
 
@@ -123,7 +276,7 @@ public class DAOSalary extends DBConnect {
         return list;
     }
 
-    public List<Salary> searchEmployeeSalaryWithCreateDate(String erole, String ename, String from, String to) {
+    public List<Salary> searchEmployeeSalaryWithCreateDate2(String ename, String from, String to) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
@@ -132,35 +285,377 @@ public class DAOSalary extends DBConnect {
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
-                + "and a.ismanager = ?\n"
+                + "where a.isadmin = 0\n"
                 + "and p.first_name + p.last_name like ?\n"
                 + "and s.create_date BETWEEN ? and ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, "%" + ename + "%");
+            state.setString(2, from);
+            state.setString(3, to);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate3(String erole, String ename, String from) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and a.ismanager = ?\n"
+                + "and p.first_name + p.last_name like ?\n"
+                + "and s.create_date >= ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, erole);
             state.setString(2, "%" + ename + "%");
             state.setString(3, from);
-            state.setString(4, to);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
                         rs.getString(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getDouble(7),
-                        rs.getDouble(8),
-                        rs.getDouble(9),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
                         rs.getDouble(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
                         rs.getDouble(14),
-                        rs.getString(15)
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate4(String from, String to) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and s.create_date BETWEEN ? and ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, from);
+            state.setString(2, to);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate5(String erole, String from, String to) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and a.ismanager = ?\n"
+                + "and s.create_date BETWEEN ? and ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, erole);
+            state.setString(2, from);
+            state.setString(3, to);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate6(String erole, String from) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and a.ismanager = ?\n"
+                + "and s.create_date >= ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, erole);
+            state.setString(2, from);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithCreateDate7(String ename, String from) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and p.first_name + p.last_name like ?\n"
+                + "and s.create_date >= ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, ename);
+            state.setString(2, from);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
+                ));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Salary> searchEmployeeSalaryWithFromOnly(String from) {
+        List<Salary> list = new ArrayList<>();
+        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+                + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
+                + "s.create_date\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin = 0\n"
+                + "and s.create_date >= ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, from);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11),
+                        rs.getDouble(12),
+                        rs.getDouble(13),
+                        rs.getDouble(14),
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
                 ));
             }
 
@@ -183,8 +678,8 @@ public class DAOSalary extends DBConnect {
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
-                + "and p.first_name + p.last_name like ?\n";
+                + "where a.isadmin = 0\n"
+                + "and p.first_name + p.last_name like ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -193,20 +688,28 @@ public class DAOSalary extends DBConnect {
             while (rs.next()) {
                 list.add(new Salary(
                         rs.getString(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getDouble(7),
-                        rs.getDouble(8),
-                        rs.getDouble(9),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
                         rs.getDouble(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
                         rs.getDouble(14),
-                        rs.getString(15)
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
                 ));
             }
 
@@ -229,8 +732,8 @@ public class DAOSalary extends DBConnect {
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
-                + "and p.first_name + p.last_name like ?\n";
+                + "where a.isadmin = 0\n"
+                + "and a.ismanager = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -239,20 +742,28 @@ public class DAOSalary extends DBConnect {
             while (rs.next()) {
                 list.add(new Salary(
                         rs.getString(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getDouble(7),
-                        rs.getDouble(8),
-                        rs.getDouble(9),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getInt(8),
+                        rs.getString(9),
                         rs.getDouble(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
                         rs.getDouble(14),
-                        rs.getString(15)
+                        rs.getDouble(15),
+                        rs.getDouble(16),
+                        rs.getDouble(17),
+                        rs.getDouble(18),
+                        rs.getDouble(19),
+                        rs.getDouble(20),
+                        rs.getDouble(21),
+                        rs.getDouble(22),
+                        rs.getString(23)
                 ));
             }
 
@@ -395,4 +906,19 @@ public class DAOSalary extends DBConnect {
         return n;
     }
 
+    public static void main(String[] args) {
+        DAOSalary daoSalary = new DAOSalary();
+//        String abc = "abc";
+//        String xyz = "";
+//        if (!abc.equals("") && xyz.equals("")) {
+//            System.out.println("dung r");
+//        } else {
+//            System.out.println("vao truong hop khac roi");
+//        }
+
+        List<Salary> list = daoSalary.listIndividualSalaryAndProfile("ABCDE");
+        for (Salary salary : list) {
+            System.out.println(salary.toString());
+        }
+    }
 }

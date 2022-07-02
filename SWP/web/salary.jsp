@@ -170,74 +170,79 @@
                         <!-- /Page Header -->
 
                         <!-- Search Filter -->
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="ename">
-                                    <label class="focus-label">Employee Name</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating" name="erole"> 
-                                        <option value=""> -- Select -- </option>
-                                        <option value="false">Staff</option>
-                                        <option value="true">Manager</option>
-                                    </select>
-                                    <label class="focus-label">Role</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option> -- Select -- </option>
-                                        <option> Pending </option>
-                                        <option> Approved </option>
-                                        <option> Rejected </option>
-                                    </select>
-                                    <label class="focus-label">Leave Status</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" name="from">
+                        <form action="salary?do=filter" method="post">
+                            <div class="row filter-row">
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="ename">
+                                        <label class="focus-label">Employee Name</label>
                                     </div>
-                                    <label class="focus-label">From</label>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" name="to">
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating" name="erole"> 
+                                            <option value="" selected=""> -- Select -- </option>
+                                            <option value="false">Staff</option>
+                                            <option value="true">Manager</option>
+                                        </select>
+                                        <label class="focus-label">Role</label>
                                     </div>
-                                    <label class="focus-label">To</label>
                                 </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating"> 
+                                            <option> -- Select -- </option>
+                                            <option> Pending </option>
+                                            <option> Approved </option>
+                                            <option> Rejected </option>
+                                        </select>
+                                        <label class="focus-label">Leave Status</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                                    <div class="form-group form-focus">
+                                        <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" type="text" name="from">
+                                        </div>
+                                        <label class="focus-label">From</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
+                                    <div class="form-group form-focus">
+                                        <div class="cal-icon">
+                                            <input class="form-control floating datetimepicker" type="text" name="to">
+                                        </div>
+                                        <label class="focus-label">To</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                                    <input type="submit" class="btn btn-success btn-block" value="Search"> 
+                                </div>     
                             </div>
-                            <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
-                                <a href="#" class="btn btn-success btn-block"> Search </a>  
-                            </div>     
-                        </div>
+                        </form>
                         <!-- /Search Filter -->
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-striped custom-table datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee</th>
-                                                <th>Employee ID</th>
-                                                <th>Email</th>
-                                                <th>Join Date</th>
-                                                <th>Role</th>
-                                                <th>Designation</th>
-                                                <th>Salary</th>
-                                                <th>Payslip</th>
-                                                <th class="text-right">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                    <c:if test="${filter == 'no'}">
+                                        <h4><a href="salary?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
+                                    <thead>
+                                        <tr>
+                                            <th>Employee</th>
+                                            <th>Employee ID</th>
+                                            <th>Email</th>
+                                            <th>Join Date</th>
+                                            <th>Role</th>
+                                            <th>Designation</th>
+                                            <th>Salary</th>
+                                            <th>Payslip</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach items="${profile}" var="p">
                                             <tr>
                                                 <td>
@@ -304,7 +309,7 @@
                                             <div class="form-group">
                                                 <label>Select Staff</label>
                                                 <select class="select" name="profile_id"> 
-                                                    <c:forEach items="${profile}" var="p">
+                                                    <c:forEach items="${needsalary}" var="p">
                                                         <option value="${p.profile_id}">${p.first_name} ${p.last_name}</option>
                                                     </c:forEach>
                                                 </select>

@@ -15,6 +15,7 @@ public class Salary extends Profile {
     public double basic_salary, DA, HRA, conveyance, allowance, medical_allowance,
             TDS, ESI, PF, leave, loan, professional_tax,
             net_salary; //net salary will be actual employee's salary earned
+    //(nếu ai làm phần gì mà cần đến salary của employee thì lấy net_salary nhé - Triệu)
     public String create_date;
 
     public Salary() {
@@ -37,6 +38,12 @@ public class Salary extends Profile {
         this.professional_tax = professional_tax;
         this.net_salary = net_salary;
         this.create_date = create_date;
+    }
+
+    //constructor for choose staff option in add Salary
+    public Salary(String profile_id, String first_name, String last_name, double basic_salary) {
+        super(profile_id, first_name, last_name);
+        this.basic_salary = basic_salary;
     }
 
     //get net_salary constructor
@@ -215,7 +222,7 @@ public class Salary extends Profile {
 
     @Override
     public String toString() {
-        return "Salary{" + "profile_id=" + profile_id + ", basic_salary=" + basic_salary + ", DA=" + DA + ", HRA=" + HRA + ", conveyance=" + conveyance + ", allowance=" + allowance + ", medical_allowance=" + medical_allowance + ", TDS=" + TDS + ", ESI=" + ESI + ", PF=" + PF + ", leave=" + leave + ", loan=" + loan + ", professional_tax=" + professional_tax + ", net_salary=" + net_salary + ", create_date=" + create_date + '}';
+        return super.toString() + " Salary{" + "profile_id=" + profile_id + ", basic_salary=" + basic_salary + ", DA=" + DA + ", HRA=" + HRA + ", conveyance=" + conveyance + ", allowance=" + allowance + ", medical_allowance=" + medical_allowance + ", TDS=" + TDS + ", ESI=" + ESI + ", PF=" + PF + ", leave=" + leave + ", loan=" + loan + ", professional_tax=" + professional_tax + ", net_salary=" + net_salary + ", create_date=" + create_date + '}';
     }
 
 }

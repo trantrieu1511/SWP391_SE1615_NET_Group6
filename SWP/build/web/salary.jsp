@@ -88,7 +88,10 @@
                     var leave = myArray[9];
                     var loan = myArray[10];
                     var professional_tax = myArray[11];
-                    document.getElementById('profile_id').value = id;
+                    var first_name = myArray[12];
+                    var last_name = myArray[13];
+
+                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
                     $(e.currentTarget).find('input[name="basic_salary"]').val(basic_salary);
                     $(e.currentTarget).find('input[name="DA"]').val(DA);
                     $(e.currentTarget).find('input[name="HRA"]').val(HRA);
@@ -101,6 +104,7 @@
                     $(e.currentTarget).find('input[name="leave"]').val(leave);
                     $(e.currentTarget).find('input[name="loan"]').val(loan);
                     $(e.currentTarget).find('input[name="professional_tax"]').val(professional_tax);
+                    $(e.currentTarget).find('input[name="name"]').val(first_name + " " + last_name);
                 });
             });
 
@@ -169,16 +173,16 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
+                                    <input type="text" class="form-control floating" name="ename">
                                     <label class="focus-label">Employee Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
+                                    <select class="select floating" name="erole"> 
                                         <option value=""> -- Select -- </option>
-                                        <option value="">Employee</option>
-                                        <option value="1">Manager</option>
+                                        <option value="false">Staff</option>
+                                        <option value="true">Manager</option>
                                     </select>
                                     <label class="focus-label">Role</label>
                                 </div>
@@ -197,7 +201,7 @@
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
+                                        <input class="form-control floating datetimepicker" type="text" name="from">
                                     </div>
                                     <label class="focus-label">From</label>
                                 </div>
@@ -205,7 +209,7 @@
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
+                                        <input class="form-control floating datetimepicker" type="text" name="to">
                                     </div>
                                     <label class="focus-label">To</label>
                                 </div>
@@ -254,13 +258,20 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <td>${p.job_title}</td>
-                                                <td>${p.net_salary}</td>
-                                                <td><a class="btn btn-sm btn-primary" href="salary-view.jsp">Generate Slip</a></td>
+                                                <c:choose>
+                                                    <c:when test="${p.net_salary==0}">
+                                                        <td>Not Available</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td>${p.net_salary}</td>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <td><a class="btn btn-sm btn-primary" href="salary?do=payslip&profile_id=${p.profile_id}">Generate Slip</a></td>
                                                 <td class="text-right">
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" profile-id="${p.profile_id}" data-id="${p.basic_salary} ${p.DA} ${p.HRA} ${p.conveyance} ${p.allowance} ${p.medical_allowance} ${p.TDS} ${p.ESI} ${p.PF} ${p.leave} ${p.loan} ${p.professional_tax}" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-toggle="modal" profile-id="${p.profile_id}" data-id="${p.basic_salary} ${p.DA} ${p.HRA} ${p.conveyance} ${p.allowance} ${p.medical_allowance} ${p.TDS} ${p.ESI} ${p.PF} ${p.leave} ${p.loan} ${p.professional_tax} ${p.first_name} ${p.last_name}" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-id="${p.profile_id}" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
@@ -404,12 +415,14 @@
                                     <div class="row"> 
                                         <div class="col-sm-6"> 
                                             <div class="form-group">
-                                                <label>Select Staff</label>
-                                                <select class="form-control" name="profile_id" id="profile_id"> 
-                                                    <c:forEach items="${profile}" var="p">
-                                                        <option value="${p.profile_id}">${p.first_name} ${p.last_name}</option>
-                                                    </c:forEach>
-                                                </select>
+                                                <label>Staff Info</label>
+                                                <input class="form-control" type="hidden" name="profile_id" readonly="">
+                                                <input class="form-control" type="text" name="name" readonly="">
+                                                <!--                                                <select class="form-control" name="profile_id" id="profile_id"> 
+                                                <%--<c:forEach items="${profile}" var="p">--%>
+                                                    <option value="${p.profile_id}">${p.first_name} ${p.last_name}</option>
+                                                <%--</c:forEach>--%>
+                                            </select>-->
                                             </div>
                                         </div>
                                         <!--                                        <div class="col-sm-6"> 

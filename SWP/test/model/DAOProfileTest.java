@@ -81,13 +81,6 @@ public class DAOProfileTest {
     }
 
     /**
-     * Test of main method, of class DAOProfile.
-     */
-    @Test
-    public void testMain() {
-    }
-
-    /**
      * Test of searchStaff3 method, of class DAOProfile.
      */
     @Test
@@ -99,6 +92,13 @@ public class DAOProfileTest {
      */
     @Test
     public void testSearchStaff4() {
+    }
+
+    /**
+     * Test of main method, of class DAOProfile.
+     */
+    @Test
+    public void testMain() {
     }
     
 }

@@ -568,24 +568,22 @@
                                         <div class="card-body">
                                             <h3 class="card-title">Account</h3>
                                             <div class="personal-info">
-                                                <ul class="personal-info">
-                                                    <c:forEach items="${listacc}" var="acc">
-                                                        <li>
-                                                            <div class="title" style="margin-right: 0px">Username:</div>
-                                                            <div class="text">${acc.user}</div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="title" style="margin-right: 0px">Password</div>
-                                                            <c:choose>
-                                                                <c:when test="${acc.pass!=sessionScope.acc.pass}">
-                                                                    <div class="text">*************************</div>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <div class="text">${acc.pass}</div>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </li>
-                                                    </c:forEach>
+                                                <ul class="personal-info">                                                    
+                                                    <li>
+                                                        <div class="title" style="margin-right: 0px">Username:</div>
+                                                        <div class="text">${account.user}</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title" style="margin-right: 0px">Password</div>
+                                                        <c:choose>
+                                                            <c:when test="${account.pass!=sessionScope.acc.pass}">
+                                                                <div class="text">*************************</div>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <div class="text">${account.pass}</div>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>

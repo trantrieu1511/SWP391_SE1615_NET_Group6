@@ -32,13 +32,6 @@ public class DAOFamilyInfoTest {
     }
 
     /**
-     * Test of main method, of class DAOFamilyInfo.
-     */
-    @Test
-    public void testMain() {
-    }
-
-    /**
      * Test of deleteFamilyInfo method, of class DAOFamilyInfo.
      */
     @Test
@@ -57,6 +50,13 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testEditFamilyInfo() {
+    }
+
+    /**
+     * Test of main method, of class DAOFamilyInfo.
+     */
+    @Test
+    public void testMain() {
     }
     
 }

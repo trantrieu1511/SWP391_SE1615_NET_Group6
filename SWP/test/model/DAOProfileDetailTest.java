@@ -32,20 +32,6 @@ public class DAOProfileDetailTest {
     }
 
     /**
-     * Test of main method, of class DAOProfileDetail.
-     */
-    @Test
-    public void testMain() {
-    }
-
-    /**
-     * Test of deleteProfileDetail method, of class DAOProfileDetail.
-     */
-    @Test
-    public void testDeleteProfileDetail() {
-    }
-
-    /**
      * Test of editProfileInfo method, of class DAOProfileDetail.
      */
     @Test
@@ -57,6 +43,20 @@ public class DAOProfileDetailTest {
      */
     @Test
     public void testEditPersonalInfo() {
+    }
+
+    /**
+     * Test of deleteProfileDetail method, of class DAOProfileDetail.
+     */
+    @Test
+    public void testDeleteProfileDetail() {
+    }
+
+    /**
+     * Test of main method, of class DAOProfileDetail.
+     */
+    @Test
+    public void testMain() {
     }
     
 }

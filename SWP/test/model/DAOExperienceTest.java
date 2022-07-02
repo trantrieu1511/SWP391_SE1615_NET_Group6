@@ -32,10 +32,10 @@ public class DAOExperienceTest {
     }
 
     /**
-     * Test of main method, of class DAOExperience.
+     * Test of editExperience method, of class DAOExperience.
      */
     @Test
-    public void testMain() {
+    public void testEditExperience() {
     }
 
     /**
@@ -46,17 +46,17 @@ public class DAOExperienceTest {
     }
 
     /**
-     * Test of editExperience method, of class DAOExperience.
-     */
-    @Test
-    public void testEditExperience() {
-    }
-
-    /**
      * Test of deleteAllExperience method, of class DAOExperience.
      */
     @Test
     public void testDeleteAllExperience() {
+    }
+
+    /**
+     * Test of main method, of class DAOExperience.
+     */
+    @Test
+    public void testMain() {
     }
     
 }

@@ -78,7 +78,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -88,7 +88,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -98,7 +98,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -108,7 +108,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -118,7 +118,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -128,7 +128,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -138,7 +138,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -148,7 +148,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -158,7 +158,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -168,7 +168,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -178,7 +178,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -188,7 +188,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -198,7 +198,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -208,7 +208,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -218,7 +218,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -228,7 +228,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -238,7 +238,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(acc.getProfile_id());
                         List<Experience> listExp = daoExp.listIndividualExperience(acc.getProfile_id());
-                        List<Account> listAcc = daoAcc.getAccountwithList(acc.getProfile_id());
+                        Account account = daoAcc.getAccount(acc.getProfile_id());
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -248,7 +248,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -270,7 +270,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -280,7 +280,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -291,7 +291,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -301,7 +301,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -312,7 +312,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -322,7 +322,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -333,7 +333,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -343,7 +343,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -354,7 +354,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -364,7 +364,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -375,7 +375,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -385,7 +385,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -396,7 +396,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -406,7 +406,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -417,7 +417,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -427,7 +427,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);
@@ -438,7 +438,7 @@ public class ControllerProfile extends HttpServlet {
                         List<ProfileDetail> listPd = daoPd.getIndividualProfileDetail(profile_id);
                         List<FamilyInfo> listF = daoF.getIndividualFamilyInfo(profile_id);
                         List<Experience> listExp = daoExp.listIndividualExperience(profile_id);
-                        List<Account> listAcc = daoAcc.getAccountwithList(profile_id);
+                        Account account = daoAcc.getAccount(profile_id);
                         for (Profile p : listPf) {
                             p.setJob_title(daoJ.getJobById(p.getJob_id()).getTitle());
                             p.setDepartment_name(daoDp.getDepartmentByID(p.getDepartment_id()).getName());
@@ -448,7 +448,7 @@ public class ControllerProfile extends HttpServlet {
                         request.setAttribute("listpd", listPd);
                         request.setAttribute("listf", listF);
                         request.setAttribute("listexp", listExp);
-                        request.setAttribute("listacc", listAcc);
+                        request.setAttribute("acc", account);
 
                         RequestDispatcher dispatch = request.getRequestDispatcher("profile.jsp");
                         dispatch.forward(request, response);

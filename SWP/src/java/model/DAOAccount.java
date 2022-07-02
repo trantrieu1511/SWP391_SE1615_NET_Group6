@@ -73,31 +73,31 @@ public class DAOAccount extends DBConnect {
         return null;
     }
 
-    public List<Account> getAccountwithList(String profile_id) {
-        List<Account> list = new ArrayList<>();
-        String sql = "select * from [account] where profile_id = ?";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.setString(1, profile_id);
-            rs = state.executeQuery();
-            while (rs.next()) {
-                list.add(new Account(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getBoolean(5)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closeResultSet(rs);
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return list;
-    }
+//    public List<Account> getAccountwithList(String profile_id) {
+//        List<Account> list = new ArrayList<>();
+//        String sql = "select * from [account] where profile_id = ?";
+//        try {
+//            conn = getConnection();
+//            state = conn.prepareStatement(sql);
+//            state.setString(1, profile_id);
+//            rs = state.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Account(
+//                        rs.getString(1),
+//                        rs.getString(2),
+//                        rs.getString(3),
+//                        rs.getBoolean(4),
+//                        rs.getBoolean(5)));
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            closeResultSet(rs);
+//            closePrepareStatement(state);
+//            closeConnection(conn);
+//        }
+//        return list;
+//    }
 
     public boolean addAccount(String profile_id, String username, String password) {
         String sql = "insert into account(profile_id, username, password, isadmin, ismanager)"
@@ -159,7 +159,7 @@ public class DAOAccount extends DBConnect {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-        dao.addAccount("12345", "1", "1");
+        System.out.println(dao.login("ABC", "123456"));
     }
 
 }

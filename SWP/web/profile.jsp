@@ -169,96 +169,93 @@
                                                 <div class="row">                                            
                                                     <div class="col-md-5">
                                                         <div class="profile-info-left">
-                                                            <h3 class="user-name m-t-0 mb-0">${profile.first_name} ${profile.last_name}</h3>
-                                                            <h6 class="text-muted">${profile.department_name}</h6>
-                                                            <small class="text-muted">${profile.job_title}</small>
-                                                            <div class="staff-id">Employee ID : ${profile.profile_id}</div>
-                                                            <div class="small doj text-muted">Date of Join : ${profile.hire_date}</div>
-                                                            <!--<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>-->
-                                                        </div>
-                                                    </div>                                             
+                                                            <h3 class="user-name m-t-0 mb-0">${p.first_name} ${p.last_name}</h3>
+                                                        <h6 class="text-muted">${p.department_name}</h6>
+                                                        <small class="text-muted">${p.job_title}</small>
+                                                        <div class="staff-id">Employee ID : ${p.profile_id}</div>
+                                                        <div class="small doj text-muted">Date of Join : ${p.hire_date}</div>
+                                                        <!--<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>-->
+                                                    </div>
+                                                </div>                                             
                                                 <div class="col-md-7">
                                                     <ul class="personal-info">
-                                                        <c:forEach items="${listp}" var="p">
-                                                            <li>
-                                                                <div class="title">Phone:</div>
-                                                                <c:choose>
-                                                                    <c:when test="${p.phone_number == ''}">
-                                                                        <div class="text">N/A</div>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <div class="text">${p.phone_number}</a></div>
-                                                                        </c:otherwise> 
-                                                                    </c:choose>
-                                                            </li>
-                                                            <li>
-                                                                <div class="title">Email:</div>
-                                                                <div class="text">${p.email}</a></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="title">Birthday:</div>
-                                                                <div class="text">${pd.dob}</div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="title">Address:</div>
-                                                                <div class="text">${pd.address}</div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="title">Gender:</div>
-                                                                <c:choose>
-                                                                    <c:when test="${pd.gender == true}">
-                                                                        <div class="text">Male</div>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <div class="text">Female</div>
+                                                        <li>
+                                                            <div class="title">Phone:</div>
+                                                            <c:choose>
+                                                                <c:when test="${p.phone_number == ''}">
+                                                                    <div class="text">N/A</div>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div class="text">${p.phone_number}</a></div>
                                                                     </c:otherwise> 
                                                                 </c:choose>
-                                                            </li>
-                                                            <li>
-                                                                <c:choose>
-                                                                    <c:when test="${p.reportto == null}">
-                                                                        <div class="title">Reports to:</div>
-                                                                        <div class="text">N/A</div>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <div class="title">Reports to:</div>
-                                                                        <div class="text">
-                                                                            <div class="avatar-box">
-                                                                                <div class="avatar avatar-xs">
-                                                                                    <img src="img/profiles/avatar-16.jpg" alt="">
-                                                                                </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Email:</div>
+                                                            <div class="text">${p.email}</a></div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Birthday:</div>
+                                                            <div class="text">${pd.dob}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Address:</div>
+                                                            <div class="text">${pd.address}</div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="title">Gender:</div>
+                                                            <c:choose>
+                                                                <c:when test="${pd.gender == true}">
+                                                                    <div class="text">Male</div>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div class="text">Female</div>
+                                                                </c:otherwise> 
+                                                            </c:choose>
+                                                        </li>
+                                                        <li>
+                                                            <c:choose>
+                                                                <c:when test="${p.reportto == null}">
+                                                                    <div class="title">Reports to:</div>
+                                                                    <div class="text">N/A</div>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div class="title">Reports to:</div>
+                                                                    <div class="text">
+                                                                        <div class="avatar-box">
+                                                                            <div class="avatar avatar-xs">
+                                                                                <img src="img/profiles/avatar-16.jpg" alt="">
                                                                             </div>
-                                                                            <c:choose>
-                                                                                <c:when test="${(p.reportto!=sessionScope.acc.profile_id)}">
-                                                                                    <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
-                                                                                        ${p.reportto}
-                                                                                    </a>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                    <a href="profile?do=getmyProfile">
-                                                                                        ${p.reportto}
-                                                                                    </a>    
-                                                                                </c:otherwise>
-                                                                            </c:choose>
                                                                         </div>
-                                                                    </c:otherwise> 
-                                                                </c:choose>
-                                                            </li>
-                                                        </c:forEach>
+                                                                        <c:choose>
+                                                                            <c:when test="${(p.reportto!=sessionScope.acc.profile_id)}">
+                                                                                <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
+                                                                                    ${p.reportto}
+                                                                                </a>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <a href="profile?do=getmyProfile">
+                                                                                    ${p.reportto}
+                                                                                </a>    
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </div>
+                                                                </c:otherwise> 
+                                                            </c:choose>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <c:forEach items="${listp}" var="p">
-                                            <c:choose>
-                                                <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                    <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#" ><i class="fa fa-pencil"></i></a></div>
-                                                        </c:when>
-                                                        <c:otherwise>
 
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:forEach>
+                                        <c:choose>
+                                            <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#" ><i class="fa fa-pencil"></i></a></div>
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -286,16 +283,14 @@
                                     <div class="card profile-box flex-fill">
                                         <div class="card-body">
                                             <h3 class="card-title">Personal Informations 
-                                                <c:forEach items="${listp}" var="p">
-                                                    <c:choose>
-                                                        <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
-                                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
-                                                            </c:when>
-                                                            <c:otherwise>
+                                                <c:choose>
+                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
+                                                        </c:when>
+                                                        <c:otherwise>
 
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
 
 
                                             </h3>
@@ -433,17 +428,15 @@
                                     <div class="card profile-box flex-fill">
                                         <div class="card-body">
                                             <h3 class="card-title">Experience 
-                                                <c:forEach items="${listp}" var="p">
-                                                    <c:choose>
-                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
+                                                <c:choose>
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
 
-                                                        </c:when>
-                                                        <c:otherwise>
+                                                    </c:when>
+                                                    <c:otherwise>
 
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
 
                                             </h3>
                                             <div class="experience-box">
@@ -457,25 +450,23 @@
                                                                 <div class="timeline-content">
                                                                     <a href="#/" class="name">${e.role}</a>
                                                                     <span class="time">${e.start_date} - Present (${e.end_date})</span>
-                                                                    <c:forEach items="${listp}" var="p">
-                                                                        <c:choose>
-                                                                            <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                                                <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>-->
-                                                                                <td class="text-right">
-                                                                                    <div class="dropdown dropdown-action" style="text-align: right;">
-                                                                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                                                            <a href="#" class="dropdown-item" data-id="${e.profile_id} ${e.start_date} ${e.end_date}" data-role="${e.role}" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                            <a href="#" class="dropdown-item" data-id="${e.profile_id}" data-role="${e.role}" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                                                        </div>
+                                                                    <c:choose>
+                                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                            <td class="text-right">
+                                                                                <div class="dropdown dropdown-action" style="text-align: right;">
+                                                                                    <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id} ${e.start_date} ${e.end_date}" data-role="${e.role}" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id}" data-role="${e.role}" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                     </div>
-                                                                                </td>
-                                                                            </c:when>
-                                                                            <c:otherwise>
+                                                                                </div>
+                                                                            </td>
+                                                                        </c:when>
+                                                                        <c:otherwise>
 
-                                                                            </c:otherwise>
-                                                                        </c:choose>
-                                                                    </c:forEach>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -489,17 +480,15 @@
                                     <div class="card profile-box flex-fill">
                                         <div class="card-body">
                                             <h3 class="card-title">Family Informations 
-                                                <c:forEach items="${listp}" var="p">
-                                                    <c:choose>
-                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                            <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
+                                                <c:choose>
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                        <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
 
-                                                        </c:when>
-                                                        <c:otherwise>
+                                                    </c:when>
+                                                    <c:otherwise>
 
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
 
                                             </h3>
                                             <div class="table-responsive">
@@ -527,27 +516,25 @@
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                                 <td>${f.phone}</td>
-                                                                <c:forEach items="${listp}" var="p">
-                                                                    <c:choose>
-                                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
-                                                                            <td class="text-right">
-                                                                                <div class="dropdown dropdown-action">
-                                                                                    <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-id="${f.profile_id} ${f.relationship} ${f.dob} ${f.phone}" data-name="${f.name}" data-target="#edit_family_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                        <a href="#" class="dropdown-item" data-id="${f.profile_id}" data-name="${f.name}" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                                                    </div>
+                                                                <c:choose>
+                                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                        <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                        <td class="text-right">
+                                                                            <div class="dropdown dropdown-action">
+                                                                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-id="${f.profile_id} ${f.relationship} ${f.dob} ${f.phone}" data-name="${f.name}" data-target="#edit_family_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <a href="#" class="dropdown-item" data-id="${f.profile_id}" data-name="${f.name}" data-toggle="modal" data-target="#delete_family_info"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                                 </div>
-                                                                            </td>
-                                                                        </c:when>
-                                                                        <c:otherwise>
+                                                                            </div>
+                                                                        </td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
 
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:forEach>
-                                                            </tr>
-                                                        </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:forEach>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1076,113 +1063,111 @@
                                 <form action="profileDetail" method="post">
                                     <input type="hidden" name="do" value="editProfileInfo">
                                     <div class="row">
-                                        <c:forEach items="${listp}" var="p">
-                                            <input type="hidden" name="profile_id" value="${p.profile_id}">
-                                            <div class="col-md-12">
-                                                <div class="profile-img-wrap edit-img">
-                                                    <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
-                                                    <div class="fileupload btn">
-                                                        <span class="btn-text">edit</span>
-                                                        <input class="upload" type="file">
+                                        <input type="hidden" name="profile_id" value="${p.profile_id}">
+                                        <div class="col-md-12">
+                                            <div class="profile-img-wrap edit-img">
+                                                <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
+                                                <div class="fileupload btn">
+                                                    <span class="btn-text">edit</span>
+                                                    <input class="upload" type="file">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>First Name</label>
+                                                        <input type="text" class="form-control" value="${p.first_name}" readonly>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        <input type="text" class="form-control" value="${p.last_name}" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Birth Date <span class="text-danger">*</span></label>
                                                         <div class="form-group">
-                                                            <label>First Name</label>
-                                                            <input type="text" class="form-control" value="${p.first_name}" readonly>
+                                                            <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" onkeydown="event.preventDefault()" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Last Name</label>
-                                                            <input type="text" class="form-control" value="${p.last_name}" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Birth Date <span class="text-danger">*</span></label>
-                                                            <div class="form-group">
-                                                                <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" onkeydown="event.preventDefault()" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Gender <span class="text-danger">*</span></label>
-                                                            <select class="select form-control" name="gender">
-                                                                <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
-                                                                <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
-                                                            </select>
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Gender <span class="text-danger">*</span></label>
+                                                        <select class="select form-control" name="gender">
+                                                            <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
+                                                            <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Address <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}"
-                                                           title="Address not contain: Unicode characters, 
-                                                           special character e.g: !@#$%^&,. etc..;  
-                                                           allow uppercase, lowercase letters, 
-                                                           allow spacing and numeric characters (0-9), max length: 100">
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Address <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}"
+                                                       title="Address not contain: Unicode characters, 
+                                                       special character e.g: !@#$%^&,. etc..;  
+                                                       allow uppercase, lowercase letters, 
+                                                       allow spacing and numeric characters (0-9), max length: 100">
                                             </div>
-                                            <!--                                            <div class="col-md-6">
-                                                                                            <div class="form-group">
-                                                                                                <label>State</label>
-                                                                                                <input type="text" class="form-control" value="New York">
-                                                                                            </div>
-                                                                                        </div>-->
-                                            <!--                                            <div class="col-md-6">
-                                                                                            <div class="form-group">
-                                                                                                <label>Pin Code</label>
-                                                                                                <input type="text" class="form-control" value="10523">
-                                                                                            </div>
-                                                                                        </div>-->
-                                            <c:choose>
-                                                <c:when test="${p.phone_number == ''}">
-
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" value="${p.phone_number}" readonly>
-                                                        </div>
-                                                    </div>
-                                                </c:otherwise> 
-                                            </c:choose>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Department</label>
-                                                    <input type="text" class="form-control" value="${p.department_name}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Designation</label>
-                                                    <input type="text" class="form-control" value="${p.job_title}" readonly>
-                                                </div>
-                                            </div>
-                                            <c:choose>
-                                                <c:when test="${p.reportto!=null}">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Reports to</label>
-                                                            <input type="text" class="form-control" value="${p.reportto}" readonly>
-                                                        </div>
-                                                    </div>
-                                                </c:when>
-                                                <c:otherwise>
-
-                                                </c:otherwise>
-                                            </c:choose>
                                         </div>
-                                    </c:forEach>
+                                        <!--                                            <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>State</label>
+                                                                                            <input type="text" class="form-control" value="New York">
+                                                                                        </div>
+                                                                                    </div>-->
+                                        <!--                                            <div class="col-md-6">
+                                                                                        <div class="form-group">
+                                                                                            <label>Pin Code</label>
+                                                                                            <input type="text" class="form-control" value="10523">
+                                                                                        </div>
+                                                                                    </div>-->
+                                        <c:choose>
+                                            <c:when test="${p.phone_number == ''}">
+
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Phone Number</label>
+                                                        <input type="text" class="form-control" value="${p.phone_number}" readonly>
+                                                    </div>
+                                                </div>
+                                            </c:otherwise> 
+                                        </c:choose>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <input type="text" class="form-control" value="${p.department_name}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <input type="text" class="form-control" value="${p.job_title}" readonly>
+                                            </div>
+                                        </div>
+                                        <c:choose>
+                                            <c:when test="${p.reportto!=null}">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Reports to</label>
+                                                        <input type="text" class="form-control" value="${p.reportto}" readonly>
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
                                     </div>
@@ -1315,9 +1300,7 @@
                                                     <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                                 </h3>
                                                 <div class="row">
-                                                    <c:forEach items="${listp}" var="p">
-                                                        <input type="hidden" name="profile_id" value="${p.profile_id}">
-                                                    </c:forEach>
+                                                    <input type="hidden" name="profile_id" value="${p.profile_id}">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Name <span class="text-danger">*</span></label>
@@ -1723,9 +1706,7 @@
                                                     <!--<a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a>-->
                                                 </h3>
                                                 <div class="row">
-                                                    <c:forEach items="${listp}" var="p">
-                                                        <input type="hidden" name="profile_id" value="${p.profile_id}">
-                                                    </c:forEach>
+                                                    <input type="hidden" name="profile_id" value="${p.profile_id}">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="">Role <span class="text-danger">*</span></label>

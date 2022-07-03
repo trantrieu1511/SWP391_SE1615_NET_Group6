@@ -143,6 +143,6 @@ public class DAOTask extends DBConnect {
     
     public static void main(String[] args) {
         DAOTask dao = new DAOTask();
-        System.out.println(dao.listProjectTask(0, ""));
+        System.out.println(dao.listProjectTask(0, "Test"));
     }
 }

@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOScheduleTest {
     
+    DAOSchedule dao = new DAOSchedule();
+    
     public DAOScheduleTest() {
     }
 
@@ -22,27 +24,28 @@ public class DAOScheduleTest {
      */
     @Test
     public void testAddSchedule() {
+        //assertTrue(dao.addSchedule("KUGHY", "morning afternoon"));
     }
 
     /**
      * Test of checkExist method, of class DAOSchedule.
      */
     @Test
-    public void testCheckExist() {
+    public void testCheckExist1() {
+        assertTrue(dao.checkExist("KUGHY"));
     }
-
-    /**
-     * Test of countSchedule method, of class DAOSchedule.
-     */
+    
     @Test
-    public void testCountSchedule() {
+    public void testCheckExist2() {
+        assertFalse(dao.checkExist("ABCDE"));
     }
-
+ 
     /**
      * Test of listAllScheduleOfStaff method, of class DAOSchedule.
      */
     @Test
-    public void testListAllScheduleOfStaff() {
+    public void testListStaffWithSchedule() {
+        assertEquals("[schedule{profile=KUGHY}]", dao.listStaffWithSchedule().toString());
     }
 
     /**
@@ -50,6 +53,7 @@ public class DAOScheduleTest {
      */
     @Test
     public void testSearchSchedule() {
+        assertEquals("[schedule{profile=KUGHY}]", dao.searchSchedule("Joe").toString());
     }
 
     /**
@@ -57,13 +61,7 @@ public class DAOScheduleTest {
      */
     @Test
     public void testUpdateSchedule() {
-    }
-
-    /**
-     * Test of main method, of class DAOSchedule.
-     */
-    @Test
-    public void testMain() {
+        assertTrue(dao.updateSchedule("KUGHY", "morning"));
     }
     
 }

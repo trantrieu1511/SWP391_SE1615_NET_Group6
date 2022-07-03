@@ -59,9 +59,9 @@ public class ControllerReport extends HttpServlet {
                 DAODepartment dAODepartment = new DAODepartment();
                 List<Projects> list = null;
                 if (acc.isIsManager()) {
-                    list = daoProject.getProject(acc.getProfile_id());
+                    list = daoProject.listProject(acc.getProfile_id());
                 } else {
-                    list = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", list);
                 String service = request.getParameter("do");

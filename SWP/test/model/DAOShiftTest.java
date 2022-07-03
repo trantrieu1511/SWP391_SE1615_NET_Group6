@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOShiftTest {
     
+    DAOShift dao = new DAOShift();
+    
     public DAOShiftTest() {
     }
 
@@ -22,6 +24,9 @@ public class DAOShiftTest {
      */
     @Test
     public void testListShift() {
+        assertEquals("[shift{name=afternoon shift, start_time=1:30, end_time=5:00}, "
+                + "shift{name=morning shift, start_time=8:30, end_time=11:30}]", 
+                dao.listShift().toString());        
     }
 
     /**
@@ -29,6 +34,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testAdd() {
+        //assertTrue(dao.add("morning", "8:30", "11:30"));
     }
 
     /**
@@ -36,6 +42,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testEdit() {
+        //assertTrue(dao.edit("morning shift", "8:30", "11:30", "morning"));
     }
 
     /**
@@ -43,13 +50,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testDelete() {
+        //assertTrue(dao.delete("morning shift"));
     }
 
-    /**
-     * Test of main method, of class DAOShift.
-     */
-    @Test
-    public void testMain() {
-    }
-    
 }

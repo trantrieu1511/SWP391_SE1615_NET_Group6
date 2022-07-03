@@ -64,11 +64,10 @@ public class DAOProfileTest {
      */
     @Test
     public void testGetByID() {
-        assertEquals("[profile{profile_id=ABCDE, first_name=Nguyen, "
-                + "last_name=Khanh, email=namkhanhnd0811@gmail.com, "
-                + "phone_number=0385326593, hire_date=08/11/2020, "
-                + "job_id=1, job_title=null, department_id=1, department_name=null, "
-                + "reportto=null}]", dao.getByID("ABCDE").toString());
+        assertEquals("profile{profile_id=ABCDE, first_name=Nguyen, last_name=Khanh, "
+                + "email=namkhanhnd0811@gmail.com, phone_number=0385326593,"
+                + " hire_date=08/11/2020, job_id=1, job_title=null, department_id=1, "
+                + "department_name=null, reportto=null}", dao.getByID("ABCDE").toString());
     }
 
     /**
@@ -84,6 +83,10 @@ public class DAOProfileTest {
      */
     @Test
     public void testSearchStaff1() {
+        assertEquals("[profile{profile_id=KUGHY, first_name=Joestar, last_name=Johnny,"
+                + " email=sbr@gmail.com, phone_number=0897654321, hire_date=01/01/1867,"
+                + " job_id=1, job_title=null, department_id=1, department_name=null,"
+                + " reportto=ABCDE}]", dao.searchStaff1("KUGHY", "Joe").toString());
     }
 
     /**
@@ -91,6 +94,10 @@ public class DAOProfileTest {
      */
     @Test
     public void testSearchStaff2() {
+        assertEquals("[profile{profile_id=KUGHY, first_name=Joestar, last_name=Johnny,"
+                + " email=sbr@gmail.com, phone_number=0897654321, hire_date=01/01/1867, "
+                + "job_id=1, job_title=null, department_id=1, department_name=null,"
+                + " reportto=ABCDE}]", dao.searchStaff2("KUGHY", "Joe", "1").toString());
     }
 
     /**
@@ -98,6 +105,10 @@ public class DAOProfileTest {
      */
     @Test
     public void testSearchStaff3() {
+        assertEquals("[profile{profile_id=KUGHY, first_name=Joestar, last_name=Johnny, "
+                + "email=sbr@gmail.com, phone_number=0897654321, hire_date=01/01/1867,"
+                + " job_id=1, job_title=null, department_id=1, department_name=null, "
+                + "reportto=ABCDE}]", dao.searchStaff3("Joe", "ABCDE").toString());
     }
 
     /**
@@ -105,6 +116,10 @@ public class DAOProfileTest {
      */
     @Test
     public void testSearchStaff4() {
+        assertEquals("[profile{profile_id=KUGHY, first_name=Joestar, last_name=Johnny, "
+                + "email=sbr@gmail.com, phone_number=0897654321, hire_date=01/01/1867, "
+                + "job_id=1, job_title=null, department_id=1, department_name=null, "
+                + "reportto=ABCDE}]", dao.searchStaff4("Joe", 1, "ABCDE").toString());
     }
 
 }

@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOProjectTest {
     
+    DAOProject dao = new DAOProject();
+    
     public DAOProjectTest() {
     }
 
@@ -21,14 +23,22 @@ public class DAOProjectTest {
      * Test of getProject method, of class DAOProject.
      */
     @Test
-    public void testGetProject() {
+    public void testListProject() {
+        assertEquals("[projects{title=Test, client=BUKFS, period=30/06/2022 - "
+                + "17/8/2022, rate=10000.0, manager=ABCDE, description=demo test},"
+                + " projects{title=Test 2, client=BUKFS, period=30/06/2022 - 17/8/2022, "
+                + "rate=100000.0, manager=ABCDE, description=demo test}]", 
+                dao.listProject("ABCDE").toString());
     }
 
     /**
      * Test of getP method, of class DAOProject.
      */
     @Test
-    public void testGetP() {
+    public void testGetProject() {
+        assertEquals("projects{title=Test, client=BUKFS, period=30/06/2022 - "
+                + "17/8/2022, rate=10000.0, manager=ABCDE, description=demo test}",
+                dao.getProject("Test").toString());
     }
 
     /**
@@ -36,6 +46,7 @@ public class DAOProjectTest {
      */
     @Test
     public void testAddProject() {
+        //assertTrue(dao.addProject("Test", "BUKFS", "30/06/2022 - 17/8/2022", 10000, "ABCDE", "demo test"));
     }
 
     /**
@@ -43,6 +54,7 @@ public class DAOProjectTest {
      */
     @Test
     public void testDeleteProject() {
+        //assertTrue(dao.deleteProject("NewTest"));
     }
 
     /**
@@ -50,6 +62,7 @@ public class DAOProjectTest {
      */
     @Test
     public void testUpdateProject() {
+        //assertTrue(dao.updateProject("Test", "NewTest", "BUKFS", "30/06/2022 - 17/8/2022", 15000, "ABCDE", "demo test"));
     }
 
     /**
@@ -57,13 +70,11 @@ public class DAOProjectTest {
      */
     @Test
     public void testSearch() {
-    }
-
-    /**
-     * Test of main method, of class DAOProject.
-     */
-    @Test
-    public void testMain() {
+        assertEquals("[projects{title=Test, client=BUKFS, period=30/06/2022 - "
+                + "17/8/2022, rate=10000.0, manager=ABCDE, description=demo test}, "
+                + "projects{title=Test 2, client=BUKFS, period=30/06/2022 - "
+                + "17/8/2022, rate=100000.0, manager=ABCDE, description=demo test}]", 
+                dao.search("Test").toString());
     }
     
 }

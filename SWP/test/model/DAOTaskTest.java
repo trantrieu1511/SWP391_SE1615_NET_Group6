@@ -51,12 +51,5 @@ public class DAOTaskTest {
     @Test
     public void testUpdateStatus() {
     }
-
-    /**
-     * Test of main method, of class DAOTask.
-     */
-    @Test
-    public void testMain() {
-    }
     
 }

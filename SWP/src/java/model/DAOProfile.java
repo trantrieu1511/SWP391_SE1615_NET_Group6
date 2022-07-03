@@ -317,6 +317,6 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        
+        System.out.println(dao.searchStaff1("KUGHY", "Joe"));
     }
 }

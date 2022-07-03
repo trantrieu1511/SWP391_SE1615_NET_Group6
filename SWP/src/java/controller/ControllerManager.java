@@ -79,9 +79,9 @@ public class ControllerManager extends HttpServlet {
                 // list project for manager/employee
                 List<Projects> listPj = null;
                 if (acc.isIsManager()) {
-                    listPj = daoProject.getProject(acc.getProfile_id());
+                    listPj = daoProject.listProject(acc.getProfile_id());
                 } else {
-                    listPj = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                    listPj = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", listPj);
 

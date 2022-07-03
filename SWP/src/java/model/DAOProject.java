@@ -22,7 +22,7 @@ public class DAOProject extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<Projects> getProject(String profile_id) {
+    public List<Projects> listProject(String profile_id) {
         List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where manager_id = ?";
         try {
@@ -49,7 +49,7 @@ public class DAOProject extends DBConnect {
         return list;
     }
 
-    public Projects getP(String title) {
+    public Projects getProject(String title) {
         String sql = "select * from projects where title = ?";
         try {
             conn = getConnection();
@@ -142,15 +142,13 @@ public class DAOProject extends DBConnect {
         return true;
     }
 
-    public List<Projects> search(String title, String id) {
+    public List<Projects> search(String title) {
         List<Projects> list = new ArrayList<>();
-        String sql = "select * from projects where title like ?"
-                + " and manager_id = ?";
+        String sql = "select * from projects where title like ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, "%" + title + "%");
-            state.setString(2, id);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Projects(
@@ -173,6 +171,6 @@ public class DAOProject extends DBConnect {
 
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
-        System.out.println(dao.deleteProject("Project demo"));
+        System.out.println(dao.search("Test"));
     }
 }

@@ -66,33 +66,7 @@ public class DAOSchedule extends DBConnect {
         }
     }
 
-    public boolean countSchedule(String profile_id) {
-        List<Schedule> list = new ArrayList<>();
-        String sql = "select * from schedule where profile_id=?";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.setString(1, profile_id);
-            rs = state.executeQuery();
-            while (rs.next()) {
-                list.add(new Schedule(
-                        rs.getString(1),
-                        rs.getString(2)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        if (list.size() < 3) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public List<Schedule> listAllScheduleOfStaff() {
+    public List<Schedule> listStaffWithSchedule() {
         List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedule order by profile_id asc";
         try {
@@ -157,6 +131,6 @@ public class DAOSchedule extends DBConnect {
     
     public static void main(String[] args) {
         DAOSchedule dao = new DAOSchedule();
-        System.out.println(dao.updateSchedule("QEQSS", " "));
+        System.out.println(dao.searchSchedule("Joe"));
     }
 }

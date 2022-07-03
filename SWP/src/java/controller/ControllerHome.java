@@ -53,9 +53,9 @@ public class ControllerHome extends HttpServlet {
                 List<Projects> list = null;
                 // list project for manager/employee
                 if (acc.isIsManager()) {
-                    list = daoProject.getProject(acc.getProfile_id());
+                    list = daoProject.listProject(acc.getProfile_id());
                 } else {
-                    list = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");

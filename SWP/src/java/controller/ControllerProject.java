@@ -68,9 +68,9 @@ public class ControllerProject extends HttpServlet {
                 DAOJob daoJob = new DAOJob();
                 List<Projects> list = null;
                 if (acc.isIsManager()) {
-                    list = daoProject.getProject(acc.getProfile_id());
+                    list = daoProject.listProject(acc.getProfile_id());
                 } else {
-                    list = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                 }
                 request.setAttribute("project", list);
                 String service = request.getParameter("do");
@@ -78,9 +78,9 @@ public class ControllerProject extends HttpServlet {
                 if (service.equals("list")) {
                     List<Projects> listPj = null;
                     if (acc.isIsManager()) {
-                        listPj = daoProject.getProject(acc.getProfile_id());
+                        listPj = daoProject.listProject(acc.getProfile_id());
                     } else {
-                        listPj = daoProject.getProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                        listPj = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
                     }
                     List<Clients> listC = daoClients.listAllClients();
                     String alert = "";
@@ -101,7 +101,7 @@ public class ControllerProject extends HttpServlet {
                     String desc = request.getParameter("description");
                     daoProject.addProject(title, client_id, period, Double.parseDouble(rate), manager, desc);
                     String alert = "New project saved!";
-                    List<Projects> listPj = daoProject.getProject(acc.getProfile_id());
+                    List<Projects> listPj = daoProject.listProject(acc.getProfile_id());
                     List<Clients> listC = daoClients.listAllClients();
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
@@ -114,9 +114,9 @@ public class ControllerProject extends HttpServlet {
                     String title = request.getParameter("title");
                     List<Projects> listPj = null;
                     if (acc.isIsManager()) {
-                        listPj = daoProject.search(title, acc.getProfile_id());
+                        listPj = daoProject.search(title);
                     } else {
-                        listPj = daoProject.search(title, daoProfile.getByID(acc.getProfile_id()).getReportto());
+                        listPj = daoProject.search(title);
                     }
                     request.setAttribute("title", title);
                     String alert = "";
@@ -135,7 +135,7 @@ public class ControllerProject extends HttpServlet {
                     if (del == true) {
                         String alert = "Project deleted!";
                         request.setAttribute("alert", alert);
-                        List<Projects> listPj = daoProject.getProject(acc.getProfile_id());
+                        List<Projects> listPj = daoProject.listProject(acc.getProfile_id());
                         List<Clients> listC = daoClients.listAllClients();
                         request.setAttribute("list", listPj);
                         request.setAttribute("listC", listC);
@@ -144,7 +144,7 @@ public class ControllerProject extends HttpServlet {
                     } else {
                         String alert = "Cannot delete project having tasks!";
                         request.setAttribute("alert", alert);
-                        List<Projects> listPj = daoProject.getProject(acc.getProfile_id());
+                        List<Projects> listPj = daoProject.listProject(acc.getProfile_id());
                         List<Clients> listC = daoClients.listAllClients();
                         request.setAttribute("list", listPj);
                         request.setAttribute("listC", listC);
@@ -162,7 +162,7 @@ public class ControllerProject extends HttpServlet {
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
                     daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
-                    List<Projects> listPj = daoProject.getProject(acc.getProfile_id());
+                    List<Projects> listPj = daoProject.listProject(acc.getProfile_id());
                     List<Clients> listC = daoClients.listAllClients();
                     String alert = "New information has been saved!";
                     request.setAttribute("alert", alert);
@@ -174,7 +174,7 @@ public class ControllerProject extends HttpServlet {
 
                 if (service.equals("view")) {
                     String title = request.getParameter("title");
-                    Projects pj = daoProject.getP(title);
+                    Projects pj = daoProject.getProject(title);
                     String sDate = format(pj.getPeriod().split(" ")[0]);
                     String eDate = format(pj.getPeriod().split(" ")[2]);
                     List<Task> list0 = daoTask.listProjectTask(0, title);
@@ -220,7 +220,7 @@ public class ControllerProject extends HttpServlet {
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
                     daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
-                    Projects pj = daoProject.getP(title);
+                    Projects pj = daoProject.getProject(title);
                     String sDate = format(pj.getPeriod().split(" ")[0]);
                     String eDate = format(pj.getPeriod().split(" ")[2]);
                     List<Task> list0 = daoTask.listProjectTask(0, title);

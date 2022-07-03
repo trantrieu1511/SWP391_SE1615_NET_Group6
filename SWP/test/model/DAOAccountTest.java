@@ -24,9 +24,9 @@ public class DAOAccountTest {
      */
     @Test
     public void testLogin1() {
-        assertEquals("account{profile_id=ABCDE, user=manager, pass=123456, "
+        assertEquals("account{profile_id=ABCDE, user=manager, pass=khanhcnn49, "
                 + "isAdmin=false, isManager=true}", 
-                dao.login("manager", "123456").toString());
+                dao.login("manager", "khanhcnn49").toString());
     }
     
     @Test
@@ -39,7 +39,7 @@ public class DAOAccountTest {
      */
     @Test
     public void testGetAccount1() {
-        assertEquals("account{profile_id=ABCDE, user=manager, pass=123456, "
+        assertEquals("account{profile_id=ABCDE, user=manager, pass=khanhcnn49, "
                 + "isAdmin=false, isManager=true}", 
                 dao.getAccount("ABCDE").toString());
     }
@@ -61,27 +61,37 @@ public class DAOAccountTest {
      */
     @Test
     public void testAddAccount1() {
+        //assertFalse(dao.addAccount("ABCDE", "test", "123456"));
+    }
+    
+    @Test
+    public void testAddAccount2() {
+        assertFalse(dao.addAccount("34091", "test", "123456"));
     }
 
     /**
      * Test of editAccount method, of class DAOAccount.
      */
     @Test
-    public void testEditAccount() {
+    public void testEditAccount1() {
+        assertTrue(dao.editAccount("WRYYY", "GER", "123456"));
+    }
+    
+    @Test
+    public void testEditAccount2() {
+        //assertFalse(dao.editAccount("47439", "manager", "khanhcnn49"));
     }
 
     /**
      * Test of deleteAccount method, of class DAOAccount.
      */
     @Test
-    public void testDeleteAccount() {
-    }
-
-    /**
-     * Test of main method, of class DAOAccount.
-     */
-    @Test
-    public void testMain() {
+    public void testDeleteAccount1() {
+        //assertTrue(dao.deleteAccount("ABCDE"));
     }
     
+    @Test
+    public void testDeleteAccount2() {
+        assertTrue(dao.deleteAccount("35252"));
+    }
 }

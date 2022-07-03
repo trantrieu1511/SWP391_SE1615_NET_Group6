@@ -95,6 +95,6 @@ public class DAODepartment extends DBConnect {
 //            System.err.println(a.getName());
 //        }
         Departments department = dao.getDepartmentByID(1);
-        System.out.println(department.toString());
+        System.out.println(dao.getDepartmentByID(1));
     }
 }

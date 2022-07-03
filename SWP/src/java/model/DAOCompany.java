@@ -70,9 +70,10 @@ public class DAOCompany extends DBConnect {
         DAOCompany daoCpn = new DAOCompany();
 //        Company cpn = daoCpn.getCompanyByID(3);
 //        System.out.println(cpn.toString());
-        List<Company> list = daoCpn.listAllCompany();
-        for (Company company : list) {
-            System.out.println(company.toString());
-        }
+//        List<Company> list = daoCpn.listAllCompany();
+//        for (Company company : list) {
+//            System.out.println(company.toString());
+//        }
+System.out.println(daoCpn.getCompanyByID(1));
     }
 }

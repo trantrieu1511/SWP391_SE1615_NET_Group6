@@ -75,7 +75,7 @@ public class DAOClients extends DBConnect {
         return list;
     }
 
-    public List<Clients> searchClient1(String id, String name) {
+   public List<Clients> searchClient1(String id, String name) {
         String sql = "select * from [clients] where client_id like ? "
                 + "and first_name + last_name like ?";
         List<Clients> list = new ArrayList<>();
@@ -107,7 +107,7 @@ public class DAOClients extends DBConnect {
     public List<Clients> searchClient2(String id, String name, String company_id) {
         String sql = "select * from [clients] where client_id like ?"
                 + " and first_name + last_name like ?"
-                + " and company_id = ?";
+                + " and company = ?";
         List<Clients> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -165,7 +165,7 @@ public class DAOClients extends DBConnect {
                 + "last_name = ?,\n"
                 + "email = ?,\n"
                 + "phone_number = ?,\n"
-                + "company_id = ?\n"
+                + "company = ?\n"
                 + "where client_id = ?";
         try {
             conn = getConnection();
@@ -207,9 +207,10 @@ public class DAOClients extends DBConnect {
 
     public static void main(String[] args) {
         DAOClients daoCl = new DAOClients();
-        List<Clients> list = daoCl.getIndividualClientProfile("CL001");
-        for (Clients clients : list) {
-            System.out.println(clients.toString());
-        }
+//        List<Clients> list = daoCl.getIndividualClientProfile("CL001");
+//        for (Clients clients : list) {
+//            System.out.println(clients.toString());
+//        }
+System.out.println(daoCl.listAllClients());
     }
 }

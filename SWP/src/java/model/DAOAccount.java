@@ -9,8 +9,6 @@ import entity.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -159,7 +157,7 @@ public class DAOAccount extends DBConnect {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-        System.out.println(dao.login("ABC", "123456"));
+        System.out.println(dao.login("manager", "khanhcnn49"));
     }
 
 }

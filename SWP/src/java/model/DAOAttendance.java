@@ -17,11 +17,11 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOAttendance extends DBConnect {
-
+    
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-
+    
     public boolean add(String date, String time_in, String time_out, String production_time,
             String employee_id) {
         String sql = "insert into attendance(date, time_in, time_out, "
@@ -44,7 +44,7 @@ public class DAOAttendance extends DBConnect {
         }
         return true;
     }
-
+    
     public Attendance getLastest(String employee_id) {
         String sql = "  select top 1 [shift_id], [date], [time_in], [time_out], "
                 + "[production_time], [employee_id] from attendance where "
@@ -72,7 +72,7 @@ public class DAOAttendance extends DBConnect {
         }
         return null;
     }
-
+    
     public boolean update(int id, String time_out, String production_time, String employee_id) {
         String sql = "update attendance set [time_out]=?, [production_time]=?"
                 + " where [shift_id]=? and [employee_id]=?";
@@ -93,7 +93,7 @@ public class DAOAttendance extends DBConnect {
         }
         return true;
     }
-
+    
     public List<Attendance> listAll(String id) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select [shift_id], [date], [time_in], [time_out],"
@@ -124,7 +124,7 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Attendance> listAllAttendanceofAnEmployee(String employee_id) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select * from attendance where [employee_id]=?";
@@ -151,7 +151,7 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Attendance> search(String date, String profile_id) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select * from attendance where employee_id like ? and date = ?";
@@ -179,7 +179,7 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Attendance> search2(String date, String name, String reportto) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select shift_id, date, time_in, time_out, production_time,"
@@ -234,14 +234,15 @@ public class DAOAttendance extends DBConnect {
         }
         return list;
     }
-
+    
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
         DAOProfile daoPf = new DAOProfile();
-        List<Attendance> list = dao.search2("", "gio", "ABCDE");
-        for (Attendance a : list) {
-            a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
-        }
-        System.out.println(list);
+//        List<Attendance> list = dao.search2("", "gio", "ABCDE");
+//        for (Attendance a : list) {
+//            a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
+//        }
+//        System.out.println(list);
+        System.out.println(dao.listAllAttendanceofAnEmployee("QWERT"));
     }
 }

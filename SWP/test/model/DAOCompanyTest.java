@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOCompanyTest {
     
+    DAOCompany dao = new DAOCompany();
+    
     public DAOCompanyTest() {
     }
 
@@ -22,20 +24,20 @@ public class DAOCompanyTest {
      */
     @Test
     public void testListAllCompany() {
+        assertEquals("[Company{id=1, name=C1}, Company{id=2, name=C2}]", 
+                dao.listAllCompany().toString());
     }
 
     /**
      * Test of getCompanyByID method, of class DAOCompany.
      */
     @Test
-    public void testGetCompanyByID() {
-    }
-
-    /**
-     * Test of main method, of class DAOCompany.
-     */
-    @Test
-    public void testMain() {
+    public void testGetCompanyByID1() {
+        assertEquals("Company{id=1, name=C1}", dao.getCompanyByID(1).toString());
     }
     
+    @Test
+    public void testGetCompanyByID2() {
+        assertNull(dao.getCompanyByID(3));
+    }
 }

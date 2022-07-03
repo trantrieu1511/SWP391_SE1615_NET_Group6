@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAODepartmentTest {
     
+    DAODepartment dao = new DAODepartment();
+    
     public DAODepartmentTest() {
     }
 
@@ -22,27 +24,28 @@ public class DAODepartmentTest {
      */
     @Test
     public void testListAllDepartment() {
+        assertEquals("[departments{id=1, name=Dev}]", dao.listAllDepartment().toString());
     }
 
     /**
      * Test of getDepartmentByName method, of class DAODepartment.
      */
     @Test
-    public void testGetDepartmentByName() {
+    public void testGetDepartmentByName1() {
+        assertEquals("departments{id=1, name=Dev}", dao.getDepartmentByID(1).toString());
+    }
+    
+    @Test
+    public void testGetDepartmentByName2() {
+        assertNull(dao.getDepartmentByID(2));
     }
 
     /**
      * Test of getDepartmentByID method, of class DAODepartment.
      */
     @Test
-    public void testGetDepartmentByID() {
+    public void testGetDepartmentByID1() {
+        assertNull(dao.getDepartmentByName("no"));
     }
 
-    /**
-     * Test of main method, of class DAODepartment.
-     */
-    @Test
-    public void testMain() {
-    }
-    
 }

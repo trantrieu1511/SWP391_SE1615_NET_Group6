@@ -160,7 +160,7 @@
                                 <div class="col">
                                     <h3 class="page-title">Employee Salary</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Salary</li>
                                     </ul>
                                 </div>

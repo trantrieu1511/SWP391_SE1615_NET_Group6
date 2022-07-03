@@ -75,7 +75,7 @@ public class DAOSalary extends DBConnect {
         return list;
     }
 
-    public List<Salary> listIndividualSalaryAndProfile(String profile_id) {
+    public Salary getIndividualSalaryAndProfile(String profile_id) {
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
@@ -86,14 +86,13 @@ public class DAOSalary extends DBConnect {
                 + "where a.isadmin != 1\n"
                 + "and p.profile_id = ?\n"
                 + "order by p.profile_id asc";
-        List<Salary> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Salary(
+                return new Salary(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -117,7 +116,7 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(21),
                         rs.getDouble(22),
                         rs.getString(23)
-                ));
+                );
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -126,10 +125,10 @@ public class DAOSalary extends DBConnect {
             closePrepareStatement(state);
             closeConnection(conn);
         }
-        return list;
+        return null;
     }
 
-    public List<Salary> listIndividualSalaryAndProfileInPayslip(String profile_id) {
+    public Salary getIndividualSalaryAndProfileInPayslip(String profile_id) {
         String sql = "select p.*, s.payslip_number, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
@@ -140,14 +139,13 @@ public class DAOSalary extends DBConnect {
                 + "where a.isadmin = 0\n"
                 + "and p.profile_id = ?\n"
                 + "order by p.profile_id asc";
-        List<Salary> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Salary(
+                return new Salary(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -172,7 +170,7 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(22),
                         rs.getDouble(23),
                         rs.getString(24)
-                ));
+                );
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -181,7 +179,7 @@ public class DAOSalary extends DBConnect {
             closePrepareStatement(state);
             closeConnection(conn);
         }
-        return list;
+        return null;
     }
 
     public List<Salary> listStaffNeedSalary() {

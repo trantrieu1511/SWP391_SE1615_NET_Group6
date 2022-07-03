@@ -84,9 +84,7 @@
                                     <div class="card-body">
                                     <%
                                         LocalDateTime now = LocalDateTime.now();
-                                        List<Salary> list = (List<Salary>) request.getAttribute("list");
-                                            for (Salary s : list) {
-
+                                        Salary s = (Salary) request.getAttribute("s");
                                     %>
                                     <h4 class="payslip-title">Payslip for the month of <%=now.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + now.getYear()%></h4>
                                     <div class="row">
@@ -182,7 +180,6 @@
                                             <%String wordNumber = DAOSalary.convertNumberToWord(Math.round(s.getNet_salary()));%>
                                             <p><strong>Net Salary: $<%= Math.round(s.getNet_salary())%></strong> (<%= wordNumber%>.)</p>
                                         </div>
-                                        <%}%>
                                     </div>
                                 </div>
                             </div>

@@ -130,12 +130,11 @@
                                 <div class="col">
                                     <h3 class="page-title">Clients</h3>
                                     <ul class="breadcrumb">
-                                    <c:if test="${sessionScope.acc.isManager == true}">
+                                    <c:if test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
                                         <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
                                         </c:if>
-                                        <c:if test="${sessionScope.acc.isManager == false}">
-                                        <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
-                                        </c:if>
+
+                                    <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
                                     <li class="breadcrumb-item active">Clients</li>
                                 </ul>
                             </div>

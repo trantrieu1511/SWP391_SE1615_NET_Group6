@@ -64,12 +64,14 @@
                         <li class="submenu">
                             <a href="#"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <c:if test="${sessionScope.acc.isManager == true}">
-                                    <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc.isManager == false}">
-                                    <li><a href="employee?do=dashboard">Dashboard (Employee)</a></li>
-                                    </c:if>
+                                <c:choose>
+                                    <c:when test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
+                                        <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <li><a href="employee?do=dashboard">Dashboard (Employee)</a></li>
+                                        </c:otherwise>
+                                    </c:choose>
                             </ul>
                         </li>
                         <li class="menu-title"> 
@@ -81,10 +83,8 @@
                                 <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                     <li><a href="manager?do=list">All Employees</a></li>
                                     </c:if>
-                                    <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
-                                    <li><a href="manager?do=list">All Employees</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
+
+                                <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                     <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                     </c:if>
                                 <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
@@ -108,19 +108,25 @@
                         <li> 
                             <a href="leads.jsp"><i class="la la-user-secret"></i> <span>Leads</span></a>
                         </li>
-                        <c:if test="${sessionScope.acc.isManager == true}">
-                            <li class="menu-title"> 
-                                <span>HR</span>
-                            </li>
-                            <li class="submenu">
-                                <a href="#" class="active subdrop"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
-                                <ul style="display: block;">
 
-                                    <li><a href="salary?do=list"> Employee Salary </a></li>
-                                    <li><a href="salary-view.jsp"> Payslip </a></li>
-                                    <!--<li><a href="payroll-items.jsp"> Payroll Items </a></li>-->
-                                </ul>
-                            </li>
+                        <li class="menu-title"> 
+                            <span>HR</span>
+                        </li>
+                        <li class="submenu">
+                            <a href="#" class="active subdrop"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
+                            <ul style="display: block;">
+                                <c:choose>
+                                    <c:when test="${sessionScope.acc.isAdmin==true}">
+                                        <li><a href="salary?do=list"> Employee Salary </a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <li><a href="salary?do=getmyPayslip"> Payslip </a></li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                <!--<li><a href="payroll-items.jsp"> Payroll Items </a></li>-->
+                            </ul>
+                        </li>
+                        <c:if test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
                             <li class="submenu">
                                 <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">

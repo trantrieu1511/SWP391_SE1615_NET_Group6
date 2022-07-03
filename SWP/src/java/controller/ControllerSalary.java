@@ -989,21 +989,40 @@ public class ControllerSalary extends HttpServlet {
 
                 if (service.equals("payslip")) {
                     String profile_id = request.getParameter("profile_id");
-                    List<Salary> list = daoSalary.listIndividualSalaryAndProfileInPayslip(profile_id);
+                    Salary salary = daoSalary.getIndividualSalaryAndProfileInPayslip(profile_id);
                     List<Departments> listDp = daoDepartment.listAllDepartment();
                     List<Jobs> listJ = daoJob.listAllJob();
-                    for (Profile p : list) {
-                        p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                        p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                        Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                        if (accStaff != null) {
-                            p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                            p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                        }
+
+                    salary.setJob_title(daoJob.getJobById(salary.getJob_id()).getTitle());
+                    salary.setDepartment_name(daoDepartment.getDepartmentByID(salary.getDepartment_id()).getName());
+                    Account accStaff = daoAccount.getAccount(salary.getProfile_id());
+                    if (accStaff != null) {
+                        salary.setUser_display(daoAccount.getAccount(salary.getProfile_id()).getUser());
+                        salary.setPass_display(daoAccount.getAccount(salary.getProfile_id()).getPass());
                     }
+
                     request.setAttribute("department", listDp);
                     request.setAttribute("job", listJ);
-                    request.setAttribute("list", list);
+                    request.setAttribute("s", salary);
+                    RequestDispatcher dispatch = request.getRequestDispatcher("salary-view.jsp");
+                    dispatch.forward(request, response);
+                }
+                if (service.equals("getmyPayslip")) {
+                    Salary salary = daoSalary.getIndividualSalaryAndProfileInPayslip(acc.getProfile_id());
+                    List<Departments> listDp = daoDepartment.listAllDepartment();
+                    List<Jobs> listJ = daoJob.listAllJob();
+
+                    salary.setJob_title(daoJob.getJobById(salary.getJob_id()).getTitle());
+                    salary.setDepartment_name(daoDepartment.getDepartmentByID(salary.getDepartment_id()).getName());
+                    Account accStaff = daoAccount.getAccount(salary.getProfile_id());
+                    if (accStaff != null) {
+                        salary.setUser_display(daoAccount.getAccount(salary.getProfile_id()).getUser());
+                        salary.setPass_display(daoAccount.getAccount(salary.getProfile_id()).getPass());
+                    }
+
+                    request.setAttribute("department", listDp);
+                    request.setAttribute("job", listJ);
+                    request.setAttribute("s", salary);
                     RequestDispatcher dispatch = request.getRequestDispatcher("salary-view.jsp");
                     dispatch.forward(request, response);
                 }

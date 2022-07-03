@@ -97,6 +97,6 @@ public class DAOJob extends DBConnect {
     public static void main(String[] args) {
         DAOJob dao = new DAOJob();
         List<Jobs> list = dao.listAllJob();
-        System.err.println(list);
+        System.err.println(dao.getJobByTitle("IOS Developer"));
     }
 }

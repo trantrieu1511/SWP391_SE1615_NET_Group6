@@ -25,7 +25,7 @@ public class DAOProfile extends DBConnect {
     public boolean addManager(Profile pro) {
         String sql = "insert into [profile](profile_id, first_name, last_name, "
                 + "email ,phone_number, hire_date, department_id, job_id)"
-                + "values (?,?,?,?,?,?,?,?,?)";
+                + "values (?,?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -111,36 +111,6 @@ public class DAOProfile extends DBConnect {
 
     public List<Profile> listAllStaff(String id) {
         String sql = "select * from [profile] where report_to = ? order by profile_id asc";
-        List<Profile> list = new ArrayList<>();
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.setString(1, id);
-            rs = state.executeQuery();
-            while (rs.next()) {
-                list.add(new Profile(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getInt(7),
-                        rs.getInt(8),
-                        rs.getString(9)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closeResultSet(rs);
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return list;
-    }
-
-    public List<Profile> getProfile(String id) {
-        String sql = "select * from [profile] where profile_id = ?";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -347,18 +317,6 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        List<Profile> list = dao.searchStaff1("s", "");
-        for (Profile object : list) {
-            System.out.println(object.toString());
-        }
-//        Profile pro = new Profile("QYYTA", "demo", "demo", "demo", "demo", "demo", 1, 1, 1, "ABCDE");
-//        dao.addStaff(pro);
-//        List<profile> staff = dao.searchStaff1("QWER", "");
-//        for (Profile object : staff) {
-//            System.out.println(object.toString());
-//        }
-//        String StringA = "      Nguyen Van A  ";
-//        String StringB = "BBBB";
-//        System.out.println(StringB+StringA.trim());
+        
     }
 }

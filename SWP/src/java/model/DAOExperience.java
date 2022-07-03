@@ -132,6 +132,7 @@ public class DAOExperience extends DBConnect {
 
     public static void main(String[] args) {
         DAOExperience daoexp = new DAOExperience();
+        System.out.println(daoexp.listIndividualExperience("WRYYY"));
 //        List<experience> list = dao.listIndividualExperience("ABCDE");
 //        for (Experience exp : list) {
 //            System.out.println(exp.toString());

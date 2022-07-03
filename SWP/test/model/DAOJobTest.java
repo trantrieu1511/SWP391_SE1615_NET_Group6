@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOJobTest {
     
+    DAOJob dao = new DAOJob();
+    
     public DAOJobTest() {
     }
 
@@ -22,6 +24,8 @@ public class DAOJobTest {
      */
     @Test
     public void testListAllJob() {
+        assertEquals("[jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}]", 
+                dao.listAllJob().toString());
     }
 
     /**
@@ -29,6 +33,8 @@ public class DAOJobTest {
      */
     @Test
     public void testGetJobByTitle() {
+        assertEquals("jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}"
+                , dao.getJobByTitle("IOS Developer").toString());
     }
 
     /**
@@ -36,13 +42,8 @@ public class DAOJobTest {
      */
     @Test
     public void testGetJobById() {
-    }
-
-    /**
-     * Test of main method, of class DAOJob.
-     */
-    @Test
-    public void testMain() {
+        assertEquals("jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}"
+                , dao.getJobById(1).toString());
     }
     
 }

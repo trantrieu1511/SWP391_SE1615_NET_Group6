@@ -115,9 +115,10 @@
                             <li class="submenu">
                                 <a href="#" class="active subdrop"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
                                 <ul style="display: block;">
+
                                     <li><a href="salary?do=list"> Employee Salary </a></li>
                                     <li><a href="salary-view.jsp"> Payslip </a></li>
-                                    <li><a href="payroll-items.jsp"> Payroll Items </a></li>
+                                    <!--<li><a href="payroll-items.jsp"> Payroll Items </a></li>-->
                                 </ul>
                             </li>
                             <li class="submenu">

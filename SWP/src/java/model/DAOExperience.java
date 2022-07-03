@@ -27,7 +27,7 @@ public class DAOExperience extends DBConnect {
         String sql = "select * from [experience] where profile_id = ?";
         try {
             conn = getConnection();
-            state= conn.prepareStatement(sql);
+            state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
@@ -79,7 +79,7 @@ public class DAOExperience extends DBConnect {
                 + "and [role] = ?";
         try {
             conn = getConnection();
-            state= conn.prepareStatement(sql);
+            state = conn.prepareStatement(sql);
             state.setString(1, exp.getRole());
             state.setString(2, exp.getStart_date());
             state.setString(3, exp.getEnd_date());
@@ -113,6 +113,7 @@ public class DAOExperience extends DBConnect {
         }
         return true;
     }
+
     public boolean deleteAllExperience(String profile_id) {
         String sql = "delete from [experience] where [profile_id] = ?";
         try {

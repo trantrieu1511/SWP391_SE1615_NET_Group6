@@ -11,14 +11,35 @@ package entity;
  */
 public class Salary extends Profile {
 
-    public String profile_id;
-    public double basic_salary, DA, HRA, conveyance, allowance, medical_allowance,
+    int payslip_number;
+    String profile_id;
+    double basic_salary, DA, HRA, conveyance, allowance, medical_allowance,
             TDS, ESI, PF, leave, loan, professional_tax,
             net_salary; //net salary will be actual employee's salary earned
     //(nếu ai làm phần gì mà cần đến salary của employee thì lấy net_salary nhé - Triệu)
-    public String create_date;
+    String create_date;
 
     public Salary() {
+    }
+
+    //list all Staff and Manager in paySlip constructor
+    public Salary(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, int payslip_number, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
+        super(profile_id, first_name, last_name, email, phone_number, hire_date, job_id, department_id, reportto);
+        this.payslip_number = payslip_number;
+        this.basic_salary = basic_salary;
+        this.DA = DA;
+        this.HRA = HRA;
+        this.conveyance = conveyance;
+        this.allowance = allowance;
+        this.medical_allowance = medical_allowance;
+        this.TDS = TDS;
+        this.ESI = ESI;
+        this.PF = PF;
+        this.leave = leave;
+        this.loan = loan;
+        this.professional_tax = professional_tax;
+        this.net_salary = net_salary;
+        this.create_date = create_date;
     }
 
     //list all Staff and Manager constructor
@@ -220,9 +241,17 @@ public class Salary extends Profile {
         this.create_date = create_date;
     }
 
+    public int getPayslip_number() {
+        return payslip_number;
+    }
+
+    public void setPayslip_number(int payslip_number) {
+        this.payslip_number = payslip_number;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + " Salary{" + "profile_id=" + profile_id + ", basic_salary=" + basic_salary + ", DA=" + DA + ", HRA=" + HRA + ", conveyance=" + conveyance + ", allowance=" + allowance + ", medical_allowance=" + medical_allowance + ", TDS=" + TDS + ", ESI=" + ESI + ", PF=" + PF + ", leave=" + leave + ", loan=" + loan + ", professional_tax=" + professional_tax + ", net_salary=" + net_salary + ", create_date=" + create_date + '}';
+        return super.toString() + " Salary{" + "payslip_number=" + payslip_number + ", profile_id=" + profile_id + ", basic_salary=" + basic_salary + ", DA=" + DA + ", HRA=" + HRA + ", conveyance=" + conveyance + ", allowance=" + allowance + ", medical_allowance=" + medical_allowance + ", TDS=" + TDS + ", ESI=" + ESI + ", PF=" + PF + ", leave=" + leave + ", loan=" + loan + ", professional_tax=" + professional_tax + ", net_salary=" + net_salary + ", create_date=" + create_date + '}';
     }
 
 }

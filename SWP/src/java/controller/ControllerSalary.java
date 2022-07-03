@@ -69,6 +69,7 @@ public class ControllerSalary extends HttpServlet {
                     Object add = request.getParameter("add");
                     Object delete = request.getParameter("delete");
                     Object deleteFail = request.getParameter("deleteFail");
+                    Object SalaryIsNA = request.getParameter("SalaryIsNA");
                     if (edit != null) { //edit
                         String alert = "Successfully edited employee salary!";
                         List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
@@ -184,6 +185,29 @@ public class ControllerSalary extends HttpServlet {
                         request.setAttribute("job", listJ);
                         RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                         dispath.forward(request, response);
+                    } else if (SalaryIsNA != null) { //Salary isn't available
+                        String alert = "Employee hasn't had a salary yet! You have to add employee's salary first to generate their payslip!";
+                        List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
+                        List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
+                        List<Departments> listDp = daoDepartment.listAllDepartment();
+                        List<Jobs> listJ = daoJob.listAllJob();
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                            if (accStaff != null) {
+                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                            }
+                        }
+                        request.setAttribute("filter", "yes");
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("profile", list);
+                        request.setAttribute("needsalary", listNeedSalary);
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
+                        dispath.forward(request, response);
                     } else {
                         String alert = "";
                         List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
@@ -223,7 +247,7 @@ public class ControllerSalary extends HttpServlet {
 //                    out.print(from);
 //                    out.print("<br>");
 //                    out.print(to);
-                    if (from.equals("") && to.equals("")) { //role + name
+                    if (!erole.equals("") && !ename.equals("") && from.equals("") && to.equals("")) { //role + name
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithoutCreateDate(erole, ename);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -270,7 +294,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!from.equals("") && !to.equals("")) { //from + to
+                    } else if (erole.equals("") && ename.equals("") && !from.equals("") && !to.equals("")) { //from + to
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate4(from, to);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -317,7 +341,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!ename.equals("") && !erole.equals("") && !from.equals("")) { //name + role + from
+                    } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && to.equals("")) { //role + name + from
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate3(erole, ename, from);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -364,7 +388,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!ename.equals("") && !from.equals("") && !to.equals("")) { //name + from + to
+                    } else if (erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) { //name + from + to
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate2(ename, from, to);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -411,7 +435,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!erole.equals("") && !from.equals("") && !to.equals("")) { //role + from + to
+                    } else if (!erole.equals("") && ename.equals("") && !from.equals("") && !to.equals("")) { //role + from + to
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate5(erole, from, to);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -459,7 +483,7 @@ public class ControllerSalary extends HttpServlet {
                             dispath.forward(request, response);
                         }
 
-                    } else if (!erole.equals("") && !from.equals("")) { //role + from
+                    } else if (!erole.equals("") && ename.equals("") && !from.equals("") && to.equals("")) { //role + from
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate6(erole, from);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -506,7 +530,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!ename.equals("") && !from.equals("")) { //name + from
+                    } else if (erole.equals("") && !ename.equals("") && !from.equals("") && to.equals("")) { //name + from
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate7(ename, from);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -553,30 +577,8 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!to.equals("")) { //to
-                        String alert = "Please enter To Date to commit search!";
-                        List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
-                        List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("profile", list);
-                        request.setAttribute("needsalary", listNeedSalary);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
-                        dispath.forward(request, response);
-                    } else if (!from.equals("")) { //from only
+
+                    } else if (erole.equals("") && ename.equals("") && !from.equals("") && to.equals("")) { //from only
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithFromOnly(from);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -623,7 +625,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!ename.equals("")) { //name only
+                    } else if (erole.equals("") && !ename.equals("") && from.equals("") && to.equals("")) { //name only
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithNameOnly(ename);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -670,7 +672,7 @@ public class ControllerSalary extends HttpServlet {
                             RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                             dispath.forward(request, response);
                         }
-                    } else if (!erole.equals("")) { //role only
+                    } else if (!erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //role only
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithRoleOnly(erole);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -718,7 +720,101 @@ public class ControllerSalary extends HttpServlet {
                             dispath.forward(request, response);
                         }
 
-                    } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) {
+                    } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) { //role + name + from + to
+                        List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
+                        if (listSearch.isEmpty()) {
+                            String alert = "There are no result found!";
+                            List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
+                            List<Departments> listDp = daoDepartment.listAllDepartment();
+                            List<Jobs> listJ = daoJob.listAllJob();
+                            for (Profile p : listSearch) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                                Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                                if (accStaff != null) {
+                                    p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                    p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                                }
+                            }
+                            request.setAttribute("filter", "no");
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("profile", listSearch);
+                            request.setAttribute("needsalary", listNeedSalary);
+                            request.setAttribute("department", listDp);
+                            request.setAttribute("job", listJ);
+                            RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
+                            dispath.forward(request, response);
+                        } else {
+                            String alert = "";
+                            List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
+                            List<Departments> listDp = daoDepartment.listAllDepartment();
+                            List<Jobs> listJ = daoJob.listAllJob();
+                            for (Profile p : listSearch) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                                Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                                if (accStaff != null) {
+                                    p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                    p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                                }
+                            }
+                            request.setAttribute("filter", "no");
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("profile", listSearch);
+                            request.setAttribute("needsalary", listNeedSalary);
+                            request.setAttribute("department", listDp);
+                            request.setAttribute("job", listJ);
+                            RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
+                            dispath.forward(request, response);
+                        }
+                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
+                        List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
+                        if (listSearch.isEmpty()) {
+                            String alert = "There are no result found!";
+                            List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
+                            List<Departments> listDp = daoDepartment.listAllDepartment();
+                            List<Jobs> listJ = daoJob.listAllJob();
+                            for (Profile p : listSearch) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                                Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                                if (accStaff != null) {
+                                    p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                    p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                                }
+                            }
+                            request.setAttribute("filter", "no");
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("profile", listSearch);
+                            request.setAttribute("needsalary", listNeedSalary);
+                            request.setAttribute("department", listDp);
+                            request.setAttribute("job", listJ);
+                            RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
+                            dispath.forward(request, response);
+                        } else {
+                            String alert = "";
+                            List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
+                            List<Departments> listDp = daoDepartment.listAllDepartment();
+                            List<Jobs> listJ = daoJob.listAllJob();
+                            for (Profile p : listSearch) {
+                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                                Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                                if (accStaff != null) {
+                                    p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                                    p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                                }
+                            }
+                            request.setAttribute("filter", "no");
+                            request.setAttribute("alert", alert);
+                            request.setAttribute("profile", listSearch);
+                            request.setAttribute("needsalary", listNeedSalary);
+                            request.setAttribute("department", listDp);
+                            request.setAttribute("job", listJ);
+                            RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
+                            dispath.forward(request, response);
+                        }
+                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
                         List<Salary> listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
                         if (listSearch.isEmpty()) {
                             String alert = "There are no result found!";
@@ -766,7 +862,7 @@ public class ControllerSalary extends HttpServlet {
                             dispath.forward(request, response);
                         }
                     } else {
-                        String alert = "Please enter To Date to commit search!";
+                        String alert = "Please enter From Date to commit search!";
                         List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
                         List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
                         List<Departments> listDp = daoDepartment.listAllDepartment();
@@ -893,7 +989,20 @@ public class ControllerSalary extends HttpServlet {
 
                 if (service.equals("payslip")) {
                     String profile_id = request.getParameter("profile_id");
-                    List<Salary> list = daoSalary.listIndividualSalaryAndProfile(profile_id);
+                    List<Salary> list = daoSalary.listIndividualSalaryAndProfileInPayslip(profile_id);
+                    List<Departments> listDp = daoDepartment.listAllDepartment();
+                    List<Jobs> listJ = daoJob.listAllJob();
+                    for (Profile p : list) {
+                        p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                        p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                        Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                        if (accStaff != null) {
+                            p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                            p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                        }
+                    }
+                    request.setAttribute("department", listDp);
+                    request.setAttribute("job", listJ);
                     request.setAttribute("list", list);
                     RequestDispatcher dispatch = request.getRequestDispatcher("salary-view.jsp");
                     dispatch.forward(request, response);

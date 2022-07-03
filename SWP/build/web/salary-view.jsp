@@ -4,6 +4,13 @@
     Author     : DELL
 --%>
 
+<%@page import="model.DAOSalary"%>
+<%@page import="java.util.List"%>
+<%@page import="entity.Salary"%>
+<%@page import="java.time.format.TextStyle"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,38 +50,45 @@
 
             <jsp:include page="menu.jsp"></jsp:include>
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="page-title">Payslip</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Payslip</li>
-                                </ul>
-                            </div>
-                            <div class="col-auto float-right ml-auto">
-                                <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-white">CSV</button>
-                                    <button class="btn btn-white">PDF</button>
-                                    <button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">Payslip</h3>
+                                    <ul class="breadcrumb">
+                                        <!--<li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>-->
+                                        <li class="breadcrumb-item"><a href="salary?do=list">Employee Salary</a></li>
+                                        <li class="breadcrumb-item active">Payslip</li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-white">CSV</button>
+                                        <button class="btn btn-white">PDF</button>
+                                        <button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Page Header -->
+                        <!-- /Page Header -->
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="payslip-title">Payslip for the month of Feb 2019</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <%
+                                        LocalDateTime now = LocalDateTime.now();
+                                        List<Salary> list = (List<Salary>) request.getAttribute("list");
+                                            for (Salary s : list) {
+
+                                    %>
+                                    <h4 class="payslip-title">Payslip for the month of <%=now.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + now.getYear()%></h4>
                                     <div class="row">
                                         <div class="col-sm-6 m-b-20">
                                             <img src="img/logo2.png" class="inv-logo" alt="">
@@ -86,9 +100,9 @@
                                         </div>
                                         <div class="col-sm-6 m-b-20">
                                             <div class="invoice-details">
-                                                <h3 class="text-uppercase">Payslip #49029</h3>
+                                                <h3 class="text-uppercase">Payslip #<%= s.getPayslip_number()%></h3>
                                                 <ul class="list-unstyled">
-                                                    <li>Salary Month: <span>March, 2019</span></li>
+                                                    <li>Salary Month: <span><%=now.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH)%>, <%=now.getYear()%></span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -96,10 +110,10 @@
                                     <div class="row">
                                         <div class="col-lg-12 m-b-20">
                                             <ul class="list-unstyled">
-                                                <li><h5 class="mb-0"><strong>John Doe</strong></h5></li>
-                                                <li><span>Web Designer</span></li>
-                                                <li>Employee ID: FT-0009</li>
-                                                <li>Joining Date: 1 Jan 2013</li>
+                                                <li><h5 class="mb-0"><strong><%= s.getFirst_name() + " " + s.getLast_name()%></strong></h5></li>
+                                                <li><span><%= s.getJob_title()%></span></li>
+                                                <li>Employee ID: <%= s.getProfile_id()%></li>
+                                                <li>Joining Date: <%= s.getHire_date()%></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -110,19 +124,25 @@
                                                 <table class="table table-bordered">
                                                     <tbody>
                                                         <tr>
-                                                            <td><strong>Basic Salary</strong> <span class="float-right">$6500</span></td>
+                                                            <td><strong>Basic Salary</strong> <span class="float-right">$<%= Math.round(s.getBasic_salary())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">$55</span></td>
+                                                            <td><strong>Dearness Allowance (D.A.)</strong> <span class="float-right">$<%= Math.round(s.getDA())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Conveyance</strong> <span class="float-right">$55</span></td>
+                                                            <td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">$<%= Math.round(s.getHRA())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Other Allowance</strong> <span class="float-right">$55</span></td>
+                                                            <td><strong>Conveyance</strong> <span class="float-right">$<%= Math.round(s.getConveyance())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Total Earnings</strong> <span class="float-right"><strong>$55</strong></span></td>
+                                                            <td><strong>Allowance</strong> <span class="float-right">$<%= Math.round(s.getAllowance())%></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Medical Allowance</strong> <span class="float-right">$<%= Math.round(s.getMedical_allowance())%></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Total Earnings</strong> <span class="float-right"><strong>$<%= Math.round(s.getBasic_salary() + s.getDA() + s.getHRA() + s.getConveyance() + s.getAllowance() + s.getMedical_allowance())%></strong></span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -134,27 +154,35 @@
                                                 <table class="table table-bordered">
                                                     <tbody>
                                                         <tr>
-                                                            <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">$0</span></td>
+                                                            <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">$<%= Math.round(s.getTDS())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Provident Fund</strong> <span class="float-right">$0</span></td>
+                                                            <td><strong>Provident Fund</strong> <span class="float-right">$<%= Math.round(s.getPF())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>ESI</strong> <span class="float-right">$0</span></td>
+                                                            <td><strong>ESI</strong> <span class="float-right">$<%= Math.round(s.getESI())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Loan</strong> <span class="float-right">$300</span></td>
+                                                            <td><strong>Leave</strong> <span class="float-right">$<%= Math.round(s.getLeave())%></span></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Total Deductions</strong> <span class="float-right"><strong>$59698</strong></span></td>
+                                                            <td><strong>Loan</strong> <span class="float-right">$<%= Math.round(s.getLoan())%></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Professional Tax</strong> <span class="float-right">$<%= Math.round(s.getProfessional_tax())%></span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Total Deductions</strong> <span class="float-right"><strong>$<%= Math.round(s.getTDS() + s.getPF() + s.getESI() + s.getLeave() + s.getLoan() + s.getProfessional_tax())%></strong></span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
-                                            <p><strong>Net Salary: $59698</strong> (Fifty nine thousand six hundred and ninety eight only.)</p>
+                                            <%String wordNumber = DAOSalary.convertNumberToWord(Math.round(s.getNet_salary()));%>
+                                            <p><strong>Net Salary: $<%= Math.round(s.getNet_salary())%></strong> (<%= wordNumber%>.)</p>
                                         </div>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>

@@ -182,72 +182,70 @@
                                                 <div class="col-md-7">
                                                     <ul class="personal-info">
                                                         <c:forEach items="${listp}" var="p">
-                                                            <c:forEach items="${listpd}" var="pd">
-                                                                <li>
-                                                                    <div class="title">Phone:</div>
-                                                                    <c:choose>
-                                                                        <c:when test="${p.phone_number == ''}">
-                                                                            <div class="text">N/A</div>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <div class="text">${p.phone_number}</a></div>
-                                                                            </c:otherwise> 
-                                                                        </c:choose>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="title">Email:</div>
-                                                                    <div class="text">${p.email}</a></div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="title">Birthday:</div>
-                                                                    <div class="text">${pd.dob}</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="title">Address:</div>
-                                                                    <div class="text">${pd.address}</div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="title">Gender:</div>
-                                                                    <c:choose>
-                                                                        <c:when test="${pd.gender == true}">
-                                                                            <div class="text">Male</div>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <div class="text">Female</div>
+                                                            <li>
+                                                                <div class="title">Phone:</div>
+                                                                <c:choose>
+                                                                    <c:when test="${p.phone_number == ''}">
+                                                                        <div class="text">N/A</div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div class="text">${p.phone_number}</a></div>
                                                                         </c:otherwise> 
                                                                     </c:choose>
-                                                                </li>
-                                                                <li>
-                                                                    <c:choose>
-                                                                        <c:when test="${p.reportto == null}">
-                                                                            <div class="title">Reports to:</div>
-                                                                            <div class="text">N/A</div>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <div class="title">Reports to:</div>
-                                                                            <div class="text">
-                                                                                <div class="avatar-box">
-                                                                                    <div class="avatar avatar-xs">
-                                                                                        <img src="img/profiles/avatar-16.jpg" alt="">
-                                                                                    </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="title">Email:</div>
+                                                                <div class="text">${p.email}</a></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="title">Birthday:</div>
+                                                                <div class="text">${pd.dob}</div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="title">Address:</div>
+                                                                <div class="text">${pd.address}</div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="title">Gender:</div>
+                                                                <c:choose>
+                                                                    <c:when test="${pd.gender == true}">
+                                                                        <div class="text">Male</div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div class="text">Female</div>
+                                                                    </c:otherwise> 
+                                                                </c:choose>
+                                                            </li>
+                                                            <li>
+                                                                <c:choose>
+                                                                    <c:when test="${p.reportto == null}">
+                                                                        <div class="title">Reports to:</div>
+                                                                        <div class="text">N/A</div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div class="title">Reports to:</div>
+                                                                        <div class="text">
+                                                                            <div class="avatar-box">
+                                                                                <div class="avatar avatar-xs">
+                                                                                    <img src="img/profiles/avatar-16.jpg" alt="">
                                                                                 </div>
-                                                                                <c:choose>
-                                                                                    <c:when test="${(p.reportto!=sessionScope.acc.profile_id)}">
-                                                                                        <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
-                                                                                            ${p.reportto}
-                                                                                        </a>
-                                                                                    </c:when>
-                                                                                    <c:otherwise>
-                                                                                        <a href="profile?do=getmyProfile">
-                                                                                            ${p.reportto}
-                                                                                        </a>    
-                                                                                    </c:otherwise>
-                                                                                </c:choose>
                                                                             </div>
-                                                                        </c:otherwise> 
-                                                                    </c:choose>
-                                                                </li>
-                                                            </c:forEach>
+                                                                            <c:choose>
+                                                                                <c:when test="${(p.reportto!=sessionScope.acc.profile_id)}">
+                                                                                    <a href="profile?do=getothersProfile&profile_id=${p.reportto}">
+                                                                                        ${p.reportto}
+                                                                                    </a>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <a href="profile?do=getmyProfile">
+                                                                                        ${p.reportto}
+                                                                                    </a>    
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </div>
+                                                                    </c:otherwise> 
+                                                                </c:choose>
+                                                            </li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
@@ -316,45 +314,43 @@
                                                                                             <div class="title">Tel</div>
                                                                                             <div class="text"><a href="">9876543210</a></div>
                                                                                         </li>-->
-                                                <c:forEach items="${listpd}" var="pd">
-                                                    <li>
-                                                        <div class="title">Nationality</div>
-                                                        <div class="text">${pd.country}</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Religion</div>
-                                                        <div class="text">${pd.religion}</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Marital status</div>
-                                                        <c:choose>
-                                                            <c:when test="${pd.isMarried == true}">
-                                                                <div class="text">Married</div>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <div class="text">Single</div>
-                                                            </c:otherwise> 
-                                                        </c:choose>
-                                                    </li>
-                                                    <!--                                                <li>
-                                                                                                        <div class="title">Employment of spouse</div>
-                                                                                                        <div class="text">No</div>
-                                                                                                    </li>-->
-                                                    <li>
-                                                        <div class="title">No. of children</div>
-                                                        <div class="text">${pd.children}</div>
-                                                    </li>
-                                                    <li><h4 style="margin-top: 30px; margin-bottom: 20px;">Bank information</h4><li>
+                                                <li>
+                                                    <div class="title">Nationality</div>
+                                                    <div class="text">${pd.country}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Religion</div>
+                                                    <div class="text">${pd.religion}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Marital status</div>
+                                                    <c:choose>
+                                                        <c:when test="${pd.isMarried == true}">
+                                                            <div class="text">Married</div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <div class="text">Single</div>
+                                                        </c:otherwise> 
+                                                    </c:choose>
+                                                </li>
+                                                <!--                                                <li>
+                                                                                                    <div class="title">Employment of spouse</div>
+                                                                                                    <div class="text">No</div>
+                                                                                                </li>-->
+                                                <li>
+                                                    <div class="title">No. of children</div>
+                                                    <div class="text">${pd.children}</div>
+                                                </li>
+                                                <li><h4 style="margin-top: 30px; margin-bottom: 20px;">Bank information</h4><li>
 
-                                                    <li>
-                                                        <div class="title">Bank name</div>
-                                                        <div class="text">${pd.bank_name}</div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">Bank account No.</div>
-                                                        <div class="text">${pd.bank_number}</div>
-                                                    </li>
-                                                </c:forEach>
+                                                <li>
+                                                    <div class="title">Bank name</div>
+                                                    <div class="text">${pd.bank_name}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Bank account No.</div>
+                                                    <div class="text">${pd.bank_number}</div>
+                                                </li>
                                                 <!--                                        <li>
                                                                                             <div class="title">IFSC Code</div>
                                                                                             <div class="text">ICI24504</div>
@@ -1083,113 +1079,111 @@
                                     <input type="hidden" name="do" value="editProfileInfo">
                                     <div class="row">
                                         <c:forEach items="${listp}" var="p">
-                                            <c:forEach items="${listpd}" var="pd">
-                                                <input type="hidden" name="profile_id" value="${p.profile_id}">
-                                                <div class="col-md-12">
-                                                    <div class="profile-img-wrap edit-img">
-                                                        <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
-                                                        <div class="fileupload btn">
-                                                            <span class="btn-text">edit</span>
-                                                            <input class="upload" type="file">
+                                            <input type="hidden" name="profile_id" value="${p.profile_id}">
+                                            <div class="col-md-12">
+                                                <div class="profile-img-wrap edit-img">
+                                                    <img class="inline-block" src="img/profiles/avatar-02.jpg" alt="user">
+                                                    <div class="fileupload btn">
+                                                        <span class="btn-text">edit</span>
+                                                        <input class="upload" type="file">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>First Name</label>
+                                                            <input type="text" class="form-control" value="${p.first_name}" readonly>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Last Name</label>
+                                                            <input type="text" class="form-control" value="${p.last_name}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Birth Date <span class="text-danger">*</span></label>
                                                             <div class="form-group">
-                                                                <label>First Name</label>
-                                                                <input type="text" class="form-control" value="${p.first_name}" readonly>
+                                                                <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" onkeydown="event.preventDefault()" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Last Name</label>
-                                                                <input type="text" class="form-control" value="${p.last_name}" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Birth Date <span class="text-danger">*</span></label>
-                                                                <div class="form-group">
-                                                                    <div class="cal-icon"><input class="form-control datetimepicker" name="dob" type="text" onkeydown="event.preventDefault()" required="" value="${pd.dob}" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Gender <span class="text-danger">*</span></label>
-                                                                <select class="select form-control" name="gender">
-                                                                    <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
-                                                                    <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
-                                                                </select>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Gender <span class="text-danger">*</span></label>
+                                                            <select class="select form-control" name="gender">
+                                                                <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
+                                                                <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Address <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}"
-                                                               title="Address not contain: Unicode characters, 
-                                                               special character e.g: !@#$%^&,. etc..;  
-                                                               allow uppercase, lowercase letters, 
-                                                               allow spacing and numeric characters (0-9), max length: 100">
-                                                    </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Address <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="address1" name="address" required="" value="${pd.address}" pattern="[A-Za-z0-9., ]{1,100}"
+                                                           title="Address not contain: Unicode characters, 
+                                                           special character e.g: !@#$%^&,. etc..;  
+                                                           allow uppercase, lowercase letters, 
+                                                           allow spacing and numeric characters (0-9), max length: 100">
                                                 </div>
-                                                <!--                                            <div class="col-md-6">
-                                                                                                <div class="form-group">
-                                                                                                    <label>State</label>
-                                                                                                    <input type="text" class="form-control" value="New York">
-                                                                                                </div>
-                                                                                            </div>-->
-                                                <!--                                            <div class="col-md-6">
-                                                                                                <div class="form-group">
-                                                                                                    <label>Pin Code</label>
-                                                                                                    <input type="text" class="form-control" value="10523">
-                                                                                                </div>
-                                                                                            </div>-->
-                                                <c:choose>
-                                                    <c:when test="${p.phone_number == ''}">
-
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Phone Number</label>
-                                                                <input type="text" class="form-control" value="${p.phone_number}" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </c:otherwise> 
-                                                </c:choose>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Department</label>
-                                                        <input type="text" class="form-control" value="${p.department_name}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Designation</label>
-                                                        <input type="text" class="form-control" value="${p.job_title}" readonly>
-                                                    </div>
-                                                </div>
-                                                <c:choose>
-                                                    <c:when test="${p.reportto!=null}">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Reports to</label>
-                                                                <input type="text" class="form-control" value="${p.reportto}" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </c:when>
-                                                    <c:otherwise>
-
-                                                    </c:otherwise>
-                                                </c:choose>
                                             </div>
-                                        </c:forEach>
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>State</label>
+                                                                                                <input type="text" class="form-control" value="New York">
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <!--                                            <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label>Pin Code</label>
+                                                                                                <input type="text" class="form-control" value="10523">
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <c:choose>
+                                                <c:when test="${p.phone_number == ''}">
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Phone Number</label>
+                                                            <input type="text" class="form-control" value="${p.phone_number}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </c:otherwise> 
+                                            </c:choose>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Department</label>
+                                                    <input type="text" class="form-control" value="${p.department_name}" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Designation</label>
+                                                    <input type="text" class="form-control" value="${p.job_title}" readonly>
+                                                </div>
+                                            </div>
+                                            <c:choose>
+                                                <c:when test="${p.reportto!=null}">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Reports to</label>
+                                                            <input type="text" class="form-control" value="${p.reportto}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
                                     </c:forEach>
                                     <div class="submit-section">
                                         <input type="submit" class="btn btn-primary submit-btn" id="create" value="submit">
@@ -1214,86 +1208,84 @@
                             <div class="modal-body">
                                 <form action="profileDetail" method="post">
                                     <input type="hidden" name="do" value="editPersonalInfo">
-                                    <c:forEach items="${listpd}" var="pd">
-                                        <input type="hidden" name="profile_id" value="${pd.profile_id}">
-                                        <div class="row">
+                                    <input type="hidden" name="profile_id" value="${pd.profile_id}">
+                                    <div class="row">
 
-                                            <!--                                        <div class="col-md-6">
-                                                                                        <div class="form-group">
-                                                                                            <label>Tel</label>
-                                                                                            <input class="form-control" type="text">
-                                                                                        </div>
-                                                                                    </div>-->
-                                            <div class="col-md-6">
+                                        <!--                                        <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Tel</label>
+                                                                                        <input class="form-control" type="text">
+                                                                                    </div>
+                                                                                </div>-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Nationality <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" name="country" value="${pd.country}" required="" pattern="[A-Za-z ]{1,20}"
+                                                       title="Nationality not contain: Unicode characters, 
+                                                       special character e.g: !@#$%^&,. etc.. ; 
+                                                       allow uppercase, lowercase letters,
+                                                       allow spacing and numeric characters (0-9),
+                                                       max length: 20">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Religion <span class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <label>Nationality <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" name="country" value="${pd.country}" required="" pattern="[A-Za-z ]{1,20}"
-                                                           title="Nationality not contain: Unicode characters, 
+                                                    <input class="form-control" type="text" name="religion" value="${pd.religion}" required="" pattern="[A-Za-z ]{1,20}"
+                                                           title="Religion not contain: Unicode characters, 
                                                            special character e.g: !@#$%^&,. etc.. ; 
                                                            allow uppercase, lowercase letters,
                                                            allow spacing and numeric characters (0-9),
                                                            max length: 20">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Religion <span class="text-danger">*</span></label>
-                                                    <div class="form-group">
-                                                        <input class="form-control" type="text" name="religion" value="${pd.religion}" required="" pattern="[A-Za-z ]{1,20}"
-                                                               title="Religion not contain: Unicode characters, 
-                                                               special character e.g: !@#$%^&,. etc.. ; 
-                                                               allow uppercase, lowercase letters,
-                                                               allow spacing and numeric characters (0-9),
-                                                               max length: 20">
-                                                    </div>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Marital status <span class="text-danger">*</span></label>
+                                                <select class="select form-control" name="isMarried">
+                                                    <option value="false" ${pd.isMarried==false ? "selected" : ''} >Single</option>
+                                                    <option value="true" ${pd.isMarried==true ? "selected" : ''} >Married</option>
+                                                </select>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Marital status <span class="text-danger">*</span></label>
-                                                    <select class="select form-control" name="isMarried">
-                                                        <option value="false" ${pd.isMarried==false ? "selected" : ''} >Single</option>
-                                                        <option value="true" ${pd.isMarried==true ? "selected" : ''} >Married</option>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>No. of children </label>
+                                                <input class="form-control" type="text" name="children" value="${pd.children}" pattern="[0-9]{1,2}"
+                                                       title="No. of children  
+                                                       must be numeric characters (0-9), not allow spacing characters
+                                                       max length: 2">
                                             </div>
-                                            <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                    <h4 style="margin-bottom: 20px;">Bank Information</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Bank name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}" required="" pattern="[A-Za-z ]{1,20}"
+                                                       title="Bank name not contain: Unicode characters, 
+                                                       special character e.g: !@#$%^&,. etc.. ; 
+                                                       allow uppercase, lowercase letters,
+                                                       allow spacing and numeric characters (0-9),
+                                                       max length: 20">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Bank account No. <span class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <label>No. of children </label>
-                                                    <input class="form-control" type="text" name="children" value="${pd.children}" pattern="[0-9]{1,2}"
-                                                           title="No. of children  
-                                                           must be numeric characters (0-9), not allow spacing characters
-                                                           max length: 2">
+                                                    <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}" required="" pattern="[0-9]{12}"
+                                                           title="Bank account No. not allow:  
+                                                           special character e.g: !@#$%^&,. etc.. and spacing characters; 
+                                                           only allow and numeric characters (0-9),
+                                                           max length: 12">
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4 style="margin-bottom: 20px;">Bank Information</h4>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Bank name <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="bank_name" value="${pd.bank_name}" required="" pattern="[A-Za-z ]{1,20}"
-                                                           title="Bank name not contain: Unicode characters, 
-                                                           special character e.g: !@#$%^&,. etc.. ; 
-                                                           allow uppercase, lowercase letters,
-                                                           allow spacing and numeric characters (0-9),
-                                                           max length: 20">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Bank account No. <span class="text-danger">*</span></label>
-                                                    <div class="form-group">
-                                                        <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}" required="" pattern="[0-9]{12}"
-                                                               title="Bank account No. not allow:  
-                                                               special character e.g: !@#$%^&,. etc.. and spacing characters; 
-                                                               only allow and numeric characters (0-9),
-                                                               max length: 12">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                                    </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Submit</button>
                                     </div>

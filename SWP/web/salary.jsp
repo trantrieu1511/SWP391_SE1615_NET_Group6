@@ -4,6 +4,8 @@
     Author     : DELL
 --%>
 
+<%@page import="entity.Salary"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -158,7 +160,7 @@
                                 <div class="col">
                                     <h3 class="page-title">Employee Salary</h3>
                                     <ul class="breadcrumb">
-                                        <!--<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>-->
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Salary</li>
                                     </ul>
                                 </div>
@@ -188,17 +190,17 @@
                                         <label class="focus-label">Role</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
-                                    <div class="form-group form-focus select-focus">
-                                        <select class="select floating"> 
-                                            <option> -- Select -- </option>
-                                            <option> Pending </option>
-                                            <option> Approved </option>
-                                            <option> Rejected </option>
-                                        </select>
-                                        <label class="focus-label">Leave Status</label>
-                                    </div>
-                                </div>
+                                <!--                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12"> 
+                                                                    <div class="form-group form-focus select-focus">
+                                                                        <select class="select floating"> 
+                                                                            <option> -- Select -- </option>
+                                                                            <option> Pending </option>
+                                                                            <option> Approved </option>
+                                                                            <option> Rejected </option>
+                                                                        </select>
+                                                                        <label class="focus-label">Leave Status</label>
+                                                                    </div>
+                                                                </div>-->
                                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                     <div class="form-group form-focus">
                                         <div class="cal-icon">
@@ -243,46 +245,50 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${profile}" var="p">
-                                            <tr>
-                                                <td>
-                                                    <h2 class="table-avatar">
-                                                        <!--<a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-02.jpg"></a>-->
-                                                        <a href="profile?do=getothersProfile&profile_id=${p.profile_id}">${p.first_name} ${p.last_name}<span>${p.department_name}</span></a>
-                                                    </h2>
-                                                </td>
-                                                <td>${p.profile_id}</td>
-                                                <td>${p.email}</td>
-                                                <td>${p.hire_date}</td>
-                                                <c:choose>
-                                                    <c:when test="${p.reportto!=null}">
-                                                        <td>Staff</td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td>Manager</td>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <td>${p.job_title}</td>
-                                                <c:choose>
-                                                    <c:when test="${p.net_salary==0}">
-                                                        <td>Not Available</td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td>${p.net_salary}</td>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <td><a class="btn btn-sm btn-primary" href="salary?do=payslip&profile_id=${p.profile_id}">Generate Slip</a></td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" profile-id="${p.profile_id}" data-id="${p.basic_salary} ${p.DA} ${p.HRA} ${p.conveyance} ${p.allowance} ${p.medical_allowance} ${p.TDS} ${p.ESI} ${p.PF} ${p.leave} ${p.loan} ${p.professional_tax} ${p.first_name} ${p.last_name}" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-id="${p.profile_id}" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                        </div>
+                                        <%
+                                            List<Salary> list = (List<Salary>) request.getAttribute("profile");
+                                            for (Salary s : list) {
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <!--<a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-02.jpg"></a>-->
+                                                    <a href="profile?do=getothersProfile&profile_id=<%= s.getProfile_id()%>"><%= s.getFirst_name() + " " + s.getLast_name()%><span><%= s.getDepartment_name()%></span></a>
+                                                </h2>
+                                            </td>
+                                            <td><%= s.getProfile_id()%></td>
+                                            <td><%= s.getEmail()%></td>
+                                            <td><%= s.getHire_date()%></td>
+                                            <c:choose>
+                                                <c:when test="<%= s.getReportto() != null%>">
+                                                    <td>Staff</td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td>Manager</td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <td><%= s.getJob_title()%></td>
+                                            <c:choose>
+                                                <c:when test="<%= s.getNet_salary() == 0%>">
+                                                    <td>Not Available</td>
+                                                    <td><a class="btn btn-sm btn-primary" href="salary?do=list&SalaryIsNA=true">Generate Slip</a></td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td>$<%= Math.round(s.getNet_salary())%></td>
+                                                    <td><a class="btn btn-sm btn-primary" href="salary?do=payslip&profile_id=<%= s.getProfile_id()%>">Generate Slip</a></td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" profile-id="<%= s.getProfile_id()%>" data-id="<%= s.getBasic_salary()%> <%= s.getDA()%> <%= s.getHRA()%> <%= s.getConveyance()%> <%= s.getAllowance()%> <%= s.getMedical_allowance()%> <%= s.getTDS()%> <%= s.getESI()%> <%= s.getPF()%> <%= s.getLeave()%> <%= s.getLoan()%> <%= s.getProfessional_tax()%> <%= s.getFirst_name()%> <%= s.getLast_name()%>" data-target="#edit_salary"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-id="<%= s.getProfile_id()%>" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%  }%>
                                     </tbody>
                                 </table>
                             </div>

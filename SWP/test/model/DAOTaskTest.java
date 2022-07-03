@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class DAOTaskTest {
     
+    DAOTask dao = new DAOTask();
+    
     public DAOTaskTest() {
     }
 
@@ -22,6 +24,7 @@ public class DAOTaskTest {
      */
     @Test
     public void testAdd() {
+        //assertTrue(dao.add("test", 0, "07/07/2022", 0, "KUGHY", "Test"));
     }
 
     /**
@@ -29,6 +32,8 @@ public class DAOTaskTest {
      */
     @Test
     public void testGetByName() {
+        assertEquals("task{name=test, priority=0, deadline=07/07/2022, status=2,"
+                + " assigned=KUGHY, project=Test}", dao.getByName("test").toString());
     }
 
     /**
@@ -36,6 +41,8 @@ public class DAOTaskTest {
      */
     @Test
     public void testList() {
+        assertEquals("[task{name=test, priority=0, deadline=07/07/2022, status=2,"
+                + " assigned=KUGHY, project=Test}]", dao.list(2).toString());
     }
 
     /**
@@ -43,6 +50,8 @@ public class DAOTaskTest {
      */
     @Test
     public void testListProjectTask() {
+        assertEquals("[task{name=test, priority=0, deadline=07/07/2022, status=2,"
+                + " assigned=KUGHY, project=Test}]", dao.listProjectTask(2, "Test").toString());
     }
 
     /**
@@ -50,6 +59,7 @@ public class DAOTaskTest {
      */
     @Test
     public void testUpdateStatus() {
+        assertTrue(dao.updateStatus(2, "test"));
     }
     
 }

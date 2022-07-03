@@ -5,6 +5,7 @@
  */
 package model;
 
+import entity.FamilyInfo;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,6 +15,8 @@ import static org.junit.Assert.*;
  */
 public class DAOFamilyInfoTest {
     
+    DAOFamilyInfo dao = new DAOFamilyInfo();
+    
     public DAOFamilyInfoTest() {
     }
 
@@ -22,6 +25,7 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testGetIndividualFamilyInfo() {
+        assertEquals("[]", dao.getIndividualFamilyInfo("QWERT").toString());
     }
 
     /**
@@ -29,6 +33,7 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testAddFamilyInfo() {
+        assertTrue(dao.addFamilyInfo(new FamilyInfo("WRYYY", "Dio Brando", "Father", "01/01/1867", "0000000000")));
     }
 
     /**
@@ -36,6 +41,7 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testDeleteFamilyInfo() {
+        assertTrue(dao.deleteFamilyInfo("WRYYY", "Dio Brando"));
     }
 
     /**
@@ -43,6 +49,7 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testDeleteAllFamilyInfo() {
+        assertTrue(dao.deleteAllFamilyInfo("WRYYY"));
     }
 
     /**
@@ -50,13 +57,8 @@ public class DAOFamilyInfoTest {
      */
     @Test
     public void testEditFamilyInfo() {
-    }
-
-    /**
-     * Test of main method, of class DAOFamilyInfo.
-     */
-    @Test
-    public void testMain() {
+        assertTrue(dao.editFamilyInfo(new FamilyInfo("WRYYY", "Dio Brando",
+                "Father", "12/12/1867", "0000000000"), "Dio Brando"));
     }
     
 }

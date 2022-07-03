@@ -5,6 +5,7 @@
  */
 package model;
 
+import entity.Experience;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,6 +15,8 @@ import static org.junit.Assert.*;
  */
 public class DAOExperienceTest {
     
+    DAOExperience dao = new DAOExperience();
+    
     public DAOExperienceTest() {
     }
 
@@ -22,6 +25,7 @@ public class DAOExperienceTest {
      */
     @Test
     public void testListIndividualExperience() {
+        assertEquals("[]", dao.listIndividualExperience("QWERT").toString());
     }
 
     /**
@@ -29,6 +33,7 @@ public class DAOExperienceTest {
      */
     @Test
     public void testAddExperience() {
+        assertTrue(dao.addExperience(new Experience("WRYYY", "Stand User", "01/01/2010", "30/06/2022")));
     }
 
     /**
@@ -36,6 +41,7 @@ public class DAOExperienceTest {
      */
     @Test
     public void testEditExperience() {
+        assertTrue(dao.editExperience(new Experience("WRYYY", "standotsukai", "01/01/2010", "02/07/2022"), "Stand User"));
     }
 
     /**
@@ -43,6 +49,7 @@ public class DAOExperienceTest {
      */
     @Test
     public void testDeleteExperience() {
+        assertTrue(dao.deleteExperience("WRYYY", "standotsukai"));
     }
 
     /**
@@ -50,13 +57,7 @@ public class DAOExperienceTest {
      */
     @Test
     public void testDeleteAllExperience() {
+        assertTrue(dao.deleteAllExperience("WRYYY"));
     }
 
-    /**
-     * Test of main method, of class DAOExperience.
-     */
-    @Test
-    public void testMain() {
-    }
-    
 }

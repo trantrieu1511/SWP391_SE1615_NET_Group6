@@ -166,19 +166,17 @@
                                                 </div>
                                             </div>
                                             <div class="profile-basic">
-                                                <div class="row">
-                                                <c:forEach items="${listp}" var="p">
+                                                <div class="row">                                            
                                                     <div class="col-md-5">
                                                         <div class="profile-info-left">
-                                                            <h3 class="user-name m-t-0 mb-0">${p.first_name} ${p.last_name}</h3>
-                                                            <h6 class="text-muted">${p.department_name}</h6>
-                                                            <small class="text-muted">${p.job_title}</small>
-                                                            <div class="staff-id">Employee ID : ${p.profile_id}</div>
-                                                            <div class="small doj text-muted">Date of Join : ${p.hire_date}</div>
+                                                            <h3 class="user-name m-t-0 mb-0">${profile.first_name} ${profile.last_name}</h3>
+                                                            <h6 class="text-muted">${profile.department_name}</h6>
+                                                            <small class="text-muted">${profile.job_title}</small>
+                                                            <div class="staff-id">Employee ID : ${profile.profile_id}</div>
+                                                            <div class="small doj text-muted">Date of Join : ${profile.hire_date}</div>
                                                             <!--<div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>-->
                                                         </div>
-                                                    </div>
-                                                </c:forEach>
+                                                    </div>                                             
                                                 <div class="col-md-7">
                                                     <ul class="personal-info">
                                                         <c:forEach items="${listp}" var="p">

@@ -96,7 +96,7 @@ CREATE TABLE [clients] (
 	last_name VARCHAR (25) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) DEFAULT NULL,
-	company VARCHAR(25) NOT NULL,
+	company_id VARCHAR(25) NOT NULL,
 	FOREIGN KEY (company) REFERENCES [company] (company_id)
 );
 

@@ -627,7 +627,7 @@ public class DAOSalary extends DBConnect {
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, ename);
+            state.setString(1, "%" + ename + "%");
             state.setString(2, from);
             rs = state.executeQuery();
             while (rs.next()) {

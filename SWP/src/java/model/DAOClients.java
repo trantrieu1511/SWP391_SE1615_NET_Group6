@@ -75,7 +75,7 @@ public class DAOClients extends DBConnect {
         return list;
     }
 
-   public List<Clients> searchClient1(String id, String name) {
+    public List<Clients> searchClient1(String id, String name) {
         String sql = "select * from [clients] where client_id like ? "
                 + "and first_name + last_name like ?";
         List<Clients> list = new ArrayList<>();
@@ -105,16 +105,15 @@ public class DAOClients extends DBConnect {
     }
 
     public List<Clients> searchClient2(String id, String name, String company_id) {
-        String sql = "select * from [clients] where client_id like ?"
-                + " and first_name + last_name like ?"
-                + " and company = ?";
+        String sql = "select * from [clients] where client_id like ? "
+                + "and company_id = ? and first_name + last_name like ?";
         List<Clients> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, "%" + id + "%");
-            state.setString(2, "%" + name + "%");
-            state.setString(3, company_id);
+            state.setString(2, company_id);
+            state.setString(3, "%" + name + "%");
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Clients(
@@ -165,7 +164,7 @@ public class DAOClients extends DBConnect {
                 + "last_name = ?,\n"
                 + "email = ?,\n"
                 + "phone_number = ?,\n"
-                + "company = ?\n"
+                + "company_id = ?\n"
                 + "where client_id = ?";
         try {
             conn = getConnection();
@@ -207,10 +206,11 @@ public class DAOClients extends DBConnect {
 
     public static void main(String[] args) {
         DAOClients daoCl = new DAOClients();
+        List<Clients> list = daoCl.searchClient2("", "", "1");
 //        List<Clients> list = daoCl.getIndividualClientProfile("CL001");
-//        for (Clients clients : list) {
-//            System.out.println(clients.toString());
-//        }
-System.out.println(daoCl.listAllClients());
+        for (Clients clients : list) {
+            System.out.println(clients.toString());
+        }
+//        System.out.println(daoCl.listAllClients());
     }
 }

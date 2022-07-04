@@ -130,15 +130,18 @@
                                 <div class="col">
                                     <h3 class="page-title">Clients</h3>
                                     <ul class="breadcrumb">
-                                    <c:if test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
-                                        <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
-                                        </c:if>
-
-                                    <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
+                                            <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
                                     <li class="breadcrumb-item active">Clients</li>
                                 </ul>
                             </div>
-                            <c:if test="${sessionScope.acc.isManager==true}">
+                            <c:if test="${sessionScope.acc.isAdmin==true}">
                                 <div class="col-auto float-right ml-auto">
                                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
                                     <div class="view-icons">
@@ -199,7 +202,7 @@
                                             <th>Email</th>
                                             <th>Mobile</th>
                                             <!--<th>Status</th>-->
-                                            <c:if test="${sessionScope.acc.isManager==true}">
+                                            <c:if test="${sessionScope.acc.isAdmin==true}">
                                                 <th class="text-right">Action</th>
                                                 </c:if>
                                         </tr>
@@ -233,7 +236,7 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>-->
-                                                <c:if test="${sessionScope.acc.isManager==true}">
+                                                <c:if test="${sessionScope.acc.isAdmin==true}">
                                                     <td class="text-right">
                                                         <div class="dropdown dropdown-action">
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

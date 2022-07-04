@@ -75,13 +75,13 @@ public class ControllerSalary extends HttpServlet {
                     if (edit != null) { //edit
                         alert = "Successfully edited employee salary!";
                     } else if (editFail != null) { //edit
-                        alert = "Fail to edit employee salary! Employee hasn't had a salary yet.";
+                        alert = "Fail to edit employee salary! Employee hasn't had a salary to edit yet.";
                     } else if (add != null) { //add
                         alert = "Successfully added new salary!";
                     } else if (delete != null) { //delete
                         alert = "Delete salary successfully!";
                     } else if (deleteFail != null) { //delete fail
-                        alert = "Fail to delete employee salary! Employee hasn't had a salary yet.";
+                        alert = "Fail to delete employee salary! Employee hasn't had a salary to delete yet.";
                     } else if (SalaryIsNA != null) { //Salary isn't available
                         alert = "Employee hasn't had a salary yet! You have to add employee's salary first to generate their payslip!";
                     }
@@ -236,7 +236,7 @@ public class ControllerSalary extends HttpServlet {
                         System.out.println("Fail to add new Salary for profile_id = " + profile_id);
                     }
                 }
-                
+
                 if (service.equals("editSalary")) {
                     String profile_id = request.getParameter("profile_id");
                     double basic_salary = Double.parseDouble(request.getParameter("basic_salary").trim());
@@ -265,7 +265,7 @@ public class ControllerSalary extends HttpServlet {
                         response.sendRedirect("salary?do=list&editFail=true");
                     }
                 }
-                
+
                 if (service.equals("deleteSalary")) {
                     String profile_id = request.getParameter("profile_id");
 

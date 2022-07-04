@@ -10,6 +10,7 @@ import entity.Clients;
 import entity.Company;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -122,60 +123,29 @@ public class ControllerClient extends HttpServlet {
                     String client_id = request.getParameter("cid").trim();
                     String client_name = request.getParameter("cname").trim();
                     String client_company = request.getParameter("ccompany");
-
+                    String alert = "";
                     List<Company> listCpn = daoCpn.listAllCompany();
+                    List<Clients> listSearch = new ArrayList<>();
                     if (client_company.equals("")) {
-                        List<Clients> listSearch = daoCl.searchClient1(client_id, client_name);
+                        listSearch = daoCl.searchClient1(client_id, client_name);
                         if (listSearch.isEmpty()) {
-                            String alert = "There are no search result found!";
-                            for (Clients c : listSearch) {
-                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
-                            }
-                            request.setAttribute("listcl", listSearch);
-                            request.setAttribute("listcpn", listCpn);
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("filter", "no");
-                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                            dispatch.forward(request, response);
-                        } else {
-                            String alert = "";
-                            for (Clients c : listSearch) {
-                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
-                            }
-                            request.setAttribute("listcl", listSearch);
-                            request.setAttribute("listcpn", listCpn);
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("filter", "no");
-                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                            dispatch.forward(request, response);
+                            alert = "There are no search result found!";
                         }
                     } else {
-                        List<Clients> listSearch = daoCl.searchClient2(client_id, client_name, client_company);
+                        listSearch = daoCl.searchClient2(client_id, client_name, client_company);
                         if (listSearch.isEmpty()) {
-                            String alert = "There are no search result found!";
-                            for (Clients c : listSearch) {
-                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
-                            }
-                            request.setAttribute("listcl", listSearch);
-                            request.setAttribute("listcpn", listCpn);
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("filter", "no");
-                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                            dispatch.forward(request, response);
-                        } else {
-                            String alert = "";
-                            for (Clients c : listSearch) {
-                                c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
-                            }
-                            request.setAttribute("listcl", listSearch);
-                            request.setAttribute("listcpn", listCpn);
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("filter", "no");
-                            RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
-                            dispatch.forward(request, response);
+                            alert = "There are no search result found!";
                         }
                     }
-
+                    for (Clients c : listSearch) {
+                        c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
+                    }
+                    request.setAttribute("listcl", listSearch);
+                    request.setAttribute("listcpn", listCpn);
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("filter", "no");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
+                    dispatch.forward(request, response);
                 }
                 if (service.equals("addClient")) {
                     String client_id = request.getParameter("client_id");
@@ -238,7 +208,7 @@ public class ControllerClient extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

@@ -67,6 +67,13 @@ public class Salary extends Profile {
         this.basic_salary = basic_salary;
     }
 
+    //get net_salary only constructor
+
+    public Salary(double net_salary) {
+        this.net_salary = net_salary;
+    }
+    
+    
     //get net_salary constructor
     public Salary(String profile_id, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
         this.profile_id = profile_id;

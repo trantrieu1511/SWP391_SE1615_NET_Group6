@@ -318,6 +318,9 @@ public class ControllerSalary extends HttpServlet {
                     RequestDispatcher dispatch = request.getRequestDispatcher("salary-view.jsp");
                     dispatch.forward(request, response);
                 }
+                if (service.equals("toPDF")) {
+                    
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

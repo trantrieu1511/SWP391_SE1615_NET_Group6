@@ -18,11 +18,11 @@ import java.util.List;
  * @author DELL
  */
 public class DAOSalary extends DBConnect {
-
+    
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-
+    
     public List<Salary> listAllStaffAndManagerProfile() {
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
@@ -74,7 +74,35 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
+    public List<Salary> listAllStaffSalary(String profile_id) {
+        String sql = "select ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary\n"
+                + "from [profile] p full outer join [account] a \n"
+                + "on p.profile_id = a.profile_id \n"
+                + "full outer join [salary] s\n"
+                + "on p.profile_id = s.profile_id\n"
+                + "where a.isadmin != 1\n"
+                + "and report_to = ?\n"
+                + "order by p.profile_id asc";
+        List<Salary> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Salary(rs.getDouble(1)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public Salary getIndividualSalaryAndProfile(String profile_id) {
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
@@ -127,7 +155,7 @@ public class DAOSalary extends DBConnect {
         }
         return null;
     }
-
+    
     public Salary getIndividualSalaryAndProfileInPayslip(String profile_id) {
         String sql = "select p.*, s.payslip_number, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
@@ -181,7 +209,7 @@ public class DAOSalary extends DBConnect {
         }
         return null;
     }
-
+    
     public List<Salary> listStaffNeedSalary() {
         String sql = "select p.profile_id, p.first_name, p.last_name, s.basic_salary\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -213,7 +241,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate(String erole, String ename, String from, String to) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -262,7 +290,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -272,7 +300,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithoutCreateDate(String erole, String ename) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -318,7 +346,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -328,7 +356,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate2(String ename, String from, String to) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -375,7 +403,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -385,7 +413,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate3(String erole, String ename, String from) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -433,7 +461,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -443,7 +471,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate4(String from, String to) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -488,7 +516,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -498,7 +526,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate5(String erole, String from, String to) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -545,7 +573,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -555,7 +583,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate6(String erole, String from) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -601,7 +629,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -611,7 +639,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithCreateDate7(String ename, String from) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -657,7 +685,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -667,7 +695,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithFromOnly(String from) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -711,7 +739,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -721,7 +749,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithNameOnly(String ename) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -765,7 +793,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -775,7 +803,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public List<Salary> searchEmployeeSalaryWithRoleOnly(String erole) {
         List<Salary> list = new ArrayList<>();
         String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
@@ -819,7 +847,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(23)
                 ));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -829,7 +857,7 @@ public class DAOSalary extends DBConnect {
         }
         return list;
     }
-
+    
     public Salary getIndividualEmployeeSalary(String profile_id) {
         String sql = "select s.*, ((basic_salary+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary from salary s\n"
                 + "where profile_id = ?";
@@ -857,7 +885,7 @@ public class DAOSalary extends DBConnect {
                         rs.getString(15)
                 );
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -867,7 +895,7 @@ public class DAOSalary extends DBConnect {
         }
         return null;
     }
-
+    
     public boolean addEmployeeSalary(Salary salary) {
         String sql = "insert into salary "
                 + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -898,7 +926,7 @@ public class DAOSalary extends DBConnect {
         }
         return true;
     }
-
+    
     public int editEmployeeSalary(Salary salary) {
         int n = 0;
         String sql = "update [salary]\n"
@@ -941,7 +969,7 @@ public class DAOSalary extends DBConnect {
         }
         return n;
     }
-
+    
     public int deleteEmployeeSalary(String profile_id) {
         int n = 0;
         String sql = "delete from salary where profile_id = ?";
@@ -1050,9 +1078,11 @@ public class DAOSalary extends DBConnect {
 //removing extra space if any  
         return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
     }
-
+    
     public static void main(String[] args) {
         DAOSalary daoSalary = new DAOSalary();
+        List<Salary> list = daoSalary.listAllStaffSalary("ABCDE");
+
 //        String name = "a";
 //        String role = "a";
 //        String from = "";
@@ -1065,10 +1095,8 @@ public class DAOSalary extends DBConnect {
 //        Random rand = new java.util.Random();
 //        int num = rand.nextInt(100000);
 //        System.out.println(num);
-
-        String num = "100.0";
-        System.out.println(Math.round(100.52));
-
+//        String num = "100.0";
+//        System.out.println(Math.round(100.52));
 //        System.out.println(convertNumberToWord(2));
 //        System.out.println(convertNumberToWord(99));
 //        System.out.println(convertNumberToWord(456));
@@ -1085,8 +1113,8 @@ public class DAOSalary extends DBConnect {
 //        System.out.println(convertNumberToWord(700000));
 //        System.out.println(convertNumberToWord(9000000));
 //        List<Salary> list = daoSalary.listIndividualSalaryAndProfileInPayslip("ABCDE");
-//        for (Salary salary : list) {
-//            System.out.println(salary.toString());
-//        }
+        for (Salary salary : list) {
+            System.out.println(salary.toString());
+        }
     }
 }

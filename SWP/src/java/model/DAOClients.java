@@ -48,8 +48,7 @@ public class DAOClients extends DBConnect {
         return list;
     }
 
-    public List<Clients> getIndividualClientProfile(String client_id) {
-        List<Clients> list = new ArrayList<>();
+    public Clients getIndividualClientProfile(String client_id) {
         String sql = "select * from clients where client_id = ?";
         try {
             conn = getConnection();
@@ -57,13 +56,13 @@ public class DAOClients extends DBConnect {
             state.setString(1, client_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Clients(
+                return new Clients(
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(6));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class DAOClients extends DBConnect {
             closePrepareStatement(state);
             closeConnection(conn);
         }
-        return list;
+        return null;
     }
 
     public List<Clients> searchClient1(String id, String name) {

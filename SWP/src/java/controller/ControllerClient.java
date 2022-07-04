@@ -196,8 +196,9 @@ public class ControllerClient extends HttpServlet {
                 }
                 if (service.equals("getclientProfile")) {
                     String client_id = request.getParameter("client_id");
-                    List<Clients> listCp = daoCl.getIndividualClientProfile(client_id);
-                    request.setAttribute("listcp", listCp);
+                    Clients cp = daoCl.getIndividualClientProfile(client_id);
+                    cp.setCompany_name(daoCpn.getCompanyByID(cp.getCompany_id()).getName());
+                    request.setAttribute("cp", cp);
                     RequestDispatcher dispatch = request.getRequestDispatcher("client-profile.jsp");
                     dispatch.forward(request, response);
                 }

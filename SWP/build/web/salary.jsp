@@ -331,27 +331,33 @@
                                             <h4 class="text-primary">Earnings</h4>
                                             <div class="form-group">
                                                 <label>Basic</label>
-                                                <input class="form-control" type="text" name="basic_salary">
+                                                <input class="form-control" type="text" name="basic_salary" required="" pattern="[0-9]{1,13}" 
+                                                       title="Basic salary must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>DA(40%)</label>
-                                                <input class="form-control" type="text" name="DA">
+                                                <input class="form-control" type="text" name="DA" required="" pattern="[0-9]{1,13}" 
+                                                       title="DA must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>HRA(15%)</label>
-                                                <input class="form-control" type="text" name="HRA">
+                                                <input class="form-control" type="text" name="HRA" required="" pattern="[0-9]{1,13}" 
+                                                       title="HRA must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Conveyance</label>
-                                                <input class="form-control" type="text" name="conveyance">
+                                                <input class="form-control" type="text" name="conveyance" required="" pattern="[0-9]{1,13}" 
+                                                       title="Conveyance must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Allowance</label>
-                                                <input class="form-control" type="text" name="allowance">
+                                                <input class="form-control" type="text" name="allowance" required="" pattern="[0-9]{1,13}" 
+                                                       title="Allowance must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Medical  Allowance</label>
-                                                <input class="form-control" type="text" name="medical_allowance">
+                                                <input class="form-control" type="text" name="medical_allowance" required="" pattern="[0-9]{1,13}" 
+                                                       title="Medical Allowance must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <!--                                            <div class="form-group">
                                                                                             <label>Others</label>
@@ -365,27 +371,33 @@
                                             <h4 class="text-primary">Deductions</h4>
                                             <div class="form-group">
                                                 <label>TDS</label>
-                                                <input class="form-control" type="text" name="TDS">
+                                                <input class="form-control" type="text" name="TDS" required="" pattern="[0-9]{1,13}" 
+                                                       title="TDS must be number, can be up to 13 numbers maximum">
                                             </div> 
                                             <div class="form-group">
                                                 <label>ESI</label>
-                                                <input class="form-control" type="text" name="ESI">
+                                                <input class="form-control" type="text" name="ESI" required="" pattern="[0-9]{1,13}" 
+                                                       title="ESI must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>PF</label>
-                                                <input class="form-control" type="text" name="PF">
+                                                <input class="form-control" type="text" name="PF" required="" pattern="[0-9]{1,13}" 
+                                                       title="PF must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Leave</label>
-                                                <input class="form-control" type="text" name="leave">
+                                                <input class="form-control" type="text" name="leave" required="" pattern="[0-9]{1,13}" 
+                                                       title="Leave must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Loan</label>
-                                                <input class="form-control" type="text" name="loan">
+                                                <input class="form-control" type="text" name="loan" required="" pattern="[0-9]{1,13}" 
+                                                       title="Loan must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <div class="form-group">
                                                 <label>Prof. Tax</label>
-                                                <input class="form-control" type="text" name="professional_tax">
+                                                <input class="form-control" type="text" name="professional_tax" required="" pattern="[0-9]{1,13}" 
+                                                       title="Prof. Tax must be number, can be up to 13 numbers maximum">
                                             </div>
                                             <!--                                            <div class="form-group">
                                                                                             <label>Labour Welfare</label>

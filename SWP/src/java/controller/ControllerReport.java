@@ -12,6 +12,7 @@ import entity.FamilyInfo;
 import entity.Profile;
 import entity.ProfileDetail;
 import entity.Projects;
+import entity.Salary;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import model.DAOJob;
 import model.DAOProfile;
 import model.DAOProfileDetail;
 import model.DAOProject;
+import model.DAOSalary;
 
 /**
  *
@@ -65,6 +67,7 @@ public class ControllerReport extends HttpServlet {
                 DAOJob daoJob = new DAOJob();
                 DAOProfileDetail daoPD =  new DAOProfileDetail();
                 DAOFamilyInfo daoFam = new DAOFamilyInfo();
+                DAOSalary daoSalary = new DAOSalary();
                 List<Projects> list = null;
                 if (acc.isIsManager()) {
                     list = daoProject.listProject(acc.getProfile_id());
@@ -167,6 +170,7 @@ public class ControllerReport extends HttpServlet {
                     List<Profile> listProfile = daoProfile.listAllStaff(acc.getProfile_id());
                     List<ProfileDetail> listPD = daoPD.listProfileDetail(acc.getProfile_id());
                     List<FamilyInfo> listFam = daoFam.listFamilyInfo(acc.getProfile_id());
+                    List<Salary> listSalary = daoSalary.listAllStaffSalary(acc.getProfile_id());
                     List<String[]> empReport = new ArrayList<>();
                     for(int i = 0; i < listPD.size(); i++) {
                         String temp[] = new String[12];
@@ -186,7 +190,7 @@ public class ControllerReport extends HttpServlet {
                         } else {
                             temp[7] = "Female";
                         }
-                        temp[8] = "";
+                        temp[8] = Double.toString(listSalary.get(i).getBasic_salary());
                         temp[9] = listPD.get(i).getAddress();
                         temp[10] = listProfile.get(i).getPhone_number();
                         for (FamilyInfo f : listFam) {

@@ -36,7 +36,7 @@ public class ControllerFamilyInfo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
             DAOFamilyInfo daoF = new DAOFamilyInfo();
             HttpSession session = request.getSession();
@@ -53,15 +53,6 @@ public class ControllerFamilyInfo extends HttpServlet {
                     String dob = request.getParameter("dob");
                     String phone = request.getParameter("phone");
 
-//                out.print(profile_id);
-//                out.print("<br>");
-//                out.print(name);
-//                out.print("<br>");
-//                out.print(relationship);
-//                out.print("<br>");
-//                out.print(dob);
-//                out.print("<br>");
-//                out.print(phone);
                     boolean statusEdit = daoF.editFamilyInfo(new FamilyInfo(profile_id, name, relationship, dob, phone),
                             cur_name);
                     if (statusEdit) {
@@ -79,8 +70,8 @@ public class ControllerFamilyInfo extends HttpServlet {
                             response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
                         }
                     }
-
                 }
+                
                 if (service.equals("addFamilyInfo")) {
                     String profile_id = request.getParameter("profile_id");
                     String name = request.getParameter("name");
@@ -103,9 +94,9 @@ public class ControllerFamilyInfo extends HttpServlet {
                         } else {
                             response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
                         }
-                    }
-
+                    }                  
                 }
+                
                 if (service.equals("deleteFamilyInfo")) {
                     String name = request.getParameter("name");
                     String profile_id = request.getParameter("profile_id");
@@ -128,6 +119,9 @@ public class ControllerFamilyInfo extends HttpServlet {
 
                 }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect("error404.jsp");
         }
     }
 

@@ -16,6 +16,7 @@ import entity.ProfileDetail;
 import entity.Projects;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -114,112 +115,35 @@ public class ControllerManager extends HttpServlet {
                     Object add = request.getParameter("add");
                     Object delete = request.getParameter("delete");
                     Object addFail = request.getParameter("addFail");
+                    String alert = "";
                     if (edit != null) { //edit
-                        String alert = "New staff information have been saved!";
-                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("list", list);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                        dispath.forward(request, response);
+                        alert = "New staff information have been saved!";
                     } else if (add != null) { //add
-                        String alert = "Successfully added new staff information!";
-                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("list", list);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                        dispath.forward(request, response);
+                        alert = "Successfully added new staff information!";
                     } else if (addFail != null) { //add failed
-                        String alert = "ID has been used by another employee, please enter again!";
-                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("list", list);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                        dispath.forward(request, response);
+                        alert = "ID has been used by another employee, please enter again!";
                     } else if (delete != null) { //delete
-                        String alert = "Delete staff successfully!";
-                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("list", list);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                        dispath.forward(request, response);
-                    } else {
-                        String alert = "";
-                        List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
-                        List<Departments> listDp = daoDepartment.listAllDepartment();
-                        List<Jobs> listJ = daoJob.listAllJob();
-                        for (Profile p : list) {
-                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            Account accStaff = daoAccount.getAccount(p.getProfile_id());
-                            if (accStaff != null) {
-                                p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
-                                p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
-                            }
-                        }
-                        request.setAttribute("filter", "yes");
-                        request.setAttribute("alert", alert);
-                        request.setAttribute("list", list);
-                        request.setAttribute("department", listDp);
-                        request.setAttribute("job", listJ);
-                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                        dispath.forward(request, response);
+                        alert = "Delete staff successfully!";
                     }
+                    List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
+                    List<Departments> listDp = daoDepartment.listAllDepartment();
+                    List<Jobs> listJ = daoJob.listAllJob();
+                    for (Profile p : list) {
+                        p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                        p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                        Account accStaff = daoAccount.getAccount(p.getProfile_id());
+                        if (accStaff != null) {
+                            p.setUser_display(daoAccount.getAccount(p.getProfile_id()).getUser());
+                            p.setPass_display(daoAccount.getAccount(p.getProfile_id()).getPass());
+                        }
+                    }
+                    request.setAttribute("filter", "yes");
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("list", list);
+                    request.setAttribute("department", listDp);
+                    request.setAttribute("job", listJ);
+                    RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                    dispath.forward(request, response);
                 }
 
                 // homepage
@@ -232,237 +156,118 @@ public class ControllerManager extends HttpServlet {
                     String eid = request.getParameter("eid");
                     String ename = request.getParameter("ename");
                     String ejob = request.getParameter("ejob");
-                    List<Profile> list = null;
+                    List<Profile> list = new ArrayList<>();
                     List<Departments> listDp = daoDepartment.listAllDepartment();
                     List<Jobs> listJ = daoJob.listAllJob();
-
+                    String alert = "";
                     if (ejob.equals("")) {
-                        String alert = "";
                         list = daoProfile.searchStaff1(eid, ename);
                         if (list.isEmpty()) {
                             alert = "No search result found!";
-                            for (Profile p : list) {
-                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
+                        } else {
+                            list = daoProfile.searchStaff2(eid, ename, ejob);
+                            if (list.isEmpty()) {
+                                alert = "No search result found!";
                             }
-
-                            request.setAttribute("list", list);
-                            request.setAttribute("filter", "no");
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("department", listDp);
-                            request.setAttribute("job", listJ);
-                            RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                            dispath.forward(request, response);
-                        } else {
-                            alert = "";
-                            for (Profile p : list) {
-                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            }
-
-                            request.setAttribute("list", list);
-                            request.setAttribute("filter", "no");
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("department", listDp);
-                            request.setAttribute("job", listJ);
-                            RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                            dispath.forward(request, response);
+                        }
+                        for (Profile p : list) {
+                            p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
+                            p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
                         }
 
-                    } else {
-                        String alert = "";
-                        list = daoProfile.searchStaff2(eid, ename, ejob);
-                        if (list.isEmpty()) {
-                            alert = "No search result found!";
-                            for (Profile p : list) {
-                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            }
+                        request.setAttribute("list", list);
+                        request.setAttribute("filter", "no");
+                        request.setAttribute("alert", alert);
+                        request.setAttribute("department", listDp);
+                        request.setAttribute("job", listJ);
+                        RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
+                        dispath.forward(request, response);
+                    }
 
-                            request.setAttribute("list", list);
-                            request.setAttribute("filter", "no");
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("department", listDp);
-                            request.setAttribute("job", listJ);
-                            RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                            dispath.forward(request, response);
+                    if (service.equals("addStaff")) {
+                        String profile_id = request.getParameter("profile_id");
+                        String first_name = request.getParameter("first_name").trim();
+                        String last_name = request.getParameter("last_name").trim();
+                        String username = request.getParameter("username").trim();
+                        String password = request.getParameter("password").trim();
+                        String email = request.getParameter("email").trim();
+                        String phone_number = request.getParameter("phone_number").trim();
+                        String hire_date = request.getParameter("hire_date").trim();
+                        String ReportsTo = request.getParameter("ReportsTo");
+                        int job_id = Integer.parseInt(request.getParameter("job_id"));
+                        int department_id = Integer.parseInt(request.getParameter("department_id"));
+
+                        Profile pro = new Profile(profile_id, first_name, last_name,
+                                email, phone_number, hire_date, job_id, department_id,
+                                ReportsTo);
+                        boolean statusPro = daoProfile.addStaff(pro);
+                        daoSchedule.addSchedule(profile_id, " ");
+                        if (statusPro) {
+                            daoAccount.addAccount(profile_id, username, password);                            
+                            ProfileDetail pd = new ProfileDetail(profile_id, "01/01/1900",
+                                    "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
+                            daoProfileDetail.addProfileDetail(pd);                           
+                            FamilyInfo f = new FamilyInfo(profile_id, "N/A", "N/A",
+                                    "01/01/1900", "N/A");
+                            daoFamilyInfo.addFamilyInfo(f);
+                            Experience exp = new Experience(profile_id, "N/A", "1900-01-01",
+                                    "1900-01-01");
+                            daoExperience.addExperience(exp);                            
+                            response.sendRedirect("manager?do=list&add=true");
                         } else {
-                            alert = "";
-                            for (Profile p : list) {
-                                p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
-                                p.setDepartment_name(daoDepartment.getDepartmentByID(p.getDepartment_id()).getName());
-                            }
-
-                            request.setAttribute("list", list);
-                            request.setAttribute("filter", "no");
-                            request.setAttribute("alert", alert);
-                            request.setAttribute("department", listDp);
-                            request.setAttribute("job", listJ);
-                            RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
-                            dispath.forward(request, response);
+                            response.sendRedirect("manager?do=list&addFail=true");
                         }
 
                     }
 
-                }
-
-                if (service.equals("addStaff")) {
-                    String profile_id = request.getParameter("profile_id");
-                    String first_name = request.getParameter("first_name").trim();
-                    String last_name = request.getParameter("last_name").trim();
-                    String username = request.getParameter("username").trim();
-                    String password = request.getParameter("password").trim();
-                    String email = request.getParameter("email").trim();
-                    String phone_number = request.getParameter("phone_number").trim();
-                    String hire_date = request.getParameter("hire_date").trim();
-                    String ReportsTo = request.getParameter("ReportsTo");
-                    int job_id = Integer.parseInt(request.getParameter("job_id"));
-                    int department_id = Integer.parseInt(request.getParameter("department_id"));
-
-                    Profile pro = new Profile(profile_id, first_name, last_name,
-                            email, phone_number, hire_date, job_id, department_id,
-                            ReportsTo);
-                    boolean statusPro = daoProfile.addStaff(pro);
-                    daoSchedule.addSchedule(profile_id, " ");
-                    if (statusPro) {
-                        System.out.println("Successfully added new Staff with profile_id = " + profile_id);
-
-                        boolean statusAcc = daoAccount.addAccount(profile_id, username, password);
-                        if (statusAcc) {
-                            System.out.println("Successfully added new account for Staff with profile_id = " + profile_id);
-                        } else {
-                            System.out.println("Fail to added new account for Staff with profile_id = " + profile_id);
-                        }
-
-                        ProfileDetail pd = new ProfileDetail(profile_id, "01/01/1900",
-                                "N/A", true, "N/A", "N/A", false, 0, "N/A", "N/A");
-                        boolean statusPd = daoProfileDetail.addProfileDetail(pd);
-                        if (statusPd) {
-                            System.out.println("Successfully added new profileDetail for Staff with profile_id = " + profile_id);
-                        } else {
-                            System.out.println("Fail to added new profileDetail for Staff with profile_id = " + profile_id);
-                        }
-
-                        FamilyInfo f = new FamilyInfo(profile_id, "N/A", "N/A",
-                                "01/01/1900", "N/A");
-                        boolean statusf = daoFamilyInfo.addFamilyInfo(f);
-                        if (statusf) {
-                            System.out.println("Successfully added new familyInfo for Staff with profile_id = " + profile_id);
-                        } else {
-                            System.out.println("Fail to added new familyInfo for Staff with profile_id = " + profile_id);
-                        }
-
-                        Experience exp = new Experience(profile_id, "N/A", "1900-01-01",
-                                "1900-01-01");
-                        boolean statusexp = daoExperience.addExperience(exp);
-                        if (statusexp) {
-                            System.out.println("Successfully added new experience for Staff with profile_id = " + profile_id);
-                        } else {
-                            System.out.println("Fail to added new experience for Staff with profile_id = " + profile_id);
-                        }
-                        response.sendRedirect("manager?do=list&add=true");
-                    } else {
-                        System.out.println("Fail to add new Staff with profile_id = " + profile_id);
-                        response.sendRedirect("manager?do=list&addFail=true");
+                    if (service.equals("editStaff")) {
+                        String profile_id = request.getParameter("profile_id");
+                        String first_name = request.getParameter("first_name").trim();
+                        String last_name = request.getParameter("last_name").trim();
+                        String username = request.getParameter("username").trim();
+                        String password = request.getParameter("password").trim();
+                        String email = request.getParameter("email").trim();
+                        String phone_number = request.getParameter("phone_number").trim();
+                        String hire_date = request.getParameter("hire_date").trim();
+                        String ReportsTo = request.getParameter("ReportsTo");
+                        int job_id = Integer.parseInt(request.getParameter("job_id"));
+                        int department_id = Integer.parseInt(request.getParameter("department_id"));
+                        daoProfile.editStaff(new Profile(profile_id, first_name,
+                                last_name, email, phone_number, hire_date, job_id,
+                                department_id, ReportsTo));                        
+                        daoAccount.editAccount(profile_id, username, password);                        
+                        response.sendRedirect("manager?do=list&edit=true");
                     }
 
-                }
-
-                if (service.equals("editStaff")) {
-                    String profile_id = request.getParameter("profile_id");
-                    String first_name = request.getParameter("first_name").trim();
-                    String last_name = request.getParameter("last_name").trim();
-                    String username = request.getParameter("username").trim();
-                    String password = request.getParameter("password").trim();
-                    String email = request.getParameter("email").trim();
-                    String phone_number = request.getParameter("phone_number").trim();
-                    String hire_date = request.getParameter("hire_date").trim();
-                    String ReportsTo = request.getParameter("ReportsTo");
-                    int job_id = Integer.parseInt(request.getParameter("job_id"));
-                    int department_id = Integer.parseInt(request.getParameter("department_id"));
-                    double salary = 0;
-//                    int department_id = daoDepartment.getDepartmentByName(department_name).getId();
-//                    int job_id = daoJob.getJobByTitle(job_title).getId();
-
-//                    PrintWriter out = response.getWriter();
-//                    out.print(hire_date);
-                    boolean statusPro = daoProfile.editStaff(new Profile(profile_id,
-                            first_name, last_name, email, phone_number, hire_date,
-                            job_id, department_id, ReportsTo));
-                    if (statusPro) {
-                        System.out.println("Successfully edited Staff with profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to edit Staff with profile_id = " + profile_id);
+                    if (service.equals("deleteStaff")) {
+                        String profile_id = request.getParameter("profile_id");
+                        daoAccount.deleteAccount(profile_id);                        
+                        daoProfileDetail.deleteProfileDetail(profile_id);                     
+                        daoFamilyInfo.deleteAllFamilyInfo(profile_id);
+                        daoExperience.deleteAllExperience(profile_id);
+                        daoProfile.deleteProfile(profile_id);
+                        response.sendRedirect("manager?do=list&delete=true");
                     }
 
-                    boolean statusAcc = daoAccount.editAccount(profile_id, username, password);
-                    if (statusAcc) {
-                        System.out.println("Successfully edited account of profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to edit account of profile_id = " + profile_id);
+                    if (service.equals("addTask")) {
+                        String name = request.getParameter("name");
+                        int priority = Integer.parseInt(request.getParameter("priority"));
+                        String deadline = request.getParameter("deadline");
+                        int status = 0;
+                        String assigned = request.getParameter("assigned");
+                        String project = request.getParameter("project");
+                        daoTask.add(name, priority, deadline, status, assigned, project);
+                        response.sendRedirect("task-board.jsp");
                     }
 
-                    response.sendRedirect("manager?do=list&edit=true");
-                }
-
-                if (service.equals("deleteStaff")) {
-                    String profile_id = request.getParameter("profile_id");
-                    boolean statusAcc = daoAccount.deleteAccount(profile_id);
-                    if (statusAcc) {
-                        System.out.println("Successfully deleted account of profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete account of profile_id = " + profile_id);
+                    if (service.equals("searchAttendance")) {
+                        String name = request.getParameter("name");
+                        String date = request.getParameter("date");
+                        List<Attendance> listAttendance = daoAttendance.search(name, date);
+                        request.setAttribute("list", listAttendance);
+                        RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
+                        dispath.forward(request, response);
                     }
-
-                    boolean statusPd = daoProfileDetail.deleteProfileDetail(profile_id);
-                    if (statusPd) {
-                        System.out.println("Successfully deleted profileDetail with profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete profileDetail with profile_id = " + profile_id);
-                    }
-
-                    boolean statusF = daoFamilyInfo.deleteAllFamilyInfo(profile_id);
-                    if (statusF) {
-                        System.out.println("Successfully deleted familyInfo of profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete familyInfo of profile_id = " + profile_id);
-                    }
-
-                    boolean statusExp = daoExperience.deleteAllExperience(profile_id);
-                    if (statusExp) {
-                        System.out.println("Successfully deleted experience of profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete experience of profile_id = " + profile_id);
-                    }
-
-                    boolean statusPf = daoProfile.deleteProfile(profile_id);
-                    if (statusPf) {
-                        System.out.println("Successfully deleted profile of profile_id = " + profile_id);
-                    } else {
-                        System.out.println("Fail to delete profile of profile_id = " + profile_id);
-                    }
-
-                    response.sendRedirect("manager?do=list&delete=true");
-                }
-
-                if (service.equals("addTask")) {
-                    String name = request.getParameter("name");
-                    int priority = Integer.parseInt(request.getParameter("priority"));
-                    String deadline = request.getParameter("deadline");
-                    int status = 0;
-                    String assigned = request.getParameter("assigned");
-                    String project = request.getParameter("project");
-                    daoTask.add(name, priority, deadline, status, assigned, project);
-                    response.sendRedirect("task-board.jsp");
-                }
-
-                if (service.equals("searchAttendance")) {
-                    String name = request.getParameter("name");
-                    String date = request.getParameter("date");
-                    List<Attendance> list = daoAttendance.search(name, date);
-                    request.setAttribute("list", list);
-                    RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
-                    dispath.forward(request, response);
                 }
             }
         } catch (Exception ex) {

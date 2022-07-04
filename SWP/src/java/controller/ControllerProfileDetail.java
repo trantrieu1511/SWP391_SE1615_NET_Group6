@@ -57,15 +57,6 @@ public class ControllerProfileDetail extends HttpServlet {
                     String dob = request.getParameter("dob").trim();
                     boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
                     String address = request.getParameter("address").trim();
-
-//                out.print(profile_id);
-//                out.print("<br>");
-//                out.print(dob);
-//                out.print("<br>");
-//                out.print(gender);
-//                out.print("<br>");
-//                out.print(address);
-//                out.print("<br>");
                     boolean statusPfi = daoPd.editProfileInfo(new ProfileDetail(profile_id, dob, address, gender));
                     if (statusPfi) {
                         System.out.println("Successfully edited profileInfo of profile_id = " + profile_id);
@@ -92,19 +83,6 @@ public class ControllerProfileDetail extends HttpServlet {
                     int children = Integer.parseInt(request.getParameter("children").trim());
                     String bank_name = request.getParameter("bank_name").trim();
                     String bank_number = request.getParameter("bank_number").trim();
-//                out.print(profile_id);
-//                out.print("<br>");
-//                out.print(country);
-//                out.print("<br>");
-//                out.print(religion);
-//                out.print("<br>");
-//                out.print(isMarried);
-//                out.print("<br>");
-//                out.print(children);
-//                out.print("<br>");
-//                out.print(bank_name);
-//                out.print("<br>");
-//                out.print(bank_number);
                     boolean statusPsInfo = daoPd.editPersonalInfo(new ProfileDetail(profile_id, country, religion,
                                     isMarried, children, bank_name, bank_number));
                     if (statusPsInfo) {
@@ -125,8 +103,8 @@ public class ControllerProfileDetail extends HttpServlet {
 
                 }
             }
-
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }

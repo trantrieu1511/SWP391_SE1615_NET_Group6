@@ -36,7 +36,7 @@ public class ControllerExperience extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             String service = request.getParameter("do");
             DAOExperience daoExp = new DAOExperience();
             HttpSession session = request.getSession();
@@ -51,16 +51,6 @@ public class ControllerExperience extends HttpServlet {
                     String cur_role = request.getParameter("cur_role");
                     String start_date = request.getParameter("start_date");
                     String end_date = request.getParameter("end_date");
-
-//                out.print(profile_id);
-//                out.print("<br>");
-//                out.print(role);
-//                out.print("<br>");
-//                out.print(start_date);
-//                out.print("<br>");
-//                out.print(end_date);
-//                out.print("<br>");
-//                out.print(cur_role);
 
                     boolean statusEdit = daoExp.editExperience(new Experience(profile_id, role, start_date, end_date),
                             cur_role);
@@ -79,7 +69,6 @@ public class ControllerExperience extends HttpServlet {
                             response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
                         }
                     }
-
                 }
                 if (service.equals("addExperience")) {
                     String profile_id = request.getParameter("profile_id");
@@ -128,6 +117,9 @@ public class ControllerExperience extends HttpServlet {
 
                 }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect("error404.jsp");
         }
     }
 

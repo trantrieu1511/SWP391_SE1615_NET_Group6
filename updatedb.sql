@@ -96,10 +96,11 @@ CREATE TABLE [clients] (
 	last_name VARCHAR (25) NOT NULL,
 	email VARCHAR (100) NOT NULL,
 	phone_number VARCHAR (20) DEFAULT NULL,
-	company_id VARCHAR(25) NOT NULL,
+	company VARCHAR(25) NOT NULL,
 	FOREIGN KEY (company) REFERENCES [company] (company_id)
 );
 
+--drop table [company]
 CREATE TABLE [company] (
     company_id INT IDENTITY(1,1) PRIMARY KEY,
 	company_name VARCHAR (25) NOT NULL,

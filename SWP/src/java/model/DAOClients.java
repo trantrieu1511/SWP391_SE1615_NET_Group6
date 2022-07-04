@@ -17,14 +17,14 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOClients extends DBConnect {
-    
+
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-    
+
     public List<Clients> listAllClients() {
         List<Clients> list = new ArrayList<>();
-        String sql = "  select client_id, first_name, last_name, email,"
+        String sql = "select client_id, first_name, last_name, email,"
                 + " phone_number, company_id, company_name from clients join "
                 + "company on clients.company = company.company_id";
         try {
@@ -50,7 +50,7 @@ public class DAOClients extends DBConnect {
         }
         return list;
     }
-    
+
     public Clients getIndividualClientProfile(String client_id) {
         String sql = "select * from clients where client_id = ?";
         try {
@@ -76,7 +76,7 @@ public class DAOClients extends DBConnect {
         }
         return null;
     }
-    
+
     public List<Clients> searchClient1(String id, String name) {
         String sql = "select * from [clients] where client_id like ? "
                 + "and first_name + last_name like ?";
@@ -105,7 +105,7 @@ public class DAOClients extends DBConnect {
         }
         return list;
     }
-    
+
     public List<Clients> searchClient2(String id, String name, String company_id) {
         String sql = "select * from [clients] where client_id like ? "
                 + "and company_id = ? and first_name + last_name like ?";
@@ -135,7 +135,7 @@ public class DAOClients extends DBConnect {
         }
         return list;
     }
-    
+
     public boolean addClient(Clients client) {
         String sql = "insert into [clients]"
                 + " values (?,?,?,?,?,?)";
@@ -158,7 +158,7 @@ public class DAOClients extends DBConnect {
         }
         return true;
     }
-    
+
     public boolean editClient(Clients client) {
         String sql = "update [clients]\n"
                 + "set\n"
@@ -187,7 +187,7 @@ public class DAOClients extends DBConnect {
         }
         return true;
     }
-    
+
     public boolean deleteClient(String client_id) {
         String sql = "delete from [clients]"
                 + "where client_id = ?";
@@ -205,7 +205,7 @@ public class DAOClients extends DBConnect {
         }
         return true;
     }
-    
+
     public static void main(String[] args) {
         DAOClients daoCl = new DAOClients();
         List<Clients> list = daoCl.listAllClients();

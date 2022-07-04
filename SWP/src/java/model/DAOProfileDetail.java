@@ -51,6 +51,40 @@ public class DAOProfileDetail extends DBConnect {
         }
         return null;
     }
+    
+    public List<ProfileDetail> listProfileDetail(String profile_id) {
+        List<ProfileDetail> list = new ArrayList<>();
+        String sql = "select profile.profile_id, dob, address, gender, country, religion,"
+                + " isMarried, children, bank_name, bank_number from profileDetail"
+                + " join profile on profileDetail.profile_id = profile.profile_id "
+                + "where report_to = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new ProfileDetail(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getBoolean(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getString(10)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
     public boolean addProfileDetail(ProfileDetail pd) {
         String sql = "insert into [profileDetail] values (?,?,?,?,?,?,?,?,?,?)";
@@ -156,7 +190,7 @@ public class DAOProfileDetail extends DBConnect {
     public static void main(String[] args) {
         DAOProfileDetail daopd = new DAOProfileDetail();
         ProfileDetail pd = daopd.getIndividualProfileDetail("ABCDE");
-        System.out.println(pd.toString());
+        System.out.println(daopd.listProfileDetail("ABCDE"));
 //        List<profileDetail> list = dao.getIndividualProfileDetail("ABCDE");
 //        for (ProfileDetail pdetail : list) {
 //            System.out.println(pdetail.toString());

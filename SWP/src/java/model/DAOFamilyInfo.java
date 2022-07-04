@@ -48,6 +48,35 @@ public class DAOFamilyInfo extends DBConnect {
         }
         return flist;
     }
+    
+    public List<FamilyInfo> listFamilyInfo(String profile_id) {
+        List<FamilyInfo> list = new ArrayList<>();
+        String sql = "  select profile.profile_id, name, relationship, dob,"
+                + " phone from familyInfo join profile on familyInfo.profile_id "
+                + "= profile.profile_id where report_to = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new FamilyInfo(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
 
     public boolean addFamilyInfo(FamilyInfo f) {
         String sql = "insert into [familyInfo]\n"

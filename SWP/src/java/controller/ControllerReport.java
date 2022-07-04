@@ -8,7 +8,9 @@ package controller;
 import entity.Account;
 import entity.Attendance;
 import entity.Departments;
+import entity.FamilyInfo;
 import entity.Profile;
+import entity.ProfileDetail;
 import entity.Projects;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
 import model.DAODepartment;
+import model.DAOFamilyInfo;
+import model.DAOJob;
 import model.DAOProfile;
+import model.DAOProfileDetail;
 import model.DAOProject;
 
 /**
@@ -47,7 +52,7 @@ public class ControllerReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
             if (acc == null) {
@@ -56,7 +61,10 @@ public class ControllerReport extends HttpServlet {
                 DAOProject daoProject = new DAOProject();
                 DAOProfile daoProfile = new DAOProfile();
                 DAOAttendance daoAttendance = new DAOAttendance();
-                DAODepartment dAODepartment = new DAODepartment();
+                DAODepartment daoDepartment = new DAODepartment();
+                DAOJob daoJob = new DAOJob();
+                DAOProfileDetail daoPD =  new DAOProfileDetail();
+                DAOFamilyInfo daoFam = new DAOFamilyInfo();
                 List<Projects> list = null;
                 if (acc.isIsManager()) {
                     list = daoProject.listProject(acc.getProfile_id());
@@ -80,7 +88,7 @@ public class ControllerReport extends HttpServlet {
                         temp[0] = p.getProfile_id();
                         temp[1] = p.getFirst_name() + " " + p.getLast_name();
                         temp[2] = formatter.format(date);
-                        temp[3] = dAODepartment.getDepartmentByID(p.getDepartment_id()).getName();
+                        temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
                         String status;
                         if (listAttendance.contains(p.getProfile_id())) {
                             status = "Present";
@@ -92,7 +100,7 @@ public class ControllerReport extends HttpServlet {
                     }).forEachOrdered((temp) -> {
                         listStr.add(temp);
                     });
-                    List<Departments> listDepartment = dAODepartment.listAllDepartment();
+                    List<Departments> listDepartment = daoDepartment.listAllDepartment();
                     request.setAttribute("present", present);
                     request.setAttribute("absent", absent);
                     request.setAttribute("totalEmployee", totalEmployee);
@@ -126,7 +134,7 @@ public class ControllerReport extends HttpServlet {
                         temp[0] = p.getProfile_id();
                         temp[1] = p.getFirst_name() + " " + p.getLast_name();
                         temp[2] = formatter.format(date);
-                        temp[3] = dAODepartment.getDepartmentByID(p.getDepartment_id()).getName();
+                        temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
                         String status;
                         if (listAttendance.contains(p.getProfile_id())) {
                             status = "Present";
@@ -138,7 +146,7 @@ public class ControllerReport extends HttpServlet {
                     }).forEachOrdered((temp) -> {
                         listStr.add(temp);
                     });
-                    List<Departments> listDepartment = dAODepartment.listAllDepartment();
+                    List<Departments> listDepartment = daoDepartment.listAllDepartment();
                     request.setAttribute("present", present);
                     request.setAttribute("absent", absent);
                     request.setAttribute("totalEmployee", totalEmployee);
@@ -154,7 +162,49 @@ public class ControllerReport extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("daily-report.jsp");
                     dispath.forward(request, response);
                 }
+                
+                if (service.equals("employee")) {
+                    List<Profile> listProfile = daoProfile.listAllStaff(acc.getProfile_id());
+                    List<ProfileDetail> listPD = daoPD.listProfileDetail(acc.getProfile_id());
+                    List<FamilyInfo> listFam = daoFam.listFamilyInfo(acc.getProfile_id());
+                    List<String[]> empReport = new ArrayList<>();
+                    for(int i = 0; i < listPD.size(); i++) {
+                        String temp[] = new String[12];
+                        temp[0] = listProfile.get(i).getFirst_name() + " " + listProfile.get(i).getLast_name();
+                        temp[1] = listProfile.get(i).getEmail();
+                        temp[2] = daoDepartment.getDepartmentByID(listProfile.get(i).getDepartment_id()).getName();
+                        temp[3] = daoJob.getJobById(listProfile.get(i).getJob_id()).getTitle();
+                        temp[4] = listProfile.get(i).getHire_date();  
+                        temp[5] = listPD.get(i).getDob();
+                        if(listPD.get(i).isIsMarried()){
+                            temp[6] = "Married";
+                        } else {
+                            temp[6] = "Single";
+                        }
+                        if(listPD.get(i).isGender()) {
+                            temp[7] = "Male";
+                        } else {
+                            temp[7] = "Female";
+                        }
+                        temp[8] = "";
+                        temp[9] = listPD.get(i).getAddress();
+                        temp[10] = listProfile.get(i).getPhone_number();
+                        for (FamilyInfo f : listFam) {
+                            if(f.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
+                                temp[11] = f.getPhone() + "\n";
+                            }
+                        }
+                        empReport.add(temp);
+                    }
+                    
+                    request.setAttribute("employee", empReport);
+                    RequestDispatcher dispath = request.getRequestDispatcher("employee-report.jsp");
+                    dispath.forward(request, response);
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect("error404.jsp");
         }
     }
 

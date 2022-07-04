@@ -243,7 +243,7 @@
                                                 </label>
                                                 <select class="select" name="client" required>
                                                     <c:forEach items="${listC}" var="o">
-                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
+                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -318,7 +318,7 @@
                                                 <label>Client<span class="text-danger">*</span></label>
                                                 <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
-                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company}</option>
+                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name_name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

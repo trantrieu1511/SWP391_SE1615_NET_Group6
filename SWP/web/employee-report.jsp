@@ -64,7 +64,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="btn btn-primary">PDF</a>
+                                    <button class="btn btn-primary" id="dl-pdf">PDF</button>
                                 </div>
                             </div>
                         </div>
@@ -73,68 +73,59 @@
                         <!-- Content Starts -->
 
                         <!-- Search Filter -->
-                        <div class="row filter-row mb-4">
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input class="form-control floating" type="text">
-                                    <label class="focus-label">Employee</label>
+                        <form action="report" do="post">
+                            <input type="hidden" name="do" value="searchEmployeeReport">
+                            <div class="row filter-row mb-4">
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input class="form-control floating" name="name" type="text">
+                                        <label class="focus-label">${nameFilter}</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option>Select Department</option>
-                                        <option>Designing</option>
-                                        <option>Development</option>
-                                        <option>Finance</option>
-                                        <option>Hr & Finance</option>
+                                    <select class="select floating" name="department" id="department"> 
+                                        <option value="" disabled selected hidden></option>
+                                        <c:forEach items="${listDepartment}" var="o">
+                                            <option value="${o.id}">${o.name}</option>  
+                                        </c:forEach>
                                     </select>
-                                    <label class="focus-label">Department</label>
                                 </div>
                             </div>
+                            <div class="col-sm-6 col-md-3">                                  
+                            </div>                            
                             <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
-                                    </div>
-                                    <label class="focus-label">From</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text">
-                                    </div>
-                                    <label class="focus-label">To</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <a href="#" class="btn btn-success btn-block"> Search </a>  
+                                <button class="btn btn-success btn-block"> Search </button>  
                             </div>     
                         </div>
-                        <!-- /Search Filter -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-striped custom-table mb-0 datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Email</th>
-                                                <th>Department</th>
-                                                <th>Designation</th>
-                                                <th>Joining Date</th>
-                                                <th>DOB</th>
-                                                <th>Martial Status</th>
-                                                <th>Gender</th>
-                                                <th>Salary</th>
-                                                <th>Address</th>
-                                                <th>Contact Number</th>
-                                                <th>Emercency Contact Details</th>
-                                                <th class="text-center">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    </form>
+                    <!-- /Search Filter -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table mb-0 datatable">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="report?do=employee" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
+                                    <thead>
+                                        <tr>
+                                            <th>Employee Name</th>
+                                            <th>Email</th>
+                                            <th>Department</th>
+                                            <th>Designation</th>
+                                            <th>Joining Date</th>
+                                            <th>DOB</th>
+                                            <th>Martial Status</th>
+                                            <th>Gender</th>
+                                            <th>Salary</th>
+                                            <th>Address</th>
+                                            <th>Contact Number</th>
+                                            <th>Emercency Contact Details</th>
+                                            <th class="text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach items="${employee}" var="o">
                                             <tr>
                                                 <td>
@@ -159,7 +150,50 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- /PDF -->
+                    <div hidden>
+                        <div id="PDF">
+                            <h1>Employee Report</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Email</th>
+                                        <th>Department</th>
+                                        <th>Designation</th>
+                                        <th>Joining Date</th>
+                                        <th>DOB</th>
+                                        <th>Martial Status</th>
+                                        <th>Gender</th>
+                                        <th>Salary</th>
+                                        <th>Address</th>
+                                        <th>Contact Number</th>
+                                        <th>Emercency Contact Details</th>
+                                        <th class="text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${employee}" var="o">
+                                        <tr>
+                                            <td>${o[0]}</td>
+                                            <td>${o[1]}</td>
+                                            <td>${o[2]}</td>
+                                            <td>${o[3]}</td>
+                                            <td>${o[4]}</td>
+                                            <td>${o[5]}</td>
+                                            <td>${o[6]}</td>
+                                            <td>${o[7]}</td>
+                                            <td>${o[8]}</td>
+                                            <td>${o[9]}</td>
+                                            <td>${o[10]}</td>
+                                            <td>${o[11]}</td>
+                                            <td>Active</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     <!-- /Content End -->
 
@@ -193,9 +227,36 @@
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
 
+        <!-- PDF JS -->
+        <script src="js/html2pdf.bundle.min.js"></script>
+
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        <script type="text/javascript">
+            document.getElementById('dl-pdf').onclick = function () {
+                var element = document.getElementById('PDF');
 
+                var opt = {
+                    margin: 0,
+                    filename: 'employee-report.pdf',
+                    image: {type: 'jpeg', quality: 0.98},
+                    html2canvas: {scale: 2},
+                    jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
+                };
+
+                html2pdf(element, opt);
+            }
+            $(document).ready(function () {
+            <c:if test="${departmentFilter != 'select a department'}">
+                $("#department").val(${departmentFilter});
+            </c:if>
+                $("#department").select2({
+                    width: '100%',
+                    placeholder: "${departmentFilter}",
+                    allowClear: false
+                });
+            });
+        </script>
 
     </body>
 </html>

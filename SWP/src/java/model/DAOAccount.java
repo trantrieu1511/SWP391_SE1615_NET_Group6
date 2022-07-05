@@ -157,7 +157,7 @@ public class DAOAccount extends DBConnect {
 
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-        System.out.println(dao.login("manager", "khanhcnn49"));
+        System.out.println(dao.login("staff", "123456"));
     }
 
 }

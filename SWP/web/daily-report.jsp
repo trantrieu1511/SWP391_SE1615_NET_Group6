@@ -33,7 +33,7 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
-        
+
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -45,36 +45,36 @@
 
             <jsp:include page="menu.jsp"></jsp:include>
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
 
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col">
-                                <h3 class="page-title">Daily Report</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Daily Report</li>
-                                </ul>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-primary" id="dl-pdf">PDF</button>
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col">
+                                    <h3 class="page-title">Daily Report</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Daily Report</li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary" id="dl-pdf">PDF</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /Page Header -->
+                        <!-- /Page Header -->
 
-                    <!-- Content Starts -->
-                    <div class="row justify-content-center">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <h3><b>${totalEmployee}</b></h3>
+                        <!-- Content Starts -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h3><b>${totalEmployee}</b></h3>
                                     <p>Total Employees</p>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                         </div>
                     </form>
                     <!-- /Search Filter -->
-                    
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -142,21 +142,21 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${list}" var="o">
-                                        <tr>
-                                            <td>
-                                                <a href="profile.html">${o[1]}</a>
-                                            </td>
-                                            <td>${o[2]}</td>
-                                            <td>${o[3]}</td>
-                                            <td class="text-center">
-                                                <c:if test="${o[4] == 'Absent'}">
-                                                    <a style="color:red;">Absent</a>
-                                                </c:if>
-                                                <c:if test="${o[4] == 'Present'}">
-                                                    <a style="color:green;">Present</a>
-                                                </c:if>                                                
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="profile.html">${o[1]}</a>
+                                                </td>
+                                                <td>${o[2]}</td>
+                                                <td>${o[3]}</td>
+                                                <td class="text-center">
+                                                    <c:if test="${o[4] == 'Absent'}">
+                                                        <a style="color:red;">Absent</a>
+                                                    </c:if>
+                                                    <c:if test="${o[4] == 'Present'}">
+                                                        <a style="color:green;">Present</a>
+                                                    </c:if>                                                
+                                                </td>
+                                            </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -164,21 +164,20 @@
                         </div>
                     </div>
 
-                    <div hidden id="PDF">
-                        <h1>Attendance report (${list.get(1)[1]})</h1>
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Employee</th>
-                                            <th>Date</th>
-                                            <th>Department</th>
-                                            <th class="text-center">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${list}" var="o">
+                    <div hidden>
+                        <div id ="PDF">
+                            <h1>Attendance report (${list.get(0)[2]})</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Date</th>
+                                        <th>Department</th>
+                                        <th class="text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${list}" var="o">
                                         <tr>
                                             <td>
                                                 <a>${o[1]}</a>
@@ -194,10 +193,9 @@
                                                 </c:if>                                                
                                             </td>
                                         </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <!-- /Content End -->
@@ -231,37 +229,36 @@
         <!-- Datetimepicker JS -->
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
-        
+
         <!-- PDF JS -->
         <script src="js/html2pdf.bundle.min.js"></script>
 
         <!-- Custom JS -->
         <script src="js/app.js"></script>
         <script type="text/javascript">
-            document.getElementById('dl-pdf').onclick = function() {
+            document.getElementById('dl-pdf').onclick = function () {
                 var element = document.getElementById('PDF');
-                element.className = "table";
-                
+
                 var opt = {
                     margin: 1,
                     filename: 'daily-report.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    image: {type: 'jpeg', quality: 0.98},
+                    html2canvas: {scale: 2},
+                    jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
                 };
-                
+
                 html2pdf(element, opt);
             }
-            $( document ).ready(function() {
+            $(document).ready(function () {
             <c:if test="${departmentFilter != 'select a department'}">
-                            $("#department").val(${departmentFilter});
+                $("#department").val(${departmentFilter});
             </c:if>
                 $("#department").select2({
-                        width: '100%',
-                        placeholder: "${departmentFilter}",
-                        allowClear: false
-                    });
-                });            
+                    width: '100%',
+                    placeholder: "${departmentFilter}",
+                    allowClear: false
+                });
+            });
         </script>
 
     </body>

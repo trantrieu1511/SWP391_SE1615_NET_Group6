@@ -87,10 +87,12 @@
                                 <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                     <li><a href="manager?do=attendance">Attendance (Manager)</a></li>
                                     </c:if>
-                                <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
+                                    <c:if test="${sessionScope.acc.isManager == false && sessionScope.acc.isAdmin == false}">
+                                    <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
+                                    </c:if>
                                 <li><a href="departments.jsp">Departments</a></li>
                                 <li><a href="designations.jsp">Designations</a></li>
-                                    <c:if test="${sessionScope.acc.isManager == true}">
+                                    <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
                                     <li><a href="schedule?do=list">Shift & Schedule</a></li>
                                     </c:if>
                             </ul>

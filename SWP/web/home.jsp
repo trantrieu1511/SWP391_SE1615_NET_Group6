@@ -31,9 +31,6 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- Bean -->
-        <jsp:useBean id="profile" class="model.DAOProfile" scope="request"></jsp:useBean>
-
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>
@@ -41,31 +38,12 @@
     </head>
 
     <body>
-        <%--<jsp:include page="menu.jsp"></jsp:include>--%>
 
-        <c:if test="${sessionScope.acc.isManager = true || sessionScope.acc.isAdmin == true}">
-            <jsp:include page="manager-dashboard.jsp"></jsp:include>
-        </c:if>
-
-        <c:if test="${profile.getByID(sessionScope.acc.profile_id).reportto != null && sessionScope.acc.isAdmin == false}">
+        <c:if test="${sessionScope.acc.isManager == false && sessionScope.acc.isAdmin == false}">
             <jsp:include page="employee-dashboard.jsp"></jsp:include>
         </c:if>
-
-        <!--         jQuery 
-                <script src="js/jquery-3.5.1.min.js"></script>
+        <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
+            <jsp:include page="manager-dashboard.jsp"></jsp:include>
+        </c:if>      
         
-                 Bootstrap Core JS 
-                <script src="js/popper.min.js"></script>
-                <script src="js/bootstrap.min.js"></script>
-        
-                 Slimscroll JS 
-                <script src="js/jquery.slimscroll.min.js"></script>
-        
-                 Chart JS 
-                <script src="plugins/morris/morris.min.js"></script>
-                <script src="plugins/raphael/raphael.min.js"></script>
-                <script src="js/chart.js"></script>
-        
-                 Custom JS 
-                <script src="js/app.js"></script>-->
     </body>

@@ -14,7 +14,6 @@ import entity.ProfileDetail;
 import entity.Projects;
 import entity.Salary;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,16 +86,18 @@ public class ControllerReport extends HttpServlet {
                     int absent = totalEmployee - present;
                     List<String[]> listStr = new ArrayList<>();
                     listProfile.stream().map((p) -> {
-                        String[] temp = new String[10];
+                        String[] temp = new String[5];
                         temp[0] = p.getProfile_id();
                         temp[1] = p.getFirst_name() + " " + p.getLast_name();
                         temp[2] = formatter.format(date);
                         temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
-                        String status;
-                        if (listAttendance.contains(p.getProfile_id())) {
-                            status = "Present";
-                        } else {
-                            status = "Absent";
+                        String status = "";
+                        for(Attendance a : listAttendance) {
+                            if(a.getEmployee_id().equals(p.getProfile_id())) {
+                                status = "Present";
+                            } else {
+                                status = "Absent";
+                            }
                         }
                         temp[4] = status;
                         return temp;
@@ -200,7 +201,78 @@ public class ControllerReport extends HttpServlet {
                         }
                         empReport.add(temp);
                     }
-                    
+                    List<Departments> listDepartment = daoDepartment.listAllDepartment();
+                    request.setAttribute("filter", "no");
+                    request.setAttribute("nameFilter", "Employee");
+                    request.setAttribute("departmentFilter", "select a department");
+                    request.setAttribute("listDepartment", listDepartment);
+                    request.setAttribute("employee", empReport);
+                    RequestDispatcher dispath = request.getRequestDispatcher("employee-report.jsp");
+                    dispath.forward(request, response);
+                }
+                
+                if (service.equals("searchEmployeeReport")) {
+                    String name = request.getParameter("name");
+                    String department = request.getParameter("department");
+                    List<Profile> listProfile = new ArrayList<>();
+                    if (department != null) {
+                        listProfile = daoProfile.searchStaff4(name, Integer.parseInt(department), acc.getProfile_id());
+                    } else {
+                        listProfile = daoProfile.searchStaff3(name, acc.getProfile_id());
+                    }
+                    List<ProfileDetail> listPD = daoPD.listProfileDetail(acc.getProfile_id());
+                    List<FamilyInfo> listFam = daoFam.listFamilyInfo(acc.getProfile_id());
+                    List<Salary> listSalary = daoSalary.listAllStaffSalary(acc.getProfile_id());
+                    List<String[]> empReport = new ArrayList<>();
+                    for(int i = 0; i < listProfile.size(); i++) {
+                        String temp[] = new String[12];
+                        temp[0] = listProfile.get(i).getFirst_name() + " " + listProfile.get(i).getLast_name();
+                        temp[1] = listProfile.get(i).getEmail();
+                        temp[2] = daoDepartment.getDepartmentByID(listProfile.get(i).getDepartment_id()).getName();
+                        temp[3] = daoJob.getJobById(listProfile.get(i).getJob_id()).getTitle();
+                        temp[4] = listProfile.get(i).getHire_date();  
+                        boolean married = false;
+                        boolean gender = false;
+                        for(ProfileDetail pd : listPD) {
+                            if (pd.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
+                                temp[5] = pd.getDob();
+                                married = pd.isIsMarried();
+                                gender = pd.isGender();
+                                temp[9] = pd.getAddress();
+                            }
+                        }
+                        if(married){
+                            temp[6] = "Married";
+                        } else {
+                            temp[6] = "Single";
+                        }
+                        if(gender) {
+                            temp[7] = "Male";
+                        } else {
+                            temp[7] = "Female";
+                        }
+                        for (Salary s : listSalary) {
+                            if (s.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
+                            temp[8] = Double.toString(s.getBasic_salary());
+                        }
+                        }
+                        temp[10] = listProfile.get(i).getPhone_number();
+                        for (FamilyInfo f : listFam) {
+                            if(f.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
+                                temp[11] = f.getPhone() + "\n";
+                            }
+                        }
+                        empReport.add(temp);
+                    }
+                    List<Departments> listDepartment = daoDepartment.listAllDepartment();
+                    request.setAttribute("filter", "yes");
+                    request.setAttribute("nameFilter", name);
+                    if (department != null) {
+                        request.setAttribute("departmentFilter", department);
+                    } else {
+                        request.setAttribute("departmentFilter", "select a department");
+                    }
+                    request.setAttribute("listDepartment", listDepartment);
                     request.setAttribute("employee", empReport);
                     RequestDispatcher dispath = request.getRequestDispatcher("employee-report.jsp");
                     dispath.forward(request, response);

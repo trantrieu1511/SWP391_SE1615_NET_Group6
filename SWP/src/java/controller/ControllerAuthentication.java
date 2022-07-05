@@ -59,6 +59,7 @@ public class ControllerAuthentication extends HttpServlet {
                 response.sendRedirect("login.jsp");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }
     }

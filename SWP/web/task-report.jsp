@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,17 +22,15 @@
         <!-- Lineawesome CSS -->
         <link rel="stylesheet" href="css/line-awesome.min.css">
 
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -39,122 +38,91 @@
 
             <jsp:include page="menu.jsp"></jsp:include>
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h3 class="page-title">Task Reports</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Task Reports</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Page Header -->
-
-                    <!-- Content Starts -->
-                    <!-- Search Filter -->
-                    <div class="row filter-row">
-
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <div class="cal-icon">
-                                    <select class="form-control floating select">
-                                        <option>
-                                            Name1
-                                        </option>
-                                        <option>
-                                            Name2
-                                        </option>
-                                    </select>
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="page-title">Task Reports</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Task Reports</li>
+                                    </ul>
                                 </div>
-                                <label class="focus-label">Project Name</label>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <div class="cal-icon">
-                                    <select class="form-control floating select">
-                                        <option>
+                        <!-- /Page Header -->
+
+                        <!-- Content Starts -->
+
+                        <!-- Search Filter -->
+                        <form action="report" do="post">
+                            <input type="hidden" name="do" value="searchTaskReport">
+                            <div class="row filter-row">
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input class="form-control floating" name="name" type="text">
+                                        <label class="focus-label">${name}</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <select class="form-control floating select" name="status" id="status">
+                                        <option value="" disabled selected hidden></option>
+                                        <option value="All">
                                             All
                                         </option>
-                                        <option>
+                                        <option value="0">
                                             Pending
                                         </option>
-                                        <option>
+                                        <option value="1">
+                                            Progress
+                                        </option>
+                                        <option value="2">
+                                            Review
+                                        </option>
+                                        <option value="3">
                                             Completed
                                         </option>
                                     </select>
                                 </div>
-                                <label class="focus-label">Status</label>
                             </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <button class="btn btn-success btn-block"> Search </button>  
+                            </div>     
                         </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
-                    </div>
+                    </form>
                     <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table mb-0 datatable">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="report?do=task" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Task Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Deadline</th>
                                             <th>Status</th>
                                             <th>Assigned To</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Hospital Administration</td>
-                                            <td>26 Mar 2019</td>
-                                            <td>26 Apr 2021</td>
-                                            <td>
-                                                <div class="dropdown action-label">
-                                                    <a href="#" class="btn btn-white btn-sm btn-rounded"><i class="fa fa-dot-circle-o text-success"></i> Active </a>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="team-members">
-                                                    <li>
-                                                        <a href="#" data-toggle="tooltip" title="" data-original-title="Jeffery Lalor"><img alt="" src="img/profiles/avatar-16.jpg"></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Hospital Administration</td>
-                                            <td>26 Mar 2019</td>
-                                            <td>26 Apr 2021</td>
-                                            <td>
-                                                <div class="dropdown action-label">
-                                                    <a href="#" class="btn btn-white btn-sm btn-rounded"><i class="fa fa-dot-circle-o text-success"></i> Active </a>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="team-members">
-                                                    <li>
-                                                        <a href="#" data-toggle="tooltip" title="" data-original-title="Jeffery Lalor"><img alt="" src="img/profiles/avatar-16.jpg"></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        <c:forEach items="${task}" var="o">
+                                            <tr>
+                                                <td>${o.name}</td>
+                                                <td>${o.deadline}</td>
+                                                <td>${o.status}</td>
+                                                <td>${o.assigned}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -185,8 +153,30 @@
         <!-- Slimscroll JS -->
         <script src="js/jquery.slimscroll.min.js"></script>
 
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
+
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+            <c:if test="${status != 'Status'}">
+                $("#status").val(${status});
+            </c:if>
+                $("#status").select2({
+                    width: '100%',
+                    placeholder: "${status}",
+                    allowClear: false,
+                    minimumResultsForSearch: -1
+                });
+            });
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
+        </script>
 
     </body>
 </html>

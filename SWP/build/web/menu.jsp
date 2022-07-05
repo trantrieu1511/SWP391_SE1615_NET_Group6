@@ -136,7 +136,7 @@
                                                                         <li><a href="invoice-reports.html"> Invoice Report </a></li>
                                                                         <li><a href="payments-reports.html"> Payments Report </a></li>-->
                                     <li><a href="project-report.jsp"> Project Report </a></li>
-                                    <li><a href="task-report.jsp"> Task Report </a></li>
+                                    <li><a href="report?do=task"> Task Report </a></li>
                                     <!--                                    <li><a href="user-reports.html"> User Report </a></li>-->
                                     <li><a href="report?do=employee"> Employee Report </a></li>
                                     <!--                                    <li><a href="payslip-reports.html"> Payslip Report </a></li>

@@ -81,7 +81,7 @@
                             <a href="#" class=""><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
-                                    <li><a href="manager?do=list">All Employees</a></li>
+                                    <li><a href="manager?do=list">All Staffs</a></li>
                                     </c:if>
 
                                 <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">

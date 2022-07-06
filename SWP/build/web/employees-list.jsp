@@ -150,14 +150,14 @@
                         <div class="page-header">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="page-title">Employee</h3>
+                                    <h3 class="page-title">Manage Staff</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="manager?do=dashboard   ">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Employee</li>
+                                        <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Staff</li>
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
-                                    <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Staff</a>
                                 <div class="view-icons">
                                     <!--                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
                                                                             <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>-->
@@ -174,19 +174,19 @@
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
                                     <input type="text" name="eid" id="eid" class="form-control floating">
-                                    <label class="focus-label">Employee ID</label>
+                                    <label class="focus-label">Staff ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group form-focus">
                                     <input type="text" name="ename" id="ename" class="form-control floating">
-                                    <label class="focus-label">Employee Name</label>
+                                    <label class="focus-label">Staff Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
                                     <select name="ejob" id="ejob" class="select floating">
-                                        <option value="">select designation</option>
+                                        <option value="">Select Designation</option>
                                         <c:forEach items="${job}" var="j">
                                             <option value="${j.id}">${j.title}</option>
                                         </c:forEach>
@@ -465,7 +465,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Edit Employee</h5>
+                                <h5 class="modal-title">Edit Staff</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -602,7 +602,7 @@
                                     <input type="hidden" name="do" value="deleteStaff">
                                     <input type="hidden" name="profile_id">
                                     <div class="form-header">
-                                        <h3>Delete Employee</h3>
+                                        <h3>Delete Staff</h3>
                                         <p>Are you sure want to delete?</p>
                                     </div>
                                     <div class="modal-btn delete-action">

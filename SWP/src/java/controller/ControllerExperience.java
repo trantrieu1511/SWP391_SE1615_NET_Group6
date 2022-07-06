@@ -9,6 +9,10 @@ import entity.Account;
 import entity.Experience;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +41,7 @@ public class ControllerExperience extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            PrintWriter out = response.getWriter();
             String service = request.getParameter("do");
             DAOExperience daoExp = new DAOExperience();
             HttpSession session = request.getSession();
@@ -51,48 +56,108 @@ public class ControllerExperience extends HttpServlet {
                     String cur_role = request.getParameter("cur_role");
                     String start_date = request.getParameter("start_date");
                     String end_date = request.getParameter("end_date");
-
-                    boolean statusEdit = daoExp.editExperience(new Experience(profile_id, role, start_date, end_date),
-                            cur_role);
-                    if (statusEdit) {
-                        System.out.println("Successfully edited experience of profile_id = " + profile_id);
-                        if (acc.getProfile_id().equals(profile_id)) {
-                            response.sendRedirect("profile?do=getmyProfile&editExp=true");
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        Date s_date = sdf.parse(start_date);
+                        Date e_date = sdf.parse(end_date);
+                        if (s_date.before(e_date)) {
+                            boolean statusEdit = daoExp.editExperience(new Experience(profile_id, role, start_date, end_date),
+                                    cur_role);
+                            if (statusEdit) {
+                                System.out.println("Successfully edited experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile&editExp=true");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editExp=true");
+                                }
+                            } else {
+                                System.out.println("Fail to edit experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                                }
+                            }
+                        } else if (s_date.after(e_date)) {
+                            System.out.println("Fail to edit experience of profile_id = " + profile_id);
+                            if (acc.getProfile_id().equals(profile_id)) {
+                                response.sendRedirect("profile?do=getmyProfile&toDateErrorEditExp=true");
+                            } else {
+                                response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&toDateErrorEditExp=true");
+                            }
                         } else {
-                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editExp=true");
+                            boolean statusEdit = daoExp.editExperience(new Experience(profile_id, role, start_date, end_date),
+                                    cur_role);
+                            if (statusEdit) {
+                                System.out.println("Successfully edited experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile&editExp=true");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&editExp=true");
+                                }
+                            }
                         }
-                    } else {
-                        System.out.println("Fail to edit experience of profile_id = " + profile_id);
-                        if (acc.getProfile_id().equals(profile_id)) {
-                            response.sendRedirect("profile?do=getmyProfile");
-                        } else {
-                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                        }
+                    } catch (Exception e) {
                     }
+
                 }
                 if (service.equals("addExperience")) {
                     String profile_id = request.getParameter("profile_id");
                     String role = request.getParameter("role");
                     String start_date = request.getParameter("start_date");
                     String end_date = request.getParameter("end_date");
-
-                    boolean statusAdd = daoExp.addExperience(new Experience(profile_id, role, start_date, end_date));
-                    if (statusAdd) {
-                        System.out.println("Successfully added new experience of profile_id = " + profile_id);
-                        if (acc.getProfile_id().equals(profile_id)) {
-                            response.sendRedirect("profile?do=getmyProfile&addExp=true");
-                        } else {
-                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&addExp=true");
-                        }
-                    } else {
-                        System.out.println("Fail to add new experience of profile_id = " + profile_id);
-                        if (acc.getProfile_id().equals(profile_id)) {
-                            response.sendRedirect("profile?do=getmyProfile");
-                        } else {
-                            response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
-                        }
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDateTime now = LocalDateTime.now();
+                    if (end_date.equals("")) {
+                        end_date = now.format(dtf);
                     }
+//                    out.print(role);
+//                    out.print("<br>");
+//                    out.print(start_date);
+//                    out.print("<br>");
+//                    out.print(end_date);
 
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        Date s_date = sdf.parse(start_date);
+                        Date e_date = sdf.parse(end_date);
+                        if (s_date.before(e_date)) {
+                            boolean statusAdd = daoExp.addExperience(new Experience(profile_id, role, start_date, end_date));
+                            if (statusAdd) {
+                                System.out.println("Successfully added new experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile&addExp=true");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&addExp=true");
+                                }
+                            } else {
+                                System.out.println("Fail to add new experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id);
+                                }
+                            }
+                        } else if (s_date.after(e_date)) {
+                            System.out.println("Fail to add new experience of profile_id = " + profile_id);
+                            if (acc.getProfile_id().equals(profile_id)) {
+                                response.sendRedirect("profile?do=getmyProfile&toDateErrorAddExp=true");
+                            } else {
+                                response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&toDateErrorAddExp=true");
+                            }
+                        } else {
+                            boolean statusAdd = daoExp.addExperience(new Experience(profile_id, role, start_date, end_date));
+                            if (statusAdd) {
+                                System.out.println("Successfully added new experience of profile_id = " + profile_id);
+                                if (acc.getProfile_id().equals(profile_id)) {
+                                    response.sendRedirect("profile?do=getmyProfile&addExp=true");
+                                } else {
+                                    response.sendRedirect("profile?do=getothersProfile&profile_id=" + profile_id + "&addExp=true");
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                    }
                 }
                 if (service.equals("deleteExperience")) {
                     String profile_id = request.getParameter("profile_id");

@@ -42,8 +42,8 @@
         <c:if test="${sessionScope.acc.isManager == false && sessionScope.acc.isAdmin == false}">
             <jsp:include page="employee-dashboard.jsp"></jsp:include>
         </c:if>
-        <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">
+        <c:if test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
             <jsp:include page="manager-dashboard.jsp"></jsp:include>
         </c:if>      
-        
+
     </body>

@@ -3,6 +3,12 @@
     Created on : Jun 11, 2022, 4:15:49 PM
     Author     : DELL
 --%>
+<%@page import="java.util.List"%>
+<%@page import="entity.Experience"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.util.concurrent.TimeUnit"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -334,6 +340,7 @@
                                                     <div class="title">No. of children</div>
                                                     <div class="text">${pd.children}</div>
                                                 </li>
+                                                <hr>
                                                 <li><h4 style="margin-top: 30px; margin-bottom: 20px;">Bank information</h4><li>
 
                                                 <li>
@@ -363,7 +370,7 @@
                                             <!--<h5 class="section-title">Primary</h5>-->
                                             <ul class="personal-info">
                                                 <c:forEach items="${listf}" var="f">
-                                                    <hr>
+                                                    <br>
                                                     <li>
                                                         <div class="title">Name</div>
                                                         <div class="text">${f.name}</div>
@@ -376,9 +383,9 @@
                                                         <div class="title">Phone </div>
                                                         <div class="text">${f.phone}</div>
                                                     </li>
+                                                    <hr>
                                                 </c:forEach>
                                             </ul>
-                                            <hr>
                                             <!--                                        <h5 class="section-title">Secondary</h5>
                                                                                     <ul class="personal-info">
                                                                                         <li>
@@ -441,36 +448,57 @@
                                             </h3>
                                             <div class="experience-box">
                                                 <ul class="experience-list">
-                                                    <c:forEach items="${listexp}" var="e">
-                                                        <li>
-                                                            <div class="experience-user">
-                                                                <div class="before-circle"></div>
-                                                            </div>
-                                                            <div class="experience-content">
-                                                                <div class="timeline-content">
-                                                                    <a href="#/" class="name">${e.role}</a>
-                                                                    <span class="time">${e.start_date} - Present (${e.end_date})</span>
-                                                                    <c:choose>
-                                                                        <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
-                                                                            <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>-->
-                                                                            <td class="text-right">
-                                                                                <div class="dropdown dropdown-action" style="text-align: right;">
-                                                                                    <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id} ${e.start_date} ${e.end_date}" data-role="${e.role}" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                                                        <a href="#" class="dropdown-item" data-id="${e.profile_id}" data-role="${e.role}" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </c:when>
-                                                                        <c:otherwise>
+                                                    <%--<c:forEach items="${listexp}" var="e">--%>
+                                                    <%
+                                                        List<Experience> listExp = (List<Experience>) request.getAttribute("listexp");
+                                                        for (Experience e : listExp) {
+                                                    %>
+                                                    <li>
+                                                        <div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                <a href="#/" class="name"><%= e.getRole()%></a>
+                                                                <%
+                                                                    SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                                                    String inputString1 = e.getStart_date();
+                                                                    String inputString2 = e.getEnd_date();
 
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </div>
+                                                                    try {
+                                                                        Date date1 = myFormat.parse(inputString1);
+                                                                        Date date2 = myFormat.parse(inputString2);
+                                                                        long diff = date2.getTime() - date1.getTime();
+//                                                                        System.out.println(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days");
+
+                                                                %>
+                                                                <span class="time"><%= e.getStart_date()%> - <%= e.getEnd_date()%> (<%= TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days"%>)</span>
+                                                                <%  } catch (ParseException ex) {
+                                                                        ex.printStackTrace();
+                                                                    }
+                                                                %>
+                                                                <c:choose>
+                                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                        <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>-->
+                                                                        <td class="text-right">
+                                                                            <div class="dropdown dropdown-action" style="text-align: right;">
+                                                                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
+                                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <a href="#" class="dropdown-item" data-id="<%= e.getProfile_id()%> <%= e.getStart_date()%> <%= e.getEnd_date()%>" data-role="<%= e.getRole()%>" data-toggle="modal" data-target="#edit_experience_info"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                                    <a href="#" class="dropdown-item" data-id="<%= e.getProfile_id()%>" data-role="<%= e.getRole()%>" data-toggle="modal" data-target="#delete_experience"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </div>
-                                                        </li>
-                                                    </c:forEach>
+                                                        </div>
+                                                    </li>
+                                                    <%--</c:forEach>--%>
+                                                    <%}%>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1243,6 +1271,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr>
                                     <h4 style="margin-bottom: 20px;">Bank Information</h4>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1710,10 +1739,11 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label class="">Role <span class="text-danger">*</span></label>
-                                                            <input type="text" class="form-control" name="role" value="" required="" pattern="[A-Za-z0-9 ]{1,100}" placeholder="Enter your experience here"
-                                                                   title="Role not contain: Unicode characters, 
-                                                                   special character e.g: !@#$%^& etc..; max length: 100, 
-                                                                   allow spacing, numeric characters (0-9), uppercase and lowercase letters">
+                                                            <input type="text" class="form-control" name="role" value="" required="" pattern="[A-Za-z0-9 !@#$%^&*()_,.\\\/`~-]{1,100}" placeholder="Enter your experience here"
+                                                                   title="Role not contain: Unicode characters; max length: 100, 
+                                                                   allow spacing, numeric characters (0-9),  
+                                                                   special character e.g: !@#$%^& etc.. , 
+                                                                   uppercase and lowercase letters">
                                                         </div>
                                                     </div>
                                                     <!--                                                <div class="col-md-6">

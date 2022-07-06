@@ -51,7 +51,7 @@ public class DAOFamilyInfo extends DBConnect {
     
     public List<FamilyInfo> listFamilyInfo(String profile_id) {
         List<FamilyInfo> list = new ArrayList<>();
-        String sql = "  select profile.profile_id, name, relationship, dob,"
+        String sql = "select profile.profile_id, name, relationship, dob,"
                 + " phone from familyInfo join profile on familyInfo.profile_id "
                 + "= profile.profile_id where report_to = ?";
         try {

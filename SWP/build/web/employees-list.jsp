@@ -174,19 +174,19 @@
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
                                     <input type="text" name="eid" id="eid" class="form-control floating">
-                                    <label class="focus-label">Employee ID</label>
+                                    <label class="focus-label">Staff ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group form-focus">
                                     <input type="text" name="ename" id="ename" class="form-control floating">
-                                    <label class="focus-label">Employee Name</label>
+                                    <label class="focus-label">Staff Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
                                     <select name="ejob" id="ejob" class="select floating">
-                                        <option value="">select designation</option>
+                                        <option value="">Select Designation</option>
                                         <c:forEach items="${job}" var="j">
                                             <option value="${j.id}">${j.title}</option>
                                         </c:forEach>

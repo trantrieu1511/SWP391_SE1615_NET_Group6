@@ -16,17 +16,19 @@ public class Projects {
     double rate;
     String manager;
     String description;
+    int status;
 
     public Projects() {
     }
 
-    public Projects(String title, String client, String period, double rate, String manager, String description) {
+    public Projects(String title, String client, String period, double rate, String manager, String description, int status) {
         this.title = title;
         this.client = client;
         this.period = period;
         this.rate = rate;
         this.manager = manager;
         this.description = description;
+        this.status = status;
     }
 
     public String getTitle() {
@@ -77,9 +79,17 @@ public class Projects {
         this.description = description;
     }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
-        return "projects{" + "title=" + title + ", client=" + client + ", period=" + period + ", rate=" + rate + ", manager=" + manager + ", description=" + description + '}';
+        return "Projects{" + "title=" + title + ", client=" + client + ", period=" + period + ", rate=" + rate + ", manager=" + manager + ", description=" + description + ", status=" + status + '}';
     }
     
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,6 +21,10 @@
 
         <!-- Lineawesome CSS -->
         <link rel="stylesheet" href="css/line-awesome.min.css">
+        
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+
 
         <!-- Select2 CSS -->
         <link rel="stylesheet" href="css/select2.min.css">
@@ -31,215 +36,98 @@
     <body>
         <!-- Main Wrapper -->
         <div class="main-wrapper">
-            
+
             <jsp:include page="menu.jsp"></jsp:include>
 
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h3 class="page-title">Project Reports</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Project Reports</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Page Header -->
-
-                    <!-- Content Starts -->
-                    <!-- Search Filter -->
-                    <div class="row filter-row">
-
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <div class="cal-icon">
-                                    <select class="form-control floating select">
-                                        <option>
-                                            Name1
-                                        </option>
-                                        <option>
-                                            Name2
-                                        </option>
-                                    </select>
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="page-title">Project Reports</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Project Reports</li>
+                                    </ul>
                                 </div>
-                                <label class="focus-label">Project Name</label>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <div class="form-group form-focus">
-                                <div class="cal-icon">
-                                    <select class="form-control floating select">
-                                        <option>
-                                            Active
-                                        </option>
-                                        <option>
-                                            Pending
-                                        </option>
-                                    </select>
-                                </div>
-                                <label class="focus-label">Status</label>
+                        <!-- /Page Header -->
+
+                        <!-- Content Starts -->
+
+                        <!-- Search Filter -->
+                        <form action="report" do="post">
+                            <input type="hidden" name="do" value="searchProjectReport">
+                            <div class="row filter-row">
+                                <div class="row align-items-center justify-content-center">Project name</div>
+                                <div class="col-sm-6 col-md-3">  
+                                    <input class="form-control floating" name="name" id="name" type="text" value="${name}">
                             </div>
+                            <div class="row align-items-center justify-content-center">Status</div>
+                            <div class="col-sm-6 col-md-3">                               
+                                <select class="form-control floating select" name="status" id="status">
+                                    <option value="" disabled selected hidden></option>
+                                    <option value="All">
+                                        All
+                                    </option>
+                                    <option value="0">
+                                        Pending
+                                    </option>
+                                    <option value="1">
+                                        Doing
+                                    </option>
+                                    <option value="2">
+                                        Done
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <a></a><button class="btn btn-success btn-block"> Search </button>  
+                            </div>     
                         </div>
-                        <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success btn-block"> Search </a>  
-                        </div>     
-                    </div>
+                    </form>
                     <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table mb-0 datatable">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="report?do=project" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Project Title</th>
                                             <th>Client Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
+                                            <th>Period</th>
                                             <th>Status</th>
-                                            <th>Team</th>
+                                            <th>Manager</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>
-                                                <a href="project-view.html">Hospital Administration</a>
-                                            </td>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="client-profile.html" class="avatar"><img src="img/profiles/avatar-19.jpg" alt=""></a>
-                                                    <a href="client-profile.html">Global Technologies</a>
-                                                </h2>
-                                            </td>
-                                            <td>9 Jan 2021</td>
-                                            <td>10 Apr 2021</td>
-                                            <td>
-                                                <div class="dropdown action-label">
-                                                    <a href="#" class="btn btn-white btn-sm btn-rounded"><i class="fa fa-dot-circle-o text-success"></i> Active </a>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="team-members">
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="John Doe"><img alt="" src="img/profiles/avatar-02.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="Richard Miles"><img alt="" src="img/profiles/avatar-09.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="John Smith"><img alt="" src="img/profiles/avatar-10.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="Mike Litorus"><img alt="" src="img/profiles/avatar-05.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="all-users">+15</a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>
-                                                <a href="project-view.html">Office Management</a>
-                                            </td>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    <a href="client-profile.html" class="avatar"><img src="img/profiles/avatar-29.jpg" alt=""></a>
-                                                    <a href="client-profile.html">Delta Infotech</a>
-                                                </h2>
-                                            </td>
-                                            <td>10 Dec 2021</td>
-                                            <td>2 May 2021</td>
-                                            <td>
-                                                <div class="action-label">
-                                                    <a href="" class="btn btn-white btn-sm btn-rounded"><i class="fa fa-dot-circle-o text-success"></i> Active </a>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="team-members text-nowrap">
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="John Doe"><img alt="" src="img/profiles/avatar-02.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="Richard Miles"><img alt="" src="img/profiles/avatar-09.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="John Smith"><img alt="" src="img/profiles/avatar-10.jpg"></a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="" data-toggle="tooltip" data-original-title="Mike Litorus"><img alt="" src="img/profiles/avatar-05.jpg"></a>
-                                                    </li>
-                                                    <li class="dropdown avatar-dropdown">
-                                                        <a href="#" class="all-users dropdown-toggle" data-toggle="dropdown" aria-expanded="false">+15</a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <div class="avatar-group">
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-02.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-09.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-10.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-05.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-11.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-12.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-13.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-01.jpg">
-                                                                </a>
-                                                                <a class="avatar avatar-xs" href="#">
-                                                                    <img alt="" src="img/profiles/avatar-16.jpg">
-                                                                </a>
-                                                            </div>
-                                                            <div class="avatar-pagination">
-                                                                <ul class="pagination">
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#" aria-label="Previous">
-                                                                            <span aria-hidden="true">«</span>
-                                                                            <span class="sr-only">Previous</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#" aria-label="Next">
-                                                                            <span aria-hidden="true">»</span>
-                                                                            <span class="sr-only">Next</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </td>
-
-
-
-                                        </tr>
+                                        <c:forEach items="${list}" var="o">
+                                            <tr>
+                                                <td>
+                                                    <a href="project?do=view&title=${o.title}">${o.title}</a>
+                                                </td>
+                                                <td>                                             
+                                                    <a href="#">${o.client}</a>                                     
+                                                </td>
+                                                <td>${o.period}</td>
+                                                <td>
+                                                    <c:if test="${o.status == 0}"><div>Pending</div></c:if>
+                                                    <c:if test="${o.status == 1}"><div>Doing</div></c:if>
+                                                    <c:if test="${o.status == 2}"><div>Done</div></c:if>
+                                                    </td>    
+                                                    <td>${o.manager}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -269,9 +157,30 @@
 
         <!-- Slimscroll JS -->
         <script src="js/jquery.slimscroll.min.js"></script>
+        
+        <!-- Datatable JS -->
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.bootstrap4.min.js"></script>
 
         <!-- Custom JS -->
         <script src="js/app.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+            <c:if test="${status != 'Status'}">
+                $("#status").val(${status});
+            </c:if>
+                $("#status").select2({
+                    width: '100%',
+                    allowClear: false,
+                    minimumResultsForSearch: -1
+                });
+            });
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
+        </script>
 
     </body>
 </html>

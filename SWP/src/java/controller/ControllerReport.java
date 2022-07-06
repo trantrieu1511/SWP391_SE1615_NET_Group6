@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAttendance;
+import model.DAOClients;
 import model.DAODepartment;
 import model.DAOFamilyInfo;
 import model.DAOJob;
@@ -70,13 +71,7 @@ public class ControllerReport extends HttpServlet {
                 DAOFamilyInfo daoFam = new DAOFamilyInfo();
                 DAOSalary daoSalary = new DAOSalary();
                 DAOTask daoTask = new DAOTask();
-                List<Projects> list = null;
-                if (acc.isIsManager()) {
-                    list = daoProject.listProject(acc.getProfile_id());
-                } else {
-                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
-                }
-                request.setAttribute("project", list);
+                DAOClients daoClient = new DAOClients();
                 String service = request.getParameter("do");
 
                 if (service.equals("daily")) {
@@ -114,7 +109,7 @@ public class ControllerReport extends HttpServlet {
                     request.setAttribute("list", listStr);
                     request.setAttribute("listDepartment", listDepartment);
                     request.setAttribute("filter", "no");
-                    request.setAttribute("nameFilter", "Employee");
+                    request.setAttribute("nameFilter", "");
                     request.setAttribute("departmentFilter", "select a department");
                     RequestDispatcher dispath = request.getRequestDispatcher("daily-report.jsp");
                     dispath.forward(request, response);
@@ -160,7 +155,11 @@ public class ControllerReport extends HttpServlet {
                     request.setAttribute("list", listStr);
                     request.setAttribute("listDepartment", listDepartment);
                     request.setAttribute("filter", "yes");
-                    request.setAttribute("nameFilter", name);
+                    if (name != "") {
+                        request.setAttribute("nameFilter", name);
+                    } else {
+                        request.setAttribute("nameFilter", "");
+                    }
                     if (department != null) {
                         request.setAttribute("departmentFilter", department);
                     } else {
@@ -194,7 +193,7 @@ public class ControllerReport extends HttpServlet {
                         } else {
                             temp[7] = "Female";
                         }
-                        temp[8] = Double.toString(listSalary.get(i).getBasic_salary());
+                        temp[8] = Double.toString(listSalary.get(i).getNet_salary());
                         temp[9] = listPD.get(i).getAddress();
                         temp[10] = listProfile.get(i).getPhone_number();
                         for (FamilyInfo f : listFam) {
@@ -206,7 +205,7 @@ public class ControllerReport extends HttpServlet {
                     }
                     List<Departments> listDepartment = daoDepartment.listAllDepartment();
                     request.setAttribute("filter", "no");
-                    request.setAttribute("nameFilter", "Employee");
+                    request.setAttribute("nameFilter", "");
                     request.setAttribute("departmentFilter", "select a department");
                     request.setAttribute("listDepartment", listDepartment);
                     request.setAttribute("employee", empReport);
@@ -254,11 +253,7 @@ public class ControllerReport extends HttpServlet {
                         } else {
                             temp[7] = "Female";
                         }
-                        for (Salary s : listSalary) {
-                            if (s.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
-                                temp[8] = Double.toString(s.getBasic_salary());
-                            }
-                        }
+                        temp[8] = Double.toString(listSalary.get(i).getNet_salary());
                         temp[10] = listProfile.get(i).getPhone_number();
                         for (FamilyInfo f : listFam) {
                             if (f.getProfile_id().equals(listProfile.get(i).getProfile_id())) {
@@ -285,7 +280,7 @@ public class ControllerReport extends HttpServlet {
                     List<Task> listTask = daoTask.listAllTask();
                     request.setAttribute("task", listTask);
                     request.setAttribute("filter", "no");
-                    request.setAttribute("name", "Project name");
+                    request.setAttribute("name", "");
                     request.setAttribute("status", "Status");
                     RequestDispatcher dispath = request.getRequestDispatcher("task-report.jsp");
                     dispath.forward(request, response);
@@ -295,37 +290,100 @@ public class ControllerReport extends HttpServlet {
                     String name = request.getParameter("name");
                     String status = request.getParameter("status");
                     List<Task> listTask = new ArrayList<>();
-                    switch (status) {
-                        case "0":
-                            listTask = daoTask.list(0);
-                            break;
-                        case "1":
-                            listTask = daoTask.list(1);
-                            break;
-                        case "2":
-                            listTask = daoTask.list(2);
-                            break;
-                        case "3":
-                            listTask = daoTask.list(3);
-                            break;
-                        case "All":
-                            listTask = daoTask.listAllTask();
-                            break;
-                    }
-                    for (Task t : listTask) {
-                        if (!t.getProject().contains(name)) {
-                            listTask.remove(t);
+                    List<Task> search = new ArrayList<>();
+                    if (status != null) {
+                        switch (status) {
+                            case "0":
+                                listTask = daoTask.list(0);
+                                break;
+                            case "1":
+                                listTask = daoTask.list(1);
+                                break;
+                            case "2":
+                                listTask = daoTask.list(2);
+                                break;
+                            case "3":
+                                listTask = daoTask.list(3);
+                                break;
+                            case "All":
+                                listTask = daoTask.listAllTask();
+                                break;
                         }
+                        for (Task t : listTask) {
+                            if (t.getProject().contains(name)) {
+                                search.add(t);
+                            }
+                        }
+                        request.setAttribute("task", search);
+                    } else {
+                        request.setAttribute("task", daoTask.listAllTask());
                     }
-                    request.setAttribute("task", listTask);
                     request.setAttribute("filter", "yes");
                     if (name != null) {
                         request.setAttribute("name", name);
                     } else {
-                        request.setAttribute("name", "Project name");
+                        request.setAttribute("name", "");
                     }
                     request.setAttribute("status", status);
                     RequestDispatcher dispath = request.getRequestDispatcher("task-report.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("project")) {
+                    List<Projects> listProject = daoProject.listProject();
+                    for (Projects p : listProject) {
+                        p.setClient(daoClient
+                                .getIndividualClientProfile(p.getClient())
+                                .getFirst_name()
+                                + " "
+                                + daoClient
+                                        .getIndividualClientProfile(p.getClient())
+                                        .getLast_name());
+                    }
+                    request.setAttribute("list", listProject);
+                    request.setAttribute("filter", "no");
+                    request.setAttribute("name", "");
+                    request.setAttribute("status", "Status");
+                    RequestDispatcher dispath = request.getRequestDispatcher("project-report.jsp");
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("searchProjectReport")) {
+                    String name = request.getParameter("name");
+                    String status = request.getParameter("status");
+                    List<Projects> listProject = daoProject.search(name);
+                    List<Projects> search = new ArrayList<>();
+                    if (status != null) {
+                        if (!status.equals("All")) {
+                            for (Projects p : listProject) {
+                                if (Integer.toString(p.getStatus()).equals(status)) {
+                                    search.add(p);
+                                }
+                            }
+                        }
+                    }
+                    for (Projects p : search) {
+                        p.setClient(daoClient
+                                .getIndividualClientProfile(p.getClient())
+                                .getFirst_name()
+                                + " "
+                                + daoClient
+                                        .getIndividualClientProfile(p.getClient())
+                                        .getLast_name());
+                    }
+                    if (status == null || status.equals("All")) {
+                        request.setAttribute("list", listProject);
+                    } else {
+                        request.setAttribute("list", search);
+                    }
+                    request.setAttribute("filter", "yes");
+                    if (name.equals("")) {
+                        request.setAttribute("name", "");
+                    } else {
+                        request.setAttribute("name", name);
+                    }
+                    request.setAttribute("status", status);
+                    RequestDispatcher dispath = request.getRequestDispatcher("project-report.jsp");
                     dispath.forward(request, response);
                 }
             }

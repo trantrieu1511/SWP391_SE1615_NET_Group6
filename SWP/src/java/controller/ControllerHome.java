@@ -50,14 +50,6 @@ public class ControllerHome extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                List<Projects> list = null;
-                // list project for manager/employee
-                if (acc.isIsManager()) {
-                    list = daoProject.listProject(acc.getProfile_id());
-                } else {
-                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
-                }
-                request.setAttribute("project", list);
                 RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");
                 dispath.forward(request, response);
             }

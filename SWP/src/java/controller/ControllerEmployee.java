@@ -64,14 +64,6 @@ public class ControllerEmployee extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                List<Projects> listPj = null;
-                if (acc.isIsManager()) {
-                    listPj = daoProject.listProject(acc.getProfile_id());
-                } else {
-                    listPj = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
-                }
-                request.setAttribute("project", listPj);
-                
                 employee_id = acc.getProfile_id();;
 
                 // home

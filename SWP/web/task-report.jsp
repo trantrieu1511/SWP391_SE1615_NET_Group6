@@ -64,12 +64,13 @@
                         <form action="report" do="post">
                             <input type="hidden" name="do" value="searchTaskReport">
                             <div class="row filter-row">
+                                <div class="row align-items-center justify-content-center">Project name</div>
                                 <div class="col-sm-6 col-md-3">  
                                     <div class="form-group form-focus">
-                                        <input class="form-control floating" name="name" type="text">
-                                        <label class="focus-label">${name}</label>
+                                        <input class="form-control floating" name="name" type="text" value="${name}">                                       
                                 </div>
                             </div>
+                                <div class="row align-items-center justify-content-center">Status</div>
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
                                     <select class="form-control floating select" name="status" id="status">
@@ -119,7 +120,12 @@
                                             <tr>
                                                 <td>${o.name}</td>
                                                 <td>${o.deadline}</td>
-                                                <td>${o.status}</td>
+                                                <td>
+                                                    <c:if test="${o.status == 0}"><div>Pending</div></c:if>
+                                                    <c:if test="${o.status == 1}"><div>Progress</div></c:if>
+                                                    <c:if test="${o.status == 2}"><div>Review</div></c:if>
+                                                    <c:if test="${o.status == 3}"><div>Completed</div></c:if>
+                                                </td>
                                                 <td>${o.assigned}</td>
                                             </tr>
                                         </c:forEach>
@@ -166,7 +172,6 @@
             </c:if>
                 $("#status").select2({
                     width: '100%',
-                    placeholder: "${status}",
                     allowClear: false,
                     minimumResultsForSearch: -1
                 });

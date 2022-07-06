@@ -50,17 +50,9 @@ public class ControllerSchedule extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                DAOProject daoProject = new DAOProject();
                 DAOProfile daoProfile = new DAOProfile();
                 DAOShift daoShift = new DAOShift();
                 DAOSchedule daoSchedule = new DAOSchedule();
-                List<Projects> list = null;
-                if (acc.isIsManager()) {
-                    list = daoProject.listProject(acc.getProfile_id());
-                } else {
-                    list = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
-                }
-                request.setAttribute("project", list);
                 String service = request.getParameter("do");
 
                 if (service.equals("list")) {

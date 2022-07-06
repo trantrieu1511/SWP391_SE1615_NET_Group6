@@ -32,7 +32,7 @@
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
-        
+
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 
@@ -50,11 +50,11 @@
         <script src="js/moment.min.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
         <script src="js/daterangepicker.min.js"></script>
-        
+
         <!-- Custom JS -->
         <script src="js/app.js"></script>
         <script src="js/edit.js"></script>
-        
+
         <!-- Model JS -->
         <script type="text/javascript">
             const changeSelected = (e) => {
@@ -63,91 +63,91 @@
             }
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('name-id').trim();                    
+                    var text = $(e.relatedTarget).attr('name-id').trim();
                     $(e.currentTarget).find('#oldTitle').val(text);
-                    $(e.currentTarget).find('#titleEdit').val(text);                                  
+                    $(e.currentTarget).find('#titleEdit').val(text);
                 });
-            });   
+            });
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id').trim();
-                    const myArray = text.split(" ");;
+                    const myArray = text.split(" ");
                     var client_id = myArray[4];
-                    var period1 = myArray[0]; 
+                    var period1 = myArray[0];
                     var period2 = myArray[1];
                     var period3 = myArray[2];
-                    var rate = myArray[3];  
+                    var rate = myArray[3];
                     $("#clientEdit").val(client_id);
                     $("#clientEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false
                     });
-                    $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
-                    $(e.currentTarget).find('#rateEdit').val(rate);            
+                    $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' + period3);
+                    $(e.currentTarget).find('#rateEdit').val(rate);
                 });
-            });   
+            });
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
-                    var text = $(e.relatedTarget).attr('desc-id').trim();                    
-                    $(e.currentTarget).find('#desc').val(text);                                  
+                    var text = $(e.relatedTarget).attr('desc-id').trim();
+                    $(e.currentTarget).find('#desc').val(text);
                 });
-            }); 
+            });
             $(function () {
                 $("#delete_project").on("show.bs.modal", function (e) {
                     var title = $(e.relatedTarget).attr('data-id');
                     $(e.currentTarget).find('input[name="title"]').val(title);
                 });
-            });    
-            $(function() {
+            });
+            $(function () {
                 $('input[name="daterange"]').daterangepicker({
                     opens: 'left'
-                }, function(start, end, label) {
+                }, function (start, end, label) {
                     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                 });
             });
         </script>
-        
+
         <c:if test="${alert != ''}">
-        <script lang="Javascript">
+            <script lang="Javascript">
             alert("${alert}");
-        </script>
+            </script>
         </c:if>
-        
+
         <script type="text/javascript">
-        $(function(){
-        $('input[type="text"]').change(function(){
-        this.value = $.trim(this.value);
-        });
-        })
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
         </script>
-        
+
     </head>
     <body>
         <!-- Main Wrapper -->
         <div class="main-wrapper">
-            
+
             <jsp:include page="menu.jsp"></jsp:include>
-            
-            <!-- Page Wrapper -->
-            <div class="page-wrapper">
 
-                <!-- Page Content -->
-                <div class="content container-fluid">
+                <!-- Page Wrapper -->
+                <div class="page-wrapper">
 
-                    <!-- Page Header -->
-                    <div class="page-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="page-title">Projects</h3>
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Projects</li>
-                                </ul>
-                            </div>
-                            <div class="col-auto float-right ml-auto">
+                    <!-- Page Content -->
+                    <div class="content container-fluid">
+
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">Projects</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Projects</li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
                                 <c:if test="${sessionScope.acc.isManager == true}">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>                           
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>                           
                                 </c:if>
                             </div>
                         </div>
@@ -177,38 +177,44 @@
 
                     <div class="row">
                         <c:forEach items="${list}" var="o">
-                        <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <c:if test="${sessionScope.acc.isManager == true}">
-                                    <div class="dropdown dropdown-action profile-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right"> 
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.client}" name-id="${o.title}" desc-id="${o.description}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>                         
+                            <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <c:if test="${sessionScope.acc.isManager == true}">
+                                            <div class="dropdown dropdown-action profile-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right"> 
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.client}" name-id="${o.title}" desc-id="${o.description}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>                         
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <h4 class="project-title"><a href="project?do=view&title=${o.title}">${o.title}</a></h4>
+                                        <p class="text-muted">${o.description}
+                                        </p>
+                                        <div class="pro-deadline m-b-15">
+                                            <div class="sub-title">
+                                                Period:
+                                            </div>
+                                            <div class="text-muted">
+                                                ${o.period}
+                                            </div>
                                         </div>
-                                    </div>
-                                    </c:if>
-                                    <h4 class="project-title"><a href="project?do=view&title=${o.title}">${o.title}</a></h4>
-                                    <p class="text-muted">${o.description}
-                                    </p>
-                                    <div class="pro-deadline m-b-15">
-                                        <div class="sub-title">
-                                            Period:
+                                        <div class="project-members m-b-15">
+                                            <div>Project Leader:</div>
+                                            <div class="text-muted">
+                                                ${o.manager}
+                                            </div>
                                         </div>
-                                        <div class="text-muted">
-                                            ${o.period}
-                                        </div>
-                                    </div>
-                                    <div class="project-members m-b-15">
-                                        <div>Project Leader :</div>
-                                        <div class="text-muted">
-                                            ${o.manager}
-                                        </div>
+                                            <div class="pro-overview m-b-15">
+                                                <div>Status:</div>
+                                                <c:if test="${o.status == 0}"><div>Pending</div></c:if>
+                                                <c:if test="${o.status == 1}"><div>Doing</div></c:if>
+                                                <c:if test="${o.status == 2}"><div>Done</div></c:if>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         </c:forEach>
                     </div>
                 </div>
@@ -243,7 +249,7 @@
                                                 </label>
                                                 <select class="select" name="client" required>
                                                     <c:forEach items="${listC}" var="o">
-                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name}</option>
+                                                        <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -281,7 +287,7 @@
                                         <label>Description<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="description" required pattern="[0-9A-Za-z ]{1,255}">
                                     </div>
-                                    
+
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn" id="create">Submit</button>
                                     </div>
@@ -318,7 +324,7 @@
                                                 <label>Client<span class="text-danger">*</span></label>
                                                 <select class="select" id="clientEdit" name="client">
                                                     <c:forEach items="${listC}" var="o">
-                                                    <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name}</option>
+                                                        <option value="${o.client_id}">${o.first_name} ${o.last_name} from ${o.company_name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -400,6 +406,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-        
+
     </body>
 </html>

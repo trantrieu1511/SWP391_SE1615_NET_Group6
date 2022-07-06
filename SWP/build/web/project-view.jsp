@@ -242,8 +242,12 @@
                                                 <td class="text-right"><a href="#">${project.client}</a></td>
                                             </tr>
                                             <tr>
-                                                <td>Status:</td>
-                                                <td class="text-right">Working</td>
+                                                <td>Status:</td>                                               
+                                                <td class="text-right">
+                                                    <c:if test="${project.status == 0}">Pending</c:if>
+                                                    <c:if test="${project.status == 1}">Doing</c:if>
+                                                    <c:if test="${project.status == 2}">Done</c:if>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>                                    

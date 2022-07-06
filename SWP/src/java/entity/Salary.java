@@ -69,7 +69,8 @@ public class Salary extends Profile {
 
     //get net_salary only constructor
 
-    public Salary(double net_salary) {
+    public Salary(String profile_id, double net_salary) {
+        this.profile_id = profile_id;
         this.net_salary = net_salary;
     }
     

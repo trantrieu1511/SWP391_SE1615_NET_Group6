@@ -100,12 +100,13 @@
                     <form action="report" do="post">
                         <input type="hidden" name="do" value="searchDailyReport">
                         <div class="row filter-row mb-4">
+                            <div class="row align-items-center justify-content-center">Employee name</div>
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input class="form-control floating" name="name" type="text">
-                                    <label class="focus-label">${nameFilter}</label>
+                                    <input class="form-control floating" name="name" type="text" value="${nameFilter}">
                                 </div>
                             </div>
+                            <div class="row align-items-center justify-content-center">Department</div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
                                     <select class="select floating" name="department" id="department"> 
@@ -255,7 +256,6 @@
             </c:if>
                 $("#department").select2({
                     width: '100%',
-                    placeholder: "${departmentFilter}",
                     allowClear: false
                 });
             });
@@ -263,7 +263,7 @@
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });
-            }) 
+            })
         </script>
 
     </body>

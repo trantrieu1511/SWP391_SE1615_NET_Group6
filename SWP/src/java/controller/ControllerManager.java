@@ -77,15 +77,6 @@ public class ControllerManager extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                // list project for manager/employee
-                List<Projects> listPj = null;
-                if (acc.isIsManager()) {
-                    listPj = daoProject.listProject(acc.getProfile_id());
-                } else {
-                    listPj = daoProject.listProject(daoProfile.getByID(acc.getProfile_id()).getReportto());
-                }
-                request.setAttribute("project", listPj);
-
                 // attendance 
                 if (service.equals("attendance")) {
                     List<Attendance> listAttendance = daoAttendance.listAll(acc.getProfile_id());

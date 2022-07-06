@@ -76,7 +76,7 @@ public class DAOSalary extends DBConnect {
     }
 
     public List<Salary> listAllStaffSalary(String profile_id) {
-        String sql = "select ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary\n"
+        String sql = "select p.profile_id, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary\n"
                 + "from [profile] p full outer join [account] a \n"
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
@@ -91,7 +91,9 @@ public class DAOSalary extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Salary(rs.getDouble(1)));
+                list.add(new Salary(
+                        rs.getString(1),
+                        rs.getDouble(2)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1113,8 +1115,6 @@ public class DAOSalary extends DBConnect {
 //        System.out.println(convertNumberToWord(700000));
 //        System.out.println(convertNumberToWord(9000000));
 //        List<Salary> list = daoSalary.listIndividualSalaryAndProfileInPayslip("ABCDE");
-        for (Salary salary : list) {
-            System.out.println(salary.toString());
-        }
+        System.out.println(list);
     }
 }

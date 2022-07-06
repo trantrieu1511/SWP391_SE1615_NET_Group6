@@ -17,18 +17,17 @@ import java.util.List;
  * @author Khanh
  */
 public class DAOProject extends DBConnect {
-
+    
     Connection conn = null;
     PreparedStatement state = null;
     ResultSet rs = null;
-
-    public List<Projects> listProject(String profile_id) {
+    
+    public List<Projects> listProject() {
         List<Projects> list = new ArrayList<>();
-        String sql = "select * from projects where manager_id = ?";
+        String sql = "select * from projects";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Projects(
@@ -37,7 +36,8 @@ public class DAOProject extends DBConnect {
                         rs.getString(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getString(6),
+                        rs.getInt(7)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -48,7 +48,7 @@ public class DAOProject extends DBConnect {
         }
         return list;
     }
-
+    
     public Projects getProject(String title) {
         String sql = "select * from projects where title = ?";
         try {
@@ -63,9 +63,10 @@ public class DAOProject extends DBConnect {
                         rs.getString(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6));
+                        rs.getString(6),
+                        rs.getInt(7));
             }
-
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -75,11 +76,11 @@ public class DAOProject extends DBConnect {
         }
         return null;
     }
-
-    public boolean addProject(String title, String client_id, String period, 
+    
+    public boolean addProject(String title, String client_id, String period,
             double rate, String manager_id, String desc) {
         String sql = "insert into projects(title, client_id, period, "
-                + "rate, manager_id, description) values(?,?,?,?,?,?)";
+                + "rate, manager_id, description, status) values(?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -89,6 +90,7 @@ public class DAOProject extends DBConnect {
             state.setDouble(4, rate);
             state.setString(5, manager_id);
             state.setString(6, desc);
+            state.setInt(7, 0);
             state.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -99,7 +101,7 @@ public class DAOProject extends DBConnect {
         }
         return true;
     }
-
+    
     public boolean deleteProject(String title) {
         String sql = "delete from projects where title = ?";
         try {
@@ -116,7 +118,7 @@ public class DAOProject extends DBConnect {
         }
         return true;
     }
-
+    
     public boolean updateProject(String title, String newTitle, String client_id,
             String period, double rate, String manager_id, String desc) {
         String sql = "update projects set title = ?, client_id = ?, period = ?"
@@ -141,7 +143,7 @@ public class DAOProject extends DBConnect {
         }
         return true;
     }
-
+    
     public List<Projects> search(String title) {
         List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where title like ?";
@@ -157,7 +159,8 @@ public class DAOProject extends DBConnect {
                         rs.getString(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getString(6),
+                        rs.getInt(7)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -168,9 +171,15 @@ public class DAOProject extends DBConnect {
         }
         return list;
     }
-
+    
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
-        System.out.println(dao.search("Test"));
+        DAOClients daoc = new DAOClients();
+        List<Projects> list = dao.listProject();
+        for(Projects p : list) {
+            System.out.println(daoc.getIndividualClientProfile(p.getClient()));
+            p.setClient(daoc.getIndividualClientProfile(p.getClient()).getCompany_name());
+        }
+        //System.out.println(list);
     }
 }

@@ -140,6 +140,7 @@ CREATE TABLE [projects] (
    rate DECIMAL(8,2),
    manager_id CHAR(5),
    description VARCHAR(255),
+   status INT,
    FOREIGN KEY (client_id) REFERENCES [clients] (client_id),
    FOREIGN KEY (manager_id) REFERENCES [profile] (profile_id),
 );

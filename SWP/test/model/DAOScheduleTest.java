@@ -31,14 +31,9 @@ public class DAOScheduleTest {
      * Test of checkExist method, of class DAOSchedule.
      */
     @Test
-    public void testCheckExist1() {
+    public void testCheckExist() {
         assertTrue(dao.checkExist("KUGHY"));
-    }
-    
-    @Test
-    public void testCheckExist2() {
-        assertFalse(dao.checkExist("ABCDE"));
-    }
+    }   
  
     /**
      * Test of listAllScheduleOfStaff method, of class DAOSchedule.

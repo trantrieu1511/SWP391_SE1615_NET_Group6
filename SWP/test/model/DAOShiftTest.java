@@ -42,7 +42,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testEdit() {
-        //assertTrue(dao.edit("morning shift", "8:30", "11:30", "morning"));
+        //assertTrue(dao.edit("morning-shift", "8:30", "11:30", "morning"));
     }
 
     /**
@@ -50,7 +50,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testDelete() {
-        //assertTrue(dao.delete("morning shift"));
+        //assertTrue(dao.delete("morning-shift"));
     }
 
 }

@@ -174,11 +174,11 @@ public class ControllerSalary extends HttpServlet {
                         if (listSearch.isEmpty()) {
                             alert = "There are no result found!";
                         }
-                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
-                        listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
+//                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
+//                        listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
+//                        if (listSearch.isEmpty()) {
+//                            alert = "There are no result found!";
+//                        }
                     } else {
                         alert = "Please enter From Date to commit search!";
                     }
@@ -319,7 +319,7 @@ public class ControllerSalary extends HttpServlet {
                     dispatch.forward(request, response);
                 }
                 if (service.equals("toPDF")) {
-                    
+
                 }
             }
         } catch (Exception ex) {

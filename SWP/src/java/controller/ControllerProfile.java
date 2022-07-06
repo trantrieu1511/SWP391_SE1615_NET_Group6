@@ -72,6 +72,8 @@ public class ControllerProfile extends HttpServlet {
                     Object addF = request.getParameter("addF");
                     Object editF = request.getParameter("editF");
                     Object deleteF = request.getParameter("deleteF");
+                    Object toDateErrorAddExp = request.getParameter("toDateErrorAddExp");
+                    Object toDateErrorEditExp = request.getParameter("toDateErrorEditExp");
                     String alert = "";
                     if (editPf != null) {
                         alert = "profile information edited successfully!";
@@ -89,7 +91,10 @@ public class ControllerProfile extends HttpServlet {
                         alert = "edit familyInfo successfully!";
                     } else if (deleteF != null) {
                         alert = "delete familyInfo successfully!";
-
+                    } else if (toDateErrorAddExp != null) {
+                        alert = "Fail to add experience, to date must not before from date!";
+                    } else if (toDateErrorEditExp != null) {
+                        alert = "Fail to edit experience, to date must not before from date!";
                     }
                     ProfileDetail pd = daoPd.getIndividualProfileDetail(acc.getProfile_id());
                     Profile profile = daoPf.getByID(acc.getProfile_id());
@@ -120,6 +125,8 @@ public class ControllerProfile extends HttpServlet {
                     Object addF = request.getParameter("addF");
                     Object editF = request.getParameter("editF");
                     Object deleteF = request.getParameter("deleteF");
+                    Object toDateErrorAddExp = request.getParameter("toDateErrorAddExp");
+                    Object toDateErrorEditExp = request.getParameter("toDateErrorEditExp");
                     String alert = "";
                     if (editPf != null) {
                         alert = "profile information edited successfully!";
@@ -137,6 +144,10 @@ public class ControllerProfile extends HttpServlet {
                         alert = "edit familyInfo successfully!";
                     } else if (deleteF != null) {
                         alert = "delete familyInfo successfully!";
+                    } else if (toDateErrorAddExp != null) {
+                        alert = "Fail to add experience, to date must not before from date!";
+                    } else if (toDateErrorEditExp != null) {
+                        alert = "Fail to edit experience, to date must not before from date!";
                     }
                     String profile_id = request.getParameter("profile_id");
 

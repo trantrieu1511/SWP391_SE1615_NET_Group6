@@ -28,7 +28,7 @@ public class DAOProjectTest {
                 + "17/8/2022, rate=10000.0, manager=ABCDE, description=demo test},"
                 + " projects{title=Test 2, client=BUKFS, period=30/06/2022 - 17/8/2022, "
                 + "rate=100000.0, manager=ABCDE, description=demo test}]", 
-                dao.listProject("ABCDE").toString());
+                dao.listProject().toString());
     }
 
     /**

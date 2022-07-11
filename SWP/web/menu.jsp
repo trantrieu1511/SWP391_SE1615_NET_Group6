@@ -66,10 +66,10 @@
                             <ul style="display: none;">
                                 <c:choose>
                                     <c:when test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
-                                        <li><a href="manager?do=dashboard">Dashboard (Manager)</a></li>
+                                        <li><a href="dashboard?do=manager">Dashboard (Manager)</a></li>
                                         </c:when>
                                         <c:otherwise>
-                                        <li><a href="employee?do=dashboard">Dashboard (Employee)</a></li>
+                                        <li><a href="dashboard?do=employee">Dashboard (Employee)</a></li>
                                         </c:otherwise>
                                     </c:choose>
                             </ul>
@@ -104,7 +104,6 @@
                             <a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a href="project?do=list">Projects</a></li>
-                                <li><a href="task?do=view&&title= ">Task board</a></li>
                             </ul>
                         </li>
                         <li> 

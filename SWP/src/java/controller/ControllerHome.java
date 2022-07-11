@@ -6,9 +6,7 @@
 package controller;
 
 import entity.Account;
-import entity.Projects;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,18 +38,17 @@ public class ControllerHome extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             /* TODO output your page here. You may use following sample code. */
-
-            DAOProject daoProject = new DAOProject();
-            DAOProfile daoProfile = new DAOProfile();
-
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
             // check session for user logged in
             if (acc == null) {
                 response.sendRedirect("login.jsp");
-            } else {
-                RequestDispatcher dispath = request.getRequestDispatcher("home.jsp");
-                dispath.forward(request, response);
+            } 
+            if (acc.isIsManager()) {
+                response.sendRedirect("dashboard?do=manager");
+            }
+            if (!acc.isIsManager()) {
+                response.sendRedirect("dashboard?do=employee");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

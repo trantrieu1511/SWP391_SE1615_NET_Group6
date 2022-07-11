@@ -148,6 +148,32 @@ public class DAOTask extends DBConnect {
         return list;
     }
     
+    public List<Task> listTaskAssignedTo(String profile_id) {
+        List<Task> list = new ArrayList<>();
+        String sql = "select * from task where assigned = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Task(rs.getString(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public boolean updateStatus(int status, String name) {
         String sql = "update task set status = ? where name = ?";
         try {

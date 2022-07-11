@@ -82,12 +82,19 @@
                     var text = $(e.relatedTarget).attr('data-id').trim();
                     const myArray = text.split(" ");;
                     var client_id = myArray[4];
+                    var status = myArray[5];
                     var period1 = myArray[0]; 
                     var period2 = myArray[1];
                     var period3 = myArray[2];
                     var rate = myArray[3];  
                     $("#clientEdit").val(client_id);
                     $("#clientEdit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
+                    $("#statusEdit").val(status);
+                    $("#statustEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false
@@ -141,7 +148,7 @@
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">
-                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${project.period} ${project.rate} ${project.client}" name-id="${project.title}" desc-id=" ${project.description}"><i class="fa fa-plus"></i> Edit Project</a>
+                                <a href="#" class="btn add-btn" data-toggle="modal" data-target="#edit_project" data-id="${project.period} ${project.rate} ${project.client} ${project.status}" name-id="${project.title}" desc-id=" ${project.description}"><i class="fa fa-plus"></i> Edit Project</a>
                                 <a href="task?do=view&&title=${project.title}" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
                             </div>
                         </div>
@@ -353,6 +360,14 @@
                                     <div class="form-group">
                                         <label>Description<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="description" id="desc" required pattern="[0-9A-Za-z ]{1,255}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status<span class="text-danger">*</span></label>
+                                        <select class="select" id="statusEdit" name="status">
+                                            <option value="0">Pending</option>
+                                            <option value="1">Doing</option>
+                                            <option value="2">Done</option>
+                                        </select>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn" id="create2">Submit</button>

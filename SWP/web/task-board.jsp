@@ -200,7 +200,7 @@
                                                                 </span>
                                                             </c:if>
                                                             <c:if test="${sessionScope.acc.isManager == false}">
-                                                                <a href="task?do=updateStatus&&status=2">Done</a>
+                                                                <a href="task?do=updateStatus&&name=${o.name}&&status=2">Done</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -241,7 +241,7 @@
                                                                 <span class="task-users">
                                                                     ${o.assigned}
                                                                 </span>
-                                                                <a href="task?do=updateStatus&&status=3">Accept</a>
+                                                                <a href="task?do=updateStatus&&name=${o.name}&&status=3">Accept</a>
                                                             </c:if>
                                                         </div>
                                                     </div>

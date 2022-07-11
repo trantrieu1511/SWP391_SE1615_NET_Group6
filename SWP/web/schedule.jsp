@@ -170,8 +170,7 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="name" pattern="[0-9A-Za-z ]{1,35}">
-                                    <label class="focus-label">Employee</label>
+                                    <input type="text" class="form-control floating" name="name" pattern="[0-9A-Za-z ]{1,35}" value="${name}">                                  
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 

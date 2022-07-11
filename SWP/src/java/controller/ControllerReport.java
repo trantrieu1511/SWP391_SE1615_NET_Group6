@@ -278,6 +278,9 @@ public class ControllerReport extends HttpServlet {
 
                 if (service.equals("task")) {
                     List<Task> listTask = daoTask.listAllTask();
+                    for (Task t : listTask) {
+                        t.setAssigned(daoProfile.getByID(t.getAssigned()).getFirst_name() + " " + daoProfile.getByID(t.getAssigned()).getLast_name());
+                    }
                     request.setAttribute("task", listTask);
                     request.setAttribute("filter", "no");
                     request.setAttribute("name", "");

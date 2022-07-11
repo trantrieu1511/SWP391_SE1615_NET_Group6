@@ -25,8 +25,8 @@ public class DAOClients extends DBConnect {
     public List<Clients> listAllClients() {
         List<Clients> list = new ArrayList<>();
         String sql = "select client_id, first_name, last_name, email,"
-                + " phone_number, company_id, company_name from clients join "
-                + "company on clients.company = company.company_id";
+                + " phone_number, clients.company_id, company_name from clients join "
+                + "company on clients.company_id = company.company_id";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);

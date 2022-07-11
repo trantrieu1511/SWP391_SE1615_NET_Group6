@@ -69,13 +69,13 @@ public class ControllerProject extends HttpServlet {
                 String service = request.getParameter("do");
 
                 if (service.equals("list")) {
-                    List<Projects> listPj = daoProject.listProject();                   
+                    List<Projects> listPj = daoProject.listProject();
                     List<Clients> listC = daoClients.listAllClients();
                     String alert = "";
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
                     request.setAttribute("alert", alert);
-                    request.setAttribute("search", "Project title");
+                    request.setAttribute("search", "");
                     RequestDispatcher dispath = request.getRequestDispatcher("projects.jsp");
                     dispath.forward(request, response);
                 }
@@ -149,10 +149,16 @@ public class ControllerProject extends HttpServlet {
                     String rate = request.getParameter("rate");
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
-                    daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
+                    String status = request.getParameter("status");
+                    boolean edit = daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc, Integer.parseInt(status));
                     List<Projects> listPj = daoProject.listProject();
                     List<Clients> listC = daoClients.listAllClients();
-                    String alert = "New information has been saved!";
+                    String alert;
+                    if (edit == false) {
+                        alert = "Cannot edit project having tasks!";
+                    } else {
+                        alert = "New information has been saved!";
+                    }
                     request.setAttribute("alert", alert);
                     request.setAttribute("list", listPj);
                     request.setAttribute("listC", listC);
@@ -207,7 +213,8 @@ public class ControllerProject extends HttpServlet {
                     String rate = request.getParameter("rate");
                     String manager = request.getParameter("manager");
                     String desc = request.getParameter("description");
-                    daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc);
+                    String status = request.getParameter("status");
+                    daoProject.updateProject(oldTitle, title, client_id, period, Double.parseDouble(rate), manager, desc, Integer.parseInt(status));
                     Projects pj = daoProject.getProject(title);
                     String sDate = format(pj.getPeriod().split(" ")[0]);
                     String eDate = format(pj.getPeriod().split(" ")[2]);

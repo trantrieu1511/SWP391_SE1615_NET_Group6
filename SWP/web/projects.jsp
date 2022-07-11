@@ -73,12 +73,19 @@
                     var text = $(e.relatedTarget).attr('data-id').trim();
                     const myArray = text.split(" ");
                     var client_id = myArray[4];
-                    var period1 = myArray[0];
+                    var status = myArray[5];
+                    var period1 = myArray[0]; 
                     var period2 = myArray[1];
                     var period3 = myArray[2];
-                    var rate = myArray[3];
+                    var rate = myArray[3];  
                     $("#clientEdit").val(client_id);
                     $("#clientEdit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
+                    $("#statusEdit").val(status);
+                    $("#statustEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false
@@ -160,8 +167,7 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="title" pattern="[0-9A-Za-z ]{1,35}">
-                                    <label class="focus-label">${search}</label>
+                                    <input type="text" class="form-control floating" name="title" pattern="[0-9A-Za-z ]{1,35}" value="${search}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">                      
@@ -184,7 +190,7 @@
                                             <div class="dropdown dropdown-action profile-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right"> 
-                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.client}" name-id="${o.title}" desc-id="${o.description}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_project" data-id="${o.period} ${o.rate} ${o.client} ${o.status}" name-id="${o.title}" desc-id="${o.description}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_project" data-id="${o.title}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>                         
                                                 </div>
                                             </div>
@@ -362,6 +368,14 @@
                                         <label>Description<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="description" id="desc" required pattern="[0-9A-Za-z ]{1,255}">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Status<span class="text-danger">*</span></label>
+                                        <select class="select" id="statusEdit" name="status">
+                                            <option value="0">Pending</option>
+                                            <option value="1">Doing</option>
+                                            <option value="2">Done</option>
+                                        </select>
+                                    </div>       
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn" id="create2">Submit</button>
                                     </div>

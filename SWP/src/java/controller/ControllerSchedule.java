@@ -7,7 +7,6 @@ package controller;
 
 import entity.Account;
 import entity.Profile;
-import entity.Projects;
 import entity.Schedule;
 import entity.Shift;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOProfile;
-import model.DAOProject;
 import model.DAOSchedule;
 import model.DAOShift;
 
@@ -104,6 +102,7 @@ public class ControllerSchedule extends HttpServlet {
                     request.setAttribute("listS", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", alert);
+                    request.setAttribute("name", "");
                     RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
                     dispath.forward(request, response);
                 }
@@ -121,6 +120,7 @@ public class ControllerSchedule extends HttpServlet {
                     }
                     daoSchedule.updateSchedule(Profile_id, shiftStatus);
                     request.setAttribute("alert", "Changes saved!");
+                    request.setAttribute("name", "");
                     RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=list&&action=edit");
                     dispath.forward(request, response);
                 }
@@ -133,6 +133,7 @@ public class ControllerSchedule extends HttpServlet {
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
                     request.setAttribute("listPf", listPf);
+                    request.setAttribute("name", "");
                     RequestDispatcher dispath = request.getRequestDispatcher("schedule?do=list&&action=delete");
                     dispath.forward(request, response);
                 }
@@ -175,6 +176,7 @@ public class ControllerSchedule extends HttpServlet {
                     request.setAttribute("listS", listS);
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", "");
+                    request.setAttribute("name", name);
                     RequestDispatcher dispath = request.getRequestDispatcher("schedule.jsp");
                     dispath.forward(request, response);
                 }

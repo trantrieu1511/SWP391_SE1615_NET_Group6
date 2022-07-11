@@ -120,9 +120,9 @@ public class DAOProject extends DBConnect {
     }
     
     public boolean updateProject(String title, String newTitle, String client_id,
-            String period, double rate, String manager_id, String desc) {
+            String period, double rate, String manager_id, String desc, int status) {
         String sql = "update projects set title = ?, client_id = ?, period = ?"
-                + ", rate = ?, manager_id = ?, description = ? where title = ?";
+                + ", rate = ?, manager_id = ?, description = ?, status = ? where title = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -132,7 +132,8 @@ public class DAOProject extends DBConnect {
             state.setDouble(4, rate);
             state.setString(5, manager_id);
             state.setString(6, desc);
-            state.setString(7, title);
+            state.setInt(7, status);
+            state.setString(8, title);          
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -175,11 +176,6 @@ public class DAOProject extends DBConnect {
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
         DAOClients daoc = new DAOClients();
-        List<Projects> list = dao.listProject();
-        for(Projects p : list) {
-            System.out.println(daoc.getIndividualClientProfile(p.getClient()));
-            p.setClient(daoc.getIndividualClientProfile(p.getClient()).getCompany_name());
-        }
-        //System.out.println(list);
+        System.out.println(dao.updateProject("Test", "Test 1", "BUKFS", "30/06/2022 - 17/8/2022", 10000, "ABCDE", "demo", 1));
     }
 }

@@ -73,6 +73,7 @@ public class ControllerDashboard extends HttpServlet {
                 String service = request.getParameter("do");
 
                 if (service.equals("manager")) {
+                    Profile employee = daoProfile.getByID(acc.getProfile_id());
                     List<Projects> listProject = daoProject.listProject();
                     List<Clients> listClient = daoClient.listAllClients();
                     List<Task> listTask = daoTask.listTaskAssignedTo(acc.getProfile_id());
@@ -86,6 +87,7 @@ public class ControllerDashboard extends HttpServlet {
                         temp[3] = Integer.toString(p.getStatus());
                         listPT.add(temp);
                     }
+                    request.setAttribute("name", employee.getFirst_name() + " " + employee.getLast_name());
                     request.setAttribute("totalPj", listProject.size());
                     request.setAttribute("totalClient", listClient.size());
                     request.setAttribute("totalTask", listTask.size());

@@ -129,15 +129,17 @@
                     </div>
 
                     <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-sm-3">Date</div>
+                    </div>
                     <form action="employee" do="post">
                         <input type="hidden" value="searchAttendance" name="do">
                         <div class="row filter-row">                    
                             <div class="col-sm-3">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input type="text" class="form-control floating datetimepicker" pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}" name="date" onchange="return trim(this)">
-                                    </div>
-                                    <label class="focus-label">Date</label>
+                                        <input type="text" class="form-control floating datetimepicker" onkeydown="event.preventDefault()" name="date" value="${date}">
+                                    </div>                                  
                                 </div>
                             </div>                       
                             <div class="col-sm-3">  
@@ -151,6 +153,9 @@
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable" id="table">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="employee?do=attendance" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
                                             <th>#</th>

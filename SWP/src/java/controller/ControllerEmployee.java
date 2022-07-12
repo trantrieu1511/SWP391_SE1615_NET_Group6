@@ -7,7 +7,6 @@ package controller;
 
 import entity.Account;
 import entity.Attendance;
-import entity.Projects;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,8 +46,6 @@ public class ControllerEmployee extends HttpServlet {
             DateFormat hf = new SimpleDateFormat("hh:mm");
             String service = request.getParameter("do");
             DAOAttendance daoAttendance = new DAOAttendance();
-            DAOProject daoProject = new DAOProject();
-            DAOProfile daoProfile = new DAOProfile();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
 
@@ -83,6 +80,8 @@ public class ControllerEmployee extends HttpServlet {
                     request.getSession(false);
                     request.setAttribute("list_attendance", list);
                     request.setAttribute("button", button);
+                    request.setAttribute("date", "");
+                    request.setAttribute("filter", "no");
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }
@@ -93,6 +92,8 @@ public class ControllerEmployee extends HttpServlet {
                     List<Attendance> list = daoAttendance.search(date_search, employee_id);
                     request.setAttribute("list_attendance", list);
                     request.setAttribute("button", button);
+                    request.setAttribute("date", date_search);
+                    request.setAttribute("filter", "yes");
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance.jsp");
                     dispath.forward(request, response);
                 }

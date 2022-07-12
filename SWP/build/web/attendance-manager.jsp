@@ -117,20 +117,25 @@
                     <!-- /Page Header -->
 
                     <!-- Search Filter -->
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-4">
+                            <a>Employee Name</a>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <a>Date</a>
+                        </div>
+                    </div>
                     <form action="manager" do="post">
                         <input type="hidden" name="do" value="searchAttendance">
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-4">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="name" id="inp" pattern="[A-Za-z]{1,20}">
-                                    <label class="focus-label">Employee Name</label>
+                                    <input type="text" class="form-control floating" name="name" id="inp" pattern="[A-Za-z]{1,20}" value="${name}">                                   
                                 </div>
                             </div>                       
                             <div class="col-sm-6 col-md-4"> 
-                                <div class="form-group form-focus"><label class="focus-label">Date</label>
-                                    <div>                                
-                                        <input type="text" class="form-control floating datetimepicker" name="date" pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}" onchange="return trim(this)">
-                                    </div>
+                                <div>                                
+                                    <input type="text" class="form-control floating datetimepicker" name="date" onkeydown="event.preventDefault()" value="${date}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-4">
@@ -144,6 +149,9 @@
                         <div class="col-lg-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable" id="table">
+                                    <c:if test="${filter == 'yes'}">
+                                        <h4><a href="manager?do=attendance" style="text-decoration: none; color: grey"> <-- back</a></h4>
+                                    </c:if>
                                     <thead>
                                         <tr>
                                             <th>Name</th>

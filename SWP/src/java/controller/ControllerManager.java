@@ -13,7 +13,6 @@ import entity.FamilyInfo;
 import entity.Jobs;
 import entity.Profile;
 import entity.ProfileDetail;
-import entity.Projects;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -68,7 +67,6 @@ public class ControllerManager extends HttpServlet {
             DAOProfileDetail daoProfileDetail = new DAOProfileDetail();
             DAOFamilyInfo daoFamilyInfo = new DAOFamilyInfo();
             DAOExperience daoExperience = new DAOExperience();
-            DAOProject daoProject = new DAOProject();
             DAOSchedule daoSchedule = new DAOSchedule();
 
             HttpSession session = request.getSession();
@@ -84,6 +82,9 @@ public class ControllerManager extends HttpServlet {
                         a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
                     request.setAttribute("list", listAttendance);
+                    request.setAttribute("name", "");
+                    request.setAttribute("date", "");
+                    request.setAttribute("filter", "no");
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);
                 }
@@ -97,6 +98,9 @@ public class ControllerManager extends HttpServlet {
                         a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
                     request.setAttribute("list", listAttendance);
+                    request.setAttribute("name", name);
+                    request.setAttribute("date", date_search);
+                    request.setAttribute("filter", "yes");
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);
                 }

@@ -73,30 +73,32 @@
                         <!-- Content Starts -->
 
                         <!-- Search Filter -->
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">Employee name</div>
+                            <div class="col-sm-6 col-md-3">Department</div>
+                        </div>
                         <form action="report" do="post">
                             <input type="hidden" name="do" value="searchEmployeeReport">
                             <div class="row filter-row">
-                                <div class="row align-items-center justify-content-center">Employee name</div>
                                 <div class="col-sm-6 col-md-3">  
-                                    <input class="form-control floating" name="name" type="text" value="${nameFilter}">
-                            </div>
-                            <div class="row align-items-center justify-content-center">Department</div>
-                            <div class="col-sm-6 col-md-3">                            
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating" name="department" id="department"> 
-                                        <option value="" disabled selected hidden></option>
-                                        <c:forEach items="${listDepartment}" var="o">
-                                            <option value="${o.id}">${o.name}</option>  
-                                        </c:forEach>
-                                    </select>
+                                    <input class="form-control floating" name="name" type="text" pattern="[A-Za-z]{1,20}" value="${nameFilter}">
                                 </div>
-                            </div>    
-                            <div class="col-sm-6 col-md-3">  
-                                <button class="btn btn-success btn-block"> Search </button>  
-                            </div> 
-                        </div>                                                          
-                    </form>
-                    <!-- /Search Filter -->
+                                <div class="col-sm-6 col-md-3">                            
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating" name="department" id="department"> 
+                                            <option value="" disabled selected hidden></option>
+                                            <c:forEach items="${listDepartment}" var="o">
+                                                <option value="${o.id}">${o.name}</option>  
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>    
+                                <div class="col-sm-6 col-md-3">  
+                                    <button class="btn btn-success btn-block"> Search </button>  
+                                </div> 
+                            </div>                                                          
+                        </form>
+                        <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">

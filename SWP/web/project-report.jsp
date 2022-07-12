@@ -62,37 +62,39 @@
                         <!-- Content Starts -->
 
                         <!-- Search Filter -->
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">Project name</div>
+                            <div class="col-sm-6 col-md-3">Status</div>
+                        </div>
                         <form action="report" do="post">
                             <input type="hidden" name="do" value="searchProjectReport">
                             <div class="row filter-row">
-                                <div class="row align-items-center justify-content-center">Project name</div>
                                 <div class="col-sm-6 col-md-3">  
-                                    <input class="form-control floating" name="name" id="name" type="text" value="${name}">
+                                    <input class="form-control floating" name="name" id="name" type="text" pattern="[A-Za-z]{1,20}" value="${name}">
+                                </div>
+                                <div class="col-sm-6 col-md-3">                               
+                                    <select class="form-control floating select" name="status" id="status">
+                                        <option value="" disabled selected hidden></option>
+                                        <option value="All">
+                                            All
+                                        </option>
+                                        <option value="0">
+                                            Pending
+                                        </option>
+                                        <option value="1">
+                                            Doing
+                                        </option>
+                                        <option value="2">
+                                            Done
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-3">  
+                                    <button class="btn btn-success btn-block"> Search </button>  
+                                </div>     
                             </div>
-                            <div class="row align-items-center justify-content-center">Status</div>
-                            <div class="col-sm-6 col-md-3">                               
-                                <select class="form-control floating select" name="status" id="status">
-                                    <option value="" disabled selected hidden></option>
-                                    <option value="All">
-                                        All
-                                    </option>
-                                    <option value="0">
-                                        Pending
-                                    </option>
-                                    <option value="1">
-                                        Doing
-                                    </option>
-                                    <option value="2">
-                                        Done
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <a></a><button class="btn btn-success btn-block"> Search </button>  
-                            </div>     
-                        </div>
-                    </form>
-                    <!-- /Search Filter -->
+                        </form>
+                        <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">

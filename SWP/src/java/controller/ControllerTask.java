@@ -137,6 +137,7 @@ public class ControllerTask extends HttpServlet {
                 
                 if (service.equals("deleteTask")) {
                     String id = request.getParameter("id");
+                    String project = daoTask.getById(Integer.parseInt(id)).getProject();
                     boolean del = daoTask.deleteTask(Integer.parseInt(id));
                     String alert = "";
                     if (del) {
@@ -144,7 +145,7 @@ public class ControllerTask extends HttpServlet {
                     } else {
                         alert = "Delete fail";
                     }
-                    String project = daoTask.getById(Integer.parseInt(id)).getProject();
+                    
 
                     List<Task> list0 = daoTask.listProjectTask(0, project);
                     List<Task> list1 = daoTask.listProjectTask(1, project);

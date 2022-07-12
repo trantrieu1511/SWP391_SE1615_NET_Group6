@@ -173,13 +173,13 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" name="eid" id="eid" class="form-control floating">
+                                    <input type="text" name="eid" id="eid" class="form-control floating" value="${eid}">
                                     <label class="focus-label">Staff ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="form-group form-focus">
-                                    <input type="text" name="ename" id="ename" class="form-control floating">
+                                    <input type="text" name="ename" id="ename" class="form-control floating" value="${ename}">
                                     <label class="focus-label">Staff Name</label>
                                 </div>
                             </div>
@@ -188,7 +188,7 @@
                                     <select name="ejob" id="ejob" class="select floating">
                                         <option value="">Select Designation</option>
                                         <c:forEach items="${job}" var="j">
-                                            <option value="${j.id}">${j.title}</option>
+                                            <option value="${j.id}" ${ejob == j.id ? " selected": ""}>${j.title}</option>
                                         </c:forEach>
                                     </select>
                                     <label class="focus-label">Designation</label>

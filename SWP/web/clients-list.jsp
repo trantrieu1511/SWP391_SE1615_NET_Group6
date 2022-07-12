@@ -159,13 +159,13 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="cid">
+                                    <input type="text" class="form-control floating" name="cid" value="${cid}">
                                     <label class="focus-label">Client ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="cname">
+                                    <input type="text" class="form-control floating" name="cname" value="${cname}">
                                     <label class="focus-label">Client Name</label>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                     <select class="select floating" name="ccompany"> 
                                         <option value="">Select Company</option>
                                         <c:forEach items="${listcpn}" var="cpn">
-                                            <option value="${cpn.id}">${cpn.name}</option>
+                                            <option value="${cpn.id}" ${cpn.id == ccompany ? " selected" : ""}>${cpn.name}</option>
                                         </c:forEach>
                                     </select>
                                     <label class="focus-label">Company</label>

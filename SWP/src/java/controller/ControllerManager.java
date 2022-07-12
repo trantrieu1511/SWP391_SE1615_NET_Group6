@@ -175,6 +175,9 @@ public class ControllerManager extends HttpServlet {
                     request.setAttribute("alert", alert);
                     request.setAttribute("department", listDp);
                     request.setAttribute("job", listJ);
+                    request.setAttribute("ename", ename);
+                    request.setAttribute("ejob", ejob);
+                    request.setAttribute("eid", eid);
                     RequestDispatcher dispath = request.getRequestDispatcher("employees-list.jsp");
                     dispath.forward(request, response);
                 }

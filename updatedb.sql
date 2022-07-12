@@ -145,8 +145,10 @@ CREATE TABLE [projects] (
    FOREIGN KEY (manager_id) REFERENCES [profile] (profile_id),
 );
 
+-- drop table task
 CREATE TABLE [task] (
-    name VARCHAR(35) PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name VARCHAR(35),
 	priority INT,
 	deadline VARCHAR(20),
 	status int,

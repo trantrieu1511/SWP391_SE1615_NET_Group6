@@ -63,6 +63,12 @@
                 });
             });
             $(function () {
+                $("#delete_task_modal").on("show.bs.modal", function (e) {
+                    var id = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="id"]').val(id);
+                });
+            });
+            $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });

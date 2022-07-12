@@ -121,6 +121,32 @@ public class DAOTask extends DBConnect {
         return list;
     }
     
+    public List<Task> listProjectTask(String title) {
+        List<Task> list = new ArrayList<>();
+        String sql = "select * from task where project like ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, "%" + title + "%");
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Task(rs.getString(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public List<Task> listProjectTask(int status, String title) {
         List<Task> list = new ArrayList<>();
         String sql = "select * from task where status = ? and project like ?";

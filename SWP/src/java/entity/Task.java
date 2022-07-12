@@ -10,6 +10,7 @@ package entity;
  * @author Khanh
  */
 public class Task {
+    int id;
     String name;
     int priority;
     String deadline;
@@ -20,13 +21,22 @@ public class Task {
     public Task() {
     }
 
-    public Task(String name, int priority, String deadline, int status, String assigned, String project) {
+    public Task(int id, String name, int priority, String deadline, int status, String assigned, String project) {
+        this.id = id;
         this.name = name;
         this.priority = priority;
         this.deadline = deadline;
         this.status = status;
         this.assigned = assigned;
         this.project = project;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -79,7 +89,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "task{" + "name=" + name + ", priority=" + priority + ", deadline=" + deadline + ", status=" + status + ", assigned=" + assigned + ", project=" + project + '}';
+        return "Task{" + "id=" + id + ", name=" + name + ", priority=" + priority + ", deadline=" + deadline + ", status=" + status + ", assigned=" + assigned + ", project=" + project + '}';
     }
     
 }

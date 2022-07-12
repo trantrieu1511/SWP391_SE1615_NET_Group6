@@ -49,7 +49,7 @@ public class ControllerTask extends HttpServlet {
                 DAOProfile daoProfile = new DAOProfile();
                 DAOTask daoTask = new DAOTask();
                 String service = request.getParameter("do");
-                
+
                 if (service.equals("view")) {
                     String title = request.getParameter("title");
                     List<Task> list0 = new ArrayList<>();
@@ -69,7 +69,7 @@ public class ControllerTask extends HttpServlet {
                         list1 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 1);
                         list2 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 2);
                         list3 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 3);
-                    }                   
+                    }
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
                     request.setAttribute("list2", list2);
@@ -80,22 +80,22 @@ public class ControllerTask extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
                     dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("newTask")) {
                     String project = request.getParameter("project");
                     String name = request.getParameter("name");
                     int priority = Integer.parseInt(request.getParameter("priority"));
                     String deadline = request.getParameter("deadline");
-                    String assigned = request.getParameter("assigned");                  
+                    String assigned = request.getParameter("assigned");
                     daoTask.add(name, priority, deadline, 0, assigned, project);
-                                
+
                     List<Task> list0 = daoTask.listProjectTask(0, project);
                     List<Task> list1 = daoTask.listProjectTask(1, project);
                     List<Task> list2 = daoTask.listProjectTask(2, project);
                     List<Task> list3 = daoTask.listProjectTask(3, project);
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     String alert = "New task saved!!";
-                                      
+
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
                     request.setAttribute("list2", list2);
@@ -104,22 +104,22 @@ public class ControllerTask extends HttpServlet {
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", alert);
                     RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
-                    dispath.forward(request, response);  
+                    dispath.forward(request, response);
                 }
-                
+
                 if (service.equals("updateStatus")) {
-                    String name = request.getParameter("name");
+                    String id = request.getParameter("id");
                     int status = Integer.parseInt(request.getParameter("status"));
-                    daoTask.updateStatus(status, name);
-                    String project = daoTask.getByName(name).getProject();
-                    
+                    daoTask.updateStatus(status, Integer.parseInt(id));
+                    String project = daoTask.getById(Integer.parseInt(id)).getProject();
+
                     List<Task> list0 = daoTask.listProjectTask(0, project);
                     List<Task> list1 = daoTask.listProjectTask(1, project);
                     List<Task> list2 = daoTask.listProjectTask(2, project);
                     List<Task> list3 = daoTask.listProjectTask(3, project);
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     String alert = "Task status updated!";
-                                      
+
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);
                     request.setAttribute("list2", list2);
@@ -128,8 +128,39 @@ public class ControllerTask extends HttpServlet {
                     request.setAttribute("listPf", listPf);
                     request.setAttribute("alert", alert);
                     RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
-                    dispath.forward(request, response);  
-                    
+                    dispath.forward(request, response);
+                }
+
+                if (service.equals("editTask")) {
+
+                }
+                
+                if (service.equals("deleteTask")) {
+                    String id = request.getParameter("id");
+                    boolean del = daoTask.deleteTask(Integer.parseInt(id));
+                    String alert = "";
+                    if (del) {
+                       alert = "Task deleted from database!"; 
+                    } else {
+                        alert = "Delete fail";
+                    }
+                    String project = daoTask.getById(Integer.parseInt(id)).getProject();
+
+                    List<Task> list0 = daoTask.listProjectTask(0, project);
+                    List<Task> list1 = daoTask.listProjectTask(1, project);
+                    List<Task> list2 = daoTask.listProjectTask(2, project);
+                    List<Task> list3 = daoTask.listProjectTask(3, project);
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
+
+                    request.setAttribute("list0", list0);
+                    request.setAttribute("list1", list1);
+                    request.setAttribute("list2", list2);
+                    request.setAttribute("list3", list3);
+                    request.setAttribute("title", project);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("alert", alert);
+                    RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
+                    dispath.forward(request, response);
                 }
             }
         } catch (Exception ex) {

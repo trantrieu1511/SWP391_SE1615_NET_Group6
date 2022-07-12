@@ -135,7 +135,7 @@
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
-                                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_task_modal" data-id="${o.id}">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </c:if>
@@ -152,7 +152,7 @@
                                                                 </span>
                                                             </c:if>
                                                             <c:if test="${sessionScope.acc.isManager == false}">
-                                                                <a href="task?do=updateStatus&&name=${o.name}&&status=1">Accept</a>
+                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=1">Accept</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -200,7 +200,7 @@
                                                                 </span>
                                                             </c:if>
                                                             <c:if test="${sessionScope.acc.isManager == false}">
-                                                                <a href="task?do=updateStatus&&name=${o.name}&&status=2">Done</a>
+                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=2">Done</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -241,7 +241,7 @@
                                                                 <span class="task-users">
                                                                     ${o.assigned}
                                                                 </span>
-                                                                <a href="task?do=updateStatus&&name=${o.name}&&status=3">Accept</a>
+                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=3">Accept</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -352,47 +352,36 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="task" do="post">
+                                    <input type="hidden" name="do" value="editTask">
                                     <div class="form-group">
-                                        <label>Task Name</label>
-                                        <input type="text" class="form-control" value="Website Redesign">
+                                        <label>Project<span class="text-danger">*</span></label>
+                                        <input type="text" value="${title}" readonly class="form-control" name="project" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Task Priority</label>
-                                        <select class="form-control select">
-                                            <option>Select</option>
-                                            <option selected>High</option>
-                                            <option>Normal</option>
-                                            <option>Low</option>
+                                        <label>Task Name<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Task Priority<span class="text-danger">*</span></label>
+                                        <select class="form-control select" name="priority" required>
+                                            <option value="0">High</option>
+                                            <option value="1">Normal</option>
+                                            <option value="2">Low</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Due Date</label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" value="20/08/2019">
-                                        </div>
+                                        <label>Due Date<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control datetimepicker" onkeydown="event.preventDefault()" name="deadline" required> 
                                     </div>
                                     <div class="form-group">
-                                        <label>Task Followers</label>
-                                        <input type="text" class="form-control" placeholder="Search to add">
-                                        <div class="task-follower-list">
-                                            <span data-toggle="tooltip" title="John Doe">
-                                                <img src="img/profiles/avatar-02.jpg" class="avatar" alt="John Doe" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="Richard Miles">
-                                                <img src="img/profiles/avatar-09.jpg" class="avatar" alt="Richard Miles" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="John Smith">
-                                                <img src="img/profiles/avatar-10.jpg" class="avatar" alt="John Smith" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                            <span data-toggle="tooltip" title="Mike Litorus">
-                                                <img src="img/profiles/avatar-05.jpg" class="avatar" alt="Mike Litorus" width="20" height="20">
-                                                <i class="fa fa-times"></i>
-                                            </span>
-                                        </div>
+                                        <label>Assigned<span class="text-danger">*</span></label>
+                                        <select class="select floating" name="assigned" required 
+                                                <option> </option>
+                                            <c:forEach items="${listPf}" var="o">
+                                                <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>
+                                            </c:forEach>
+                                        </select>  
                                     </div>
                                     <div class="submit-section text-center">
                                         <button class="btn btn-primary submit-btn">Submit</button>
@@ -404,6 +393,35 @@
                 </div>
                 <!-- /Edit Task Modal -->
 
+                <!-- Delete Task Modal -->
+                <div class="modal custom-modal fade" id="delete_task_modal" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="task" do="post">
+                                    <input type="hidden" name="do" value="deleteTask">
+                                    <input type="hidden" name="id">
+                                    <div class="form-header">
+                                        <h3>Delete Task</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Delete Task Modal -->   
+                
             </div>
             <!-- /Page Wrapper -->
 

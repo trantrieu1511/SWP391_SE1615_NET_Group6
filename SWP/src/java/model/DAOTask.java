@@ -45,20 +45,22 @@ public class DAOTask extends DBConnect {
         return true;
     }
     
-    public Task getByName(String name) {
-        String sql = "select * from task where name = ?";
+    public Task getById(int id) {
+        String sql = "select * from task where id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, name);
+            state.setInt(1, id);
             rs = state.executeQuery();
             while (rs.next()) {
-                return new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6));
+                return new Task(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,12 +81,13 @@ public class DAOTask extends DBConnect {
             state.setInt(1, status);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,12 +107,13 @@ public class DAOTask extends DBConnect {
             state = conn.prepareStatement(sql);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,12 +134,13 @@ public class DAOTask extends DBConnect {
             state.setString(1, "%" + title + "%");
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,12 +162,13 @@ public class DAOTask extends DBConnect {
             state.setString(2, "%" + title + "%");
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,12 +189,13 @@ public class DAOTask extends DBConnect {
             state.setString(1, profile_id);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,12 +217,13 @@ public class DAOTask extends DBConnect {
             state.setInt(2, status);
             rs = state.executeQuery();
             while (rs.next()) {
-                list.add(new Task(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                list.add(new Task(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,13 +235,30 @@ public class DAOTask extends DBConnect {
         return list;
     }
     
-    public boolean updateStatus(int status, String name) {
-        String sql = "update task set status = ? where name = ?";
+    public boolean updateStatus(int status, int id) {
+        String sql = "update task set status = ? where id = ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setInt(1, status);
-            state.setString(2, name);
+            state.setInt(2, id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public boolean deleteTask(int id) {
+        String sql = "delete from task where id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, id);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

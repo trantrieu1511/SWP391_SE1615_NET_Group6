@@ -315,7 +315,6 @@
                                     <div class="form-group">
                                         <label>Task Priority<span class="text-danger">*</span></label>
                                         <select class="form-control select" name="priority" required>
-                                            <option>Select</option>
                                             <option value="0">High</option>
                                             <option value="1">Normal</option>
                                             <option value="2">Low</option>

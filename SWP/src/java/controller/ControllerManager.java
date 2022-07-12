@@ -32,7 +32,6 @@ import model.DAOFamilyInfo;
 import model.DAOJob;
 import model.DAOProfile;
 import model.DAOProfileDetail;
-import model.DAOProject;
 import model.DAOSchedule;
 import model.DAOTask;
 

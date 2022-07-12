@@ -147,7 +147,7 @@
                                         <c:forEach items="${list}" var="o">
                                             <tr>
                                                 <td>
-                                                    <a href="profile.html">${o[1]}</a>
+                                                    ${o[1]}
                                                 </td>
                                                 <td>${o[2]}</td>
                                                 <td>${o[3]}</td>

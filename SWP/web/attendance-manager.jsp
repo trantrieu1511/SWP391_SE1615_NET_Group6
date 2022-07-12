@@ -73,11 +73,6 @@
         </c:if>
         
         <script type="text/javascript">
-        $(function(){
-        $('input[type="text"]').change(function(){
-        this.value = $.trim(this.value);
-        });
-        })
         $('#table').dataTable({
             "fnDrawCallback":function(){
                 if ( $('#table_paginate span span.paginate_button').size()) {
@@ -129,14 +124,10 @@
                         <input type="hidden" name="do" value="searchAttendance">
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-4">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="name" id="inp" pattern="[A-Za-z]{1,20}" value="${name}">                                   
-                                </div>
+                                <input type="text" class="form-control form-focus" name="name" id="inp" pattern="[A-Za-z]{1,20}" value="${name}">                                   
                             </div>                       
-                            <div class="col-sm-6 col-md-4"> 
-                                <div>                                
-                                    <input type="text" class="form-control floating datetimepicker" name="date" onkeydown="event.preventDefault()" value="${date}">
-                                </div>
+                            <div class="col-sm-6 col-md-4">                               
+                                <input type="text" class="form-control form-focus datetimepicker" name="date" onkeydown="event.preventDefault()" value="${date}">
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <button class="btn btn-success btn-block"> Search </button>  
@@ -237,6 +228,13 @@
 
         </div>
         <!-- /Main Wrapper -->
+        <script type="text/javascript">
+        $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
+        </script>
 
     </body>
 </html>

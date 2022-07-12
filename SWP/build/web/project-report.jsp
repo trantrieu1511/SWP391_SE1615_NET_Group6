@@ -119,7 +119,7 @@
                                                     <a href="project?do=view&title=${o.title}">${o.title}</a>
                                                 </td>
                                                 <td>                                             
-                                                    <a href="#">${o.client}</a>                                     
+                                                    <a>${o.client}</a>                                     
                                                 </td>
                                                 <td>${o.period}</td>
                                                 <td>

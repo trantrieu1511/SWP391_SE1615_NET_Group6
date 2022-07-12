@@ -128,7 +128,7 @@
                                         <c:forEach items="${employee}" var="o">
                                             <tr>
                                                 <td>
-                                                    <a href="profile.html" class="text-primary">${o[0]}</a>
+                                                    ${o[0]}
                                                 </td>
                                                 <td class="text-info">${o[1]}</td>
                                                 <td>${o[2]}</td>

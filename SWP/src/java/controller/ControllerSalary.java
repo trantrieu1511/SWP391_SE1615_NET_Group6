@@ -202,6 +202,10 @@ public class ControllerSalary extends HttpServlet {
                     request.setAttribute("needsalary", listNeedSalary);
                     request.setAttribute("department", listDp);
                     request.setAttribute("job", listJ);
+                    request.setAttribute("ename", ename);
+                    request.setAttribute("erole", erole);
+                    request.setAttribute("from", from);
+                    request.setAttribute("to", to);
                     RequestDispatcher dispath = request.getRequestDispatcher("salary.jsp");
                     dispath.forward(request, response);
                 }

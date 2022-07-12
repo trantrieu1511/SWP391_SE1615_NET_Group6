@@ -144,6 +144,9 @@ public class ControllerClient extends HttpServlet {
                     request.setAttribute("listcpn", listCpn);
                     request.setAttribute("alert", alert);
                     request.setAttribute("filter", "no");
+                    request.setAttribute("cid", client_id);
+                    request.setAttribute("cname", client_name);
+                    request.setAttribute("ccompany", client_company);
                     RequestDispatcher dispatch = request.getRequestDispatcher("clients-list.jsp");
                     dispatch.forward(request, response);
                 }

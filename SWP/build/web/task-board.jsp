@@ -111,7 +111,7 @@
 
                         </div>
                         <div class="col-8 text-right">
-                            <a href="project-view.jsp" class="btn btn-white float-right" title="View Board"><i class="fa fa-link"></i></a>
+                            <a href="project?do=view&&title=${title}" class="btn btn-white float-right" title="View Board"><i class="fa fa-link"></i></a>
                         </div>
                     </div>
 

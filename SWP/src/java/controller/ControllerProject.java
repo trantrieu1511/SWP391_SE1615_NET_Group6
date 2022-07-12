@@ -171,9 +171,8 @@ public class ControllerProject extends HttpServlet {
                     Projects pj = daoProject.getProject(title);
                     String sDate = format(pj.getPeriod().split(" ")[0]);
                     String eDate = format(pj.getPeriod().split(" ")[2]);
+                    List<Task> listTask = daoTask.listProjectTask(title);
                     List<Task> list0 = daoTask.listProjectTask(0, title);
-                    List<Task> list1 = daoTask.listProjectTask(1, title);
-                    List<Task> list2 = daoTask.listProjectTask(2, title);
                     List<Task> list3 = daoTask.listProjectTask(3, title);
                     Profile lead = null;
                     if (acc.isIsManager()) {
@@ -195,8 +194,7 @@ public class ControllerProject extends HttpServlet {
                     request.setAttribute("start", sDate);
                     request.setAttribute("end", eDate);
                     request.setAttribute("list0", list0);
-                    request.setAttribute("list1", list1);
-                    request.setAttribute("list2", list2);
+                    request.setAttribute("listTask", listTask);
                     request.setAttribute("list3", list3);
                     request.setAttribute("lead", lead);
                     request.setAttribute("listPf", listPf);

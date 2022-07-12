@@ -9,6 +9,7 @@ import entity.Account;
 import entity.Profile;
 import entity.Task;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOProfile;
-import model.DAOProject;
 import model.DAOTask;
 
 /**
@@ -52,15 +52,23 @@ public class ControllerTask extends HttpServlet {
                 
                 if (service.equals("view")) {
                     String title = request.getParameter("title");
-                    List<Task> list0 = daoTask.listProjectTask(0, title);
-                    List<Task> list1 = daoTask.listProjectTask(1, title);
-                    List<Task> list2 = daoTask.listProjectTask(2, title);
-                    List<Task> list3 = daoTask.listProjectTask(3, title);
+                    List<Task> list0 = new ArrayList<>();
+                    List<Task> list1 = new ArrayList<>();
+                    List<Task> list2 = new ArrayList<>();
+                    List<Task> list3 = new ArrayList<>();
                     List<Profile> listPf = null;
                     if (acc.isIsManager()) {
                         listPf = daoProfile.listAllStaff(acc.getProfile_id());
+                        list0 = daoTask.listProjectTask(0, title);
+                        list1 = daoTask.listProjectTask(1, title);
+                        list2 = daoTask.listProjectTask(2, title);
+                        list3 = daoTask.listProjectTask(3, title);
                     } else {
                         listPf = daoProfile.listAllStaff(daoProfile.getByID(acc.getProfile_id()).getReportto());
+                        list0 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 0);
+                        list1 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 1);
+                        list2 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 2);
+                        list3 = daoTask.listTaskAssignedTo(acc.getProfile_id(), 3);
                     }                   
                     request.setAttribute("list0", list0);
                     request.setAttribute("list1", list1);

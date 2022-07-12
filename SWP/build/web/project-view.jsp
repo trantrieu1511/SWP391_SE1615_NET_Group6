@@ -177,7 +177,7 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
-                                                        <c:forEach items="${list0}" var="o">
+                                                        <c:forEach items="${listTask}" var="o">
                                                         <li class="task">
                                                             <div class="task-container">                                                            
                                                                 <span class="task-label" contenteditable="false">${o.name}</span>                                                   
@@ -194,7 +194,7 @@
                                             <div class="task-list-container">
                                                 <div class="task-list-body">
                                                     <ul id="task-list">
-                                                        <c:forEach items="${list1}" var="o">
+                                                        <c:forEach items="${list0}" var="o">
                                                         <li class="task">
                                                             <div class="task-container">                                                            
                                                                 <span class="task-label" contenteditable="false">${o.name}</span>                                                   

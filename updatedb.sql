@@ -57,6 +57,26 @@ CREATE TABLE [salary] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
+--drop table [leave]
+CREATE TABLE [leave] (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+	profile_id CHAR(5),
+	leave_type INT NOT NULL,
+    [from] VARCHAR(35) NOT NULL,
+	[to] VARCHAR(35) NOT NULL,
+	number_of_days VARCHAR(35) NOT NULL,
+	reason VARCHAR(100) DEFAULT NULL,
+	[status] int NOT NULL,
+	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id),
+	FOREIGN KEY (leave_type) REFERENCES [leaveType] (id),
+);
+
+--drop table [leaveType]
+CREATE TABLE [leaveType] (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name VARCHAR(35),
+);
+
 CREATE TABLE [profileDetail] (
     profile_id CHAR(5),
 	dob VARCHAR(20) NOT NULL,

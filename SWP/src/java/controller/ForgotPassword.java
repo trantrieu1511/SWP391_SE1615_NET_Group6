@@ -49,7 +49,7 @@ public class ForgotPassword extends HttpServlet {
             props.put("mail.smtp.ssl.trust", host);
             Session session = Session.getInstance(props, new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("hieupthe141028@fpt.edu.vn", "dothiphuonganh0212ji");// Put your email
+                    return new PasswordAuthentication("", "");// Put your email
                     // id and
                     // password here
                 }

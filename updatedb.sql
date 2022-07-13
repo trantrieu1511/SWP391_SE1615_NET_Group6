@@ -34,6 +34,7 @@ CREATE TABLE [account] (
 	password VARCHAR(20) NOT NULL, 
 	isadmin BIT NOT NULL,
 	ismanager BIT NOT NULL,
+	status BIT NOT NULL,
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 

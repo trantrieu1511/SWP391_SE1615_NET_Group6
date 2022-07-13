@@ -9,6 +9,7 @@ import entity.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -155,6 +156,36 @@ public class DAOAccount extends DBConnect {
         return true;
     }
 
+    public String getProfileId(String email) {
+        String sql = "select * from [profile] where [email] = '" + email + "'";
+        try {
+            ResultSet rs = getData(sql);
+            rs.next();
+            return rs.getString(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public boolean GetNewPassword(String password, String profile_id) {
+        String sql = "update account set password=? where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, password);
+            state.setString(2, profile_id);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
         System.out.println(dao.login("staff", "123456"));

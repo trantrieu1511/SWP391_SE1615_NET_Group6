@@ -159,7 +159,10 @@
                         </c:if>
                         <li class="menu-title"> 
                             <span>Administration</span>
-                        </li>                
+                        </li>
+                        <li class="submenu">
+                            <a href="authentication?do=list" class=""><i class="la la-user"></i> <span>Account Manager</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

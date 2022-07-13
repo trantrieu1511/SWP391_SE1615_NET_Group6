@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -35,7 +37,8 @@ public class DAOAccount extends DBConnect {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getBoolean(4),
-                        rs.getBoolean(5));
+                        rs.getBoolean(5),
+                        rs.getBoolean(6));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -60,7 +63,8 @@ public class DAOAccount extends DBConnect {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getBoolean(4),
-                        rs.getBoolean(5));
+                        rs.getBoolean(5),
+                        rs.getBoolean(6));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -186,9 +190,36 @@ public class DAOAccount extends DBConnect {
         return true;
     }
     
+    public List<Account> getADandMNAccount() {
+        String sql = " SELECT account.*"
+                + "  FROM [account], [profile] \n"
+                + "  WHERE account.profile_id = profile.profile_id and "
+                + "  report_to is NULL";
+        List<Account> list = new ArrayList<>();
+        try {
+            ResultSet rs = getData(sql);
+            while (rs.next()) {
+                list.add(new Account(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getBoolean(5),
+                        rs.getBoolean(6)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public static void main(String[] args) {
         DAOAccount dao = new DAOAccount();
-        System.out.println(dao.login("staff", "123456"));
+        System.out.println(dao.login("mana01", "mana001"));
     }
 
 }

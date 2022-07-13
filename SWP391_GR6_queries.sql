@@ -14,10 +14,11 @@ select * from clients
 select * from [profile] p, account a where
 p.profile_id = a.profile_id
 
+Use SWP_HRMS_GRP6_3
 --add account
-insert into account values ('ABCDE', 'trantrieu123', '12345678',0,1)
-insert into account values ('MBEAN', 'mrbean', 'mbean', 0,0)
-insert into account values ('ADMIN', 'admin', 'admin',1,0)
+insert into account values ('ABCDE', 'trantrieu123', '12345678',0,1,1)
+insert into account values ('MBEAN', 'mrbean', 'mbean', 0,0,1)
+insert into account values ('ADMIN', 'admin', 'admin',1,0,1)
 
 --insert jobs
 insert into jobs(job_title) values('Web Designer')

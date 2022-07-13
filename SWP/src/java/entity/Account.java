@@ -15,18 +15,28 @@ public class Account {
     String pass;
     boolean isAdmin;
     boolean isManager;
+    boolean status;
 
     public Account() {
     }
 
-    public Account(String profile_id, String user, String pass, boolean isAdmin, boolean isManager) {
+    public Account(String profile_id, String user, String pass, boolean isAdmin, boolean isManager, boolean status) {
         this.profile_id = profile_id;
         this.user = user;
         this.pass = pass;
         this.isAdmin = isAdmin;
         this.isManager = isManager;
+        this.status = status;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
     public String getProfile_id() {
         return profile_id;
     }

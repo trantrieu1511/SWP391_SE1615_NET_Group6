@@ -6,7 +6,9 @@
 package controller;
 
 import entity.Account;
+import entity.Profile;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
+import model.DAOProfile;
 
 /**
  *
@@ -57,6 +60,17 @@ public class ControllerAuthentication extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.invalidate();
                 response.sendRedirect("login.jsp");
+            }
+
+            if (service.equals("list")) {
+                DAOAccount da = new DAOAccount();
+                DAOProfile dp = new DAOProfile();
+                List<Account> listA = da.getADandMNAccount();
+                List<Profile> listP = dp.getADandMN();
+
+                request.setAttribute("listA", listA);
+                request.setAttribute("listP", listP);
+                request.getRequestDispatcher("admin-management.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

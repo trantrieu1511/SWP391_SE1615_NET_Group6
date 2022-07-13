@@ -22,6 +22,7 @@ public class Profile {
     String pass_display;
     String isadmin_d;
     String ismanager_d;
+    String status_d;
 
     public Profile() {
     }
@@ -40,6 +41,20 @@ public class Profile {
         this.reportto = reportto;
     }
 
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, String user_display, String pass_display, String isadmin_d, String ismanager_d, String status_d){
+        this.profile_id = profile_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+        this.user_display = user_display;
+        this.pass_display = pass_display;
+        this.isadmin_d = isadmin_d;
+        this.ismanager_d = ismanager_d;
+        this.status_d = status_d;
+    }
+    
     public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
@@ -58,6 +73,14 @@ public class Profile {
         this.last_name = last_name;
     }
 
+    public String getStatus_d() {
+        return status_d;
+    }
+
+    public void setStatus_d(String status_d) {
+        this.status_d = status_d;
+    }
+    
     public String getProfile_id() {
         return profile_id;
     }

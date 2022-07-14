@@ -11,6 +11,7 @@ package entity;
  */
 public class Profile {
 
+    int id;
     String profile_id, first_name, last_name, email, phone_number;
     String hire_date;
     int job_id;
@@ -27,6 +28,32 @@ public class Profile {
     public Profile() {
     }
 
+    public Profile(int id, String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
+        this.id = id;
+        this.profile_id = profile_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+        this.job_id = job_id;
+        this.department_id = department_id;
+        this.reportto = reportto;
+    }
+    
+    //add Staff constructor
+    public Profile(String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+        this.job_id = job_id;
+        this.department_id = department_id;
+        this.reportto = reportto;
+    }
+    
+    
     public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, String department_name, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
@@ -66,6 +93,8 @@ public class Profile {
         this.department_id = department_id;
         this.reportto = reportto;
     }
+    
+    
 
     public Profile(String profile_id, String first_name, String last_name) {//constructor for choose staff option in add Salary
         this.profile_id = profile_id;

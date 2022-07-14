@@ -24,20 +24,19 @@ public class DAOProfile extends DBConnect {
     ResultSet rs = null;
 
     public boolean addManager(Profile pro) {
-        String sql = "insert into [profile](profile_id, first_name, last_name, "
+        String sql = "insert into [profile](first_name, last_name, "
                 + "email ,phone_number, hire_date, department_id, job_id)"
-                + "values (?,?,?,?,?,?,?,?)";
+                + "values (?,?,?,?,?,?,?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, pro.getProfile_id());
-            state.setString(2, pro.getFirst_name());
-            state.setString(3, pro.getLast_name());
-            state.setString(4, pro.getEmail());
-            state.setString(5, pro.getPhone_number());
-            state.setString(6, pro.getHire_date());
-            state.setInt(7, pro.getDepartment_id());
-            state.setInt(8, pro.getJob_id());
+            state.setString(1, pro.getFirst_name());
+            state.setString(2, pro.getLast_name());
+            state.setString(3, pro.getEmail());
+            state.setString(4, pro.getPhone_number());
+            state.setString(5, pro.getHire_date());
+            state.setInt(6, pro.getDepartment_id());
+            state.setInt(7, pro.getJob_id());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,22 +48,42 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
-    public boolean addStaff(Profile pro) {
-        String sql = "insert into [profile](profile_id,first_name,last_name,email,"
-                + "phone_number,hire_date,department_id,job_id,report_to)"
-                + " values (?,?,?,?,?,?,?,?,?)";
+    public String getGeneratedProfileID() {
+        String id = "";
+        String sql = "select top 1 profile_id from [profile]\n"
+                + "order by id desc";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, pro.getProfile_id());
-            state.setString(2, pro.getFirst_name());
-            state.setString(3, pro.getLast_name());
-            state.setString(4, pro.getEmail());
-            state.setString(5, pro.getPhone_number());
-            state.setString(6, pro.getHire_date());
+            rs = state.executeQuery();
+            if (rs.next()) {
+                id = rs.getString(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return id;
+    }
+
+    public boolean addStaff(Profile pro) {
+        String sql = "insert into [profile](first_name,last_name,email,"
+                + "phone_number,hire_date,job_id,department_id,report_to)"
+                + " values (?,?,?,?,?,?,?,?)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, pro.getFirst_name());
+            state.setString(2, pro.getLast_name());
+            state.setString(3, pro.getEmail());
+            state.setString(4, pro.getPhone_number());
+            state.setString(5, pro.getHire_date());
+            state.setInt(6, pro.getJob_id());
             state.setInt(7, pro.getDepartment_id());
-            state.setInt(8, pro.getJob_id());
-            state.setString(9, pro.getReportto());
+            state.setString(8, pro.getReportto());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -120,15 +139,16 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9)));
+                        rs.getInt(9),
+                        rs.getString(10)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -149,15 +169,16 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 return new Profile(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9));
+                        rs.getInt(9),
+                        rs.getString(10));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -346,11 +367,11 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user) {
         String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id "
-                + "and profile.first_name like '%"+fname+"%' and profile.last_name like '%"+lname+"%' \n" 
-                + "and email like '%"+email+"%' and profile.phone_number like '%"+pnumber+"%' and account.username like '%"+user+"%' ";
+                + "and profile.first_name like '%" + fname + "%' and profile.last_name like '%" + lname + "%' \n"
+                + "and email like '%" + email + "%' and profile.phone_number like '%" + pnumber + "%' and account.username like '%" + user + "%' ";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -379,9 +400,11 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        System.out.println(dao.searchStaff1("KUGHY", "Joe"));
+        System.out.println(dao.getGeneratedProfileID());
+        System.out.println(dao.searchStaff1("", "a"));
     }
+
 }

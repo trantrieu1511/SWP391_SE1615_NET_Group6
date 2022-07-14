@@ -254,7 +254,7 @@
                                                 <td class="text-center">
                                                     <div class="dropdown action-label">
                                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-dot-circle-o text-danger"></i>${p.isadmin_d}
+                                                            <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.isadmin_d == 1}">True</c:if><c:if test="${p.isadmin_d == 0}">False</c:if>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
@@ -265,7 +265,7 @@
                                                 <td class="text-center">
                                                     <div class="dropdown action-label">
                                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-dot-circle-o text-danger"></i>${p.ismanager_d}
+                                                            <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.ismanager_d == 1}">True</c:if><c:if test="${p.ismanager_d == 0}">False</c:if>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
@@ -276,7 +276,7 @@
                                                 <td class="text-center">
                                                     <div class="dropdown action-label">
                                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-dot-circle-o text-danger"></i>${p.status_d}
+                                                            <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.status_d == 1}">True</c:if><c:if test="${p.status_d == 0}">False</c:if>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Open</a>

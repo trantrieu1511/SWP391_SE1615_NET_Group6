@@ -69,6 +69,9 @@ public class ControllerAuthentication extends HttpServlet {
                 request.setAttribute("listP", listP);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
+            if (service.equals("")){
+                
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");

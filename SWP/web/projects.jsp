@@ -112,16 +112,14 @@
                 }, function (start, end, label) {
                     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                 });
-            });
-        </script>
-
-        <c:if test="${alert != ''}">
-            <script lang="Javascript">
-            alert("${alert}");
-            </script>
-        </c:if>
-
-        <script type="text/javascript">
+            })
+            // alert
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
+            // alert
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);

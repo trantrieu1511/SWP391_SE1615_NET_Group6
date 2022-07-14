@@ -317,7 +317,7 @@ public class DAOProfile extends DBConnect {
     }
 
     public List<Profile> getADandMN() {
-        String sql = "SELECT profile.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id and report_to is NULL";
+        String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id and report_to is NULL";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();

@@ -63,14 +63,11 @@ public class ControllerAuthentication extends HttpServlet {
             }
 
             if (service.equals("list")) {
-                DAOAccount da = new DAOAccount();
                 DAOProfile dp = new DAOProfile();
-                List<Account> listA = da.getADandMNAccount();
                 List<Profile> listP = dp.getADandMN();
 
-                request.setAttribute("listA", listA);
                 request.setAttribute("listP", listP);
-                request.getRequestDispatcher("admin-management.jsp").forward(request, response);
+                request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

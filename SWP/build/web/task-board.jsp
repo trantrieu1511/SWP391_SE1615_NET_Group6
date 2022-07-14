@@ -73,16 +73,15 @@
                     this.value = $.trim(this.value);
                 });
             })
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
         </script>
 
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
-        </c:if>
-
-        <c:if test="${alert != ''}">
-            <script lang="Javascript">
-                alert("${alert}");
-            </script>
         </c:if>
 
     </head>

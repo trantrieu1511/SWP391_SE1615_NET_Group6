@@ -85,7 +85,7 @@
                         allowClear: false
                     });
                     $("#statusEdit").val(status);
-                    $("#statustEdit").select2({
+                    $("#statusEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false

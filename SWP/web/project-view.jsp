@@ -80,7 +80,7 @@
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id').trim();
-                    const myArray = text.split(" ");;
+                    const myArray = text.split(" ");
                     var client_id = myArray[4];
                     var status = myArray[5];
                     var period1 = myArray[0]; 
@@ -94,7 +94,7 @@
                         allowClear: false
                     });
                     $("#statusEdit").val(status);
-                    $("#statustEdit").select2({
+                    $("#statusEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false

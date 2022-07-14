@@ -71,8 +71,17 @@ public class ControllerAuthentication extends HttpServlet {
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
-            if (service.equals("")){
-                
+            if (service.equals("search")){
+                String fname = request.getParameter("fname");
+                String lname = request.getParameter("lname");
+                String email = request.getParameter("email");
+                String pnumber = request.getParameter("pnum");
+                String user = request.getParameter("user");
+                DAOProfile dp = new DAOProfile();
+                List<Profile> listP = dp.searchADandMN(fname, lname, email, pnumber, user);
+
+                request.setAttribute("listP", listP);
+                request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -163,65 +163,73 @@
                         <!-- /Page Header -->
 
                         <!-- Search Filter -->
-                        <div class="row filter-row">
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">Full Name</label>
+                        <form action="authentication?do=search" method="post">
+                            <div class="row filter-row">
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="fname">
+                                        <label class="focus-label">First Name</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">Email</label>
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="lname">
+                                        <label class="focus-label">Last Name</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">Phone Number</label>
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="email">
+                                        <label class="focus-label">Email</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating">
-                                    <label class="focus-label">User Name</label>
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="pnum">
+                                        <label class="focus-label">Phone Number</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option>Select</option>
-                                        <option>True</option>
-                                        <option>False</option>
-                                    </select>
-                                    <label class="focus-label">IsAdmin</label>
+                                <div class="col-sm-6 col-md-3">  
+                                    <div class="form-group form-focus">
+                                        <input type="text" class="form-control floating" name="user">
+                                        <label class="focus-label">User Name</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option>Select</option>
-                                        <option>True</option>
-                                        <option>False</option>
-                                    </select>
-                                    <label class="focus-label">IsManager</label>
+                                <div class="col-sm-6 col-md-3"> 
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating"> 
+                                            <option>Select</option>
+                                            <option>True</option>
+                                            <option>False</option>
+                                        </select>
+                                        <label class="focus-label">IsAdmin</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3"> 
-                                <div class="form-group form-focus select-focus">
-                                    <select class="select floating"> 
-                                        <option>Select</option>
-                                        <option>True</option>
-                                        <option>False</option>
-                                    </select>
-                                    <label class="focus-label">Status</label>
+                                <div class="col-sm-6 col-md-3"> 
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating"> 
+                                            <option>Select</option>
+                                            <option>True</option>
+                                            <option>False</option>
+                                        </select>
+                                        <label class="focus-label">IsManager</label>
+                                    </div>
                                 </div>
+                                <div class="col-sm-6 col-md-3"> 
+                                    <div class="form-group form-focus select-focus">
+                                        <select class="select floating"> 
+                                            <option>Select</option>
+                                            <option>True</option>
+                                            <option>False</option>
+                                        </select>
+                                        <label class="focus-label">Status</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">  
+                                    <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
+                                </div>   
                             </div>
-                            <div class="col-sm-6 col-md-3">  
-                                <a href="#" class="btn btn-success btn-block"> Search </a>  
-                            </div>     
-                        </div>
+                        </form>
                         <!-- /Search Filter -->
 
                         <div class="row">
@@ -255,41 +263,41 @@
                                                     <div class="dropdown action-label">
                                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                             <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.isadmin_d == 1}">True</c:if><c:if test="${p.isadmin_d == 0}">False</c:if>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> False</a>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> False</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="dropdown action-label">
-                                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.ismanager_d == 1}">True</c:if><c:if test="${p.ismanager_d == 0}">False</c:if>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> False</a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="dropdown action-label">
+                                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.ismanager_d == 1}">True</c:if><c:if test="${p.ismanager_d == 0}">False</c:if>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> True</a>
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> False</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="dropdown action-label">
-                                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                            <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.status_d == 1}">True</c:if><c:if test="${p.status_d == 0}">False</c:if>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Open</a>
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Closed</a>
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Cancelled</a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="dropdown action-label">
+                                                            <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                                                    <i class="fa fa-dot-circle-o text-danger"></i><c:if test="${p.status_d == 1}">True</c:if><c:if test="${p.status_d == 0}">False</c:if>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Open</a>
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Closed</a>
+                                                                <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Cancelled</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="loadA?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#edit_job"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <div class="dropdown dropdown-action">
+                                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a href="loadA?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#edit_job"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a href="delete?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#delete_job"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>

@@ -65,8 +65,10 @@ public class ControllerAuthentication extends HttpServlet {
             if (service.equals("list")) {
                 DAOProfile dp = new DAOProfile();
                 List<Profile> listP = dp.getADandMN();
-
+                String alert = "";
+                
                 request.setAttribute("listP", listP);
+                request.setAttribute("alert", alert);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
             if (service.equals("")){

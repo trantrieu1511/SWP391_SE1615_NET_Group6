@@ -160,9 +160,9 @@
                         <li class="menu-title"> 
                             <span>Administration</span>
                         </li>
-                        <li class="submenu">
-                            <a href="authentication?do=list"><i class="la la-user"></i> <span>Account Manager</span></a>
-                        </li>
+                        <c:if test="${sessionScope.acc.isAdmin == true}">
+                            <li><a href="authentication?do=list"><i class="la la-user"></i> <span>Account Manager</span></a></li>
+                            </c:if>
                     </ul>
                 </div>
             </div>

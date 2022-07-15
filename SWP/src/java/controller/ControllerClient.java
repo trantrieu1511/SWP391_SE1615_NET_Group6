@@ -128,14 +128,8 @@ public class ControllerClient extends HttpServlet {
                     List<Clients> listSearch = new ArrayList<>();
                     if (client_company.equals("")) {
                         listSearch = daoCl.searchClient1(client_id, client_name);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no search result found!";
-                        }
                     } else {
                         listSearch = daoCl.searchClient2(client_id, client_name, client_company);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no search result found!";
-                        }
                     }
                     for (Clients c : listSearch) {
                         c.setCompany_name(daoCpn.getCompanyByID(c.getCompany_id()).getName());
@@ -151,7 +145,6 @@ public class ControllerClient extends HttpServlet {
                     dispatch.forward(request, response);
                 }
                 if (service.equals("addClient")) {
-                    String client_id = request.getParameter("client_id");
                     String first_name = request.getParameter("first_name").trim();
                     String last_name = request.getParameter("last_name").trim();
                     String company_id_str = request.getParameter("company_id").trim();
@@ -159,13 +152,14 @@ public class ControllerClient extends HttpServlet {
                     String email = request.getParameter("email").trim();
                     String phone_number = request.getParameter("phone_number").trim();
 
-                    boolean statusAdd = daoCl.addClient(new Clients(client_id,
+                    boolean statusAdd = daoCl.addClient(new Clients(
                             first_name, last_name, email, phone_number, company_id));
                     if (statusAdd) {
-                        System.out.println("Successfully added new Client with client_id = " + client_id);
+                        String client_id = daoCl.getGeneratedClientID();
+                        System.out.println("Successfully added new Client with generated client_id = " + client_id);
                         response.sendRedirect("client?do=list&add=true");
                     } else {
-                        System.out.println("Fail to add new Client with client_id = " + client_id);
+                        System.out.println("Fail to add new Client!");
                         response.sendRedirect("client?do=list&addFail=true");
                     }
                 }

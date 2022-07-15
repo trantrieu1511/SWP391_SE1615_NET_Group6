@@ -156,14 +156,8 @@ public class ControllerManager extends HttpServlet {
                     String alert = "";
                     if (ejob.equals("")) {
                         list = daoProfile.searchStaff1(eid, ename);
-                        if (list.isEmpty()) {
-                            alert = "No search result found!";
-                        }
                     } else {
                         list = daoProfile.searchStaff2(eid, ename, ejob);
-                        if (list.isEmpty()) {
-                            alert = "No search result found!";
-                        }
                     }
                     for (Profile p : list) {
                         p.setJob_title(daoJob.getJobById(p.getJob_id()).getTitle());
@@ -184,7 +178,6 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("addStaff")) {
 //                    String profile_id = request.getParameter("profile_id");
-                    String profile_id = daoProfile.getGeneratedProfileID();
                     String first_name = request.getParameter("first_name").trim();
                     String last_name = request.getParameter("last_name").trim();
                     String username = request.getParameter("username").trim();
@@ -200,18 +193,20 @@ public class ControllerManager extends HttpServlet {
                             email, phone_number, hire_date, job_id, department_id,
                             ReportsTo);
                     boolean statusPro = daoProfile.addStaff(pro);
-                    daoSchedule.addSchedule(profile_id, " ");
+
                     if (statusPro) {
+                        String profile_id = daoProfile.getGeneratedProfileID();
+                        daoSchedule.addSchedule(profile_id, " ");
                         daoAccount.addAccount(profile_id, username, password);
                         ProfileDetail pd = new ProfileDetail(profile_id, "01/01/1900",
                                 "notAvailable", true, "notAvailable", "notAvailable", false, 0, "notAvailable", "notAvailable");
                         daoProfileDetail.addProfileDetail(pd);
-                        FamilyInfo f = new FamilyInfo(profile_id, "notAvailable", "notAvailable",
-                                "01/01/1900", "notAvailable");
-                        daoFamilyInfo.addFamilyInfo(f);
-                        Experience exp = new Experience(profile_id, "notAvailable", "1900-01-01",
-                                "1900-01-01");
-                        daoExperience.addExperience(exp);
+//                        FamilyInfo f = new FamilyInfo(profile_id, "notAvailable", "notAvailable",
+//                                "01/01/1900", "notAvailable");
+//                        daoFamilyInfo.addFamilyInfo(f);
+//                        Experience exp = new Experience(profile_id, "notAvailable", "01/01/1900",
+//                                "01/01/1900");
+//                        daoExperience.addExperience(exp);
                         response.sendRedirect("manager?do=list&add=true");
                     } else {
                         response.sendRedirect("manager?do=list&addFail=true");
@@ -239,6 +234,7 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
+                    daoSchedule.deleteSchedule(profile_id);
                     daoAccount.deleteAccount(profile_id);
                     daoProfileDetail.deleteProfileDetail(profile_id);
                     daoFamilyInfo.deleteAllFamilyInfo(profile_id);

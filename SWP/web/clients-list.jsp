@@ -273,14 +273,14 @@
                                 <form action="client" method="post">
                                     <input type="hidden" name="do" value="addClient">
                                     <div class="row">
-                                        <div class="col-md-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" type="text" name="client_id" required pattern="[A-Z0-9]{5}"
-                                                       title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
-                                                       max length: 5">
-                                            </div>
-                                        </div>
+                                        <!--                                        <div class="col-md-6">  
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
+                                                                                        <input class="form-control floating" type="text" name="client_id" required pattern="[A-Z0-9]{5}"
+                                                                                               title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
+                                                                                               max length: 5">
+                                                                                    </div>
+                                                                                </div>-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
@@ -381,6 +381,17 @@
                                 <form action="client" method="post">
                                     <input type="hidden" name="do" value="editClient">
                                     <div class="row">
+                                        <div class="col-md-6">  
+                                            <div class="form-group">
+                                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
+                                                <input class="form-control floating" value="" type="text" name="client_id" readonly="" required pattern="[A-Z0-9]{5}"
+                                                       title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
+                                                       max length: 5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
@@ -429,14 +440,7 @@
                                                                                     <input class="form-control" value="barrycuda" type="password">
                                                                                 </div>
                                                                             </div>-->
-                                        <div class="col-md-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" value="" type="text" name="client_id" readonly="" required pattern="[A-Z0-9]{5}"
-                                                       title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
-                                                       max length: 5">
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>

@@ -116,26 +116,19 @@
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                 });
             });
-        </script>
-
-        <c:choose>
-            <c:when test="${alert != ''}">
-                <script type="text/javascript">
-                    alert("${alert}");
-                </script>
-            </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
-
-        <script type="text/javascript">
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });
             })
+            // alert
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
         </script>
+
 
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
@@ -160,8 +153,8 @@
                                 <div class="col">
                                     <h3 class="page-title">Employee Salary</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Salary</li>
+                                        <li class="breadcrumb-item">Payroll</li>
+                                        <li class="breadcrumb-item active">Employee Salary</li>
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
@@ -326,9 +319,10 @@
                                                                                     <input class="form-control" type="text">
                                                                                 </div>-->
                                     </div>
+                                    <hr>
                                     <div class="row"> 
                                         <div class="col-sm-6"> 
-                                            <h4 class="text-primary">Earnings</h4>
+                                            <h4 class="text-primary">Earnings ($)</h4>
                                             <div class="form-group">
                                                 <label>Basic</label>
                                                 <input class="form-control" type="text" name="basic_salary" required="" pattern="[0-9]{1,6}" 
@@ -368,7 +362,7 @@
                                                                                         </div>-->
                                         </div>
                                         <div class="col-sm-6">  
-                                            <h4 class="text-primary">Deductions</h4>
+                                            <h4 class="text-primary">Deductions ($)</h4>
                                             <div class="form-group">
                                                 <label>TDS</label>
                                                 <input class="form-control" type="text" name="TDS" required="" pattern="[0-9]{1,6}" 
@@ -453,9 +447,10 @@
                                                                                     <input class="form-control" type="text" value="$4000">
                                                                                 </div>-->
                                     </div>
+                                    <hr>
                                     <div class="row"> 
                                         <div class="col-sm-6"> 
-                                            <h4 class="text-primary">Earnings</h4>
+                                            <h4 class="text-primary">Earnings ($)</h4>
                                             <div class="form-group">
                                                 <label>Basic</label>
                                                 <input class="form-control" type="text" name="basic_salary" required="" pattern="[0-9]{1,6}" 
@@ -492,7 +487,7 @@
                                                                                         </div>  -->
                                         </div>
                                         <div class="col-sm-6">  
-                                            <h4 class="text-primary">Deductions</h4>
+                                            <h4 class="text-primary">Deductions ($)</h4>
                                             <div class="form-group">
                                                 <label>TDS</label>
                                                 <input class="form-control" type="text" name="TDS" required="" pattern="[0-9]{1,6}" 

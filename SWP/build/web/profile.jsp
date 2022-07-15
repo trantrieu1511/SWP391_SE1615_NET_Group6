@@ -119,21 +119,14 @@
                     alert("Cannot input blank, please enter all values!");
                 }
             }
-//            function codeAddress() {
-//                alert('ok');
-//            }
-//            window.onload = codeAddress;
+            function msg() {
+                alert('${alert}');
+            }
+            if (${alert != ''})
+                window.onload = msg;
 
         </script>
-        <c:if test="${alert != ''}">
-            <script type="text/javascript">
-                alert("${alert}");
-            </script>
-        </c:if>
 
-        <c:if test="${sessionScope.acc == null}">
-            <c:redirect url="login.jsp"></c:redirect>
-        </c:if>
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -223,7 +216,7 @@
                                                             <c:choose>
                                                                 <c:when test="${p.reportto == null}">
                                                                     <div class="title">Reports to:</div>
-                                                                    <div class="text">N/A</div>
+                                                                    <div class="text">None</div>
                                                                 </c:when>
                                                                 <c:otherwise>
                                                                     <div class="title">Reports to:</div>
@@ -255,7 +248,7 @@
                                         </div>
 
                                         <c:choose>
-                                            <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                            <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true || sessionScope.acc.isAdmin == true}">
                                                 <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#" ><i class="fa fa-pencil"></i></a></div>
                                                     </c:when>
                                                     <c:otherwise>
@@ -290,14 +283,14 @@
                                         <div class="card-body">
                                             <h3 class="card-title">Personal Informations 
                                                 <c:choose>
-                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true}">
+                                                    <c:when test="${p.reportto != null || sessionScope.acc.isManager==true || sessionScope.acc.isAdmin == true}">
                                                         <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
                                                         </c:when>
                                                         <c:otherwise>
 
                                                     </c:otherwise>
                                                 </c:choose>
-
+                                                <hr>
 
                                             </h3>
                                             <ul class="personal-info">
@@ -367,8 +360,14 @@
                                     <div class="card profile-box flex-fill">
                                         <div class="card-body">
                                             <h3 class="card-title">Emergency Contact</h3>
+                                            <hr>
                                             <!--<h5 class="section-title">Primary</h5>-->
                                             <ul class="personal-info">
+                                                <c:if test="${listf.isEmpty()}">
+                                                    <li>
+                                                        <div class="text">There are no Emergency contact available.</div>
+                                                    </li>
+                                                </c:if>
                                                 <c:forEach items="${listf}" var="f">
                                                     <br>
                                                     <li>
@@ -436,7 +435,7 @@
                                         <div class="card-body">
                                             <h3 class="card-title">Experience 
                                                 <c:choose>
-                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true || sessionScope.acc.isAdmin == true}">
                                                         <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_experience_info"><i class="fa fa-pencil"></i></a>
 
                                                     </c:when>
@@ -444,13 +443,25 @@
 
                                                     </c:otherwise>
                                                 </c:choose>
-
+                                                <hr>
                                             </h3>
                                             <div class="experience-box">
                                                 <ul class="experience-list">
                                                     <%--<c:forEach items="${listexp}" var="e">--%>
                                                     <%
                                                         List<Experience> listExp = (List<Experience>) request.getAttribute("listexp");
+                                                        if (listExp.isEmpty()) {
+                                                    %>
+                                                    <li><div class="experience-user">
+                                                            <div class="before-circle"></div>
+                                                        </div>
+                                                        <div class="experience-content">
+                                                            <div class="timeline-content">
+                                                                This profile has no experience yet.
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <%  }
                                                         for (Experience e : listExp) {
                                                     %>
                                                     <li>
@@ -509,7 +520,7 @@
                                         <div class="card-body">
                                             <h3 class="card-title">Family Informations 
                                                 <c:choose>
-                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true || sessionScope.acc.isAdmin == true}">
                                                         <a href="#" class="edit-icon" data-toggle="modal" data-target="#add_family_info_modal"><i class="fa fa-pencil"></i></a>
 
                                                     </c:when>
@@ -531,6 +542,17 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <c:if test="${listf.isEmpty()}">
+                                                            <tr>
+                                                                <td>
+                                                                    <ul class="personal-info">
+                                                                        <li>
+                                                                            <div class="text">There are no Family Information available yet in this profile.</div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        </c:if>
                                                         <c:forEach items="${listf}" var="f">
                                                             <tr>
                                                                 <td>${f.name}</td>
@@ -545,7 +567,7 @@
                                                                 </c:choose>
                                                                 <td>${f.phone}</td>
                                                                 <c:choose>
-                                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true}">
+                                                                    <c:when test="${p.reportto!=null || sessionScope.acc.isManager==true || sessionScope.acc.isAdmin == true}">
                                                                         <!--<a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a>-->
                                                                         <td class="text-right">
                                                                             <div class="dropdown dropdown-action">
@@ -1290,10 +1312,10 @@
                                                 <label>Bank account No. <span class="text-danger">*</span></label>
                                                 <div class="form-group">
                                                     <input class="form-control" name="bank_number" type="text" value="${pd.bank_number}" required="" pattern="[0-9]{12}"
-                                                           title="Bank account No. not allow:  
+                                                           title="Bank account No. must be a 12-digit number (0-9), 
+                                                           not allow: 
                                                            special character e.g: !@#$%^&,. etc.. and spacing characters; 
-                                                           only allow and numeric characters (0-9),
-                                                           max length: 12">
+                                                           ">
                                                 </div>
                                             </div>
                                         </div>

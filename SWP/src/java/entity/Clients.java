@@ -11,6 +11,7 @@ package entity;
  */
 public class Clients {
 
+    int id;
     String client_id;
     String first_name;
     String last_name;
@@ -22,6 +23,16 @@ public class Clients {
     public Clients() {
     }
 
+    //add clients constructor
+    public Clients(String first_name, String last_name, String email, String phone_number, int company_id) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.company_id = company_id;
+    }
+
+    //edit clients constructor
     public Clients(String client_id, String first_name, String last_name, String email, String phone_number, int company_id) {
         this.client_id = client_id;
         this.first_name = first_name;
@@ -30,8 +41,21 @@ public class Clients {
         this.phone_number = phone_number;
         this.company_id = company_id;
     }
+    
+    
 
-    public Clients(String client_id, String first_name, String last_name, String email, String phone_number, int company_id, String company_name) {
+    public Clients(int id, String client_id, String first_name, String last_name, String email, String phone_number, int company_id) {
+        this.id = id;
+        this.client_id = client_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.company_id = company_id;
+    }
+
+    public Clients(int id, String client_id, String first_name, String last_name, String email, String phone_number, int company_id, String company_name) {
+        this.id = id;
         this.client_id = client_id;
         this.first_name = first_name;
         this.last_name = last_name;

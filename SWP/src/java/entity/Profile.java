@@ -40,7 +40,7 @@ public class Profile {
         this.department_id = department_id;
         this.reportto = reportto;
     }
-    
+
     //add Staff constructor
     public Profile(String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
         this.first_name = first_name;
@@ -52,8 +52,7 @@ public class Profile {
         this.department_id = department_id;
         this.reportto = reportto;
     }
-    
-    
+
     public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, String job_title, int department_id, String department_name, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
@@ -68,7 +67,7 @@ public class Profile {
         this.reportto = reportto;
     }
 
-    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, String user_display, String pass_display, String isadmin_d, String ismanager_d, String status_d){
+    public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, String user_display, String pass_display, String isadmin_d, String ismanager_d, String status_d) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -81,7 +80,7 @@ public class Profile {
         this.ismanager_d = ismanager_d;
         this.status_d = status_d;
     }
-    
+
     public Profile(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto) {
         this.profile_id = profile_id;
         this.first_name = first_name;
@@ -93,8 +92,6 @@ public class Profile {
         this.department_id = department_id;
         this.reportto = reportto;
     }
-    
-    
 
     public Profile(String profile_id, String first_name, String last_name) {//constructor for choose staff option in add Salary
         this.profile_id = profile_id;
@@ -109,7 +106,7 @@ public class Profile {
     public void setStatus_d(String status_d) {
         this.status_d = status_d;
     }
-    
+
     public String getProfile_id() {
         return profile_id;
     }

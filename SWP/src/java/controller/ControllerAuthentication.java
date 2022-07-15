@@ -72,13 +72,28 @@ public class ControllerAuthentication extends HttpServlet {
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
             if (service.equals("search")){
-                String fname = request.getParameter("fname");
-                String lname = request.getParameter("lname");
-                String email = request.getParameter("email");
-                String pnumber = request.getParameter("pnum");
-                String user = request.getParameter("user");
+                String fname = request.getParameter("fname").trim();
+                String lname = request.getParameter("lname").trim();
+                String email = request.getParameter("email").trim();
+                String pnumber = request.getParameter("pnum").trim();
+                String user = request.getParameter("user").trim();
+                String isa = request.getParameter("isa").trim();
+                String ism = request.getParameter("ism").trim();
+                String status = request.getParameter("status").trim();
+                int Isa = 0;
+                int Ism = 0;
+                int Status = 0;
+                if (isa.equals("True")){
+                    Isa = 1;
+                }
+                if (ism.equals("True")){
+                    Ism = 1;
+                }
+                if (status.equals("True")){
+                    Status = 1;
+                }
                 DAOProfile dp = new DAOProfile();
-                List<Profile> listP = dp.searchADandMN(fname, lname, email, pnumber, user);
+                List<Profile> listP = dp.searchADandMN(fname, lname, email, pnumber, user, Isa, Ism, Status);
 
                 request.setAttribute("listP", listP);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);

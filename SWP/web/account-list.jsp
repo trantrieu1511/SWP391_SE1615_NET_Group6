@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
-                                        <select class="select floating"> 
+                                        <select class="select floating" name="isa"> 
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -207,7 +207,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
-                                        <select class="select floating"> 
+                                        <select class="select floating" name="ism"> 
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
-                                        <select class="select floating"> 
+                                        <select class="select floating" name="status"> 
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -227,7 +227,10 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3">  
                                     <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
-                                </div>   
+                                </div>
+                                <div class="col-sm-6 col-md-3">  
+                                    <input type="submit" class="btn btn-success btn-block" value="Clear" style="padding: 0px">
+                                </div>  
                             </div>
                         </form>
                         <!-- /Search Filter -->

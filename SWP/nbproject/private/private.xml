@@ -3,43 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/salary-view.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerEmployee.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProject.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerSalary.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOSalary.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/employees-list.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/task-board.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/menu.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOTask.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Task.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerProject.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerHome.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/projects.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/client-profile.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Clients.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAODepartment.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Salary.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/leaves-manager.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOCompany.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerDashboard.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOClients.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerTask.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOAccount.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/leaves-employee.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/js/edit.js</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerAuthentication.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/salary.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/project-view.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerClient.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerManager.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOAttendance.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerLeave.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/manager-dashboard.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfileDetail.java</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/leaves.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/clients-list.jsp</file>
-            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOExperience.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/menu.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/account-list.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/employees-list.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Profile.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/NewPassword.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ForgotPassword.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfile.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerManager.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerAuthentication.java</file>
         </group>
     </open-files>
 </project-private>

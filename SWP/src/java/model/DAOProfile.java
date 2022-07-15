@@ -347,10 +347,11 @@ public class DAOProfile extends DBConnect {
         return list;
     }
     
-    public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user) {
+    public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user, int isa, int ism, int status) {
         String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id "
                 + "and profile.first_name like '%"+fname+"%' and profile.last_name like '%"+lname+"%' \n" 
-                + "and email like '%"+email+"%' and profile.phone_number like '%"+pnumber+"%' and account.username like '%"+user+"%' ";
+                + "and email like '%"+email+"%' and profile.phone_number like '%"+pnumber+"%' and account.username like '%"+user+"%' "
+                + "and account.isadmin = "+isa+" and account.ismanager = "+ism+" and account.status = "+status+"";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();

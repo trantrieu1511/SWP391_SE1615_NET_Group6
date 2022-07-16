@@ -50,6 +50,24 @@ public class DAOAccount extends DBConnect {
         return null;
     }
 
+    public boolean addAMAccount(String profile_id, String username, String password, int isA, int isM) {
+        String sql = "insert into account(profile_id, username, password, isadmin, ismanager, status)"
+                + "values('" + profile_id + "', '" + username + "', '" + password
+                + "', " + isA + ", " + isM + ", " + 1 + ")";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public Account getAccount(String profile_id) {
         String sql = "select * from [account] where profile_id = ?";
         try {

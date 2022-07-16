@@ -49,6 +49,32 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
+    public boolean addMD(Profile pro) {
+        String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
+                + "values ("
+                + "'" + pro.getProfile_id() + "', "
+                + "'" + pro.getFirst_name() + "', "
+                + "'" + pro.getLast_name() + "', "
+                + "'" + pro.getEmail() + "', "
+                + "'" + pro.getPhone_number() + "', "
+                + "'" + pro.getHire_date() + "', "
+                + "" + pro.getDepartment_id() + ", "
+                + "" + pro.getJob_id() + ", "
+                + ")";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeQuery();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public boolean addStaff(Profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,"
                 + "phone_number,hire_date,department_id,job_id,report_to)"

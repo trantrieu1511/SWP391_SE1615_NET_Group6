@@ -66,12 +66,12 @@ public class ControllerAuthentication extends HttpServlet {
                 DAOProfile dp = new DAOProfile();
                 List<Profile> listP = dp.getADandMN();
                 String alert = "";
-                
+
                 request.setAttribute("listP", listP);
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
-            if (service.equals("search")){
+            if (service.equals("search")) {
                 String fname = request.getParameter("fname").trim();
                 String lname = request.getParameter("lname").trim();
                 String email = request.getParameter("email").trim();
@@ -83,13 +83,13 @@ public class ControllerAuthentication extends HttpServlet {
                 int Isa = 0;
                 int Ism = 0;
                 int Status = 0;
-                if (isa.equals("True")){
+                if (isa.equals("True")) {
                     Isa = 1;
                 }
-                if (ism.equals("True")){
+                if (ism.equals("True")) {
                     Ism = 1;
                 }
-                if (status.equals("True")){
+                if (status.equals("True")) {
                     Status = 1;
                 }
                 DAOProfile dp = new DAOProfile();
@@ -97,6 +97,34 @@ public class ControllerAuthentication extends HttpServlet {
 
                 request.setAttribute("listP", listP);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
+            }
+            if (service.equals("addaccount")) {
+                String pid = request.getParameter("id").trim();
+                String user = request.getParameter("user").trim();
+                String pass = request.getParameter("pass").trim();
+                String isA = request.getParameter("isAdmin").trim();
+                String isM = request.getParameter("isManager").trim();
+                String fname = request.getParameter("fname").trim();
+                String lname = request.getParameter("lname").trim();
+                String date = request.getParameter("hiredate").trim();
+                String email = request.getParameter("email").trim();
+                String phone = request.getParameter("pnumber").trim();
+                DAOAccount da = new DAOAccount();
+                DAOProfile dp = new DAOProfile();
+                int isAA = 0;
+                int isMM = 0;
+                int status = 1;
+                if (isA == "True") {
+                    isAA = 1;
+                }
+                if (isM == "True") {
+                    isMM = 1;
+                }
+                Profile pro = new Profile(pid, fname, lname, email, phone, date, 0, 0, "NULL");
+                if (dp.addManager(pro)) {
+                    da.addAMAccount(pid, user, pass, isAA, isMM);
+                }
+                request.getRequestDispatcher("authentication?do=list").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

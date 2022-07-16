@@ -86,7 +86,7 @@ public class DAOSchedule extends DBConnect {
         }
         return list;
     }
-    
+
     public List<Schedule> searchSchedule(String name) {
         List<Schedule> list = new ArrayList<>();
         String sql = "select schedule.profile_id, shift_name from schedule join "
@@ -128,7 +128,24 @@ public class DAOSchedule extends DBConnect {
         }
         return true;
     }
-    
+
+    public boolean deleteSchedule(String profile_id) {
+        String sql = "delete from schedule where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         DAOSchedule dao = new DAOSchedule();
         System.out.println(dao.searchSchedule("Joe"));

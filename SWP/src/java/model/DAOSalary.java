@@ -40,16 +40,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -62,7 +62,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
         } catch (Exception ex) {
@@ -75,6 +76,7 @@ public class DAOSalary extends DBConnect {
         return list;
     }
 
+    //ham cho report cua Khanh
     public List<Salary> listAllStaffSalary(String profile_id) {
         String sql = "select p.profile_id, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -123,16 +125,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 return new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -145,7 +147,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 );
             }
         } catch (Exception ex) {
@@ -176,17 +179,17 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 return new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getInt(10),
-                        rs.getDouble(11),
+                        rs.getInt(9),
+                        rs.getString(10),
+                        rs.getInt(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
                         rs.getDouble(14),
@@ -199,7 +202,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(21),
                         rs.getDouble(22),
                         rs.getDouble(23),
-                        rs.getString(24)
+                        rs.getDouble(24),
+                        rs.getString(25)
                 );
             }
         } catch (Exception ex) {
@@ -267,16 +271,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -289,7 +293,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -323,16 +328,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -345,7 +350,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -380,16 +386,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -402,7 +408,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -438,16 +445,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -460,7 +467,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -493,16 +501,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -515,7 +523,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -550,16 +559,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -572,7 +581,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -606,16 +616,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -628,7 +638,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -662,16 +673,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -684,7 +695,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -716,16 +728,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -738,7 +750,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -770,16 +783,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -792,7 +805,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 
@@ -824,16 +838,16 @@ public class DAOSalary extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Salary(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9),
-                        rs.getDouble(10),
+                        rs.getInt(9),
+                        rs.getString(10),
                         rs.getDouble(11),
                         rs.getDouble(12),
                         rs.getDouble(13),
@@ -846,7 +860,8 @@ public class DAOSalary extends DBConnect {
                         rs.getDouble(20),
                         rs.getDouble(21),
                         rs.getDouble(22),
-                        rs.getString(23)
+                        rs.getDouble(23),
+                        rs.getString(24)
                 ));
             }
 

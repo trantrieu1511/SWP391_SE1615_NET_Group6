@@ -43,13 +43,15 @@ public class ControllerHome extends HttpServlet {
             // check session for user logged in
             if (acc == null) {
                 response.sendRedirect("login.jsp");
+            } else {
+                if (acc.isIsManager()) {
+                    response.sendRedirect("dashboard?do=manager");
+                }
+                if (!acc.isIsManager()) {
+                    response.sendRedirect("dashboard?do=employee");
+                }
             }
-            if (acc.isIsManager()) {
-                response.sendRedirect("dashboard?do=manager");
-            }
-            if (!acc.isIsManager()) {
-                response.sendRedirect("dashboard?do=employee");
-            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
             // error page

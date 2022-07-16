@@ -22,9 +22,9 @@ public class Salary extends Profile {
     public Salary() {
     }
 
-    //list all Staff and Manager in paySlip constructor
-    public Salary(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, int payslip_number, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
-        super(profile_id, first_name, last_name, email, phone_number, hire_date, job_id, department_id, reportto);
+    //list all Staff and Manager in paySlip constructor (have payslip number)
+    public Salary(int id, String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, int payslip_number, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
+        super(id, profile_id, first_name, last_name, email, phone_number, hire_date, job_id, department_id, reportto);
         this.payslip_number = payslip_number;
         this.basic_salary = basic_salary;
         this.DA = DA;
@@ -43,8 +43,8 @@ public class Salary extends Profile {
     }
 
     //list all Staff and Manager constructor
-    public Salary(String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
-        super(profile_id, first_name, last_name, email, phone_number, hire_date, job_id, department_id, reportto);
+    public Salary(int id, String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
+        super(id, profile_id, first_name, last_name, email, phone_number, hire_date, job_id, department_id, reportto);
         this.basic_salary = basic_salary;
         this.DA = DA;
         this.HRA = HRA;
@@ -68,13 +68,11 @@ public class Salary extends Profile {
     }
 
     //get net_salary only constructor
-
     public Salary(String profile_id, double net_salary) {
         this.profile_id = profile_id;
         this.net_salary = net_salary;
     }
-    
-    
+
     //get net_salary constructor
     public Salary(String profile_id, double basic_salary, double DA, double HRA, double conveyance, double allowance, double medical_allowance, double TDS, double ESI, double PF, double leave, double loan, double professional_tax, double net_salary, String create_date) {
         this.profile_id = profile_id;

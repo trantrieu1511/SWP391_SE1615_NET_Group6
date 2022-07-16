@@ -116,64 +116,28 @@ public class ControllerSalary extends HttpServlet {
                     List<Salary> listSearch = new ArrayList<>();
                     if (!erole.equals("") && !ename.equals("") && from.equals("") && to.equals("")) { //role + name
                         listSearch = daoSalary.searchEmployeeSalaryWithoutCreateDate(erole, ename);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && ename.equals("") && !from.equals("") && !to.equals("")) { //from + to
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate4(from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && to.equals("")) { //role + name + from
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate3(erole, ename, from);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) { //name + from + to
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate2(ename, from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (!erole.equals("") && ename.equals("") && !from.equals("") && !to.equals("")) { //role + from + to
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate5(erole, from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (!erole.equals("") && ename.equals("") && !from.equals("") && to.equals("")) { //role + from
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate6(erole, from);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && !ename.equals("") && !from.equals("") && to.equals("")) { //name + from
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate7(ename, from);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && ename.equals("") && !from.equals("") && to.equals("")) { //from only
                         listSearch = daoSalary.searchEmployeeSalaryWithFromOnly(from);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && !ename.equals("") && from.equals("") && to.equals("")) { //name only
                         listSearch = daoSalary.searchEmployeeSalaryWithNameOnly(ename);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (!erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //role only
                         listSearch = daoSalary.searchEmployeeSalaryWithRoleOnly(erole);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) { //role + name + from + to
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
                     } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
-                        if (listSearch.isEmpty()) {
-                            alert = "There are no result found!";
-                        }
 //                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
 //                        listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
 //                        if (listSearch.isEmpty()) {

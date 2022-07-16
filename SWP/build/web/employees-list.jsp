@@ -597,6 +597,16 @@
                                 <form action="manager" do="post">
                                     <input type="hidden" name="do" value="editStaff">
                                     <div class="row">
+                                        <div class="col-sm-6">  
+                                            <div class="form-group">
+                                                <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
+                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" 
+                                                       required pattern="[A-Z]{5}" title="Staff ID not allow Unicode characters and must be 5 character with uppercase">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
@@ -655,13 +665,6 @@
                                                        title="Confirm Password not contain: Unicode characters, 
                                                        special character e.g: !@#$%^&,. etc.. and spacing characters; 
                                                        allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-                                                <input type="text" value="" readonly class="form-control floating employee-id" name="profile_id" id="profile_id2" 
-                                                       required pattern="[A-Z]{5}" title="Staff ID not allow Unicode characters and must be 5 character with uppercase">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">  

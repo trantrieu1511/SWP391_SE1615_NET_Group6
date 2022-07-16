@@ -63,25 +63,28 @@
                                     <h3 class="page-title">Payslip</h3>
                                     <ul class="breadcrumb">
                                         <!--<li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>-->
+                                        <li class="breadcrumb-item">Payroll</li>
+                                        <c:if test="${sessionScope.acc.isAdmin == true}">
                                         <li class="breadcrumb-item"><a href="salary?do=list">Employee Salary</a></li>
-                                        <li class="breadcrumb-item active">Payslip</li>
-                                    </ul>
-                                </div>
-                                <div class="col-auto float-right ml-auto">
-                                    <div class="btn-group btn-group-sm">
-<!--                                        <button class="btn btn-white">CSV</button>
-                                        <button class="btn btn-white">PDF</button>
-                                        <button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>-->
-                                    </div>
+                                        </c:if>
+                                    <li class="breadcrumb-item active">Payslip</li>
+                                </ul>
+                            </div>
+                            <div class="col-auto float-right ml-auto">
+                                <div class="btn-group btn-group-sm">
+                                    <!--                                        <button class="btn btn-white">CSV</button>
+                                                                            <button class="btn btn-white">PDF</button>
+                                                                            <button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>-->
                                 </div>
                             </div>
                         </div>
-                        <!-- /Page Header -->
+                    </div>
+                    <!-- /Page Header -->
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
                                     <%
                                         LocalDateTime now = LocalDateTime.now();
                                         Salary s = (Salary) request.getAttribute("s");

@@ -152,10 +152,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-striped custom-table datatable" id="table">
-                                    <c:if test="${filter == 'yes'}">
-                                        <h4><a href="employee?do=attendance" style="text-decoration: none; color: grey"> <-- back</a></h4>
-                                    </c:if>
+                                <table class="table table-striped custom-table datatable" id="table">                                  
                                     <thead>
                                         <tr>
                                             <th>#</th>

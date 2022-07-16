@@ -80,7 +80,7 @@
             $(function () {
                 $("#edit_project").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id').trim();
-                    const myArray = text.split(" ");;
+                    const myArray = text.split(" ");
                     var client_id = myArray[4];
                     var status = myArray[5];
                     var period1 = myArray[0]; 
@@ -94,35 +94,32 @@
                         allowClear: false
                     });
                     $("#statusEdit").val(status);
-                    $("#statustEdit").select2({
+                    $("#statusEdit").select2({
                         width: '100%',
                         placeholder: "Select an option",
                         allowClear: false
                     });
-                    $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' +period3);
-                    $(e.currentTarget).find('#rateEdit').val(rate);                 
+                    $(e.currentTarget).find('#daterange').val(period1 + ' ' + period2 + ' ' + period3);
+                    $(e.currentTarget).find('#rateEdit').val(rate);
                 });
-            });            
-            $(function() {
+            });
+            $(function () {
                 $('input[name="daterange"]').daterangepicker({
                     opens: 'left'
-                }, function(start, end, label) {
+                }, function (start, end, label) {
                     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                 });
             });
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
         </script>
    
         <c:if test="${sessionScope.acc == null}">
             <c:redirect url="login.jsp"></c:redirect>
         </c:if>   
-        
-        <script type="text/javascript">
-        $(function(){
-        $('input[type="text"]').change(function(){
-        this.value = $.trim(this.value);
-        });
-        })
-        </script>
         
     </head>
     <body>

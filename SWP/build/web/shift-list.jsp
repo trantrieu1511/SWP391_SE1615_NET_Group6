@@ -105,7 +105,12 @@
                         }
                     });
                 });
-            });      
+            });
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
         </script>       
 
     </head>
@@ -367,10 +372,6 @@
 
         </div>
         <!-- /Main Wrapper -->       
-            <c:if test="${alert != ''}">
-                <script lang="Javascript">
-            alert("${alert}");
-                </script>
-            </c:if>
+        
     </body>
 </html>

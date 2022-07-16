@@ -106,25 +106,145 @@
                     $(e.currentTarget).find('input[name="profile_id"]').val(id);
                 });
             });
-        </script>
+            function checkPassword(checkpassword) {
+                var password = document.getElementById('password').value;
+                if ((checkpassword.value && password) != "") {
+                    if (checkpassword.value != password) {
+                        document.getElementById('wrong_pass_alert').style.color = 'red';
+                        document.getElementById('wrong_pass_alert').innerHTML
+                                = '☒ Use same password! Confirm password does not match';
+                        document.getElementById('create').disabled = true;
+                        document.getElementById('create').style.opacity = (0.4);
+                    } else {
+                        document.getElementById('wrong_pass_alert').style.color = 'green';
+                        document.getElementById('wrong_pass_alert').innerHTML =
+                                '🗹 Password Matched';
+                        document.getElementById('create').disabled = false;
+                        document.getElementById('create').style.opacity = (1);
+                    }
 
-        <c:choose>
-            <c:when test="${alert != ''}">
-                <script type="text/javascript">
-                    alert("${alert}");
-                </script>
-            </c:when>
-            <c:otherwise>
+                } else {
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = '';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
+                }
+            }
+            function checkconfirmPassword(checkpassword) {
+                var confirm_password = document.getElementById('confirm_password').value;
+                if ((checkpassword.value && confirm_password) != "") {
+                    if (checkpassword.value != confirm_password) {
+                        document.getElementById('wrong_pass_alert').style.color = 'red';
+                        document.getElementById('wrong_pass_alert').innerHTML
+                                = '☒ Use same password! Confirm password does not match';
+                        document.getElementById('create').disabled = true;
+                        document.getElementById('create').style.opacity = (0.4);
+                    } else {
+                        document.getElementById('wrong_pass_alert').style.color = 'green';
+                        document.getElementById('wrong_pass_alert').innerHTML =
+                                '🗹 Password Matched';
+                        document.getElementById('create').disabled = false;
+                        document.getElementById('create').style.opacity = (1);
+                    }
 
-            </c:otherwise>
-        </c:choose>
+                } else {
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = '';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
+                }
+            }
 
-        <script type="text/javascript">
+            function checkPassword2(checkpassword) {
+                var password = document.getElementById('password2').value;
+                if ((checkpassword.value && password) != "") {
+                    if (checkpassword.value != password) {
+                        document.getElementById('wrong_pass_alert2').style.color = 'red';
+                        document.getElementById('wrong_pass_alert2').innerHTML
+                                = '☒ Use same password! Confirm password does not match';
+                        document.getElementById('create2').disabled = true;
+                        document.getElementById('create2').style.opacity = (0.4);
+                    } else {
+                        document.getElementById('wrong_pass_alert2').style.color = 'green';
+                        document.getElementById('wrong_pass_alert2').innerHTML =
+                                '🗹 Password Matched';
+                        document.getElementById('create2').disabled = false;
+                        document.getElementById('create2').style.opacity = (1);
+                    }
+                } else {
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = '';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
+                }
+
+            }
+            function checkPasswordonpageshow() {
+                var password = document.getElementById('password2').value;
+                var confirm_password = document.getElementById('confirm_password2').value;
+                if ((password && confirm_password) != "") {
+                    if (confirm_password != password) {
+                        document.getElementById('wrong_pass_alert2').style.color = 'red';
+                        document.getElementById('wrong_pass_alert2').innerHTML
+                                = '☒ Use same password! Confirm password does not match';
+                        document.getElementById('create2').disabled = true;
+                        document.getElementById('create2').style.opacity = (0.4);
+                    } else {
+                        document.getElementById('wrong_pass_alert2').style.color = 'green';
+                        document.getElementById('wrong_pass_alert2').innerHTML =
+                                '🗹 Password Matched';
+                        document.getElementById('create2').disabled = false;
+                        document.getElementById('create2').style.opacity = (1);
+                    }
+                } else {
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = '';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
+                }
+
+            }
+
+            function checkConfirmPassword2(checkpassword) {
+                var confirm_password = document.getElementById('confirm_password2').value;
+                if ((checkpassword.value && confirm_password) != "") {
+                    if (checkpassword.value != confirm_password) {
+                        document.getElementById('wrong_pass_alert2').style.color = 'red';
+                        document.getElementById('wrong_pass_alert2').innerHTML
+                                = '☒ Use same password! Confirm password does not match';
+                        document.getElementById('create2').disabled = true;
+                        document.getElementById('create2').style.opacity = (0.4);
+                    } else {
+                        document.getElementById('wrong_pass_alert2').style.color = 'green';
+                        document.getElementById('wrong_pass_alert2').innerHTML =
+                                '🗹 Password Matched';
+                        document.getElementById('create2').disabled = false;
+                        document.getElementById('create2').style.opacity = (1);
+                    }
+                } else {
+                    document.getElementById('wrong_pass_alert').innerHTML
+                            = '';
+                    document.getElementById('create').disabled = false;
+                    document.getElementById('create').style.opacity = (1);
+                }
+
+            }
+            // alert
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });
             })
+            function clearFunc() {
+                document.getElementById('ejob').value = "";
+                document.getElementById('ename').value = "";
+                document.getElementById('eid').value = "";
+            }
         </script>
 
         <c:if test="${sessionScope.acc == null}">
@@ -153,7 +273,7 @@
                                     <h3 class="page-title">Manage Staff</h3>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Staff</li>
+                                        <li class="breadcrumb-item active"><a href="manager?do=list">Staff</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
@@ -185,7 +305,7 @@
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
-                                    <select name="ejob" id="ejob" class="select floating">
+                                    <select name="ejob" id="ejob" class="form-control">
                                         <option value="">Select Designation</option>
                                         <c:forEach items="${job}" var="j">
                                             <option value="${j.id}" ${ejob == j.id ? " selected": ""}>${j.title}</option>
@@ -194,20 +314,23 @@
                                     <label class="focus-label">Designation</label>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-3">  
+                            <div class="col-sm-6 col-md-2">  
                                 <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
                             </div>
+                            <div class="col-sm-6 col-md-1">
+                                <a class="btn btn-success btn-block" onclick="clearFunc()">Clear</a>
+                            </div>
                         </div>
-                    </form>         
+                    </form>
                     <!-- /Search Filter -->
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable" id="table">  
-                                    <c:if test="${filter == 'no'}">
-                                        <h4><a href="manager?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
-                                    </c:if>
+                                    <%--<c:if test="${filter == 'no'}">--%>
+                                    <!--<h4><a href="manager?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>-->
+                                    <%--</c:if>--%>
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -401,13 +524,13 @@
                                                        allow uppercase, lowercase letters and numeric characters (0-9), max length: 12">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="profile_id" id="profile_id" required pattern="[A-Z]{5}"
-                                                       title="Staff ID not allow Unicode characters, must be 5 character with uppercase">
-                                            </div>
-                                        </div>
+                                        <!--                                        <div class="col-sm-6">  
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-form-label">Staff ID <span class="text-danger">*</span></label>
+                                                                                        <input type="text" class="form-control" name="profile_id" id="profile_id" required pattern="[A-Z]{5}"
+                                                                                               title="Staff ID not allow Unicode characters, must be 5 character with uppercase">
+                                                                                    </div>
+                                                                                </div>-->
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Joining Date <span class="text-danger">*</span></label>

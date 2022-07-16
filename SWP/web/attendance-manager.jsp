@@ -82,6 +82,11 @@
                 }
             }
         });​
+        $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
         </script>
 
     </head>
@@ -228,13 +233,6 @@
 
         </div>
         <!-- /Main Wrapper -->
-        <script type="text/javascript">
-        $(function () {
-                $('input[type="text"]').change(function () {
-                    this.value = $.trim(this.value);
-                });
-            })
-        </script>
 
     </body>
 </html>

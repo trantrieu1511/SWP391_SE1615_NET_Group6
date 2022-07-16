@@ -91,20 +91,18 @@
                     $(e.currentTarget).find('input[name="client_id"]').val(id);
                 });
             });
-        </script>
+            // alert
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
 
-        <c:choose>
-            <c:when test="${alert != ''}">
-                <script type="text/javascript">
-                    alert("${alert}");
-                </script>
-            </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
-
-        <script type="text/javascript">
+            function clearFunc() {
+                document.getElementById('cid').value = "";
+                document.getElementById('cname').value = "";
+                document.getElementById('ccompany').value = "";
+            }
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
@@ -138,7 +136,7 @@
                                             <li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>
                                             </c:otherwise>
                                         </c:choose>
-                                    <li class="breadcrumb-item active">Clients</li>
+                                    <li class="breadcrumb-item active"><a href="client?do=list">Clients</a></li>
                                 </ul>
                             </div>
                             <c:if test="${sessionScope.acc.isAdmin==true}">
@@ -159,19 +157,19 @@
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="cid" value="${cid}">
+                                    <input type="text" class="form-control floating" name="cid" id="cid" value="${cid}">
                                     <label class="focus-label">Client ID</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="cname" value="${cname}">
+                                    <input type="text" class="form-control floating" name="cname" id="cname" value="${cname}">
                                     <label class="focus-label">Client Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3"> 
                                 <div class="form-group form-focus select-focus">
-                                    <select class="select floating" name="ccompany"> 
+                                    <select class="form-control" name="ccompany" id="ccompany"> 
                                         <option value="">Select Company</option>
                                         <c:forEach items="${listcpn}" var="cpn">
                                             <option value="${cpn.id}" ${cpn.id == ccompany ? " selected" : ""}>${cpn.name}</option>
@@ -180,20 +178,24 @@
                                     <label class="focus-label">Company</label>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-3">  
+                            <div class="col-sm-6 col-md-2">  
                                 <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
-                            </div>     
+                            </div>
+                            <div class="col-sm-6 col-md-1">
+                                <a class="btn btn-success btn-block" onclick="clearFunc()">Clear</a>
+                            </div>
                         </div>
                     </form>
                     <!-- Search Filter -->
+
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable">
-                                    <c:if test="${filter == 'no'}">
-                                        <h4><a href="client?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
-                                    </c:if>
+                                    <%--<c:if test="${filter == 'no'}">--%>
+                                    <!--<h4><a href="client?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>-->
+                                    <%--</c:if>--%>
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -271,6 +273,14 @@
                                 <form action="client" method="post">
                                     <input type="hidden" name="do" value="addClient">
                                     <div class="row">
+                                        <div class="col-md-6">  
+                                            <div class="form-group">
+                                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
+                                                <input class="form-control floating" type="text" name="client_id" required pattern="[A-Z0-9]{5}"
+                                                       title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
+                                                       max length: 5">
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
@@ -319,14 +329,7 @@
                                                                                     <input class="form-control" type="password">
                                                                                 </div>
                                                                             </div>-->
-                                        <div class="col-md-6">  
-                                            <div class="form-group">
-                                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
-                                                <input class="form-control floating" type="text" name="client_id" required pattern="[A-Z0-9]{5}"
-                                                       title="Client ID not allow Unicode characters; Can contain both uppercase letters and/or numbers (0-9);
-                                                       max length: 5">
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone </label>

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="jaxr-ra">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/glassfish-5.0/glassfish5/glassfish/lib/install/applications/jaxr-ra/jaxr-ra.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

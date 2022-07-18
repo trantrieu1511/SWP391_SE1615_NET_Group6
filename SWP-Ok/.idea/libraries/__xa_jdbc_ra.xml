@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="__xa_jdbc_ra">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/glassfish-5.0/glassfish5/glassfish/lib/install/applications/__xa_jdbc_ra/__xa_jdbc_ra.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

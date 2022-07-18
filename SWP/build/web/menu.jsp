@@ -90,18 +90,15 @@
                                     <c:if test="${sessionScope.acc.isManager == false && sessionScope.acc.isAdmin == false}">
                                     <li><a href="employee?do=attendance">Attendance (Employee)</a></li>
                                     </c:if>
-                                    <c:if test="${sessionScope.acc.isAdmin == true}">
-                                    <li><a href="leave?do=leaveAdmin">Leaves (Admin)</a></li>
+                                    <c:if test="${sessionScope.acc.isAdmin == true || sessionScope.acc.isManager == true}">
+                                    <li><a href="leave?do=checkLeave">Check Leaves</a></li>
                                     </c:if>
-                                    <c:choose>
-                                        <c:when test="${sessionScope.acc.isManager == true}">
-                                        <li><a href="leave?do=leaveManager">Leaves (Manager)</a></li>
-                                        <li><a href="leave?do=myLeave">My Leaves</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                        <li><a href="leave?do=myLeave">My Leaves</a></li>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <c:if test="${sessionScope.acc.isManager == true}">
+                                    <li><a href="leave?do=myLeave">My Leaves</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.isManager == false && sessionScope.acc.isAdmin == false}">
+                                    <li><a href="leave?do=myLeave">My Leaves</a></li>
+                                    </c:if>
                                 <li><a href="departments.jsp">Departments</a></li>
                                 <li><a href="designations.jsp">Designations</a></li>
                                     <c:if test="${sessionScope.acc.isManager == true && sessionScope.acc.isAdmin == false}">

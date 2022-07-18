@@ -19,6 +19,7 @@ public class Profile {
     int department_id;
     String department_name;
     String reportto;
+    String reportto_name;
     String user_display;
     String pass_display;
     String isadmin_d;
@@ -93,10 +94,23 @@ public class Profile {
         this.reportto = reportto;
     }
 
-    public Profile(String profile_id, String first_name, String last_name) {//constructor for choose staff option in add Salary
+    //constructor for choose staff option in add Salary
+    public Profile(String profile_id, String first_name, String last_name) {
         this.profile_id = profile_id;
         this.first_name = first_name;
         this.last_name = last_name;
+    }
+
+    //constructor for myLeave list
+    public Profile(String reportto) {
+        this.reportto = reportto;
+    }
+
+    //constructor for checkLeave list
+    public Profile(String first_name, String last_name, int job_id) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.job_id = job_id;
     }
 
     public String getStatus_d() {
@@ -225,6 +239,22 @@ public class Profile {
 
     public void setIsmanager_d(String ismanager_d) {
         this.ismanager_d = ismanager_d;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getReportto_name() {
+        return reportto_name;
+    }
+
+    public void setReportto_name(String reportto_name) {
+        this.reportto_name = reportto_name;
     }
 
     @Override

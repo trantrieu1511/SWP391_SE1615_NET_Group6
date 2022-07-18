@@ -127,6 +127,7 @@
                 alert("${alert}");
             }
             </c:if>
+
         </script>
 
 
@@ -154,7 +155,7 @@
                                     <h3 class="page-title">Employee Salary</h3>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item">Payroll</li>
-                                        <li class="breadcrumb-item active">Employee Salary</li>
+                                        <li class="breadcrumb-item active"><a href="salary?do=list">Employee Salary</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
@@ -197,7 +198,7 @@
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" name="from" value="${from}">
+                                        <input class="form-control floating datetimepicker" onkeydown="event.preventDefault()" type="text" name="from" value="${from}" >
                                     </div>
                                     <label class="focus-label">From</label>
                                 </div>
@@ -205,7 +206,7 @@
                             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">  
                                 <div class="form-group form-focus">
                                     <div class="cal-icon">
-                                        <input class="form-control floating datetimepicker" type="text" name="to" value="${to}">
+                                        <input class="form-control floating datetimepicker" onkeydown="event.preventDefault()" type="text" name="to" value="${to}">
                                     </div>
                                     <label class="focus-label">To</label>
                                 </div>
@@ -221,9 +222,9 @@
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable">
-                                    <c:if test="${filter == 'no'}">
-                                        <h4><a href="salary?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>
-                                    </c:if>
+                                    <%--<c:if test="${filter == 'no'}">--%>
+                                    <!--<h4><a href="salary?do=list" style="text-decoration: none; color: grey"> <-- back</a></h4>-->
+                                    <%--</c:if>--%>
                                     <thead>
                                         <tr>
                                             <th>Employee</th>

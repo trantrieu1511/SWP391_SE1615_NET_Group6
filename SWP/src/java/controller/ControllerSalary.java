@@ -75,7 +75,7 @@ public class ControllerSalary extends HttpServlet {
                     if (edit != null) { //edit
                         alert = "Successfully edited employee salary!";
                     } else if (editFail != null) { //edit
-                        alert = "Fail to edit employee salary! Employee hasn't had a salary to edit yet.";
+                        alert = "Fail to edit employee salary! Employee hasn't had a salary to edit yet. Please add salary first!";
                     } else if (add != null) { //add
                         alert = "Successfully added new salary!";
                     } else if (delete != null) { //delete
@@ -137,7 +137,7 @@ public class ControllerSalary extends HttpServlet {
                     } else if (!erole.equals("") && !ename.equals("") && !from.equals("") && !to.equals("")) { //role + name + from + to
                         listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
                     } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
-                        listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
+                        listSearch = daoSalary.searchEmployeeSalaryWithNameOnly(ename);
 //                    } else if (erole.equals("") && ename.equals("") && from.equals("") && to.equals("")) { //enter nothing
 //                        listSearch = daoSalary.searchEmployeeSalaryWithCreateDate(erole, ename, from, to);
 //                        if (listSearch.isEmpty()) {

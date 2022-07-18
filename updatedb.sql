@@ -77,7 +77,7 @@ CREATE TABLE [leave] (
 	[to] VARCHAR(35) NOT NULL,
 	number_of_days VARCHAR(35) NOT NULL,
 	reason VARCHAR(100) DEFAULT NULL,
-	[status] int NOT NULL,
+	[status] int DEFAULT 1 NOT NULL, --1:Pending; 2:Approved; 3:Declined 
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id),
 	FOREIGN KEY (leave_type) REFERENCES [leaveType] (id),
 );

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
 import model.DAOProfile;
+import model.DAOProfileDetail;
 
 /**
  *
@@ -102,13 +103,13 @@ public class ControllerAuthentication extends HttpServlet {
                 String pid = request.getParameter("id").trim();
                 String user = request.getParameter("user").trim();
                 String pass = request.getParameter("pass").trim();
-                String isA = request.getParameter("isAdmin").trim();
-                String isM = request.getParameter("isManager").trim();
+                String isA = request.getParameter("isa").trim();
+                String isM = request.getParameter("ism").trim();
                 String fname = request.getParameter("fname").trim();
                 String lname = request.getParameter("lname").trim();
                 String date = request.getParameter("hiredate").trim();
                 String email = request.getParameter("email").trim();
-                String phone = request.getParameter("pnumber").trim();
+                String phone = request.getParameter("pnum").trim();
                 DAOAccount da = new DAOAccount();
                 DAOProfile dp = new DAOProfile();
                 int isAA = 0;
@@ -123,8 +124,70 @@ public class ControllerAuthentication extends HttpServlet {
                 Profile pro = new Profile(pid, fname, lname, email, phone, date, 0, 0, "NULL");
                 if (dp.addManager(pro)) {
                     da.addAMAccount(pid, user, pass, isAA, isMM);
+                    System.out.println("Add Successfully user_id = " + pid);
+
+                    request.getRequestDispatcher("authentication?do=list").forward(request, response);
+                } else {
+                    request.setAttribute("alert", "Add Fail");
+                    request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
-                request.getRequestDispatcher("authentication?do=list").forward(request, response);
+            }
+
+            if (service.equals("editaccount")) {
+                String pid = request.getParameter("eid").trim();
+                String user = request.getParameter("euser").trim();
+                String pass = request.getParameter("epass").trim();
+                String isA = request.getParameter("eisAdmin").trim();
+                String isM = request.getParameter("eisManager").trim();
+                String fname = request.getParameter("efname").trim();
+                String lname = request.getParameter("elname").trim();
+                String date = request.getParameter("ehiredate").trim();
+                String email = request.getParameter("eemail").trim();
+                String phone = request.getParameter("epnumber").trim();
+                String status = request.getParameter("estatus").trim();
+                DAOAccount da = new DAOAccount();
+                DAOProfile dp = new DAOProfile();
+                int isAA = 0;
+                int isMM = 0;
+                int Status = 1;
+                if (isA == "True") {
+                    isAA = 1;
+                }
+                if (isM == "True") {
+                    isMM = 1;
+                }
+                if (status == "True") {
+                    Status = 1;
+                }
+                Profile pro = new Profile(pid, fname, lname, email, phone, date, 0, 0, "NULL");
+                if (dp.editStaff(pro)) {
+                    da.editAMAccount(pid, user, pass, isAA, isMM, Status);
+                    System.out.println("Add Successfully user_id = " + pid);
+
+                    request.getRequestDispatcher("authentication?do=list").forward(request, response);
+                } else {
+                    request.setAttribute("alert", "Add Fail");
+                    request.getRequestDispatcher("authentication?do=list").forward(request, response);
+                }
+            }
+            
+            if (service.contains("delete")) {
+                String aid = request.getParameter("aprofile_id");
+                DAOAccount da = new DAOAccount();
+                DAOProfile dp = new DAOProfile();
+                DAOProfileDetail dpd = new DAOProfileDetail();
+                if (da.deleteAccount(aid)) {
+                    if (dpd.deleteProfileDetail(aid)) {
+                        dp.deleteProfile(aid);
+                        System.out.println("Delete Successfully user_id " + aid);
+
+                        request.getRequestDispatcher("authentication?do=list").forward(request, response);
+                    }
+                } else {
+                    System.out.println("Delete Fail user_id = " + aid);
+
+                    request.getRequestDispatcher("authentication?do=list").forward(request, response);
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

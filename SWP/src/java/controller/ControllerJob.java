@@ -6,7 +6,8 @@
 package controller;
 
 import entity.Account;
-import entity.Leave;
+import entity.Jobs;
+import entity.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,16 +18,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOLeave;
-import model.DAOLeaveType;
+import model.DAOAccount;
+import model.DAOJob;
 import model.DAOProfile;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "ControllerLeave", urlPatterns = {"/leave"})
-public class ControllerLeave extends HttpServlet {
+@WebServlet(name = "ControllerJob", urlPatterns = {"/job"})
+public class ControllerJob extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,60 +42,33 @@ public class ControllerLeave extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            PrintWriter out = response.getWriter();
-            DAOLeave daoLeave = new DAOLeave();
-            DAOLeaveType daoLeaveType = new DAOLeaveType();
-            DAOProfile daoPf = new DAOProfile();
-
             String service = request.getParameter("do");
-            HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("acc");
-            if (acc == null) {
-                response.sendRedirect("login.jsp");
-            } else {
-                if (service.equals("checkLeave")) {
-                    if (acc.isIsAdmin()) {
-                        List<Leave> listLeave = daoLeave.listAllMyLeave(acc.getProfile_id());
-                    }
-                    if (acc.isIsManager()) {
-                        
-                    }
-                    RequestDispatcher dispath = request.getRequestDispatcher("leaves.jsp");
+            if (service.equals("login")) {
+                String username = request.getParameter("user");
+                String password = request.getParameter("pass");
+                DAOAccount dao = new DAOAccount();
+                Account a = dao.login(username, password);
+                if (a == null) {
+                    request.setAttribute("mess", "Wrong username or password");
+                    RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
                     dispath.forward(request, response);
-                }
-
-                if (service.equals("myLeave")) {
-                    List<Leave> listLeave = daoLeave.listAllMyLeave(acc.getProfile_id());
-                    if (acc.isIsManager()) {
-                        for (Leave leave : listLeave) {
-                            leave.setReportto_name("null");
-                            leave.setLeave_name(daoLeaveType.getLeaveTypeByID(Integer.toString(leave.getLeave_type())).getName());
-                        }
-                    } else {
-                        for (Leave leave : listLeave) {
-                            leave.setReportto_name(daoPf.getByID(leave.getReportto()).getFirst_name() + " "
-                                    + daoPf.getByID(leave.getReportto()).getLast_name());
-                            leave.setLeave_name(daoLeaveType.getLeaveTypeByID(Integer.toString(leave.getLeave_type())).getName());
-                        }
-                    }
-                    request.setAttribute("myLeaveList", listLeave);
-                    RequestDispatcher dispath = request.getRequestDispatcher("leaves-employee.jsp");
-                    dispath.forward(request, response);
-                }
-                if (service.equals("addLeave")) {
-                    
-                    response.sendRedirect("leave?do=myLeave");
-                }
-                if (service.equals("editLeave")) {
-
-                    response.sendRedirect("leave?do=myLeave");
-                }
-                if (service.equals("deleteLeave")) {
-
-                    response.sendRedirect("leave?do=myLeave");
+                } else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("acc", a);
+                    response.sendRedirect("home");
                 }
             }
-        } catch (Exception ex) {
+            
+            if (service.equals("list")) {
+                DAOJob j = new DAOJob();
+                List<Jobs> listJ = j.listAllJob();
+                String alert = "";
+
+                request.setAttribute("listJ", listJ);
+                request.setAttribute("alert", alert);
+                request.getRequestDispatcher("job-list.jsp").forward(request, response);
+            }
+        }catch(Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }

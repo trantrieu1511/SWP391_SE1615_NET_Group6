@@ -152,8 +152,7 @@ CREATE TABLE [shift](
 CREATE TABLE [schedule](
     profile_id VARCHAR(8000),
 	shift_name VARCHAR(255),
-	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id),
-	FOREIGN KEY (shift_name) REFERENCES [shift] (name),
+	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
 --drop table projects

@@ -146,15 +146,16 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9)));
+                        rs.getInt(9),
+                        rs.getString(10)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -166,6 +167,28 @@ public class DAOProfile extends DBConnect {
         return list;
     }
 
+    //get generated ID when add profile successfully
+    public String getGeneratedProfileID() {
+        String id = "";
+        String sql = "select top 1 profile_id from [profile]\n"
+                + "order by id desc";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            if (rs.next()) {
+                id = rs.getString(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return id;
+    }
+    
     public Profile getByID(String profile_id) {
         String sql = "select * from [profile] where [profile_id] = ?";
         try {
@@ -175,15 +198,16 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 return new Profile(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
+                        rs.getString(7),
                         rs.getInt(8),
-                        rs.getString(9));
+                        rs.getInt(9),
+                        rs.getString(10));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

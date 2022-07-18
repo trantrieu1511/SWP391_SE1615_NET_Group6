@@ -161,6 +161,28 @@ public class DAOAccount extends DBConnect {
         return true;
     }
 
+    public boolean editAMAccount(String profile_id, String username, String password, int isA, int isM, int Status) {
+        String sql = "update account set username=?, password=?, isadmin=?, ismanager=?, status=? where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, username);
+            state.setString(2, password);
+            state.setInt(3, isA);
+            state.setInt(4, isM);
+            state.setInt(5, Status);
+            state.setString(6, profile_id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public boolean deleteAccount(String profile_id) {
         String sql = "delete from account where profile_id = ?";
         try {

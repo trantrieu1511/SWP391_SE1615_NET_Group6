@@ -10,7 +10,7 @@
         <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
-        <title>Employees - HRMS admin template</title>
+        <title>Account - HRMS admin template</title>
 
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -67,7 +67,7 @@
         <!-- Model JS -->
         <script type="text/javascript">
             $(function () {
-                $("#edit_employee").on("show.bs.modal", function (e) {
+                $("#edit_account").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id');
                     const myArray = text.split(" ");
                     var id = myArray[0];
@@ -78,32 +78,32 @@
                     var hire_date = myArray[5];
                     var username = myArray[6];
                     var password = myArray[7];
-                    var reportto = myArray[8];
-                    var depart_id = myArray[9];
-                    var job_id = myArray[10];
-                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
-                    $(e.currentTarget).find('input[name="first_name"]').val(first_name);
-                    $(e.currentTarget).find('input[name="last_name"]').val(last_name);
-                    $(e.currentTarget).find('input[name="email"]').val(email);
-                    $(e.currentTarget).find('input[name="phone_number"]').val(phone_number);
-                    $(e.currentTarget).find('input[name="hire_date"]').val(hire_date);
-                    $(e.currentTarget).find('input[name="username"]').val(username);
-                    $(e.currentTarget).find('input[name="password"]').val(password);
-                    $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
-                    document.getElementById('department_id2').value = depart_id;
-                    document.getElementById('job_id2').value = job_id;
+                    var isamin_d = myArray[8];
+                    var ismanager_d = myArray[9];
+                    var status_d = myArray[10];
+                    $(e.currentTarget).find('input[name="eid"]').val(id);
+                    $(e.currentTarget).find('input[name="efname"]').val(first_name);
+                    $(e.currentTarget).find('input[name="elname"]').val(last_name);
+                    $(e.currentTarget).find('input[name="eemail"]').val(email);
+                    $(e.currentTarget).find('input[name="epnumber"]').val(phone_number);
+                    $(e.currentTarget).find('input[name="ehiredate"]').val(hire_date);
+                    $(e.currentTarget).find('input[name="euser"]').val(username);
+                    $(e.currentTarget).find('input[name="epass"]').val(password);
+                    $(e.currentTarget).find('input[name="eisa"]').val(isamin_d);
+                    $(e.currentTarget).find('input[name="eism"]').val(ismanager_d);
+                    $(e.currentTarget).find('input[name="estatus"]').val(status_d);
                 });
             });
             $(function () {
-                $("#add_employee").on("show.bs.modal", function (e) {
+                $("#add_account").on("show.bs.modal", function (e) {
                     var reportto = $(e.relatedTarget).attr('data-id');
                     $(e.currentTarget).find('input[name="ReportsTo"]').val(reportto);
                 });
             });
             $(function () {
-                $("#delete_employee").on("show.bs.modal", function (e) {
+                $("#delete_account").on("show.bs.modal", function (e) {
                     var id = $(e.relatedTarget).attr('data-id');
-                    $(e.currentTarget).find('input[name="profile_id"]').val(id);
+                    $(e.currentTarget).find('input[name="aprofile_id"]').val(id);
                 });
             });
         </script>
@@ -156,7 +156,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-auto float-right ml-auto">
-                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_job"><i class="fa fa-plus"></i> Add User</a>
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_account"><i class="fa fa-plus"></i> Add User</a>
                                 </div>
                             </div>
                         </div>
@@ -245,6 +245,7 @@
                                                 <th>Full Name</th>
                                                 <th>Email</th>
                                                 <th>Phone Number</th>
+                                                <th>Hire date</th>
                                                 <th>Username</th>
                                                 <th>Password</th>
                                                 <th class="text-center">IsAdmin</th>
@@ -260,6 +261,7 @@
                                                 <td>${p.first_name} ${p.last_name}</td>
                                                 <td>${p.email}</td>
                                                 <td>${p.phone_number}</td>
+                                                <td>${p.hire_date}</td>
                                                 <td>${p.user_display}</td>
                                                 <td>${p.pass_display}</td>wbb
                                                 <td class="text-center">
@@ -300,8 +302,8 @@
                                                         <div class="dropdown dropdown-action">
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a href="loadA?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#edit_job"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a href="delete?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#delete_job"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-id="${p.profile_id} ${p.first_name} ${p.last_name} ${p.email} ${p.phone_number} ${p.hire_date} ${p.user_display} ${p.pass_display} ${p.isadmin_d} ${p.ismanager_d} ${p.status_d}" data-target="#edit_account"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_account" data-id="${p.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -316,7 +318,7 @@
                 <!-- /Page Content -->
 
                 <!-- Add Job Modal -->
-                <div id="add_job" class="modal custom-modal fade" role="dialog">
+                <div id="add_account" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -326,7 +328,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="addAccount" method="post">
+                                <form action="authentication" do="post">
+                                <input type="hidden" name="do" value="addaccount">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -439,7 +442,7 @@
                                         </div>
                                     </div>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Submit</button>
+                                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -449,7 +452,7 @@
                 <!-- /Add Job Modal -->
 
                 <!-- Edit Job Modal -->
-                <div id="edit_job" class="modal custom-modal fade" role="dialog">
+                <div id="edit_account" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <div class="modal-content">
@@ -460,7 +463,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="editAccont" method="post">
+                                <form action="authentication" do="post">
+                                    <input type="hidden" name="do" value="editaccount">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -471,8 +475,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>IsAdmin</label>
-                                                <select class="select">
-                                                    <option>-</option>
+                                                <select class="select" name="eisa">
+                                                    <option></option>
                                                     <option>True</option>
                                                     <option>False</option>
                                                 </select>
@@ -489,7 +493,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>IsManager</label>
-                                                <select class="select">
+                                                <select class="select" name="eism">
                                                     <option>-</option>
                                                     <option>True</option>
                                                     <option>False</option>
@@ -542,7 +546,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Status</label>
-                                                <select class="select">
+                                                <select class="select" name="estatus">
                                                     <option>Open</option>
                                                     <option>Closed</option>
                                                     <option>Cancelled</option>
@@ -573,7 +577,7 @@
                                         </div>
                                     </div>
                                     <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn">Save</button>
+                                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -583,24 +587,28 @@
                 <!-- /Edit Job Modal -->
 
                 <!-- Delete Job Modal -->
-                <div class="modal custom-modal fade" id="delete_job" role="dialog">
+                <div class="modal custom-modal fade" id="delete_account" role="dialog">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <div class="form-header">
-                                    <h3>Delete User</h3>
-                                    <p>Are you sure want to delete?</p>
-                                </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                <form action="authentication" do="post">
+                                    <input type="hidden" name="do" value="delete">
+                                    <input type="hidden" name="aprofile_id">
+                                    <div class="form-header">
+                                        <h3>Delete User</h3>
+                                        <p>Are you sure want to delete?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>       
                             </div>
                         </div>
                     </div>

@@ -159,6 +159,7 @@
                         </li>
                         <c:if test="${sessionScope.acc.isAdmin == true}">
                             <li><a href="authentication?do=list"><i class="la la-user"></i> <span>Account Manager</span></a></li>
+                            <li><a href="job?do=list"><i class="la la-rocket"></i> <span>JOB Manager</span></a></li>
                             </c:if>
                     </ul>
                 </div>

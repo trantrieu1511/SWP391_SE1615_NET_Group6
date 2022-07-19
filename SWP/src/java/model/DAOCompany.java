@@ -44,6 +44,10 @@ public class DAOCompany extends DBConnect {
         return list;
     }
 
+    
+    
+    
+    
     public Company getCompanyByID(int id) {
         String sql = "select * from company where [company_id] = ?";
         try {
@@ -66,6 +70,8 @@ public class DAOCompany extends DBConnect {
         return null;
     }
 
+    
+    
     public static void main(String[] args) {
         DAOCompany daoCpn = new DAOCompany();
 //        Company cpn = daoCpn.getCompanyByID(3);
@@ -74,6 +80,6 @@ public class DAOCompany extends DBConnect {
 //        for (Company company : list) {
 //            System.out.println(company.toString());
 //        }
-System.out.println(daoCpn.getCompanyByID(1));
+        System.out.println(daoCpn.getCompanyByID(1));
     }
 }

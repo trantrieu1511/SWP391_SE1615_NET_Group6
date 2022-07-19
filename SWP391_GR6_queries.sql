@@ -10,15 +10,23 @@ select * from attendance
 select * from account
 select * from projects
 select * from clients
+select * from schedule
+select * from [shift]
+
+
+--search schedule
+select schedule.profile_id, shift_name from schedule join [profile] on schedule.profile_id = [profile].profile_id 
+where first_name + last_name like '%m%' order by [profile].profile_id asc
 
 select * from [profile] p, account a where
 p.profile_id = a.profile_id
 
-Use SWP_HRMS_GRP6_3
 --add account
-insert into account values ('ABCDE', 'trantrieu123', '12345678',0,1,1)
-insert into account values ('MBEAN', 'mrbean', 'mbean', 0,0,1)
-insert into account values ('ADMIN', 'admin', 'admin',1,0,1)
+insert into account(profile_id,username,[password],isadmin,ismanager) values ('MA001', 'admin', 'admin',1,0)
+insert into account(profile_id,username,[password],isadmin,ismanager) values ('TT002', 'trantrieu123', '12345678',0,1)
+insert into account(profile_id,username,[password],isadmin,ismanager) values ('MA003', 'mra', 'mra',0,1)
+insert into account values ('MBEAN', 'mrbean', 'mbean', 0,0)
+
 
 --insert jobs
 insert into jobs(job_title) values('Web Designer')
@@ -33,33 +41,41 @@ insert into jobs(job_title) values('Ios Developer')
 insert into departments(department_name) values('IT Management')
 insert into departments([department_name]) values('Web Development')
 
+--get Generated ProfileID
+select top 1 profile_id from [profile]
+order by id desc
+
+select * from schedule
+-- schedule
+insert into schedule values('TT002','shift1')
+delete from schedule
+
 --insert admin
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary)
-values ('ADMIN', 'mr', 'admin', 'admin@mail.com', '0123456789', GETDATE(), NULL, NULL, 0)
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id)
+values ('mr', 'admin', 'admin@mail.com', '0123456789', '14/07/2022', 1, 1)
 
 --insert manager
-
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary)
-values ('ABCDE', 'Trieu', 'Tran', 'trantrieu@gmail.com', '0123456789', GETDATE(), 1, 1, 100)
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary)
-values ('MRAAA', 'MR', 'A', 'MRA@gmail.com', 'XXX-XXX-XXXX', GETDATE(), 1, 1, 100)
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id)
+values ('Trieu', 'Tran', 'trantrieu@gmail.com', '0123456789', '14/07/2022', 1, 1)
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id)
+values ('mr', 'a', 'MRA@gmail.com', '0246813579', '12/07/2022', 1, 1)
 
 
 --insert staff
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary,report_to)
-values ('ASDFG', 'MR', 'ASDFG', 'MRASDFG@gmail.com', '01234xxxxx', GETDATE(), 1, 1, 100, 'ABCDE')
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id,report_to)
+values ('MR', 'ASDFG', 'MRASDFG@gmail.com', '01234xxxxx', GETDATE(), 1, 1, 'ABCDE')
 
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary,report_to)
-values ('AAAAA', 'Christiano', 'Ronaldo', 'christianoronaldo@gmail.com', '123456789', GETDATE(), 3, 2, 1000, 'ABCDE')
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id,report_to)
+values ('Christiano', 'Ronaldo', 'christianoronaldo@gmail.com', '123456789', GETDATE(), 3, 2, 'ABCDE')
 
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary,report_to)
-values ('ASDFG', 'MR', 'ASDFG', 'MRASDFG@gmail.com', '01234xxxxx', GETDATE(), 1, 1, 100, 'ABCDE')
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id,report_to)
+values ('MR', 'ASDFG', 'MRASDFG@gmail.com', '01234xxxxx', GETDATE(), 1, 1, 'ABCDE')
 
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary,report_to)
-values ('MRDEL', 'mr', 'delete', 'mrdelete@gmail.com', 'mrdelete', GETDATE(), 1, 1, 100, 'ABCDE')
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id,report_to)
+values ('mr', 'delete', 'mrdelete@gmail.com', 'mrdelete', GETDATE(), 1, 1, 'ABCDE')
 
-insert into [Profile](profile_id,first_name,last_name,email,phone_number,hire_date,job_id,department_id,salary,report_to)
-values ('mr123', 'mr', 'delete', 'mrdelete@gmail.com', 'mrdelete', GETDATE(), 1, 1, 100, 'ABCDE')
+insert into [Profile](first_name,last_name,email,phone_number,hire_date,job_id,department_id,report_to)
+values ('mr', 'delete', 'mrdelete@gmail.com', 'mrdelete', GETDATE(), 1, 1, 'ABCDE')
 
 -- select account
 select * from account
@@ -78,7 +94,7 @@ insert into account values ('ABCDE', 'trantrieu123', '12345678', 0,1)
 --update acc
 update account
 set
-isadmin = 0 where profile_id = 'ABCDE'
+profile_id = 'TT002' where profile_id = 'ABCDE'
 
 --remove staff
 select * from [Profile]
@@ -155,6 +171,10 @@ select * from [profile] where profile_id like '%m%' and first_name + last_name l
 select * from clients cl join projects pj 
 on cl.client_id = pj.client_id
 
+select id, client_id, first_name, last_name, email, phone_number, clients.company_id, company.company_name from clients join
+company on clients.company_id = company.company_id 
+order by clients.client_id asc
+
 -- filter client
 --search with company name
 select * from [clients] where client_id like '%%' and company_id = ''
@@ -168,7 +188,7 @@ select * from [profileDetail] where profile_id = 'AAAAA'
 --insert profileDetail
 
 insert into profileDetail
-values ('ABCDE', '2002-11-15', 'so nha 16, to 19, phuong Tan Thinh, tp HB, tinh HB', 1, 'Vietnam', 'no', 0, 0, 'BIDV', '03216546879')
+values ('TT002', '15/11/2002', 'so nha 16, to 19, phuong Tan Thinh, tp HB, tinh HB', 1, 'Vietnam', 'no', 0, 0, 'BIDV', '0321654687')
 
 insert into [profileDetail]
 values ('MRNEW', GETDATE(), 'so nha 16, to 19, phuong Tan Thinh, tp HB, tinh HB', 'true', 'Vietnam', 'no', 'false', 0, 'BIDV', '03216546879')
@@ -436,3 +456,46 @@ order by p.profile_id asc
 
 --projects
 select * from projects
+
+--leave type
+select * from leaveType
+
+insert into leaveType([name]) values('Medical Leave')
+insert into leaveType([name]) values('Casual Leave')
+insert into leaveType([name]) values('Paternity Leave')
+insert into leaveType([name]) values('Maternity Leave')
+insert into leaveType([name]) values('LOP')
+insert into leaveType([name]) values('Hospitalisation')
+
+--leave
+select * from [profile] where profile_id = 'NULL'
+select * from leave
+--myLeave list select query
+select p.report_to, l.* 
+from leave l join [profile] p
+on l.profile_id = p.profile_id
+where l.profile_id = 'TT002'
+
+
+--checkLeave list select query
+select p.first_name, p.last_name, p.job_id, l.* 
+from leave l join [profile] p
+on l.profile_id = p.profile_id
+where p.report_to = 'TT002'
+
+--insert into leave
+insert into leave(profile_id, leave_type, [from], [to], number_of_days, reason)
+values('TT002', 2, '13/07/2022', '16/07/2022', DATEDIFF(DAY,'2022-07-13','2022-07-16'), 'Going to Town')
+
+--edit leave
+update leave
+set number_of_days = 2
+where id = 1
+
+--delete leave
+delete from leave where profile_id = ''
+
+--account management
+SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id and report_to is NULL
+
+--

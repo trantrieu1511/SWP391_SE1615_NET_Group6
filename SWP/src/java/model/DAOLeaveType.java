@@ -73,5 +73,6 @@ public class DAOLeaveType extends DBConnect {
         for (LeaveType leaveType : list) {
             System.out.println(leaveType.toString());
         }
+        System.out.println(dao.getLeaveTypeByID(Integer.toString(1)));
     }
 }

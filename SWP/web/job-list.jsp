@@ -285,7 +285,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ID</label>
-                                                <input class="form-control" type="text" name="eid">
+                                                <input class="form-control" type="text" disabled="disabled" name="eid">
                                             </div>
                                         </div>
                                     </div>

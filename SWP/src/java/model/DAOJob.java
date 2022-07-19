@@ -9,6 +9,7 @@ import entity.Jobs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,9 +95,46 @@ public class DAOJob extends DBConnect {
         return null;
     }
 
+    public boolean addJob(int id, String title, double min, double max) {
+        String sql = "insert into jobs(job_id, job_title, min_salary, max_salary)"
+                + "values('" + id + "', '" + title + "', '" + min  + "', " + max + ")";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public static void main(String[] args) {
         DAOJob dao = new DAOJob();
         List<Jobs> list = dao.listAllJob();
         System.err.println(dao.getJobByTitle("IOS Developer"));
+    }
+
+    public boolean editJob(int id, String title, double min, double max) {
+        String sql = "update account set job_title=?, min_salary=?, max_salary=? where job_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, title);
+            state.setDouble(2,min);
+            state.setDouble(3,max);
+            state.setInt(4, id);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
     }
 }

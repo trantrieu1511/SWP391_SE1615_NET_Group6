@@ -68,6 +68,42 @@ public class ControllerJob extends HttpServlet {
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("job-list.jsp").forward(request, response);
             }
+            
+            if (service.equals("add")){
+                int id = Integer.getInteger(request.getParameter("id"));
+                String title = request.getParameter("title");
+                double min = Double.parseDouble(request.getParameter("min"));
+                double max = Double.parseDouble(request.getParameter("max"));
+                DAOJob j = new DAOJob();
+                
+                if(j.addJob(id, title, min, max)){
+                    System.out.println("Add successfully job: " + title);
+                }else{
+                    System.out.println("Add fail job: " + title);
+                }
+                
+                request.getRequestDispatcher("job?do=list").forward(request, response);
+            }
+            
+            if (service.equals("edit")){
+                int id = Integer.getInteger(request.getParameter("eid"));
+                String title = request.getParameter("etitle");
+                double min = Double.parseDouble(request.getParameter("emin"));
+                double max = Double.parseDouble(request.getParameter("emax"));
+                DAOJob j = new DAOJob();
+                
+                if(j.editJob(id, title, min, max)){
+                    System.out.println("Save successfully job_id: " + id);
+                }else{
+                    System.out.println("Save fail job_id: " + id);
+                }
+                
+                request.getRequestDispatcher("job?do=list").forward(request, response);
+            }
+            
+            if (service.equals("delete")){
+                
+            }
         }catch(Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");

@@ -58,8 +58,8 @@
                             <div class="row">
                                 <div class="col">
                                     <h3 class="page-title">Employee Report</h3>
-                                    <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <ul class="breadcrumb">                                       
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Employee Report</li>
                                     </ul>
                                 </div>

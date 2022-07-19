@@ -1,9 +1,3 @@
-<%-- 
-    Document   : clients-list
-    Created on : Jun 19, 2022, 7:01:10 PM
-    Author     : DELL
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -38,11 +32,6 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 
@@ -129,7 +118,7 @@
                                     <h3 class="page-title">Clients</h3>
                                     <ul class="breadcrumb">
                                     <c:choose>
-                                        <c:when test="${sessionScope.acc.isManager == true || sessionScope.acc.isAdmin == true}">
+                                        <c:when test="${sessionScope.acc.isManager == true}">
                                             <li class="breadcrumb-item"><a href="manager?do=dashboard">Dashboard</a></li>
                                             </c:when>
                                             <c:otherwise>

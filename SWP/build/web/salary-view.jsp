@@ -62,7 +62,12 @@
                                 <div class="col">
                                     <h3 class="page-title">Payslip</h3>
                                     <ul class="breadcrumb">
-                                        <!--<li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>-->
+                                    <c:if test="${sessionScope.acc.isManager == true}">
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.isManager == false}">
+                                        <li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>
+                                    </c:if>
                                         <li class="breadcrumb-item">Payroll</li>
                                         <c:if test="${sessionScope.acc.isAdmin == true}">
                                         <li class="breadcrumb-item"><a href="salary?do=list">Employee Salary</a></li>

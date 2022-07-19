@@ -51,7 +51,7 @@
                                 <div class="col-sm-12">
                                     <h3 class="page-title">Project Reports</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
                                         <li class="breadcrumb-item active">Project Reports</li>
                                     </ul>
                                 </div>

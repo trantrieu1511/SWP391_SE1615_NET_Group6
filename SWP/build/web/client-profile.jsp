@@ -32,11 +32,6 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-                <script src="js/html5shiv.min.js"></script>
-                <script src="js/respond.min.js"></script>
-        <![endif]-->
         <!-- jQuery -->
         <script src="js/jquery-3.5.1.min.js"></script>
 
@@ -73,7 +68,12 @@
                             <div class="col-sm-12">
                                 <h3 class="page-title">Client Profile</h3>
                                 <ul class="breadcrumb">
-                                    <!--                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>-->
+                                <c:if test="${sessionScope.acc.isManager == true}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.acc.isManager == false}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>
+                                </c:if>
                                     <li class="breadcrumb-item active">Profile</li>
                                 </ul>
                             </div>

@@ -140,8 +140,13 @@
                             <div class="col">
                                 <h3 class="page-title">Project</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Project</li>
+                                <c:if test="${sessionScope.acc.isManager == true}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.acc.isManager == false}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>
+                                </c:if>
+                                    <li class="breadcrumb-item active">Project ${project.title}</li>
                                 </ul>
                             </div>
                             <div class="col-auto float-right ml-auto">

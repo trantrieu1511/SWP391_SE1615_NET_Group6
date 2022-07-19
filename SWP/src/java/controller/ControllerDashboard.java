@@ -9,9 +9,10 @@ import entity.Account;
 import entity.Clients;
 import entity.Profile;
 import entity.Projects;
+import entity.Schedule;
+import entity.Shift;
 import entity.Task;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,8 @@ import model.DAOProfile;
 import model.DAOProfileDetail;
 import model.DAOProject;
 import model.DAOSalary;
+import model.DAOSchedule;
+import model.DAOShift;
 import model.DAOTask;
 
 /**
@@ -70,6 +73,8 @@ public class ControllerDashboard extends HttpServlet {
                 DAOSalary daoSalary = new DAOSalary();
                 DAOTask daoTask = new DAOTask();
                 DAOClients daoClient = new DAOClients();
+                DAOShift daoShift = new DAOShift();
+                DAOSchedule daoSch = new DAOSchedule();
                 String service = request.getParameter("do");
 
                 if (service.equals("manager")) {
@@ -104,17 +109,29 @@ public class ControllerDashboard extends HttpServlet {
                     String today = formatter.format(new Date());
                     List<Task> listTask = daoTask.listTaskAssignedTo(acc.getProfile_id());
                     List<Task> pending = new ArrayList<>();
-                    for (Task t : listTask) {
-                        if (t.getStatus() == 0) {
-                            pending.add(t);
+                    List<Task> progress = new ArrayList<>();
+                    listTask.stream().filter((t) -> (t.getStatus() == 0)).forEachOrdered((t) -> {
+                        pending.add(t);
+                    });
+                    listTask.stream().filter((t) -> (t.getStatus() == 1)).forEachOrdered((t) -> {
+                        progress.add(t);
+                    });
+                    List<Shift> listShift = daoShift.listShift();
+                    Schedule sch = daoSch.getStaffSchedule(acc.getProfile_id());
+                    for(Shift s : listShift) {
+                        if (!sch.getName().contains(s.getName())) {
+                            listShift.remove(s);
                         }
-                    }
+                    }                  
                     List<Projects> listProject = daoProject.listProject();
                     request.setAttribute("name", employee.getFirst_name() + " " + employee.getLast_name());
                     request.setAttribute("date", today);
                     request.setAttribute("totalTask", listTask.size());
                     request.setAttribute("pendingTask", pending.size());
                     request.setAttribute("totalPj", listProject.size());
+                    request.setAttribute("schedule", listShift);
+                    request.setAttribute("list0", pending);
+                    request.setAttribute("list1", progress);
                     RequestDispatcher dispath = request.getRequestDispatcher("employee-dashboard.jsp");
                     dispath.forward(request, response);
                 }

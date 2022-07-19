@@ -110,6 +110,27 @@ public class DAOSchedule extends DBConnect {
         }
         return list;
     }
+    
+    public Schedule getStaffSchedule(String profile_id) {
+        String sql = "select * from schedule where profile_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                return new Schedule(
+                        rs.getString(1),
+                        rs.getString(2));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return null;
+    }
 
     public boolean updateSchedule(String profile_id, String shift_status) {
         String sql = "update schedule set shift_name=? where profile_id=?";

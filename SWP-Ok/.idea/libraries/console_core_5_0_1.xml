@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="console-core-5.0.1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/glassfish-5.0/glassfish5/glassfish/lib/install/applications/__admingui/WEB-INF/lib/console-core-5.0.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

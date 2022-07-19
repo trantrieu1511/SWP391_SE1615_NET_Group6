@@ -27,6 +27,7 @@ CREATE TABLE [profile] (
 	job_id INT NULL,
 	department_id INT NULL,
 	report_to VARCHAR(8000),
+	annual_leave INT DEFAULT 12 NOT NULL,
 	FOREIGN KEY (job_id) REFERENCES jobs (job_id),
 	FOREIGN KEY (department_id) REFERENCES departments (department_id),
 	FOREIGN KEY (report_to) REFERENCES [profile] (profile_id)

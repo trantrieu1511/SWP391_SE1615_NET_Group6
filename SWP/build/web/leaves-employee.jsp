@@ -4,6 +4,8 @@
     Author     : DELL
 --%>
 
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -70,6 +72,53 @@
                 <script src="js/html5shiv.min.js"></script>
                 <script src="js/respond.min.js"></script>
         <![endif]-->
+        <script type="text/javascript">
+            $(function () {
+                $("#edit_leave").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var profile_id = myArray[1];
+                    var leave_type = myArray[2];
+                    var from = myArray[3];
+                    var to = myArray[4];
+                    var number_of_days = myArray[5];
+                    var reason = $(e.relatedTarget).attr('data-reason');
+
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+//                    $(e.currentTarget).find('input[name="leave_type"]').val(leave_type);
+                    $(e.currentTarget).find('input[name="from"]').val(from);
+                    $(e.currentTarget).find('input[name="to"]').val(to);
+                    $(e.currentTarget).find('input[name="number_of_days"]').val(number_of_days);
+                    $('#reason').text(reason);
+                    document.getElementById('leave_type').value = leave_type;
+                });
+            });
+            $(function () {
+                $("#add_leave").on("show.bs.modal", function (e) {
+                    var profile_id = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                });
+            });
+            $(function () {
+                $("#delete_leave").on("show.bs.modal", function (e) {
+                    var profile_id = $(e.relatedTarget).attr('data-id');
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                });
+            });
+            // alert
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
+            $(function () {
+                $('input[type="text"]').change(function () {
+                    this.value = $.trim(this.value);
+                });
+            })
+        </script>
+
     </head>
     <body>
         <!-- Main Wrapper -->
@@ -94,59 +143,67 @@
                                         <li class="breadcrumb-item active">My Leaves</li>
                                     </ul>
                                 </div>
+                            <c:if test="${(12 - medical_leave - other_leave) > 0}">
                                 <div class="col-auto float-right ml-auto">
-                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
                                 </div>
+                            </c:if>
+                        </div>
+                    </div>
+                    <!-- /Page Header -->
+
+                    <!-- Leave Statistics -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="stats-info">
+                                <h6>Annual Leave</h6>
+                                <h4>12</h4>
                             </div>
                         </div>
-                        <!-- /Page Header -->
-
-                        <!-- Leave Statistics -->
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="stats-info">
-                                    <h6>Annual Leave</h6>
-                                    <h4>12</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stats-info">
-                                    <h6>Medical Leave</h6>
-                                    <h4>3</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stats-info">
-                                    <h6>Other Leave</h6>
-                                    <h4>4</h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stats-info">
-                                    <h6>Remaining Leave</h6>
-                                    <h4>5</h4>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="stats-info">
+                                <h6>Medical Leave</h6>
+                                <h4>${medical_leave}</h4>
                             </div>
                         </div>
-                        <!-- /Leave Statistics -->
+                        <div class="col-md-3">
+                            <div class="stats-info">
+                                <h6>Other Leave</h6>
+                                <h4>${other_leave}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stats-info">
+                                <h6>Remaining Leave</h6>
+                                <h4>${12 - medical_leave - other_leave}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Leave Statistics -->
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-striped custom-table mb-0 datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>Leave Type</th>
-                                                <th>From</th>
-                                                <th>To</th>
-                                                <th>No of Days</th>
-                                                <th>Reason</th>
-                                                <th class="text-center">Status</th>
-                                                <th>Approved by</th>
-                                                <th class="text-right">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <c:if test="${(12 - medical_leave - other_leave) <= 0}">
+                                <div class="col-auto float-left ml-auto">
+                                    Your leave has exceeded the annual leave amount! Cannot add new leave!
+                                </div>
+                            </c:if>
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table mb-0 datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Leave Type</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>No of Days</th>
+                                            <th>Reason</th>
+                                            <th class="text-center">Status</th>
+                                            <th>Approved by</th>
+                                            <th class="text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <c:forEach items="${myLeaveList}" var="leave">
                                             <tr>
                                                 <td>${leave.leave_name}</td>
@@ -187,8 +244,8 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to} ${leave.number_of_days}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a class="dropdown-item" href="#" data-id="${leave.id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -213,39 +270,44 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="leave?do=addLeave" method="post">
+                                    <input type="text" name="profile_id">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Select Leave Type</option>
-                                            <option>Casual Leave 12 Days</option>
-                                            <option>Medical Leave</option>
-                                            <option>Loss of Pay</option>
+                                        <select class="select" name="leave_type">
+                                            <option value="">Select Leave Type</option>
+                                            <c:forEach items="${listLeaveType}" var="ltype">
+                                                <option value="${ltype.id}">${ltype.name}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
+                                    <%
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                        LocalDateTime now = LocalDateTime.now();
+                                    %>
                                     <div class="form-group">
                                         <label>From <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text">
+                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="from" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>To <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text">
+                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="to">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Number of days <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly type="text">
+                                        <input class="form-control" readonly type="text" name="number_of_days">
                                     </div>
                                     <div class="form-group">
-                                        <label>Remaining Leaves <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly value="12" type="text">
+                                        <!--<label>Remaining Leaves <span class="text-danger">*</span></label>-->
+                                        <!--<input class="form-control" readonly value="12" type="hidden">-->
                                     </div>
                                     <div class="form-group">
                                         <label>Leave Reason <span class="text-danger">*</span></label>
-                                        <textarea rows="4" class="form-control"></textarea>
+                                        <textarea rows="4" class="form-control" name="reason"></textarea>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Submit</button>
@@ -268,37 +330,41 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="leave" method="post">
+                                    <input type="hidden" name="do" value="editLeave">
+                                    <input type="text" name="profile_id" value="">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
-                                        <select class="select">
-                                            <option>Select Leave Type</option>
-                                            <option>Casual Leave 12 Days</option>
+                                        <select class="form-control" name="leave_type" id="leave_type">
+                                            <option value="">Select Leave Type</option>
+                                            <c:forEach items="${listLeaveType}" var="leaveType">
+                                                <option value="${leaveType.id}">${leaveType.name}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>From <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                            <input class="form-control datetimepicker" name="from" onkeydown="event.preventDefault()" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>To <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                            <input class="form-control datetimepicker" name="to" onkeydown="event.preventDefault()" value="" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Number of days <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly type="text" value="2">
+                                        <input class="form-control" readonly name="number_of_days" type="text" value="">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Remaining Leaves <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly value="12" type="text">
-                                    </div>
+                                    <!--                                    <div class="form-group">
+                                                                            <label>Remaining Leaves <span class="text-danger">*</span></label>
+                                                                            <input class="form-control" readonly name="remaining_leave" value="" type="text">
+                                                                        </div>-->
                                     <div class="form-group">
                                         <label>Leave Reason <span class="text-danger">*</span></label>
-                                        <textarea rows="4" class="form-control">Going to hospital</textarea>
+                                        <textarea rows="4" class="form-control" name="reason" id="reason"></textarea>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Save</button>
@@ -311,7 +377,7 @@
                 <!-- /Edit Leave Modal -->
 
                 <!-- Delete Leave Modal -->
-                <div class="modal custom-modal fade" id="delete_approve" role="dialog">
+                <div class="modal custom-modal fade" id="delete_leave" role="dialog">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -319,16 +385,20 @@
                                     <h3>Delete Leave</h3>
                                     <p>Are you sure want to Cancel this leave?</p>
                                 </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                <form action="leave" method="post">
+                                    <input type="hidden" name="do" value="deleteLeave">
+                                    <input type="text" name="profile_id">
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="submit" class="btn btn-primary continue-btn" value="Delete" style="padding: 10px 75px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

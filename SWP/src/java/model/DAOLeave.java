@@ -24,7 +24,7 @@ public class DAOLeave extends DBConnect {
     ResultSet rs = null;
 
     public List<Leave> listAllMyLeave(String id) {
-        String sql = "select p.report_to, l.* \n"
+        String sql = "select p.report_to, p.annual_leave, l.* \n"
                 + "from leave l join [profile] p\n"
                 + "on l.profile_id = p.profile_id\n"
                 + "where l.profile_id = ?";
@@ -38,13 +38,14 @@ public class DAOLeave extends DBConnect {
                 list.add(new Leave(
                         rs.getString(1),
                         rs.getInt(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9)
+                        rs.getString(9),
+                        rs.getInt(10)
                 ));
             }
         } catch (Exception ex) {
@@ -57,11 +58,49 @@ public class DAOLeave extends DBConnect {
         return list;
     }
 
-    public List<Leave> listAllCheckLeave(String id) {
-        String sql = "select p.first_name, p.last_name, p.job_id, l.* \n"
+    public List<Leave> listAllCheckLeaveAdmin() {
+        String sql = "select p.first_name, p.last_name, p.job_id, p.annual_leave, l.* \n"
                 + "from leave l join [profile] p\n"
                 + "on l.profile_id = p.profile_id\n"
-                + "where p.report_to = 'TT002'";
+                + "join account a\n"
+                + "on l.profile_id = a.profile_id\n"
+                + "where a.isadmin = 0 and p.report_to is null";
+        List<Leave> list = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Leave(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getInt(12)
+                ));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+
+    public List<Leave> listAllCheckLeaveManager(String id) {
+        String sql = "select p.first_name, p.last_name, p.job_id, p.annual_leave, l.* \n"
+                + "from leave l join [profile] p\n"
+                + "on l.profile_id = p.profile_id\n"
+                + "where p.report_to = ?";
         List<Leave> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -74,13 +113,14 @@ public class DAOLeave extends DBConnect {
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getString(7),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getInt(7),
                         rs.getString(8),
                         rs.getString(9),
                         rs.getString(10),
-                        rs.getInt(11)
+                        rs.getString(11),
+                        rs.getInt(12)
                 ));
             }
         } catch (Exception ex) {
@@ -123,10 +163,10 @@ public class DAOLeave extends DBConnect {
 
     public static void main(String[] args) {
         DAOLeave dao = new DAOLeave();
-//        List<Leave> list = dao.listAllMyLeave("TT002");
-//        for (Leave leave : list) {
-//            System.out.println(leave.toString());
-//        }
-        System.out.println(dao.getLeaveByID("TT002"));
+        List<Leave> list = dao.listAllCheckLeaveManager("TT002");
+        for (Leave leave : list) {
+            System.out.println(leave.toString());
+        }
+//        System.out.println(dao.getLeaveByID("TT002"));
     }
 }

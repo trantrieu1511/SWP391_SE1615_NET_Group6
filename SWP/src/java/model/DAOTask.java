@@ -22,7 +22,7 @@ public class DAOTask extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
     
-    public boolean add(String name, int priority, String deadline, int status, String assigned, String project) {
+    public boolean addTask(String name, int priority, String deadline, int status, String assigned, String project) {
         String sql = "insert into task(name, priority, deadline, status, assigned, project)"
                 + " values(?,?,?,?,?,?)";
         try {
@@ -67,7 +67,7 @@ public class DAOTask extends DBConnect {
         return true;
     }
     
-    public Task getById(int id) {
+    public Task getTaskById(int id) {
         String sql = "select * from task where id = ?";
         try {
             conn = getConnection();
@@ -94,7 +94,7 @@ public class DAOTask extends DBConnect {
         return null;
     }
     
-    public List<Task> list(int status) {
+    public List<Task> listTaskByStatus(int status) {
         List<Task> list = new ArrayList<>();
         String sql = "select * from task where status = ?";
         try {

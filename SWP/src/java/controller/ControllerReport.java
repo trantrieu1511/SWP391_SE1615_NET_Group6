@@ -301,16 +301,16 @@ public class ControllerReport extends HttpServlet {
                     if (status != null) {
                         switch (status) {
                             case "0":
-                                listTask = daoTask.list(0);
+                                listTask = daoTask.listTaskByStatus(0);
                                 break;
                             case "1":
-                                listTask = daoTask.list(1);
+                                listTask = daoTask.listTaskByStatus(1);
                                 break;
                             case "2":
-                                listTask = daoTask.list(2);
+                                listTask = daoTask.listTaskByStatus(2);
                                 break;
                             case "3":
-                                listTask = daoTask.list(3);
+                                listTask = daoTask.listTaskByStatus(3);
                                 break;
                             case "All":
                                 listTask = daoTask.listAllTask();

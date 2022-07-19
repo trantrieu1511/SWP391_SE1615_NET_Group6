@@ -249,7 +249,7 @@ public class ControllerManager extends HttpServlet {
                     int status = 0;
                     String assigned = request.getParameter("assigned");
                     String project = request.getParameter("project");
-                    daoTask.add(name, priority, deadline, status, assigned, project);
+                    daoTask.addTask(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
 

@@ -24,15 +24,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOAttendance;
 import model.DAOClients;
-import model.DAODepartment;
-import model.DAOFamilyInfo;
-import model.DAOJob;
 import model.DAOProfile;
-import model.DAOProfileDetail;
 import model.DAOProject;
-import model.DAOSalary;
 import model.DAOSchedule;
 import model.DAOShift;
 import model.DAOTask;
@@ -65,12 +59,6 @@ public class ControllerDashboard extends HttpServlet {
             } else {
                 DAOProject daoProject = new DAOProject();
                 DAOProfile daoProfile = new DAOProfile();
-                DAOAttendance daoAttendance = new DAOAttendance();
-                DAODepartment daoDepartment = new DAODepartment();
-                DAOJob daoJob = new DAOJob();
-                DAOProfileDetail daoPD = new DAOProfileDetail();
-                DAOFamilyInfo daoFam = new DAOFamilyInfo();
-                DAOSalary daoSalary = new DAOSalary();
                 DAOTask daoTask = new DAOTask();
                 DAOClients daoClient = new DAOClients();
                 DAOShift daoShift = new DAOShift();
@@ -118,11 +106,11 @@ public class ControllerDashboard extends HttpServlet {
                     });
                     List<Shift> listShift = daoShift.listShift();
                     Schedule sch = daoSch.getStaffSchedule(acc.getProfile_id());
-                    for(Shift s : listShift) {
+                    for (Shift s : listShift) {
                         if (!sch.getName().contains(s.getName())) {
                             listShift.remove(s);
                         }
-                    }                  
+                    }
                     List<Projects> listProject = daoProject.listProject();
                     request.setAttribute("name", employee.getFirst_name() + " " + employee.getLast_name());
                     request.setAttribute("date", today);

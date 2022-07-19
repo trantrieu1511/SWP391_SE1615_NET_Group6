@@ -70,7 +70,7 @@
                             <div class="row filter-row">
                                 <div class="col-sm-6 col-md-3">  
                                     <div class="form-group form-focus">
-                                        <input class="form-control floating" name="name" type="text" pattern="[A-Za-z]{1,20}" value="${name}">   
+                                        <input class="form-control floating" name="name" type="text" pattern="[A-Za-z0-9]{1,20}" value="${name}">   
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-3">  

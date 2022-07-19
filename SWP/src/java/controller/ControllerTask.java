@@ -132,7 +132,30 @@ public class ControllerTask extends HttpServlet {
                 }
 
                 if (service.equals("editTask")) {
+                    String project = request.getParameter("project");
+                    int id = Integer.parseInt(request.getParameter("idTask")); 
+                    String name = request.getParameter("nameEdit");
+                    int priority = Integer.parseInt(request.getParameter("priorityEdit"));
+                    String deadline = request.getParameter("deadlineEdit");
+                    String assigned = request.getParameter("assignedEdit");
+                    daoTask.editTask(id, name, priority, deadline, assigned);
+                    
+                    List<Task> list0 = daoTask.listProjectTask(0, project);
+                    List<Task> list1 = daoTask.listProjectTask(1, project);
+                    List<Task> list2 = daoTask.listProjectTask(2, project);
+                    List<Task> list3 = daoTask.listProjectTask(3, project);
+                    List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
+                    String alert = "New task information saved!!";
 
+                    request.setAttribute("list0", list0);
+                    request.setAttribute("list1", list1);
+                    request.setAttribute("list2", list2);
+                    request.setAttribute("list3", list3);
+                    request.setAttribute("title", project);
+                    request.setAttribute("listPf", listPf);
+                    request.setAttribute("alert", alert);
+                    RequestDispatcher dispath = request.getRequestDispatcher("task-board.jsp");
+                    dispath.forward(request, response);                  
                 }
                 
                 if (service.equals("deleteTask")) {

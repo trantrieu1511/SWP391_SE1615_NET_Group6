@@ -86,6 +86,7 @@
                     var reason = $(e.relatedTarget).attr('data-reason');
 
                     $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                    $(e.currentTarget).find('input[name="id"]').val(id);
 //                    $(e.currentTarget).find('input[name="leave_type"]').val(leave_type);
                     $(e.currentTarget).find('input[name="from"]').val(from);
                     $(e.currentTarget).find('input[name="to"]').val(to);
@@ -102,10 +103,79 @@
             });
             $(function () {
                 $("#delete_leave").on("show.bs.modal", function (e) {
-                    var profile_id = $(e.relatedTarget).attr('data-id');
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var profile_id = myArray[1];
+                    $(e.currentTarget).find('input[name="id"]').val(id);
                     $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
                 });
             });
+
+            $(document).ready(function () {
+                var x;
+                $("#btn1").click(function () {
+                    x = $("p").detach();
+                });
+                $("#btn2").click(function () {
+                    $("body").prepend(x);
+                });
+            });
+
+            $(document).ready(function () {
+                var cacheDom = "";
+                $('#remove').click(function () {
+                    cacheDom = $('#div_select'); //storing the value in dom
+                    $('#div_select').remove();
+                });
+                $('#add').click(function () {
+                    $('#prepend').append(cacheDom); // appending it back
+                });
+            });
+
+            function checkDay() {
+                var to_date = document.getElementById('to').value;
+                var from_date = document.getElementById('from').value;
+                var myselect = document.getElementById('number_of_days_select');
+                var div_select = document.getElementById('div_select');
+                var div_input = document.getElementById('div_input');
+                var div_prepend = document.getElementById('prepend');
+                var x;
+                var y;
+                var cacheDom = "";
+                if (to_date != from_date) {
+
+//                    cacheDom = $('#div_select'); //storing the value in dom
+//                    $('#div_select').remove();
+
+
+//                    document.getElementById('number_of_days').type = "text";
+//                    myselect.setAttribute("hidden", "hidden");
+//                    x = div_select.detach();
+                } else {
+//                    document.getElementById("number_of_days").type = "hidden";
+//                    myselect.removeAttribute("hidden");
+//                    div_prepend.prepend(x);
+//                    $('#prepend').append(cacheDom); // appending it back
+                }
+            }
+
+//            let toggle = button => {
+//                let element = document.getElementById("number_of_days_select");
+//                let element2 = document.getElementById("number_of_days");
+//
+//                let hidden = element.getAttribute("hidden");
+//
+//                if (hidden) {
+//                    element.removeAttribute("hidden");
+//                    element2.type = "hidden";
+//                    button.innerText = "Hide Select";
+//                } else {
+//                    element.setAttribute("hidden", "hidden");
+//                    element2.type = "text";
+//                    button.innerText = "Show Select";
+//                }
+//            }
             // alert
             <c:if test="${alert != ''}">
             window.onload = function () {
@@ -228,7 +298,7 @@
                                                 </td>
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <a href="" class="avatar avatar-xs"><img src="img/profiles/avatar-09.jpg" alt=""></a>
+                                                        <a href="" class="avatar avatar-xs"><img src="img/profiles/avatar-05.jpg" alt=""></a>
                                                             <c:choose>
                                                                 <c:when test="${leave.reportto_name.equals('null')}">
                                                                 Admin
@@ -245,7 +315,7 @@
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to} ${leave.number_of_days}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-id="${leave.id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                            <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -271,7 +341,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="leave?do=addLeave" method="post">
-                                    <input type="text" name="profile_id">
+                                    <input type="hidden" name="profile_id">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
                                         <select class="select" name="leave_type">
@@ -288,19 +358,30 @@
                                     <div class="form-group">
                                         <label>From <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="from" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>">
+                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="from" id="from" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>To <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="to">
+                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="to" id="to">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<a class="btn btn-success btn-block" onclick="checkDay()">Compare</a>-->
+                                    <div id="prepend"></div>
+                                    <div class="form-group" id="div_input">
                                         <label>Number of days <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly type="text" name="number_of_days">
+                                        <input class="form-control" readonly type="text" name="number_of_days" id="number_of_days">
                                     </div>
+                                    <!--                                    <div class="form-group" id="div_select">
+                                                                            <label>Number of days <span class="text-danger">*</span></label>
+                                                                            <select class="form-control" name="number_of_days" id="number_of_days_select">
+                                                                                <option value="">Select leave slot</option>
+                                                                                <option value="1">slot 1</option>
+                                                                                <option value="2">slot 2</option>
+                                                                                <option value="3">slot 3</option>
+                                                                            </select>
+                                                                        </div>-->
                                     <div class="form-group">
                                         <!--<label>Remaining Leaves <span class="text-danger">*</span></label>-->
                                         <!--<input class="form-control" readonly value="12" type="hidden">-->
@@ -313,6 +394,9 @@
                                         <button class="btn btn-primary submit-btn">Submit</button>
                                     </div>
                                 </form>
+                                <!--<button onclick="toggle(this)">Hide Select</button>-->
+                                <!--                                <button id='remove'>Remove</button>
+                                                                <button id='add'>Add Back</button>-->
                             </div>
                         </div>
                     </div>
@@ -332,7 +416,8 @@
                             <div class="modal-body">
                                 <form action="leave" method="post">
                                     <input type="hidden" name="do" value="editLeave">
-                                    <input type="text" name="profile_id" value="">
+                                    <input type="hidden" name="profile_id" value="">
+                                    <input type="hidden" name="id" value="">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
                                         <select class="form-control" name="leave_type" id="leave_type">
@@ -387,6 +472,7 @@
                                 </div>
                                 <form action="leave" method="post">
                                     <input type="hidden" name="do" value="deleteLeave">
+                                    <input type="text" name="id">
                                     <input type="text" name="profile_id">
                                     <div class="modal-btn delete-action">
                                         <div class="row">

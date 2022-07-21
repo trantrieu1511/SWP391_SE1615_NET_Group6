@@ -172,9 +172,23 @@
                                 <div class="col-md-12">
                                     <div class="profile-view">
                                         <div class="profile-img-wrap">
-                                            <div class="profile-img">
-                                                <a href="#"><img alt="" src="img/profiles/avatar-02.jpg"></a>
-                                            </div>
+                                            <c:choose>
+                                                <c:when test="${sessionScope.acc.isAdmin == true && p.reportto == null}">
+                                                    <div class="profile-img">
+                                                        <a href="#"><img alt="" src="img/profiles/avatar-05.jpg"></a>
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${sessionScope.acc.isManager == true && p.reportto == null}">
+                                                    <div class="profile-img">
+                                                        <a href="#"><img alt="" src="img/profiles/avatar-21.jpg"></a>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="profile-img">
+                                                        <a href="#"><img alt="" src="img/profiles/avatar-18.jpg"></a>
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                         <div class="profile-basic">
                                             <div class="row">                                            
@@ -235,7 +249,7 @@
                                                                     <div class="text">
                                                                         <div class="avatar-box">
                                                                             <div class="avatar avatar-xs">
-                                                                                <img src="img/profiles/avatar-16.jpg" alt="">
+                                                                                <img src="img/profiles/avatar-21.jpg" alt="">
                                                                             </div>
                                                                         </div>
                                                                         <c:choose>

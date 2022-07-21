@@ -111,6 +111,28 @@ public class ControllerLeave extends HttpServlet {
                 }
 
                 if (service.equals("myLeave")) {
+                    String add = request.getParameter("add");
+                    String edit = request.getParameter("edit");
+                    String delete = request.getParameter("delete");
+
+                    if (add != null && add.equals("success")) {
+                        alert = "Add new leave successfully!";
+                    }
+                    if (add != null && add.equals("failed")) {
+                        alert = "Add new leave failed!";
+                    }
+                    if (edit != null && edit.equals("success")) {
+                        alert = "Edit leave successfully!";
+                    }
+                    if (edit != null && edit.equals("failed")) {
+                        alert = "Edit leave failed!";
+                    }
+                    if (delete != null && delete.equals("success")) {
+                        alert = "Delete leave successfully!";
+                    }
+                    if (delete != null && delete.equals("failed")) {
+                        alert = "Delete leave failed!";
+                    }
                     List<Leave> listLeave = daoLeave.listAllMyLeave(acc.getProfile_id());
                     List<LeaveType> listLeaveType = daoLeaveType.listAllLeaveType();
                     int medical_leave = 0;
@@ -147,12 +169,11 @@ public class ControllerLeave extends HttpServlet {
                 }
                 if (service.equals("addLeave")) {
                     String profile_id = request.getParameter("profile_id");
-                    String leave_type = request.getParameter("leave_type");
+                    int leave_type = Integer.parseInt(request.getParameter("leave_type"));
                     String from = request.getParameter("from");
                     String to = request.getParameter("to");
                     String number_of_days = request.getParameter("number_of_days");
                     String reason = request.getParameter("reason");
-
 //                    out.print(profile_id);
 //                    out.print("<br>");
 //                    out.print(leave_type);
@@ -164,21 +185,62 @@ public class ControllerLeave extends HttpServlet {
 //                    out.print(number_of_days);
 //                    out.print("<br>");
 //                    out.print(reason);
-                    response.sendRedirect("leave?do=myLeave");
+
+                    int annual_leave = daoPf.getByID(profile_id).getAnnual_leave(); //remaining leave
+                    if (annual_leave <= 0) {
+                        boolean addLeave = daoLeave.addLeave(new Leave(profile_id,
+                                leave_type, from, to, number_of_days, reason));
+                        if (addLeave) {
+                            System.out.println("Add Leave for pf_id = " + profile_id + " successfully!");
+                            boolean IncrementAL = daoLeave.IncrementAnnualLeave(profile_id);
+                            if (IncrementAL) {
+                                System.out.println("Update annual leave for pf_id = " + profile_id + " successfully (-1 annual leave)!");
+                            } else {
+                                System.out.println("Fail to update annual leave!");
+                            }
+                        } else {
+                            System.out.println("Fail to add new leave!");
+                        }
+                        response.sendRedirect("leave?do=myLeave&add=success");
+                    } else {
+                        System.out.println("Cannot add more leave, your leave has extend the required amount of annual leave!");
+                        response.sendRedirect("leave?do=myLeave&add=failed");
+                    }
                 }
                 if (service.equals("editLeave")) {
+                    int id = Integer.parseInt(request.getParameter("id"));
                     String profile_id = request.getParameter("profile_id");
-                    String leave_type = request.getParameter("leave_type");
+                    int leave_type = Integer.parseInt(request.getParameter("leave_type"));
                     String from = request.getParameter("from");
                     String to = request.getParameter("to");
                     String number_of_days = request.getParameter("number_of_days");
                     String reason = request.getParameter("reason");
 
+                    boolean editLeave = daoLeave.editLeave(new Leave(id, profile_id,
+                            leave_type, from, to, number_of_days, reason));
+                    if (editLeave) {
+                        System.out.println("Edit Leave for pf_id = " + profile_id + " where id = " + id + " success!");
+                    } else {
+                        System.out.println("Fail to edit leave!");
+                    }
                     response.sendRedirect("leave?do=myLeave");
                 }
                 if (service.equals("deleteLeave")) {
+                    int id = Integer.parseInt(request.getParameter("id"));
                     String profile_id = request.getParameter("profile_id");
 
+                    boolean deleteLeave = daoLeave.deleteLeave(id);
+                    if (deleteLeave) {
+                        System.out.println("Delete Leave for pf_id = " + profile_id + " where id = " + id + " success!");
+                        boolean DecrementAL = daoLeave.IncrementAnnualLeave(profile_id);
+                        if (DecrementAL) {
+                            System.out.println("Update annual leave for pf_id = " + profile_id + " successfully (+1 annual leave)!");
+                        } else {
+                            System.out.println("Fail to update annual leave!");
+                        }
+                    } else {
+                        System.out.println("Fail to delete leave!");
+                    }
                     response.sendRedirect("leave?do=myLeave");
                 }
             }

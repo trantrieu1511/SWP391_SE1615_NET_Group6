@@ -61,6 +61,27 @@ public class Leave extends Profile {
         this.status = status;
     }
 
+    //addLeave constructor
+    public Leave(String profile_id, int leave_type, String from, String to, String number_of_days, String reason) {
+        this.profile_id = profile_id;
+        this.leave_type = leave_type;
+        this.from = from;
+        this.to = to;
+        this.number_of_days = number_of_days;
+        this.reason = reason;
+    }
+
+    //editLeave constructor
+    public Leave(int id, String profile_id, int leave_type, String from, String to, String number_of_days, String reason) {
+        this.id = id;
+        this.profile_id = profile_id;
+        this.leave_type = leave_type;
+        this.from = from;
+        this.to = to;
+        this.number_of_days = number_of_days;
+        this.reason = reason;
+    }
+
     public int getId() {
         return id;
     }

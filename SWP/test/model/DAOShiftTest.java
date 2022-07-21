@@ -30,27 +30,27 @@ public class DAOShiftTest {
     }
 
     /**
-     * Test of add method, of class DAOShift.
+     * Test of addShift method, of class DAOShift.
      */
     @Test
     public void testAdd() {
-        //assertTrue(dao.add("morning", "8:30", "11:30"));
+        //assertTrue(dao.addShift("morning", "8:30", "11:30"));
     }
 
     /**
-     * Test of edit method, of class DAOShift.
+     * Test of editShift method, of class DAOShift.
      */
     @Test
     public void testEdit() {
-        //assertTrue(dao.edit("morning-shift", "8:30", "11:30", "morning"));
+        //assertTrue(dao.editShift("morning-shift", "8:30", "11:30", "morning"));
     }
 
     /**
-     * Test of delete method, of class DAOShift.
+     * Test of deleteShift method, of class DAOShift.
      */
     @Test
     public void testDelete() {
-        //assertTrue(dao.delete("morning-shift"));
+        //assertTrue(dao.deleteShift("morning-shift"));
     }
 
 }

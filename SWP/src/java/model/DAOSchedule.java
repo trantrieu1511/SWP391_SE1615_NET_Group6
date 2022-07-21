@@ -40,32 +40,6 @@ public class DAOSchedule extends DBConnect {
         return true;
     }
 
-    public boolean checkExist(String profile_id) {
-        List<Schedule> list = new ArrayList<>();
-        String sql = "select * from schedule where profile_id=?";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.setString(1, profile_id);
-            rs = state.executeQuery();
-            while (rs.next()) {
-                list.add(new Schedule(
-                        rs.getString(1),
-                        rs.getString(2)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        if (list.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public List<Schedule> listStaffWithSchedule() {
         List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedule order by profile_id asc";
@@ -139,23 +113,6 @@ public class DAOSchedule extends DBConnect {
             state = conn.prepareStatement(sql);
             state.setString(1, shift_status);
             state.setString(2, profile_id);
-            state.executeUpdate();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        } finally {
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return true;
-    }
-
-    public boolean deleteSchedule(String profile_id) {
-        String sql = "delete from schedule where profile_id=?";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            state.setString(1, profile_id);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

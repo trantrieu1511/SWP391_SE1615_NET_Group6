@@ -124,7 +124,7 @@
 
             $(document).ready(function () {
                 var cacheDom = "";
-                $('#remove').click(function () {
+                $('#remove').on("#div_input.")(function () {
                     cacheDom = $('#div_select'); //storing the value in dom
                     $('#div_select').remove();
                 });
@@ -373,15 +373,15 @@
                                         <label>Number of days <span class="text-danger">*</span></label>
                                         <input class="form-control" readonly type="text" name="number_of_days" id="number_of_days">
                                     </div>
-                                    <!--                                    <div class="form-group" id="div_select">
-                                                                            <label>Number of days <span class="text-danger">*</span></label>
-                                                                            <select class="form-control" name="number_of_days" id="number_of_days_select">
-                                                                                <option value="">Select leave slot</option>
-                                                                                <option value="1">slot 1</option>
-                                                                                <option value="2">slot 2</option>
-                                                                                <option value="3">slot 3</option>
-                                                                            </select>
-                                                                        </div>-->
+                                    <div class="form-group" id="div_select">
+                                        <label>Number of days <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="number_of_days" id="number_of_days_select">
+                                            <option value="">Select leave slot</option>
+                                            <option value="1">slot 1</option>
+                                            <option value="2">slot 2</option>
+                                            <option value="3">slot 3</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <!--<label>Remaining Leaves <span class="text-danger">*</span></label>-->
                                         <!--<input class="form-control" readonly value="12" type="hidden">-->

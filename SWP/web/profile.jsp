@@ -173,12 +173,12 @@
                                     <div class="profile-view">
                                         <div class="profile-img-wrap">
                                             <c:choose>
-                                                <c:when test="${sessionScope.acc.isAdmin == true && p.reportto == null}">
+                                                <c:when test="${(p.profile_id).equals('MA001')}">
                                                     <div class="profile-img">
                                                         <a href="#"><img alt="" src="img/profiles/avatar-05.jpg"></a>
                                                     </div>
                                                 </c:when>
-                                                <c:when test="${sessionScope.acc.isManager == true && p.reportto == null}">
+                                                <c:when test="${p.reportto == null}">
                                                     <div class="profile-img">
                                                         <a href="#"><img alt="" src="img/profiles/avatar-21.jpg"></a>
                                                     </div>

@@ -34,7 +34,7 @@
         <div class="main-wrapper">
 		
 			<div class="account-content">
-				<a href="job-list.html" class="btn btn-primary apply-btn">Apply Job</a>
+				<!--<a href="job-list.html" class="btn btn-primary apply-btn">Apply Job</a>-->
 				<div class="container">
 				
 					<!-- Account Logo -->

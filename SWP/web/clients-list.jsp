@@ -203,7 +203,7 @@
                                             <tr>
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <!--<a href="client-profile.html" class="avatar"><img src="img/profiles/avatar-19.jpg" alt=""></a>-->
+                                                        <a href="#" class="avatar"><img src="img/profiles/avatar-19.jpg" alt=""></a>
                                                         <a href="client?do=getclientProfile&client_id=${cl.client_id}">${cl.company_name}</a>
                                                     </h2>
                                                 </td>

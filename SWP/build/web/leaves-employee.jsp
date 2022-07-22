@@ -298,12 +298,13 @@
                                                 </td>
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <a href="" class="avatar avatar-xs"><img src="img/profiles/avatar-05.jpg" alt=""></a>
-                                                            <c:choose>
-                                                                <c:when test="${leave.reportto_name.equals('null')}">
+                                                        <c:choose>
+                                                            <c:when test="${leave.reportto_name.equals('null')}">
+                                                                <a href="" class="avatar avatar-xs"><img src="img/profiles/avatar-05.jpg" alt=""></a>
                                                                 Admin
                                                             </c:when>
                                                             <c:otherwise>
+                                                                <a href="" class="avatar avatar-xs"><img src="img/profiles/avatar-21.jpg" alt=""></a>
                                                                 <a href="profile?do=getothersProfile&profile_id=${leave.reportto}">${leave.reportto_name}</a>
                                                             </c:otherwise>
                                                         </c:choose>
@@ -311,13 +312,20 @@
                                                     </h2>
                                                 </td>
                                                 <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to} ${leave.number_of_days}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                        </div>
-                                                    </div>
+                                                    <c:choose>
+                                                        <c:when test="${leave.status == 1}">
+                                                            <div class="dropdown dropdown-action">
+                                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to} ${leave.number_of_days}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                    <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -344,7 +352,7 @@
                                     <input type="hidden" name="profile_id">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
-                                        <select class="select" name="leave_type">
+                                        <select class="select" name="leave_type" required="">
                                             <option value="">Select Leave Type</option>
                                             <c:forEach items="${listLeaveType}" var="ltype">
                                                 <option value="${ltype.id}">${ltype.name}</option>

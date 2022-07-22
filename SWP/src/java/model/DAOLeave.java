@@ -66,7 +66,8 @@ public class DAOLeave extends DBConnect {
                 + "on l.profile_id = p.profile_id\n"
                 + "join account a\n"
                 + "on l.profile_id = a.profile_id\n"
-                + "where a.isadmin = 0 and p.report_to is null";
+                + "where a.isadmin = 0 and p.report_to is null\n"
+                + "order by [status] asc";
         List<Leave> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -102,7 +103,8 @@ public class DAOLeave extends DBConnect {
         String sql = "select p.first_name, p.last_name, p.job_id, p.annual_leave, l.* \n"
                 + "from leave l join [profile] p\n"
                 + "on l.profile_id = p.profile_id\n"
-                + "where p.report_to = ?";
+                + "where p.report_to = ?\n"
+                + "order by [status] asc";
         List<Leave> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -276,6 +278,26 @@ public class DAOLeave extends DBConnect {
             conn = getConnection();
             state = conn.prepareStatement(sql);
             state.setString(1, profile_id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean updateStatus(int id, int status) {
+        String sql = "update [leave]\n"
+                + "set [status] = ?\n"
+                + "where id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, status);
+            state.setInt(2, id);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

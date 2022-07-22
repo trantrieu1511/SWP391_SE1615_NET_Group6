@@ -243,6 +243,19 @@ public class ControllerLeave extends HttpServlet {
                     }
                     response.sendRedirect("leave?do=myLeave");
                 }
+                if (service.equals("updateStatus")) {
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    String profile_id = request.getParameter("profile_id");
+
+                    boolean updateStatus = daoLeave.updateStatus(id, status);
+                    if (updateStatus) {
+                        System.out.println("Update status successfully to " + status + " for pf_id = " + profile_id + ", id = " + id);
+                    } else {
+                        System.out.println("Fail to update status to " + status + " for pf_id = " + profile_id + ", id = " + id);
+                    }
+                    response.sendRedirect("leave?do=checkLeave");
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

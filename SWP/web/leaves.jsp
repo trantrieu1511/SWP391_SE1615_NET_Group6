@@ -92,6 +92,40 @@
                     $('#reason').val(reason);
                 });
             });
+
+            $(function () {
+                $("#approve_leave").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var profile_id = myArray[1];
+                    $(e.currentTarget).find('input[name="id"]').val(id);
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                });
+            });
+
+            $(function () {
+                $("#decline_leave").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var profile_id = myArray[1];
+                    $(e.currentTarget).find('input[name="id"]').val(id);
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                });
+            });
+
+            $(function () {
+                $("#cancel_approve").on("show.bs.modal", function (e) {
+                    var text = $(e.relatedTarget).attr('data-id');
+                    const myArray = text.split(" ");
+                    var id = myArray[0];
+                    var profile_id = myArray[1];
+                    $(e.currentTarget).find('input[name="id"]').val(id);
+                    $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
+                });
+            });
+
             // alert
             <c:if test="${alert != ''}">
             window.onload = function () {
@@ -269,9 +303,9 @@
                                                             </a>
                                                         </c:if>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                                            <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#cancel_approve"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                                            <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                                            <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#decline_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -419,25 +453,96 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <div class="form-header">
-                                    <h3>Leave Approve</h3>
-                                    <p>Are you sure want to approve for this leave?</p>
-                                </div>
-                                <div class="modal-btn delete-action">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Decline</a>
+                                <form action="leave" method="post">
+                                    <input type="hidden" name="do" value="updateStatus">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="profile_id">
+                                    <input type="hidden" name="status" value="2">
+                                    <div class="form-header">
+                                        <h3>Leave Approve</h3>
+                                        <p>Are you sure want to approve for this leave?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <!--                                                <a href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</a>-->
+                                                <input type="submit" class="btn btn-primary continue-btn" value="Approve" style="padding: 10px 70px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- /Approve Leave Modal -->
+
+                <!-- Decline Leave Modal -->
+                <div class="modal custom-modal fade" id="decline_leave" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="leave" method="post">
+                                    <input type="hidden" name="do" value="updateStatus">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="profile_id">
+                                    <input type="hidden" name="status" value="3">
+                                    <div class="form-header">
+                                        <h3>Leave Decline</h3>
+                                        <p>Are you sure want to decline this leave?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <!--<a href="javascript:void(0);" class="btn btn-primary continue-btn">Yes</a>-->
+                                                <input type="submit" class="btn btn-primary continue-btn" value="Decline" style="padding: 10px 70px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Decline Leave Modal -->
+
+                <!-- Cancel Leave Approval Modal -->
+                <div class="modal custom-modal fade" id="cancel_approve" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="leave" method="post">
+                                    <input type="hidden" name="do" value="updateStatus">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="profile_id">
+                                    <input type="hidden" name="status" value="1">
+                                    <div class="form-header">
+                                        <h3>Cancel Leave Approval</h3>
+                                        <p>Are you sure want to cancel approval for this leave?</p>
+                                    </div>
+                                    <div class="modal-btn delete-action">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <!--<a href="javascript:void(0);" class="btn btn-primary continue-btn">Yes</a>-->
+                                                <input type="submit" class="btn btn-primary continue-btn" value="Yes" style="padding: 10px 90px;">
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Decline Leave Modal -->
 
                 <!-- Delete Leave Modal -->
                 <div class="modal custom-modal fade" id="delete_approve" role="dialog">

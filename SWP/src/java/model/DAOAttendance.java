@@ -97,7 +97,7 @@ public class DAOAttendance extends DBConnect {
     public List<Attendance> listAllAttendance(String id) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select [shift_id], [date], [time_in], [time_out],"
-                + " [production_time], [employee_id], [report_to] "
+                + " [production_time], [employee_id], [note] "
                 + "from attendance join profile on attendance.employee_id = "
                 + "profile.profile_id where [report_to] = ?";
         try {
@@ -152,7 +152,7 @@ public class DAOAttendance extends DBConnect {
         return list;
     }
     
-    public List<Attendance> search(String date, String profile_id) {
+    public List<Attendance> searchAttendance(String date, String profile_id) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select * from attendance where employee_id like ? and date = ?";
         try {
@@ -180,7 +180,7 @@ public class DAOAttendance extends DBConnect {
         return list;
     }
     
-    public List<Attendance> search(String date, String name, String reportto) {
+    public List<Attendance> searchAttendance(String date, String name, String reportto) {
         List<Attendance> list = new ArrayList<>();
         String sql = "select shift_id, date, time_in, time_out, production_time,"
                 + " employee_id, report_to from attendance join "
@@ -238,11 +238,11 @@ public class DAOAttendance extends DBConnect {
     public static void main(String[] args) {
         DAOAttendance dao = new DAOAttendance();
         DAOProfile daoPf = new DAOProfile();
-//        List<Attendance> list = dao.search("", "gio", "ABCDE");
+//        List<Attendance> list = dao.searchAttendance("", "gio", "ABCDE");
 //        for (Attendance a : list) {
 //            a.setEmployee_id(daoPf.getByID(a.getEmployee_id()).getFirst_name() + " " + daoPf.getByID(a.getEmployee_id()).getLast_name());
 //        }
 //        System.out.println(list);
-        System.out.println(dao.listAllAttendanceofAnEmployee("QWERT"));
+        System.out.println(dao.listAllAttendance("NK006"));
     }
 }

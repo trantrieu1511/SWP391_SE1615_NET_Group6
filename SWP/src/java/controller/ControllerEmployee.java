@@ -86,10 +86,10 @@ public class ControllerEmployee extends HttpServlet {
                     dispath.forward(request, response);
                 }
                 
-                // search attendance
+                // searchAttendance attendance
                 if (service.equals("searchAttendance")) {
                     String date_search = request.getParameter("date");
-                    List<Attendance> list = daoAttendance.search(date_search, employee_id);
+                    List<Attendance> list = daoAttendance.searchAttendance(date_search, employee_id);
                     request.setAttribute("list_attendance", list);
                     request.setAttribute("button", button);
                     request.setAttribute("date", date_search);

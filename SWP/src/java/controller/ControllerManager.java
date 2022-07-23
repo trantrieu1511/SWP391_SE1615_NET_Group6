@@ -88,11 +88,11 @@ public class ControllerManager extends HttpServlet {
                     dispath.forward(request, response);
                 }
 
-                // search attendance
+                // searchAttendance attendance
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date_search = request.getParameter("date");
-                    List<Attendance> listAttendance = daoAttendance.search(date_search, name, acc.getProfile_id());
+                    List<Attendance> listAttendance = daoAttendance.searchAttendance(date_search, name, acc.getProfile_id());
                     for (Attendance a : listAttendance) {
                         a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
@@ -256,7 +256,7 @@ public class ControllerManager extends HttpServlet {
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date = request.getParameter("date");
-                    List<Attendance> listAttendance = daoAttendance.search(name, date);
+                    List<Attendance> listAttendance = daoAttendance.searchAttendance(name, date);
                     request.setAttribute("list", listAttendance);
                     RequestDispatcher dispath = request.getRequestDispatcher("attendance-manager.jsp");
                     dispath.forward(request, response);

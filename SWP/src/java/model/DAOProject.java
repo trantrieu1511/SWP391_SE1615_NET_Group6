@@ -145,7 +145,7 @@ public class DAOProject extends DBConnect {
         return true;
     }
     
-    public List<Projects> search(String title) {
+    public List<Projects> searchProject(String title) {
         List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where title like ?";
         try {

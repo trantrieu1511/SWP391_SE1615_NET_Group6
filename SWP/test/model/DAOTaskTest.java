@@ -24,17 +24,9 @@ public class DAOTaskTest {
      */
     @Test
     public void testAdd() {
-        //assertTrue(dao.addTask("test", 0, "07/07/2022", 0, "KUGHY", "Test"));
+        assertTrue(dao.addTask("test", 0, "07/07/2022", 0, "GG007", "pj1"));
     }
 
-    /**
-     * Test of getByName method, of class DAOTask.
-     */
-//    @Test
-//    public void testGetByName() {
-//        assertEquals("task{name=test, priority=0, deadline=07/07/2022, status=2,"
-//                + " assigned=KUGHY, project=Test}", dao.getByName("test").toString());
-//    }
 
     /**
      * Test of listTaskByStatus method, of class DAOTask.

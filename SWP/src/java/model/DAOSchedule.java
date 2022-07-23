@@ -126,6 +126,6 @@ public class DAOSchedule extends DBConnect {
 
     public static void main(String[] args) {
         DAOSchedule dao = new DAOSchedule();
-        System.out.println(dao.searchSchedule("Joe"));
+        System.out.println(dao.listStaffWithSchedule());
     }
 }

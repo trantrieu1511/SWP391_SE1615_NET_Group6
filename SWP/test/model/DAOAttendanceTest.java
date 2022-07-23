@@ -21,33 +21,33 @@ public class DAOAttendanceTest {
     }
 
     /**
-     * Test of add method, of class DAOAttendance.
+     * Test of checkIn method, of class DAOAttendance.
      */
     @Test
     public void testAdd() {
-        //assertTrue(dao.add("02/07/2022", "8:30", "11:30", "3:00", "WRYYY"));
+        //assertTrue(dao.checkIn("02/07/2022", "8:30", "11:30", "3:00", "WRYYY"));
     }
 
     /**
-     * Test of getLastest method, of class DAOAttendance.
+     * Test of getLastestAttendance method, of class DAOAttendance.
      */
     @Test
     public void testGetLastest() {
         assertEquals("attendance{id=11, date=02/07/2022, time_in=8:30,"
                 + " time_out=11:30, production_time=3:00, employee_id=WRYYY, "
-                + "reportto=null}", dao.getLastest("WRYYY").toString());
+                + "reportto=null}", dao.getLastestAttendance("WRYYY").toString());
     }
 
     /**
-     * Test of update method, of class DAOAttendance.
+     * Test of checkOut method, of class DAOAttendance.
      */
     @Test
     public void testUpdate() {
-        assertTrue(dao.update(1, "6:00", "5:51", "QWERT"));
+        assertTrue(dao.checkOut(1, "6:00", "5:51", "QWERT"));
     }
 
     /**
-     * Test of listAll method, of class DAOAttendance.
+     * Test of listAllAttendance method, of class DAOAttendance.
      */
     @Test
     public void testListAll() {
@@ -58,7 +58,7 @@ public class DAOAttendanceTest {
                 + "employee_id=WRYYY, reportto=ABCDE}, attendance{id=11, "
                 + "date=02/07/2022, time_in=8:30, time_out=11:30, "
                 + "production_time=3:00, employee_id=WRYYY, reportto=ABCDE}]", 
-                dao.listAll("ABCDE").toString());
+                dao.listAllAttendance("ABCDE").toString());
     }
 
     /**
@@ -85,14 +85,14 @@ public class DAOAttendanceTest {
     }
 
     /**
-     * Test of search2 method, of class DAOAttendance.
+     * Test of search method, of class DAOAttendance.
      */
     @Test
     public void testSearch2() {
         assertEquals("[attendance{id=11, date=02/07/2022, time_in=8:30, "
                 + "time_out=11:30, production_time=3:00, employee_id=WRYYY, "
                 + "reportto=ABCDE}]",
-                dao.search2("02/07/2022", "Gior", "ABCDE").toString());
+                dao.search("02/07/2022", "Gior", "ABCDE").toString());
     }
 
     /**

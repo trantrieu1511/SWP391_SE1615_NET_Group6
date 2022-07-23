@@ -46,7 +46,7 @@ public class DAOProjectTest {
      */
     @Test
     public void testAddProject() {
-        //assertTrue(dao.addProject("Test", "BUKFS", "30/06/2022 - 17/8/2022", 10000, "ABCDE", "demo test"));
+        assertTrue(dao.addProject("Test", "BUKFS", "30/06/2022 - 17/8/2022", 10000, "ABCDE", "demo test"));
     }
 
     /**
@@ -62,11 +62,11 @@ public class DAOProjectTest {
      */
     @Test
     public void testUpdateProject() {
-        //assertTrue(dao.updateProject("Test", "NewTest", "BUKFS", "30/06/2022 - 17/8/2022", 15000, "ABCDE", "demo test"));
+        assertTrue(dao.updateProject("Test", "NewTest", "BUKFS", "30/06/2022 - 17/8/2022", 15000, "ABCDE", "demo test", 1));
     }
 
     /**
-     * Test of search method, of class DAOProject.
+     * Test of searchProject method, of class DAOProject.
      */
     @Test
     public void testSearch() {
@@ -74,7 +74,6 @@ public class DAOProjectTest {
                 + "17/8/2022, rate=10000.0, manager=ABCDE, description=demo test}, "
                 + "projects{title=Test 2, client=BUKFS, period=30/06/2022 - "
                 + "17/8/2022, rate=100000.0, manager=ABCDE, description=demo test}]", 
-                dao.search("Test").toString());
-    }
-    
+                dao.searchProject("Test").toString());
+    }   
 }

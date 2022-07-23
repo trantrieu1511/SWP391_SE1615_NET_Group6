@@ -76,7 +76,7 @@ public class ControllerManager extends HttpServlet {
             } else {
                 // attendance 
                 if (service.equals("attendance")) {
-                    List<Attendance> listAttendance = daoAttendance.listAll(acc.getProfile_id());
+                    List<Attendance> listAttendance = daoAttendance.listAllAttendance(acc.getProfile_id());
                     for (Attendance a : listAttendance) {
                         a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }
@@ -92,7 +92,7 @@ public class ControllerManager extends HttpServlet {
                 if (service.equals("searchAttendance")) {
                     String name = request.getParameter("name");
                     String date_search = request.getParameter("date");
-                    List<Attendance> listAttendance = daoAttendance.search2(date_search, name, acc.getProfile_id());
+                    List<Attendance> listAttendance = daoAttendance.search(date_search, name, acc.getProfile_id());
                     for (Attendance a : listAttendance) {
                         a.setEmployee_id(daoProfile.getByID(a.getEmployee_id()).getFirst_name() + " " + daoProfile.getByID(a.getEmployee_id()).getLast_name());
                     }

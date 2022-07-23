@@ -201,12 +201,12 @@ public class ControllerManager extends HttpServlet {
                         ProfileDetail pd = new ProfileDetail(profile_id, "01/01/1900",
                                 "notAvailable", true, "notAvailable", "notAvailable", false, 0, "notAvailable", "notAvailable");
                         daoProfileDetail.addProfileDetail(pd);
-                        FamilyInfo f = new FamilyInfo(profile_id, "notAvailable", "notAvailable",
-                                "01/01/1900", "notAvailable");
-                        daoFamilyInfo.addFamilyInfo(f);
-                        Experience exp = new Experience(profile_id, "notAvailable", "1900-01-01",
-                                "1900-01-01");
-                        daoExperience.addExperience(exp);
+//                        FamilyInfo f = new FamilyInfo(profile_id, "notAvailable", "notAvailable",
+//                                "01/01/1900", "notAvailable");
+//                        daoFamilyInfo.addFamilyInfo(f);
+//                        Experience exp = new Experience(profile_id, "notAvailable", "01/01/1900",
+//                                "01/01/1900");
+//                        daoExperience.addExperience(exp);
                         response.sendRedirect("manager?do=list&add=true");
                     } else {
                         response.sendRedirect("manager?do=list&addFail=true");
@@ -249,7 +249,7 @@ public class ControllerManager extends HttpServlet {
                     int status = 0;
                     String assigned = request.getParameter("assigned");
                     String project = request.getParameter("project");
-                    daoTask.add(name, priority, deadline, status, assigned, project);
+                    daoTask.addTask(name, priority, deadline, status, assigned, project);
                     response.sendRedirect("task-board.jsp");
                 }
 

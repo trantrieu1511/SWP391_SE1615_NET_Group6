@@ -24,14 +24,14 @@ public class DAOSalary extends DBConnect {
     ResultSet rs = null;
 
     public List<Salary> listAllStaffAndManagerProfile() {
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
-                + "from [profile] p full outer join [account] a \n"
+                + "from [profile] p full outer join [account] a\n"
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
+                + "where a.isadmin = 0\n"
                 + "order by p.profile_id asc";
         List<Salary> list = new ArrayList<>();
         try {
@@ -83,7 +83,7 @@ public class DAOSalary extends DBConnect {
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
+                + "where a.isadmin = 0\n"
                 + "and report_to = ?\n"
                 + "order by p.profile_id asc";
         List<Salary> list = new ArrayList<>();
@@ -108,14 +108,14 @@ public class DAOSalary extends DBConnect {
     }
 
     public Salary getIndividualSalaryAndProfile(String profile_id) {
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
-                + "from [profile] p full outer join [account] a \n"
+                + "from [profile] p full outer join [account] a\n"
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
+                + "where a.isadmin = 0\n"
                 + "and p.profile_id = ?\n"
                 + "order by p.profile_id asc";
         try {
@@ -162,7 +162,7 @@ public class DAOSalary extends DBConnect {
     }
 
     public Salary getIndividualSalaryAndProfileInPayslip(String profile_id) {
-        String sql = "select p.*, s.payslip_number, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.payslip_number, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -250,7 +250,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate(String erole, String ename, String from, String to) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -310,14 +310,14 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithoutCreateDate(String erole, String ename) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
                 + "on p.profile_id = a.profile_id \n"
                 + "full outer join [salary] s\n"
                 + "on p.profile_id = s.profile_id\n"
-                + "where a.isadmin != 1\n"
+                + "where a.isadmin = 0\n"
                 + "and a.ismanager = ?\n"
                 + "and p.first_name + p.last_name like ?";
         try {
@@ -367,7 +367,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate2(String ename, String from, String to) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -425,7 +425,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate3(String erole, String ename, String from) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -484,7 +484,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate4(String from, String to) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -540,7 +540,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate5(String erole, String from, String to) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -598,7 +598,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate6(String erole, String from) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -655,7 +655,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithCreateDate7(String ename, String from) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -712,7 +712,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithFromOnly(String from) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -767,7 +767,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithNameOnly(String ename) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"
@@ -822,7 +822,7 @@ public class DAOSalary extends DBConnect {
 
     public List<Salary> searchEmployeeSalaryWithRoleOnly(String erole) {
         List<Salary> list = new ArrayList<>();
-        String sql = "select p.*, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
+        String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"
                 + "from [profile] p full outer join [account] a \n"

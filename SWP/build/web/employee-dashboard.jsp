@@ -60,126 +60,89 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-8">
                             <section class="dash-section">
-                                <h1 class="dash-sec-title">Today</h1>
+                                <h1 class="dash-sec-title">Your schedule</h1>
                                 <div class="dash-sec-content">
                                     <div class="dash-info-list">
-                                        <a href="#" class="dash-card text-danger">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-hourglass-o"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>Richard Miles is off sick today</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <div class="e-avatar"><img src="assets/img/profiles/avatar-09.jpg" alt=""></div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="dash-info-list">
-                                        <a href="#" class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-suitcase"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>You are away today</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <div class="e-avatar"><img src="assets/img/profiles/avatar-02.jpg" alt=""></div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <div class="dash-info-list">
-                                        <a href="#" class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-building-o"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>You are working from home today</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <div class="e-avatar"><img src="assets/img/profiles/avatar-02.jpg" alt=""></div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </section>
-
-                            <section class="dash-section">
-                                <h1 class="dash-sec-title">Tomorrow</h1>
-                                <div class="dash-sec-content">
-                                    <div class="dash-info-list">
-                                        <div class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-suitcase"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>2 people will be away tomorrow</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <a href="#" class="e-avatar"><img src="assets/img/profiles/avatar-04.jpg" alt=""></a>
-                                                    <a href="#" class="e-avatar"><img src="assets/img/profiles/avatar-08.jpg" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table class="table table-striped custom-table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <td>Shift</td>
+                                                    <td>Start</td>
+                                                    <td>End</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${schedule}" var="o">
+                                                    <tr>
+                                                        <td>${o.name}</td>
+                                                        <td>${o.start_time}</td>
+                                                        <td>${o.end_time}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>                                           
+                                        </table>                                        
                                     </div>
                                 </div>
                             </section>
 
                             <section class="dash-section">
-                                <h1 class="dash-sec-title">Next seven days</h1>
+                                <h1 class="dash-sec-title">Your tasks</h1>
                                 <div class="dash-sec-content">
                                     <div class="dash-info-list">
-                                        <div class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-suitcase"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>2 people are going to be away</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <a href="#" class="e-avatar"><img src="assets/img/profiles/avatar-05.jpg" alt=""></a>
-                                                    <a href="#" class="e-avatar"><img src="assets/img/profiles/avatar-07.jpg" alt=""></a>
+                                        <div class="kanban-board card mb-0">
+                                            <div class="card-body">
+                                                <div class="kanban-cont">
+                                                    <div class="kanban-list kanban-danger">
+                                                        <div class="kanban-header">
+                                                            <span class="status-title">Pending</span>
+                                                        </div>
+                                                        <div class="kanban-wrap">
+                                                            <c:forEach items="${list0}" var="o">
+                                                                <div class="card panel">
+                                                                    <div class="kanban-box">
+                                                                        <div class="task-board-header">
+                                                                            <span class="status-title">${o.name}</span>                                                                         
+                                                                        </div>
+                                                                        <div class="task-board-body">                                            
+                                                                            <div class="kanban-footer">
+                                                                                <span class="task-info-cont">
+                                                                                    <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                                                    <span class="task-priority badge bg-inverse-danger"></span>
+                                                                                </span>                                                                                                                                                                                                  
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </div>     
+                                                    </div>
+                                                    <div class="kanban-list kanban-info">
+                                                        <div class="kanban-header">
+                                                            <span class="status-title">Progress</span>                                        
+                                                        </div>
+                                                        <div class="kanban-wrap">
+                                                            <c:forEach items="${list1}" var="o">
+                                                                <div class="card panel">
+                                                                    <div class="kanban-box">
+                                                                        <div class="task-board-header">
+                                                                            <span class="status-title">${o.name}</span>                                                                          
+                                                                        </div>
+                                                                        <div class="task-board-body">                                            
+                                                                            <div class="kanban-footer">
+                                                                                <span class="task-info-cont">
+                                                                                    <span class="task-date"><i class="fa fa-clock-o"></i> ${o.deadline}</span>
+                                                                                    <span class="task-priority badge bg-inverse-danger"></span>
+                                                                                </span>                                                                                                                                                                                                                                      
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>                               
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="dash-info-list">
-                                        <div class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-user-plus"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>Your first day is going to be  on Thursday</p>
-                                                </div>
-                                                <div class="dash-card-avatars">
-                                                    <div class="e-avatar"><img src="assets/img/profiles/avatar-02.jpg" alt=""></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dash-info-list">
-                                        <a href="" class="dash-card">
-                                            <div class="dash-card-container">
-                                                <div class="dash-card-icon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <div class="dash-card-content">
-                                                    <p>It's Spring Bank Holiday  on Monday</p>
-                                                </div>
-                                            </div>
-                                        </a>
                                     </div>
                                 </div>
                             </section>

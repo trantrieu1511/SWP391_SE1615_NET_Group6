@@ -46,8 +46,6 @@ public class DAOCompany extends DBConnect {
 
     
     
-    
-    
     public Company getCompanyByID(int id) {
         String sql = "select * from company where [company_id] = ?";
         try {

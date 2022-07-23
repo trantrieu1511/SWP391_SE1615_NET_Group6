@@ -63,6 +63,34 @@
                 });
             });
             $(function () {
+               $("#edit_task_modal").on("show.bs.modal", function (e) {
+                   var text = $(e.relatedTarget).attr('data-id').trim();
+                   const myArray = text.split(" ");
+                   var id = myArray[0];
+                   var name = myArray[1];
+                   var priority = myArray[2];
+                   var dl = myArray[3];
+                   var assigned = myArray[4];
+                   $(e.currentTarget).find('input[name="idTask"]').val(id);
+                   $(e.currentTarget).find('input[name="nameEdit"]').val(name);
+                   $("#priorityEdit").val(priority);
+                   $("#priorityEdit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false,
+                        minimumResultsForSearch: -1
+                    });
+                   $(e.currentTarget).find('input[name="deadlineEdit"]').val(dl);
+                   $("#assignedEdit").val(assigned);  
+                   $("#assignedEdit").select2({
+                        width: '100%',
+                        placeholder: "Select an option",
+                        allowClear: false,
+                        minimumResultsForSearch: -1
+                    });
+               }); 
+            });
+            $(function () {
                 $("#delete_task_modal").on("show.bs.modal", function (e) {
                     var id = $(e.relatedTarget).attr('data-id');
                     $(e.currentTarget).find('input[name="id"]').val(id);
@@ -103,7 +131,12 @@
                                 <div class="col-sm-12">
                                     <h3 class="page-title">${title}</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <c:if test="${sessionScope.acc.isManager == true}">
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.acc.isManager == false}">
+                                        <li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>
+                                    </c:if>
                                     <li class="breadcrumb-item active">Task Board</li>
                                 </ul>
                             </div>
@@ -139,7 +172,7 @@
                                                                     <i class="fa fa-angle-down"></i>
                                                                 </a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
+                                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal" data-id="${o.id} ${o.name} ${o.priority} ${o.deadline} ${o.assigned}">Edit</a>
                                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_task_modal" data-id="${o.id}">Delete</a>
                                                                 </div>
                                                             </div>
@@ -359,17 +392,18 @@
                             <div class="modal-body">
                                 <form action="task" do="post">
                                     <input type="hidden" name="do" value="editTask">
+                                    <input type="hidden" name="idTask">
                                     <div class="form-group">
                                         <label>Project<span class="text-danger">*</span></label>
                                         <input type="text" value="${title}" readonly class="form-control" name="project" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Task Name<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="name" required>
+                                        <input type="text" class="form-control" name="nameEdit" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Task Priority<span class="text-danger">*</span></label>
-                                        <select class="form-control select" name="priority" required>
+                                        <select class="select" name="priorityEdit" id="priorityEdit" required>
                                             <option value="0">High</option>
                                             <option value="1">Normal</option>
                                             <option value="2">Low</option>
@@ -377,11 +411,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Due Date<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control datetimepicker" onkeydown="event.preventDefault()" name="deadline" required> 
+                                        <input type="text" class="form-control datetimepicker" onkeydown="event.preventDefault()" name="deadlineEdit" required> 
                                     </div>
                                     <div class="form-group">
                                         <label>Assigned<span class="text-danger">*</span></label>
-                                        <select class="select floating" name="assigned" required 
+                                        <select class="select" name="assignedEdit" id="assignedEdit" required>
                                                 <option> </option>
                                             <c:forEach items="${listPf}" var="o">
                                                 <option value="${o.profile_id}">${o.first_name} ${o.last_name}</option>

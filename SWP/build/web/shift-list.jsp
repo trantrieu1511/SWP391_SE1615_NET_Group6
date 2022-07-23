@@ -132,8 +132,8 @@
                                 <div class="col">
                                     <h3 class="page-title">Shift List</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="#">Employees</a></li>
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="manager?do=list">Employees</a></li>
                                         <li class="breadcrumb-item active">Shift List</li>
                                     </ul>
                                 </div>

@@ -62,9 +62,14 @@
                                 <div class="col">
                                     <h3 class="page-title">Payslip</h3>
                                     <ul class="breadcrumb">
-                                        <!--<li class="breadcrumb-item"><a href="employee?do=dashboard">Dashboard</a></li>-->
-                                        <li class="breadcrumb-item">Payroll</li>
-                                        <c:if test="${sessionScope.acc.isAdmin == true}">
+                                    <%--<c:if test="${sessionScope.acc.isManager == true}">--%>
+                                    <!--<li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>-->
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${sessionScope.acc.isManager == false}">--%>
+                                    <!--<li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>-->
+                                    <%--</c:if>--%>
+                                    <!--<li class="breadcrumb-item">Payroll</li>-->
+                                    <c:if test="${sessionScope.acc.isAdmin == true}">
                                         <li class="breadcrumb-item"><a href="salary?do=list">Employee Salary</a></li>
                                         </c:if>
                                     <li class="breadcrumb-item active">Payslip</li>
@@ -92,7 +97,7 @@
                                     <h4 class="payslip-title">Payslip for the month of <%=now.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH) + " " + now.getYear()%></h4>
                                     <div class="row">
                                         <div class="col-sm-6 m-b-20">
-                                            <img src="img/logo2.png" class="inv-logo" alt="">
+                                            <img src="img/profiles/avatar-05.jpg" class="inv-logo" alt="" style="border-radius: 50px;">
                                             <ul class="list-unstyled mb-0">
                                                 <li>Dreamguy's Technologies</li>
                                                 <li>3864 Quiet Valley Lane,</li>
@@ -111,9 +116,9 @@
                                     <div class="row">
                                         <div class="col-lg-12 m-b-20">
                                             <ul class="list-unstyled">
-                                                <li><h5 class="mb-0"><strong><%= s.getFirst_name() + " " + s.getLast_name()%></strong></h5></li>
-                                                <li><span><%= s.getJob_title()%></span></li>
+                                                <li>EmployeeName: <h4 class="mb-0" style="display: inline;"> <strong><%= s.getFirst_name() + " " + s.getLast_name()%></strong></h4></li>
                                                 <li>Employee ID: <%= s.getProfile_id()%></li>
+                                                <li>Job: <span><%= s.getJob_title()%></span></li>
                                                 <li>Joining Date: <%= s.getHire_date()%></li>
                                             </ul>
                                         </div>

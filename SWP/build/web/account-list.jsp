@@ -197,7 +197,11 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
+<<<<<<< Updated upstream
                                         <select class="select floating" name="isa"> 
+=======
+                                        <select class="select floating"> 
+>>>>>>> Stashed changes
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -207,7 +211,11 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
+<<<<<<< Updated upstream
                                         <select class="select floating" name="ism"> 
+=======
+                                        <select class="select floating"> 
+>>>>>>> Stashed changes
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -217,7 +225,11 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3"> 
                                     <div class="form-group form-focus select-focus">
+<<<<<<< Updated upstream
                                         <select class="select floating" name="status"> 
+=======
+                                        <select class="select floating"> 
+>>>>>>> Stashed changes
                                             <option>Select</option>
                                             <option>True</option>
                                             <option>False</option>
@@ -227,10 +239,14 @@
                                 </div>
                                 <div class="col-sm-6 col-md-3">  
                                     <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
+<<<<<<< Updated upstream
                                 </div>
                                 <div class="col-sm-6 col-md-3">  
                                     <input type="submit" class="btn btn-success btn-block" value="Clear" style="padding: 0px">
                                 </div>  
+=======
+                                </div>   
+>>>>>>> Stashed changes
                             </div>
                         </form>
                         <!-- /Search Filter -->
@@ -302,8 +318,13 @@
                                                         <div class="dropdown dropdown-action">
                                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                             <div class="dropdown-menu dropdown-menu-right">
+<<<<<<< Updated upstream
                                                                     <a href="#" class="dropdown-item" data-toggle="modal" data-id="${p.profile_id} ${p.first_name} ${p.last_name} ${p.email} ${p.phone_number} ${p.hire_date} ${p.user_display} ${p.pass_display} ${p.isadmin_d} ${p.ismanager_d} ${p.status_d}" data-target="#edit_account"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                             <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_account" data-id="${p.profile_id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+=======
+                                                                    <a href="loadA?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#edit_job"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                            <a href="delete?aid=${p.profile_id}" class="dropdown-item" data-toggle="modal" data-target="#delete_job"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+>>>>>>> Stashed changes
                                                         </div>
                                                     </div>
                                                 </td>

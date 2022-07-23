@@ -148,8 +148,8 @@
                                 <div class="col">
                                     <h3 class="page-title">Daily Scheduling</h3>
                                     <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="employees.html">Employees</a></li>
+                                        <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="manager?do=list">Employees</a></li>
                                         <li class="breadcrumb-item active">Shift Scheduling</li>
                                     </ul>
                                 </div>

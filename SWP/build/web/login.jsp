@@ -36,7 +36,7 @@
 
                     <!-- Account Logo -->
                     <div class="account-logo">
-                        <a href="index.html"><img src="img/logo2.png" alt="Dreamguy's Technologies"></a>
+                        <a href="#"><img src="img/logo2.png" alt="Dreamguy's Technologies"></a>
                     </div>
                     <!-- /Account Logo -->
 

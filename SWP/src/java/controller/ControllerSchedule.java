@@ -195,7 +195,7 @@ public class ControllerSchedule extends HttpServlet {
                     String name = request.getParameter("name");
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
-                    daoShift.add(name, start, end);
+                    daoShift.addShift(name, start, end);
                     List<Shift> listS = daoShift.listShift();
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
@@ -210,7 +210,7 @@ public class ControllerSchedule extends HttpServlet {
                     String start = request.getParameter("start");
                     String end = request.getParameter("end");
                     String oldName = request.getParameter("oldName");
-                    daoShift.edit(name, start, end, oldName);
+                    daoShift.editShift(name, start, end, oldName);
                     List<Shift> listS = daoShift.listShift();
                     List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
                     request.setAttribute("list", listS);
@@ -222,7 +222,7 @@ public class ControllerSchedule extends HttpServlet {
 
                 if (service.equals("deleteShift")) {
                     String name = request.getParameter("shift");
-                    boolean del = daoShift.delete(name);
+                    boolean del = daoShift.deleteShift(name);
                     if (del == true) {
                         List<Shift> listS = daoShift.listShift();
                         List<Profile> listPf = daoProfile.listAllStaff(acc.getProfile_id());
@@ -264,7 +264,7 @@ public class ControllerSchedule extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to editShift the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

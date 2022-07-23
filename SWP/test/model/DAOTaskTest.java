@@ -20,11 +20,11 @@ public class DAOTaskTest {
     }
 
     /**
-     * Test of add method, of class DAOTask.
+     * Test of addTask method, of class DAOTask.
      */
     @Test
     public void testAdd() {
-        //assertTrue(dao.add("test", 0, "07/07/2022", 0, "KUGHY", "Test"));
+        //assertTrue(dao.addTask("test", 0, "07/07/2022", 0, "KUGHY", "Test"));
     }
 
     /**
@@ -37,12 +37,12 @@ public class DAOTaskTest {
 //    }
 
     /**
-     * Test of list method, of class DAOTask.
+     * Test of listTaskByStatus method, of class DAOTask.
      */
     @Test
     public void testList() {
         assertEquals("[task{name=test, priority=0, deadline=07/07/2022, status=2,"
-                + " assigned=KUGHY, project=Test}]", dao.list(2).toString());
+                + " assigned=KUGHY, project=Test}]", dao.listTaskByStatus(2).toString());
     }
 
     /**

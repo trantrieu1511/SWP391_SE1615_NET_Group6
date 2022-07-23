@@ -25,6 +25,7 @@ public class Profile {
     String isadmin_d;
     String ismanager_d;
     String status_d;
+    int annual_leave;
 
     public Profile() {
     }
@@ -111,15 +112,17 @@ public class Profile {
     }
 
     //constructor for myLeave list
-    public Profile(String reportto) {
+    public Profile(String reportto, int annual_leave) {
         this.reportto = reportto;
+        this.annual_leave = annual_leave;
     }
 
     //constructor for checkLeave list
-    public Profile(String first_name, String last_name, int job_id) {
+    public Profile(String first_name, String last_name, int job_id, int annual_leave) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.job_id = job_id;
+        this.annual_leave = annual_leave;
     }
 
     public String getStatus_d() {
@@ -264,6 +267,14 @@ public class Profile {
 
     public void setReportto_name(String reportto_name) {
         this.reportto_name = reportto_name;
+    }
+
+    public int getAnnual_leave() {
+        return annual_leave;
+    }
+
+    public void setAnnual_leave(int annual_leave) {
+        this.annual_leave = annual_leave;
     }
 
     @Override

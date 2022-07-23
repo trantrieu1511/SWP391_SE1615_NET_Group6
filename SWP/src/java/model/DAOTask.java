@@ -22,7 +22,7 @@ public class DAOTask extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
     
-    public boolean add(String name, int priority, String deadline, int status, String assigned, String project) {
+    public boolean addTask(String name, int priority, String deadline, int status, String assigned, String project) {
         String sql = "insert into task(name, priority, deadline, status, assigned, project)"
                 + " values(?,?,?,?,?,?)";
         try {
@@ -45,7 +45,29 @@ public class DAOTask extends DBConnect {
         return true;
     }
     
-    public Task getById(int id) {
+    public boolean editTask(int id, String name, int priority, String deadline, String assigned) {
+        String sql = "update task set name = ?, priority = ?, deadline = ?, assigned = ?"
+                + " where id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, name);
+            state.setInt(2, priority);
+            state.setString(3, deadline);
+            state.setString(4, assigned);
+            state.setInt(5, id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public Task getTaskById(int id) {
         String sql = "select * from task where id = ?";
         try {
             conn = getConnection();
@@ -72,7 +94,7 @@ public class DAOTask extends DBConnect {
         return null;
     }
     
-    public List<Task> list(int status) {
+    public List<Task> listTaskByStatus(int status) {
         List<Task> list = new ArrayList<>();
         String sql = "select * from task where status = ?";
         try {
@@ -272,6 +294,6 @@ public class DAOTask extends DBConnect {
     
     public static void main(String[] args) {
         DAOTask dao = new DAOTask();
-        System.out.println(dao.listProjectTask(0, "Test"));
+        System.out.println(dao.editTask(0, "task 3", 0, "01/08/2022", "GG007"));
     }
 }

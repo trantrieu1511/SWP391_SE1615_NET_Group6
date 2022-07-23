@@ -1,9 +1,4 @@
-<%-- 
-    Document   : payroll-items
-    Created on : Jun 30, 2022, 1:11:17 PM
-    Author     : DELL
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +59,12 @@
                             <div class="col">
                                 <h3 class="page-title">Payroll Items</h3>
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                <c:if test="${sessionScope.acc.isManager == true}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=manager">Dashboard</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.acc.isManager == false}">
+                                    <li class="breadcrumb-item"><a href="dashboard?do=employee">Dashboard</a></li>
+                                </c:if>
                                     <li class="breadcrumb-item active">Payroll Items</li>
                                 </ul>
                             </div>

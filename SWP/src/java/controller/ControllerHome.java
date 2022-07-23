@@ -7,15 +7,12 @@ package controller;
 
 import entity.Account;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.DAOProfile;
-import model.DAOProject;
 
 /**
  *
@@ -44,10 +41,9 @@ public class ControllerHome extends HttpServlet {
             if (acc == null) {
                 response.sendRedirect("login.jsp");
             } else {
-                if (acc.isIsManager()) {
+                if (acc.isIsManager() || acc.isIsAdmin()) {
                     response.sendRedirect("dashboard?do=manager");
-                }
-                if (!acc.isIsManager()) {
+                } else {
                     response.sendRedirect("dashboard?do=employee");
                 }
             }

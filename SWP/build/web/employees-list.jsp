@@ -279,8 +279,6 @@
                                 <div class="col-auto float-right ml-auto">
                                     <a href="#" class="btn add-btn" data-toggle="modal" data-id="${sessionScope.acc.profile_id}" data-target="#add_employee"><i class="fa fa-plus"></i> Add Staff</a>
                                 <div class="view-icons">
-                                    <!--                                        <a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                                                                            <a href="employees-list.jsp" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>-->
                                 </div>
                             </div>
                         </div>
@@ -347,7 +345,7 @@
                                             <tr>
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <!--<a href="profile.html" class="avatar"><img alt="" src="assets/img/user.jpg"></a>-->
+                                                        <a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-18.jpg"></a>
                                                         <a href="profile?do=getothersProfile&profile_id=${o.profile_id}">${o.first_name} ${o.last_name} <span>${o.department_name}</span></a>
                                                     </h2>
 
@@ -734,7 +732,7 @@
                                     <div class="modal-btn delete-action">
                                         <div class="row">
                                             <div class="col-6">
-                                                <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                                <input type="submit" value="Delete" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
                                             </div>
                                             <div class="col-6">
                                                 <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>

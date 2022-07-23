@@ -45,7 +45,7 @@ public class DAOShift extends DBConnect {
         return list;
     }
     
-    public boolean add(String name, String start, String end) {
+    public boolean addShift(String name, String start, String end) {
         String sql = "insert into shift(name, start_time, end_time)values(?,?,?)";
         try {
             conn = getConnection();
@@ -64,7 +64,7 @@ public class DAOShift extends DBConnect {
         return true;
     }
     
-    public boolean edit(String name, String start, String end, String oldName) {
+    public boolean editShift(String name, String start, String end, String oldName) {
         String sql = "update shift set name=?,start_time=?,end_time=? where name=?";
         try {
             conn = getConnection();
@@ -84,7 +84,7 @@ public class DAOShift extends DBConnect {
         return true;
     }
     
-    public boolean  delete(String name) {
+    public boolean  deleteShift(String name) {
         String sql = "delete from shift where name = ?";
         try {
             conn = getConnection();

@@ -89,7 +89,7 @@ public class ControllerReport extends HttpServlet {
                         temp[1] = p.getFirst_name() + " " + p.getLast_name();
                         temp[2] = formatter.format(date);
                         temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
-                        String status = "";
+                        String status = "Absent";
                         for (Attendance a : listAttendance) {
                             if (a.getEmployee_id().equals(p.getProfile_id())) {
                                 status = "Present";
@@ -131,28 +131,32 @@ public class ControllerReport extends HttpServlet {
                     int present = listAttendance.size();
                     int absent = totalEmployee - present;
                     List<String[]> listStr = new ArrayList<>();
-                    listProfile.stream().map((p) -> {
-                        String[] temp = new String[10];
-                        temp[0] = p.getProfile_id();
-                        temp[1] = p.getFirst_name() + " " + p.getLast_name();
-                        temp[2] = formatter.format(date);
-                        temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
-                        String status;
-                        if (listAttendance.contains(p.getProfile_id())) {
-                            status = "Present";
-                        } else {
-                            status = "Absent";
-                        }
-                        temp[4] = status;
-                        return temp;
-                    }).forEachOrdered((temp) -> {
-                        listStr.add(temp);
-                    });
+                    if (!listProfile.isEmpty()) {
+                        listProfile.stream().map((p) -> {
+                            String[] temp = new String[10];
+                            temp[0] = p.getProfile_id();
+                            temp[1] = p.getFirst_name() + " " + p.getLast_name();
+                            temp[2] = formatter.format(date);
+                            temp[3] = daoDepartment.getDepartmentByID(p.getDepartment_id()).getName();
+                            String status;
+                            if (listAttendance.contains(p.getProfile_id())) {
+                                status = "Present";
+                            } else {
+                                status = "Absent";
+                            }
+                            temp[4] = status;
+                            return temp;
+                        }).forEachOrdered((temp) -> {
+                            listStr.add(temp);
+                        });
+                    }
                     List<Departments> listDepartment = daoDepartment.listAllDepartment();
                     request.setAttribute("present", present);
                     request.setAttribute("absent", absent);
                     request.setAttribute("totalEmployee", totalEmployee);
-                    request.setAttribute("list", listStr);
+                    if (!listStr.isEmpty()) {
+                        request.setAttribute("list", listStr);
+                    }
                     request.setAttribute("listDepartment", listDepartment);
                     request.setAttribute("filter", "yes");
                     if (name != "") {
@@ -297,16 +301,16 @@ public class ControllerReport extends HttpServlet {
                     if (status != null) {
                         switch (status) {
                             case "0":
-                                listTask = daoTask.list(0);
+                                listTask = daoTask.listTaskByStatus(0);
                                 break;
                             case "1":
-                                listTask = daoTask.list(1);
+                                listTask = daoTask.listTaskByStatus(1);
                                 break;
                             case "2":
-                                listTask = daoTask.list(2);
+                                listTask = daoTask.listTaskByStatus(2);
                                 break;
                             case "3":
-                                listTask = daoTask.list(3);
+                                listTask = daoTask.listTaskByStatus(3);
                                 break;
                             case "All":
                                 listTask = daoTask.listAllTask();
@@ -319,7 +323,13 @@ public class ControllerReport extends HttpServlet {
                         }
                         request.setAttribute("task", search);
                     } else {
-                        request.setAttribute("task", daoTask.listAllTask());
+                        listTask = daoTask.listAllTask();
+                        for (Task t : listTask) {
+                            if (t.getProject().contains(name)) {
+                                search.add(t);
+                            }
+                        }
+                        request.setAttribute("task", search);
                     }
                     request.setAttribute("filter", "yes");
                     if (name != null) {

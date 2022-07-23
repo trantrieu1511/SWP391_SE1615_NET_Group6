@@ -93,6 +93,15 @@ public class Profile {
         this.department_id = department_id;
         this.reportto = reportto;
     }
+    
+    public Profile(String first_name, String last_name, String email, String phone_number, String hire_date) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+    }
+
 
     //constructor for choose staff option in add Salary
     public Profile(String profile_id, String first_name, String last_name) {

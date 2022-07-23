@@ -23,21 +23,37 @@ public class DAOProfile extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public boolean addManager(Profile pro) {
-        String sql = "insert into [profile](profile_id, first_name, last_name, "
-                + "email ,phone_number, hire_date, department_id, job_id)"
-                + "values (?,?,?,?,?,?,?,?)";
+    public String getPID(String fname) {
+        String sql = "SELECT profile.* FROM [profile] WHERE first_name = '"+fname+"'";
+        String s = null;
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, pro.getProfile_id());
-            state.setString(2, pro.getFirst_name());
-            state.setString(3, pro.getLast_name());
-            state.setString(4, pro.getEmail());
-            state.setString(5, pro.getPhone_number());
-            state.setString(6, pro.getHire_date());
-            state.setInt(7, pro.getDepartment_id());
-            state.setInt(8, pro.getJob_id());
+            rs = state.executeQuery();
+            rs.next();
+            s = rs.getString(2);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return s;
+    }
+    
+    public boolean addManager(Profile pro) {
+        String sql = "insert into [profile](first_name, last_name, "
+                + "email ,phone_number, hire_date)"
+                + "values (?,?,?,?,?)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, pro.getFirst_name());
+            state.setString(2, pro.getLast_name());
+            state.setString(3, pro.getEmail());
+            state.setString(4, pro.getPhone_number());
+            state.setString(5, pro.getHire_date());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,6 +65,8 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
+    
+    
     public boolean addMD(Profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
                 + "values ("
@@ -378,12 +396,12 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(
-                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
+                        rs.getString(7),
                         rs.getString(12),
                         rs.getString(13),
                         rs.getString(14),
@@ -412,12 +430,12 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(
-                        rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
+                        rs.getString(7),
                         rs.getString(12),
                         rs.getString(13),
                         rs.getString(14),
@@ -436,6 +454,6 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        System.out.println(dao.searchStaff1("KUGHY", "Joe"));
+        System.out.println(dao.getPID("Hieu"));
     }
 }

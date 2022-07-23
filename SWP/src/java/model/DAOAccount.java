@@ -23,6 +23,18 @@ public class DAOAccount extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
+    public boolean getStatus(String user) {
+        String sql = "select * from [account] where [username] = '" + user + "'";
+        try {
+            ResultSet rs = getData(sql);
+            rs.next();
+            return rs.getBoolean(6);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public Account login(String user, String pass) {
         String sql = "select * from [account] where [username] = ? and [password] = ?";
         try {

@@ -51,9 +51,16 @@ public class ControllerAuthentication extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
                     dispath.forward(request, response);
                 } else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("acc", a);
-                    response.sendRedirect("home");
+                    Boolean status = dao.getStatus(username);
+                    if(status == true){
+                        HttpSession session = request.getSession();
+                        session.setAttribute("acc", a);
+                        response.sendRedirect("home");
+                    }else{
+                        request.setAttribute("mess", "Your account is disable. Please contact admin by phone number: 0976.475.638 for more details");
+                        RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
+                        dispath.forward(request, response);
+                    }
                 }
             }
 
@@ -100,7 +107,6 @@ public class ControllerAuthentication extends HttpServlet {
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
             if (service.equals("addaccount")) {
-                String pid = request.getParameter("id").trim();
                 String user = request.getParameter("user").trim();
                 String pass = request.getParameter("pass").trim();
                 String isA = request.getParameter("isa").trim();
@@ -121,8 +127,9 @@ public class ControllerAuthentication extends HttpServlet {
                 if (isM == "True") {
                     isMM = 1;
                 }
-                Profile pro = new Profile(pid, fname, lname, email, phone, date, 0, 0, "NULL");
+                Profile pro = new Profile(fname, lname, email, phone, date);
                 if (dp.addManager(pro)) {
+                    String pid = dp.getPID(fname);
                     da.addAMAccount(pid, user, pass, isAA, isMM);
                     System.out.println("Add Successfully user_id = " + pid);
 

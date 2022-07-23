@@ -469,7 +469,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ID</label>
-                                                <input class="form-control" type="text" name="eid">
+                                                <input class="form-control" type="text" name="eid" disabled="disable">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -532,15 +532,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Type of Job</label>
-                                                <select class="select">
-                                                    <option>Full Time</option>
-                                                    <option>Part Time</option>
-                                                    <option>Internship</option>
-                                                    <option>Temporary</option>
-                                                    <option>Remote</option>
-                                                    <option>Others</option>
-                                                </select>
+                                                <label>Email</label>
+                                                <input type="text" class="form-control" name="eemail">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -557,22 +550,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" class="form-control" name="eemail">
+                                                <label>Note</label>
+                                                <textarea class="form-control" name="email"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Hire Date</label>
                                                 <input type="text" class="form-control datetimepicker" name="ehiredate">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Note</label>
-                                                <textarea class="form-control" name="email"></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -206,6 +206,27 @@ public class DAOProfile extends DBConnect {
         return id;
     }
 
+    public String getReportTo(String pid) {
+        String id = "";
+        String sql = "select report_to from [profile]\n"
+                + "where profile_id = '"+pid+"'";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            if (rs.next()) {
+                id = rs.getString(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return id;
+    }
+    
     public Profile getByID(String profile_id) {
         String sql = "select * from [profile] where [profile_id] = ?";
         try {
@@ -417,20 +438,12 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-<<<<<<< Updated upstream
 
     public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user, int isa, int ism, int status) {
         String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id "
                 + "and profile.first_name like '%" + fname + "%' and profile.last_name like '%" + lname + "%' \n"
                 + "and email like '%" + email + "%' and profile.phone_number like '%" + pnumber + "%' and account.username like '%" + user + "%' "
                 + "and account.isadmin = " + isa + " and account.ismanager = " + ism + " and account.status = " + status + "";
-=======
-    
-    public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user) {
-        String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id "
-                + "and profile.first_name like '%"+fname+"%' and profile.last_name like '%"+lname+"%' \n" 
-                + "and email like '%"+email+"%' and profile.phone_number like '%"+pnumber+"%' and account.username like '%"+user+"%' ";
->>>>>>> Stashed changes
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();
@@ -438,20 +451,13 @@ public class DAOProfile extends DBConnect {
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(
-<<<<<<< Updated upstream
-=======
-                        rs.getString(1),
->>>>>>> Stashed changes
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
-<<<<<<< Updated upstream
                         rs.getString(7),
-=======
->>>>>>> Stashed changes
-                        rs.getString(12),
+                        rs.getString(8),
                         rs.getString(13),
                         rs.getString(14),
                         rs.getString(15),
@@ -466,11 +472,6 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-<<<<<<< Updated upstream
-
-=======
-    
->>>>>>> Stashed changes
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
         System.out.println(dao.getPID("Hieu"));

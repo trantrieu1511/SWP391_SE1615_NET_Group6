@@ -6,8 +6,10 @@
 package controller;
 
 import entity.Account;
+import entity.Company;
 import entity.Profile;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
+import model.DAOCompany;
 import model.DAOProfile;
 import model.DAOProfileDetail;
 
@@ -79,7 +82,7 @@ public class ControllerAuthentication extends HttpServlet {
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
-<<<<<<< Updated upstream
+            
             if (service.equals("search")) {
                 String fname = request.getParameter("fname").trim();
                 String lname = request.getParameter("lname").trim();
@@ -196,19 +199,26 @@ public class ControllerAuthentication extends HttpServlet {
 
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
-=======
-            if (service.equals("search")){
-                String fname = request.getParameter("fname");
-                String lname = request.getParameter("lname");
-                String email = request.getParameter("email");
-                String pnumber = request.getParameter("pnum");
-                String user = request.getParameter("user");
-                DAOProfile dp = new DAOProfile();
-                List<Profile> listP = dp.searchADandMN(fname, lname, email, pnumber, user);
-
-                request.setAttribute("listP", listP);
-                request.getRequestDispatcher("account-list.jsp").forward(request, response);
->>>>>>> Stashed changes
+            }
+            
+            if (service.contains("company")){
+                HttpSession session = request.getSession();
+                Account acc = (Account) session.getAttribute("acc");
+                DAOCompany dc = new DAOCompany();
+                List<Company> listc = new ArrayList<>();
+                if(acc.isIsAdmin() == true || acc.isIsManager() == true){
+                    listc = dc.MyCompany(acc.getProfile_id());
+                }else{
+                    DAOProfile dp = new DAOProfile();
+                    String pid = dp.getReportTo(acc.getProfile_id());
+                    listc = dc.MyCompany(pid);
+                }
+                request.setAttribute("listC", listc);
+                request.getRequestDispatcher("seting.jsp").forward(request, response);
+            }
+            
+            if (service.contains("editcompany")){
+                
             }
         } catch (Exception ex) {
             ex.printStackTrace();

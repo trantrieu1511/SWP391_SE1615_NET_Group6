@@ -30,11 +30,11 @@ public class DAOScheduleTest {
     /**
      * Test of checkExist method, of class DAOSchedule.
      */
-    @Test
-    public void testCheckExist() {
-        assertTrue(dao.checkExist("KUGHY"));
-    }   
- 
+//    @Test
+//    public void testCheckExist() {
+//        assertTrue(dao.checkExist("KUGHY"));
+//    }   
+// 
     /**
      * Test of listAllScheduleOfStaff method, of class DAOSchedule.
      */

@@ -44,7 +44,41 @@ public class DAOCompany extends DBConnect {
         return list;
     }
 
-    
+    public List<Company> MyCompany(String id) {
+        List<Company> list = new ArrayList<>();
+        String sql = "select company.*, profile.first_name, profile.last_name, profile.phone_number"
+                + " from [company], [profile] where company.profile_id = profile.profile_id"
+                + " and profile.profile_id = '"+id+"' ";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Company(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getString(15),
+                        rs.getInt(11),
+                        rs.getString(12)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
     
     public Company getCompanyByID(int id) {
         String sql = "select * from company where [company_id] = ?";
@@ -78,6 +112,6 @@ public class DAOCompany extends DBConnect {
 //        for (Company company : list) {
 //            System.out.println(company.toString());
 //        }
-        System.out.println(daoCpn.getCompanyByID(1));
+        System.out.println(daoCpn.MyCompany("MA005"));
     }
 }

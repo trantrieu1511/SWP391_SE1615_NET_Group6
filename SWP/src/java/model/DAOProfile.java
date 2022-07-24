@@ -206,27 +206,6 @@ public class DAOProfile extends DBConnect {
         return id;
     }
 
-    public String getReportTo(String pid) {
-        String id = "";
-        String sql = "select report_to from [profile]\n"
-                + "where profile_id = '"+pid+"'";
-        try {
-            conn = getConnection();
-            state = conn.prepareStatement(sql);
-            rs = state.executeQuery();
-            if (rs.next()) {
-                id = rs.getString(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            closeResultSet(rs);
-            closePrepareStatement(state);
-            closeConnection(conn);
-        }
-        return id;
-    }
-    
     public Profile getByID(String profile_id) {
         String sql = "select * from [profile] where [profile_id] = ?";
         try {
@@ -457,7 +436,7 @@ public class DAOProfile extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8),
+                        rs.getString(12),
                         rs.getString(13),
                         rs.getString(14),
                         rs.getString(15),
@@ -472,6 +451,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
+    
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
         System.out.println(dao.getPID("Hieu"));

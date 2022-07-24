@@ -364,7 +364,7 @@ public class ControllerReport extends HttpServlet {
                 if (service.equals("searchProjectReport")) {
                     String name = request.getParameter("name");
                     String status = request.getParameter("status");
-                    List<Projects> listProject = daoProject.search(name);
+                    List<Projects> listProject = daoProject.searchProject(name);
                     List<Projects> search = new ArrayList<>();
                     if (status != null) {
                         if (!status.equals("All")) {

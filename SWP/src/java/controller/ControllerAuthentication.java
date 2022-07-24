@@ -6,10 +6,8 @@
 package controller;
 
 import entity.Account;
-import entity.Company;
 import entity.Profile;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
-import model.DAOCompany;
 import model.DAOProfile;
 import model.DAOProfileDetail;
 
@@ -199,26 +196,6 @@ public class ControllerAuthentication extends HttpServlet {
 
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
-            }
-            
-            if (service.contains("company")){
-                HttpSession session = request.getSession();
-                Account acc = (Account) session.getAttribute("acc");
-                DAOCompany dc = new DAOCompany();
-                List<Company> listc = new ArrayList<>();
-                if(acc.isIsAdmin() == true || acc.isIsManager() == true){
-                    listc = dc.MyCompany(acc.getProfile_id());
-                }else{
-                    DAOProfile dp = new DAOProfile();
-                    String pid = dp.getReportTo(acc.getProfile_id());
-                    listc = dc.MyCompany(pid);
-                }
-                request.setAttribute("listC", listc);
-                request.getRequestDispatcher("seting.jsp").forward(request, response);
-            }
-            
-            if (service.contains("editcompany")){
-                
             }
         } catch (Exception ex) {
             ex.printStackTrace();

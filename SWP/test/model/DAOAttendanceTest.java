@@ -21,44 +21,39 @@ public class DAOAttendanceTest {
     }
 
     /**
-     * Test of add method, of class DAOAttendance.
+     * Test of checkIn method, of class DAOAttendance.
      */
     @Test
-    public void testAdd() {
-        //assertTrue(dao.add("02/07/2022", "8:30", "11:30", "3:00", "WRYYY"));
+    public void testCheckIn() {
+        //assertTrue(dao.checkIn("02/07/2022", "8:30", " ", " ", "GG007"));
     }
 
     /**
-     * Test of getLastest method, of class DAOAttendance.
+     * Test of getLastestAttendance method, of class DAOAttendance.
      */
     @Test
-    public void testGetLastest() {
-        assertEquals("attendance{id=11, date=02/07/2022, time_in=8:30,"
-                + " time_out=11:30, production_time=3:00, employee_id=WRYYY, "
-                + "reportto=null}", dao.getLastest("WRYYY").toString());
+    public void testGetLastestAttendance() {
+        assertEquals("attendance{id=1, date=02/07/2022, time_in=8:30, time_out=11:30, "
+                + "production_time=3:00, employee_id=GG007, note=null}", 
+                dao.getLastestAttendance("GG007").toString());
     }
 
     /**
-     * Test of update method, of class DAOAttendance.
+     * Test of checkOut method, of class DAOAttendance.
      */
     @Test
-    public void testUpdate() {
-        assertTrue(dao.update(1, "6:00", "5:51", "QWERT"));
+    public void testCheckOut() {
+        //assertTrue(dao.checkOut(1, "11:30", "3:00", "GG007"));
     }
 
     /**
-     * Test of listAll method, of class DAOAttendance.
+     * Test of listAllAttendance method, of class DAOAttendance.
      */
     @Test
-    public void testListAll() {
-        assertEquals("[attendance{id=6, date=19/06/2022, time_in=05:23,"
-                + " time_out=05:23, production_time=00:00, employee_id=WRYYY, "
-                + "reportto=ABCDE}, attendance{id=7, date=21/06/2022, "
-                + "time_in=01:07, time_out=01:07, production_time=00:00, "
-                + "employee_id=WRYYY, reportto=ABCDE}, attendance{id=11, "
-                + "date=02/07/2022, time_in=8:30, time_out=11:30, "
-                + "production_time=3:00, employee_id=WRYYY, reportto=ABCDE}]", 
-                dao.listAll("ABCDE").toString());
+    public void testListAllAttendance() {
+        assertEquals("[attendance{id=1, date=02/07/2022, time_in=8:30, time_out=11:30,"
+                + " production_time=3:00, employee_id=GG007, note=null}]", 
+                dao.listAllAttendance("NK006").toString());
     }
 
     /**
@@ -66,33 +61,9 @@ public class DAOAttendanceTest {
      */
     @Test
     public void testListAllAttendanceofAnEmployee() {
-        assertEquals("[attendance{id=1, date=17/06/2022, time_in=01:09, "
-                + "time_out=6:00, production_time=5:51, employee_id=QWERT, "
-                + "reportto=null}, attendance{id=4, date=01/01/2022, "
-                + "time_in=9:00, time_out=10:00, production_time=1:00, "
-                + "employee_id=QWERT, reportto=null}]", 
-                dao.listAllAttendanceofAnEmployee("QWERT").toString());
-    }
-
-    /**
-     * Test of search method, of class DAOAttendance.
-     */
-    @Test
-    public void testSearch() {
-        assertEquals("[attendance{id=11, date=02/07/2022, time_in=8:30,"
-                + " time_out=11:30, production_time=3:00, employee_id=WRYYY, "
-                + "reportto=null}]", dao.search("02/07/2022", "WRYYY").toString());
-    }
-
-    /**
-     * Test of search2 method, of class DAOAttendance.
-     */
-    @Test
-    public void testSearch2() {
-        assertEquals("[attendance{id=11, date=02/07/2022, time_in=8:30, "
-                + "time_out=11:30, production_time=3:00, employee_id=WRYYY, "
-                + "reportto=ABCDE}]",
-                dao.search2("02/07/2022", "Gior", "ABCDE").toString());
+        assertEquals("[attendance{id=1, date=02/07/2022, time_in=8:30, time_out=11:30,"
+                + " production_time=3:00, employee_id=GG007, note=null}]",
+                dao.listAllAttendanceofAnEmployee("GG007").toString());
     }
 
     /**
@@ -101,7 +72,28 @@ public class DAOAttendanceTest {
     @Test
     public void testTodayAttendance() {
         assertEquals("[attendance{id=0, date=null, time_in=null, time_out=null, "
-                + "production_time=null, employee_id=WRYYY, reportto=null}]",
+                + "production_time=null, employee_id=GG007, note=null}]",
                 dao.todayAttendance("02/07/2022").toString());
     }   
+
+    /**
+     * Test of searchAttendance method, of class DAOAttendance.
+     */
+    @Test
+    public void testSearchAttendance_String_String() {
+        assertEquals("[attendance{id=1, date=02/07/2022, time_in=8:30, time_out=11:30,"
+                + " production_time=3:00, employee_id=GG007, note=null}]",
+                dao.searchAttendance("02/07/2022", "GG007").toString());
+    }
+
+    /**
+     * Test of searchAttendance method, of class DAOAttendance.
+     */
+    @Test
+    public void testSearchAttendance_3args() {
+        assertEquals("[attendance{id=1, date=02/07/2022, time_in=8:30, time_out=11:30, "
+                + "production_time=3:00, employee_id=GG007, note=NK006}]",
+                dao.searchAttendance("02/07/2022", "Gio", "NK006").toString());
+    }
+
 }

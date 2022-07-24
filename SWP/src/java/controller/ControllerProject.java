@@ -102,9 +102,9 @@ public class ControllerProject extends HttpServlet {
                     String title = request.getParameter("title");
                     List<Projects> listPj = null;
                     if (acc.isIsManager()) {
-                        listPj = daoProject.search(title);
+                        listPj = daoProject.searchProject(title);
                     } else {
-                        listPj = daoProject.search(title);
+                        listPj = daoProject.searchProject(title);
                     }
                     request.setAttribute("title", title);
                     String alert = "";

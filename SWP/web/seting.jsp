@@ -84,7 +84,7 @@
                             <!-- /Page Header -->
 
                             <form action="authentication?do=editcompany" method="post">
-                                <c:forEach items="listC" var="c">
+                                <c:forEach items="${listC}" var="c">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">

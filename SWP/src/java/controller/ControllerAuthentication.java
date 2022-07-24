@@ -6,8 +6,10 @@
 package controller;
 
 import entity.Account;
+import entity.Company;
 import entity.Profile;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
+import model.DAOCompany;
 import model.DAOProfile;
 import model.DAOProfileDetail;
 
@@ -41,6 +44,8 @@ public class ControllerAuthentication extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             String service = request.getParameter("do");
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("acc");
             if (service.equals("login")) {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
@@ -53,7 +58,6 @@ public class ControllerAuthentication extends HttpServlet {
                 } else {
                     Boolean status = dao.getStatus(username);
                     if(status == true){
-                        HttpSession session = request.getSession();
                         session.setAttribute("acc", a);
                         response.sendRedirect("home");
                     }else{
@@ -65,14 +69,13 @@ public class ControllerAuthentication extends HttpServlet {
             }
 
             if (service.equals("logout")) {
-                HttpSession session = request.getSession();
                 session.invalidate();
                 response.sendRedirect("login.jsp");
             }
 
             if (service.equals("list")) {
-                DAOProfile dp = new DAOProfile();
-                List<Profile> listP = dp.getADandMN();
+                DAOProfile daoPf = new DAOProfile();
+                List<Profile> listP = daoPf.getADandMN();
                 String alert = "";
 
                 request.setAttribute("listP", listP);
@@ -101,8 +104,8 @@ public class ControllerAuthentication extends HttpServlet {
                 if (status.equals("True")) {
                     Status = 1;
                 }
-                DAOProfile dp = new DAOProfile();
-                List<Profile> listP = dp.searchADandMN(fname, lname, email, pnumber, user, Isa, Ism, Status);
+                DAOProfile daoPf = new DAOProfile();
+                List<Profile> listP = daoPf.searchADandMN(fname, lname, email, pnumber, user, Isa, Ism, Status);
 
                 request.setAttribute("listP", listP);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
@@ -117,8 +120,8 @@ public class ControllerAuthentication extends HttpServlet {
                 String date = request.getParameter("hiredate").trim();
                 String email = request.getParameter("email").trim();
                 String phone = request.getParameter("pnum").trim();
-                DAOAccount da = new DAOAccount();
-                DAOProfile dp = new DAOProfile();
+                DAOAccount daoAcc = new DAOAccount();
+                DAOProfile daoPf = new DAOProfile();
                 int isAA = 0;
                 int isMM = 0;
                 int status = 1;
@@ -129,9 +132,9 @@ public class ControllerAuthentication extends HttpServlet {
                     isMM = 1;
                 }
                 Profile pro = new Profile(fname, lname, email, phone, date);
-                if (dp.addManager(pro)) {
-                    String pid = dp.getPID(fname);
-                    da.addAMAccount(pid, user, pass, isAA, isMM);
+                if (daoPf.addManager(pro)) {
+                    String pid = daoPf.getPID(fname);
+                    daoAcc.addAMAccount(pid, user, pass, isAA, isMM);
                     System.out.println("Add Successfully user_id = " + pid);
 
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
@@ -153,8 +156,8 @@ public class ControllerAuthentication extends HttpServlet {
                 String email = request.getParameter("eemail").trim();
                 String phone = request.getParameter("epnumber").trim();
                 String status = request.getParameter("estatus").trim();
-                DAOAccount da = new DAOAccount();
-                DAOProfile dp = new DAOProfile();
+                DAOAccount daoAcc = new DAOAccount();
+                DAOProfile daoPf = new DAOProfile();
                 int isAA = 0;
                 int isMM = 0;
                 int Status = 1;
@@ -168,8 +171,8 @@ public class ControllerAuthentication extends HttpServlet {
                     Status = 1;
                 }
                 Profile pro = new Profile(pid, fname, lname, email, phone, date, 0, 0, "NULL");
-                if (dp.editStaff(pro)) {
-                    da.editAMAccount(pid, user, pass, isAA, isMM, Status);
+                if (daoPf.editStaff(pro)) {
+                    daoAcc.editAMAccount(pid, user, pass, isAA, isMM, Status);
                     System.out.println("Add Successfully user_id = " + pid);
 
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
@@ -181,12 +184,12 @@ public class ControllerAuthentication extends HttpServlet {
             
             if (service.contains("delete")) {
                 String aid = request.getParameter("aprofile_id");
-                DAOAccount da = new DAOAccount();
-                DAOProfile dp = new DAOProfile();
-                DAOProfileDetail dpd = new DAOProfileDetail();
-                if (da.deleteAccount(aid)) {
-                    if (dpd.deleteProfileDetail(aid)) {
-                        dp.deleteProfile(aid);
+                DAOAccount daoAcc = new DAOAccount();
+                DAOProfile daoPf = new DAOProfile();
+                DAOProfileDetail daoPd = new DAOProfileDetail();
+                if (daoAcc.deleteAccount(aid)) {
+                    if (daoPd.deleteProfileDetail(aid)) {
+                        daoPf.deleteProfile(aid);
                         System.out.println("Delete Successfully user_id " + aid);
 
                         request.getRequestDispatcher("authentication?do=list").forward(request, response);
@@ -196,6 +199,48 @@ public class ControllerAuthentication extends HttpServlet {
 
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
+            }
+            
+            if (service.contains("company")){
+                DAOCompany daoCp = new DAOCompany();
+                List<Company> listC = new ArrayList<>();
+                if(acc.isIsAdmin() == true || acc.isIsManager() == true){
+                    listC = daoCp.MyCompany(acc.getProfile_id());
+                }else{
+                    DAOProfile daoPf = new DAOProfile();
+                    String pid = daoPf.getReportTo(acc.getProfile_id());
+                    listC = daoCp.MyCompany(pid);
+                }
+                request.setAttribute("listC", listC);
+                request.getRequestDispatcher("seting.jsp").forward(request, response);
+            }
+            
+            if (service.contains("editcompany")){
+                String name = request.getParameter("name").trim();
+                String pnamed = request.getParameter("pname").trim();
+                String[] part = pnamed.split(" ");
+                String lname = part[0];
+                String fname = part[1];
+                String address = request.getParameter("caddress").trim();
+                String conutry = request.getParameter("country").trim();
+                String province = request.getParameter("province").trim();
+                String city = request.getParameter("city").trim();
+                int pcode = Integer.getInteger(request.getParameter("pcode").trim());
+                String email = request.getParameter("cemail").trim();
+                int phone = Integer.getInteger(request.getParameter("cphone").trim());
+                String pphone = request.getParameter("pphone").trim();
+                int fax = Integer.getInteger(request.getParameter("fax").trim());
+                String url = request.getParameter("url").trim();
+                DAOCompany daoCP = new DAOCompany();
+                Company com = new Company(name, address, conutry, province, city, pcode, email, phone, fax, url);
+                DAOProfile daoPf = new DAOProfile();
+                Profile pro = new Profile(acc.getProfile_id(), fname, lname, pphone);
+                if(daoCP.editCompany(com, acc.getProfile_id()) && daoPf.editStaff(pro)){
+                    System.out.println("Save successfully");
+                    request.getRequestDispatcher("authentication?do=company").forward(request, response);
+                }
+                System.out.println("Save fail");
+                request.getRequestDispatcher("authentication?do=company").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

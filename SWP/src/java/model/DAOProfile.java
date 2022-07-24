@@ -42,6 +42,27 @@ public class DAOProfile extends DBConnect {
         return s;
     }
     
+    public String getReportTo(String pid) {
+        String id = "";
+        String sql = "select report_to from [profile]\n"
+                + "where profile_id = '"+pid+"'";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            if (rs.next()) {
+                id = rs.getString(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return id;
+    }
+    
     public boolean addManager(Profile pro) {
         String sql = "insert into [profile](first_name, last_name, "
                 + "email ,phone_number, hire_date)"
@@ -153,6 +174,30 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
+    public boolean editCompanyCEO(Profile pro) {
+        String sql = "update [profile] set "
+                + "first_name = ?, "
+                + "last_name = ?, "
+                + "phone_number = ?, "
+                + "where profile_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, pro.getFirst_name());
+            state.setString(2, pro.getLast_name());
+            state.setString(3, pro.getPhone_number());
+            state.setString(4, pro.getProfile_id());
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public List<Profile> listAllStaff(String id) {
         String sql = "select * from [profile] where report_to = ? order by profile_id asc";
         List<Profile> list = new ArrayList<>();

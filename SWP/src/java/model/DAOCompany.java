@@ -5,12 +5,16 @@
  */
 package model;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
+import entity.Account;
 import entity.Company;
+import entity.Profile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,6 +61,7 @@ public class DAOCompany extends DBConnect {
                 list.add(new Company(
                         rs.getInt(1),
                         rs.getString(2),
+                        rs.getString(3),
                         rs.getString(13),
                         rs.getString(14),
                         rs.getString(4),
@@ -78,6 +83,44 @@ public class DAOCompany extends DBConnect {
             closeConnection(conn);
         }
         return list;
+    }
+    
+    public boolean editCompany(Company com, String id) {
+        String sql = "update [company] set "
+                + "company_name = ?, "
+                + "company_address = ?, "
+                + "company_country = ?, "
+                + "company_province = ?, "
+                + "company_city = ?, "
+                + "postal_code = ?, "
+                + "company_email = ?, "
+                + "company_pnumber = ?, "
+                + "fax = ? "
+                + "website_url = ?"
+                + "where profile_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, com.getName());
+            state.setString(2, com.getAddress());
+            state.setString(3, com.getCountry());
+            state.setString(4, com.getProvince());
+            state.setString(5, com.getCity());
+            state.setInt(6, com.getPostal_code());
+            state.setString(7, com.getEmail());
+            state.setInt(8, com.getPhone());
+            state.setInt(9, com.getFax());
+            state.setString(10, com.getUrl());
+            state.setString(11, id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
     }
     
     public Company getCompanyByID(int id) {
@@ -112,6 +155,10 @@ public class DAOCompany extends DBConnect {
 //        for (Company company : list) {
 //            System.out.println(company.toString());
 //        }
-        System.out.println(daoCpn.MyCompany("MA005"));
+          List<Company> list = daoCpn.MyCompany("HP001");
+          for(Company company : list){
+              System.out.println(company.toString());
+          }
+            
     }
 }

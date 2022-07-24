@@ -119,7 +119,19 @@ CREATE TABLE [experience] (
 CREATE TABLE [company] (
     company_id INT IDENTITY(1,1) PRIMARY KEY,
 	company_name VARCHAR (25) NOT NULL,
-);
+	profile_id VARCHAR (8000) NOT NULL,
+	company_address VARCHAR (50) NOT NULL,
+	company_country VARCHAR (20) NOT NULL,
+	company_province VARCHAR (20) NOT NULL,
+	company_city VARCHAR (20) NOT NULL,
+	postal_code INT NOT NULL,
+	company_email VARCHAR (50) NOT NULL,
+	company_pnumber INT NOT NULL,
+	fax INT NOT NULL,
+	website_url VARCHAR (50) NOT NULL,
+	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
+	);
+
 
 --drop table clients
 CREATE TABLE [clients] (

@@ -9,20 +9,16 @@ package entity;
  *
  * @author Khanh
  */
-public class Schedule extends Shift {
+public class Schedule {
     String profile;
+    String shift;
 
     public Schedule() {
     }
-    
-    public Schedule(String profile, String name) {
-        this.name = name;
-        this.profile = profile;
-    }
 
-    public Schedule(String profile, String name, String start_time, String end_time) {
-        super(name, start_time, end_time);
+    public Schedule(String profile, String shift) {
         this.profile = profile;
+        this.shift = shift;
     }
 
     public String getProfile() {
@@ -33,32 +29,17 @@ public class Schedule extends Shift {
         this.profile = profile;
     }
 
-    public String getName() {
-        return name;
+    public String getShift() {
+        return shift;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
-    }
-
-    public String getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
+    public void setShift(String shift) {
+        this.shift = shift;
     }
 
     @Override
     public String toString() {
-        return "schedule{" + "profile=" + profile + '}';
-    }    
+        return "Schedule{" + "profile=" + profile + ", shift=" + shift + '}';
+    }
+    
 }

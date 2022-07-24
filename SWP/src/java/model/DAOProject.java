@@ -145,7 +145,7 @@ public class DAOProject extends DBConnect {
         return true;
     }
     
-    public List<Projects> search(String title) {
+    public List<Projects> searchProject(String title) {
         List<Projects> list = new ArrayList<>();
         String sql = "select * from projects where title like ?";
         try {
@@ -176,6 +176,6 @@ public class DAOProject extends DBConnect {
     public static void main(String[] args) {
         DAOProject dao = new DAOProject();
         DAOClients daoc = new DAOClients();
-        System.out.println(dao.updateProject("Test", "Test 1", "BUKFS", "30/06/2022 - 17/8/2022", 10000, "ABCDE", "demo", 1));
+        System.out.println(dao.searchProject("pj1"));
     }
 }

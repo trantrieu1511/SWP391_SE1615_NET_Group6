@@ -294,6 +294,6 @@ public class DAOTask extends DBConnect {
     
     public static void main(String[] args) {
         DAOTask dao = new DAOTask();
-        System.out.println(dao.editTask(0, "task 3", 0, "01/08/2022", "GG007"));
+        System.out.println(dao.listTaskAssignedTo("GG007", 0));
     }
 }

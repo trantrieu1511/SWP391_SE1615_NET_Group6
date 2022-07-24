@@ -69,8 +69,8 @@ public class ControllerSchedule extends HttpServlet {
                     List<Schedule> listSch = daoSchedule.listStaffWithSchedule();
                     List<String[]> listShiftArray = new ArrayList<>();
                     listSch.forEach((sch) -> {
-                        if (sch.getName() != " ") {
-                            String[] temp = sch.getName().split(" ");
+                        if (sch.getShift() != " ") {
+                            String[] temp = sch.getShift().split(" ");
                             listShiftArray.add(temp);
                         } else {
                             String[] temp = {" "};
@@ -145,8 +145,8 @@ public class ControllerSchedule extends HttpServlet {
                     List<Schedule> listSch = daoSchedule.searchSchedule(name);
                     List<String[]> listShiftArray = new ArrayList<String[]>();
                     for (Schedule sch : listSch) {
-                        if (sch.getName() != " ") {
-                            String[] temp = sch.getName().split(" ");
+                        if (sch.getShift() != " ") {
+                            String[] temp = sch.getShift().split(" ");
                             listShiftArray.add(temp);
                         } else {
                             String[] temp = {" "};

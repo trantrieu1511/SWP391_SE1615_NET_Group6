@@ -171,6 +171,15 @@
                                                     <li><a href="authentication?do=list"><i class="la la-user"></i> <span>Account Manager</span></a></li>
                                                     <li><a href="job?do=list"><i class="la la-rocket"></i> <span>JOB Manager</span></a></li>
                                                     </c:if>
+                                                <li class="submenu">
+                                                    <a href="#" class=""><i class="la la-users"></i> <span> Company</span> <span class="menu-arrow"></span></a>
+                                                    <ul style="display: none;">
+                                                        <c:if test="${sessionScope.acc.isAdmin == true}">
+                                                            <li><a href="authentication?do=clist">All Company</a></li>
+                                                            </c:if>
+                                                        <li><a href="authentication?do=company">My Company</a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>

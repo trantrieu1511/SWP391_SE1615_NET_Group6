@@ -24,8 +24,9 @@ public class DAOShiftTest {
      */
     @Test
     public void testListShift() {
-        assertEquals("[shift{name=afternoon shift, start_time=1:30, end_time=5:00}, "
-                + "shift{name=morning shift, start_time=8:30, end_time=11:30}]", 
+        assertEquals("[shift{name=afternoon, start_time=1:30 PM, end_time=5:30 PM},"
+                + " shift{name=evening, start_time=8:00 AM, end_time=11:30 PM},"
+                + " shift{name=morning, start_time=8:30 AM, end_time=12:30 PM}]", 
                 dao.listShift().toString());        
     }
 
@@ -34,7 +35,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testAdd() {
-        //assertTrue(dao.addShift("morning", "8:30", "11:30"));
+        assertTrue(dao.addShift("morning", "8:30 AM", "11:30 AM"));
     }
 
     /**
@@ -42,7 +43,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testEdit() {
-        //assertTrue(dao.editShift("morning-shift", "8:30", "11:30", "morning"));
+        assertTrue(dao.editShift("morning", "8:30 AM", "12:30 PM", "morning"));
     }
 
     /**
@@ -50,7 +51,7 @@ public class DAOShiftTest {
      */
     @Test
     public void testDelete() {
-        //assertTrue(dao.deleteShift("morning-shift"));
+        //assertTrue(dao.deleteShift("morning"));
     }
 
 }

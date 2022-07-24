@@ -121,7 +121,7 @@
                                                 <c:forEach items="${listClient}" var="o">
                                                 <tr>
                                                     <td>
-                                                        <a href="client-profile.html">${o.first_name} ${o.last_name}</a>
+                                                        <a href="client?do=getclientProfile&client_id=${o.client_id}">${o.first_name} ${o.last_name}</a>
                                                     </td>
                                                     <td>${o.email}</td>                                                 
                                                 </tr>

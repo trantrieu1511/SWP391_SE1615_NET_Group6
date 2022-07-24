@@ -71,7 +71,7 @@ public class ControllerEmployee extends HttpServlet {
                 // attendance
                 if (service.equals("attendance")) {
                     List<Attendance> list = daoAttendance.listAllAttendanceofAnEmployee(employee_id);
-                    Attendance temp = daoAttendance.getLastest(employee_id);
+                    Attendance temp = daoAttendance.getLastestAttendance(employee_id);
                     if (temp != null) {
                         if (temp.getTime_out().equals("")) {
                             button = "out";
@@ -86,10 +86,10 @@ public class ControllerEmployee extends HttpServlet {
                     dispath.forward(request, response);
                 }
                 
-                // search attendance
+                // searchAttendance attendance
                 if (service.equals("searchAttendance")) {
                     String date_search = request.getParameter("date");
-                    List<Attendance> list = daoAttendance.search(date_search, employee_id);
+                    List<Attendance> list = daoAttendance.searchAttendance(date_search, employee_id);
                     request.setAttribute("list_attendance", list);
                     request.setAttribute("button", button);
                     request.setAttribute("date", date_search);
@@ -104,8 +104,8 @@ public class ControllerEmployee extends HttpServlet {
                     time_in = hf.format(new java.util.Date());
                     button = "out";
 
-                    daoAttendance.add(date, time_in, time_out, production_time, employee_id);
-                    Attendance temp = daoAttendance.getLastest(acc.getProfile_id());
+                    daoAttendance.checkIn(date, time_in, time_out, production_time, employee_id);
+                    Attendance temp = daoAttendance.getLastestAttendance(acc.getProfile_id());
 
                     List<Attendance> list = daoAttendance.listAllAttendanceofAnEmployee(employee_id);
                     request.setAttribute("list_attendance", list);
@@ -118,7 +118,7 @@ public class ControllerEmployee extends HttpServlet {
                 // punch out
                 if (service.equals("punchout")) {
                     time_out = hf.format(new java.util.Date());
-                    Attendance temp = daoAttendance.getLastest(employee_id);
+                    Attendance temp = daoAttendance.getLastestAttendance(employee_id);
 
                     int t_out_hr = Integer.parseInt(time_out.split(":")[0]);
                     int t_out_min = Integer.parseInt(time_out.split(":")[1]);
@@ -141,7 +141,7 @@ public class ControllerEmployee extends HttpServlet {
                     }
 
                     production_time = proc_time_hr + ":" + proc_time_min;
-                    daoAttendance.update(temp.getId(), time_out, production_time, employee_id);
+                    daoAttendance.checkOut(temp.getId(), time_out, production_time, employee_id);
                     List<Attendance> list = daoAttendance.listAllAttendanceofAnEmployee(employee_id);
                     request.setAttribute("button", button);
                     request.setAttribute("list_attendance", list);

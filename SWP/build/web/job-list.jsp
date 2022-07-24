@@ -231,7 +231,7 @@
                                 <form action="job" do="post">
                                     <input type="hidden" name="do" value="add">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>ID</label>
                                                 <input class="form-control" type="text" name="id">
@@ -239,7 +239,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <input class="form-control" type="text" name="title">
@@ -247,7 +247,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Min Salary</label>
                                                 <input class="form-control" type="text" name="min">
@@ -255,7 +255,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Max Salary</label>
                                                 <input type="text" class="form-control" name="max">
@@ -287,7 +287,7 @@
                                 <form action="job" do="post">
                                     <input type="hidden" name="do" value="edit">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>ID</label>
                                                 <input class="form-control" type="text" disabled="disabled" name="eid">
@@ -295,7 +295,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Title</label>
                                                 <input class="form-control" type="text" name="etitle">
@@ -303,7 +303,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Min Salary</label>
                                                 <input class="form-control" type="text" name="emin">
@@ -311,7 +311,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Max Salary</label>
                                                 <input type="text" class="form-control" name="emax">

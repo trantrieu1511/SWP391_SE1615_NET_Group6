@@ -116,6 +116,21 @@ public class Profile {
         this.annual_leave = annual_leave;
     }
 
+    //constructor to get employee's AnnualLeave
+    public Profile(int id, String profile_id, String first_name, String last_name, String email, String phone_number, String hire_date, int job_id, int department_id, String reportto, int annual_leave) {
+        this.id = id;
+        this.profile_id = profile_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.hire_date = hire_date;
+        this.job_id = job_id;
+        this.department_id = department_id;
+        this.reportto = reportto;
+        this.annual_leave = annual_leave;
+    }
+
     public String getStatus_d() {
         return status_d;
     }

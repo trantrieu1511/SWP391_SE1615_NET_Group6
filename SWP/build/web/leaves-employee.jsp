@@ -82,15 +82,25 @@
                     var leave_type = myArray[2];
                     var from = myArray[3];
                     var to = myArray[4];
-                    var number_of_days = myArray[5];
+                    var number_of_days = $(e.relatedTarget).attr('data-number_of_days');
                     var reason = $(e.relatedTarget).attr('data-reason');
+                    var new_fromDate = from.split("/").reverse().join("-");
+                    var new_toDate = to.split("/").reverse().join("-");
 
                     $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
                     $(e.currentTarget).find('input[name="id"]').val(id);
 //                    $(e.currentTarget).find('input[name="leave_type"]').val(leave_type);
-                    $(e.currentTarget).find('input[name="from"]').val(from);
-                    $(e.currentTarget).find('input[name="to"]').val(to);
-                    $(e.currentTarget).find('input[name="number_of_days"]').val(number_of_days);
+                    $(e.currentTarget).find('input[name="from"]').val(new_fromDate);
+                    $(e.currentTarget).find('input[name="to"]').val(new_toDate);
+//                    if (from == to) {
+                    document.getElementById('number_of_days_select2').value = number_of_days;
+//                    $(e.currentTarget).find('select[name="number_of_days_select2"]').val(number_of_days)
+//                    } else {
+                    document.getElementById('number_of_days2').value = number_of_days;
+//                    $(e.currentTarget).find('input[name="number_of_days2"]').val(number_of_days);
+//                    }
+
+
                     $('#reason').text(reason);
                     document.getElementById('leave_type').value = leave_type;
                 });
@@ -122,41 +132,110 @@
                 });
             });
 
-            $(document).ready(function () {
-                var cacheDom = "";
-                $('#remove').on("#div_input.")(function () {
-                    cacheDom = $('#div_select'); //storing the value in dom
-                    $('#div_select').remove();
-                });
-                $('#add').click(function () {
-                    $('#prepend').append(cacheDom); // appending it back
-                });
-            });
+//            $(document).ready(function () {
+            function checkDay2(to_date) {
+
+                var from_date = document.getElementById('from').value;
+                var mySelect = document.getElementById('div_select');
+                var myText = document.getElementById('div_input');
+                var prepend = document.getElementById('prepend');
+                var cacheDom; //storing the value in dom
+                if (to_date.value != from_date) {
+                    cacheDom = $('#number_of_days_select').detach();
+
+//                    mySelect.remove();
+//                        alert('khac');
+                } else {
+                    $('#prepend').prepend(cacheDom); // appending it back
+//                        alert('giong');
+                }
+            }
+//            });
 
             function checkDay() {
                 var to_date = document.getElementById('to').value;
                 var from_date = document.getElementById('from').value;
+                // JavaScript program to illustrate
+                // calculation of no. of days between two date
+
+                // To set two dates to two variables
+                var date1 = new Date(from_date);
+                var date2 = new Date(to_date);
+
+// To calculate the time difference of two dates
+                var Difference_In_Time = date2.getTime() - date1.getTime();
+
+// To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+                if (Difference_In_Days < 0)
+                    Difference_In_Days = 0;
+
+//To display the final no. of days (result)
+//                document.write("Total number of days between dates <br>"
+//                        + date1 + "<br> and <br>"
+//                        + date2 + " is: <br> "
+//                        + Difference_In_Days);
+                document.getElementById('number_of_days').value = Difference_In_Days;
                 var myselect = document.getElementById('number_of_days_select');
-                var div_select = document.getElementById('div_select');
-                var div_input = document.getElementById('div_input');
-                var div_prepend = document.getElementById('prepend');
-                var x;
-                var y;
-                var cacheDom = "";
                 if (to_date != from_date) {
-
-//                    cacheDom = $('#div_select'); //storing the value in dom
-//                    $('#div_select').remove();
-
-
-//                    document.getElementById('number_of_days').type = "text";
-//                    myselect.setAttribute("hidden", "hidden");
-//                    x = div_select.detach();
+                    document.getElementById('number_of_days').type = "text";
+                    myselect.setAttribute("hidden", "hidden");
+                    myselect.removeAttribute("required");
                 } else {
-//                    document.getElementById("number_of_days").type = "hidden";
-//                    myselect.removeAttribute("hidden");
-//                    div_prepend.prepend(x);
-//                    $('#prepend').append(cacheDom); // appending it back
+                    document.getElementById("number_of_days").type = "hidden";
+                    myselect.removeAttribute("hidden");
+                    myselect.setAttribute("required", "");
+                }
+            }
+
+            function checkDayEdit() {
+                var to_date = document.getElementById('to2').value;
+                var from_date = document.getElementById('from2').value;
+                // JavaScript program to illustrate
+                // calculation of no. of days between two date
+
+                // To set two dates to two variables
+                var date1 = new Date(from_date);
+                var date2 = new Date(to_date);
+
+// To calculate the time difference of two dates
+                var Difference_In_Time = date2.getTime() - date1.getTime();
+
+// To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+                if (Difference_In_Days < 0)
+                    Difference_In_Days = 0;
+
+//To display the final no. of days (result)
+//                document.write("Total number of days between dates <br>"
+//                        + date1 + "<br> and <br>"
+//                        + date2 + " is: <br> "
+//                        + Difference_In_Days);
+                document.getElementById('number_of_days2').value = Difference_In_Days;
+                var myselect = document.getElementById('number_of_days_select2');
+                if (to_date != from_date) {
+                    document.getElementById('number_of_days2').type = "text";
+                    myselect.setAttribute("hidden", "hidden");
+                    myselect.removeAttribute("required");
+                } else {
+                    document.getElementById("number_of_days2").type = "hidden";
+                    myselect.removeAttribute("hidden");
+                    myselect.setAttribute("required", "");
+                }
+            }
+            function checkDayOnPageShow() {
+                var to_date = document.getElementById('to2').value;
+                var from_date = document.getElementById('from2').value;
+
+                var myselect = document.getElementById('number_of_days_select2');
+                if (to_date != from_date) {
+                    document.getElementById('number_of_days2').type = "text";
+                    myselect.setAttribute("hidden", "hidden");
+                    myselect.removeAttribute("required");
+                } else {
+                    document.getElementById("number_of_days2").type = "hidden";
+                    myselect.removeAttribute("hidden");
+                    myselect.setAttribute("required", "");
                 }
             }
 
@@ -317,7 +396,7 @@
                                                             <div class="dropdown dropdown-action">
                                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to} ${leave.number_of_days}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                                    <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-number_of_days="${leave.number_of_days}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                 </div>
                                                             </div>
@@ -365,38 +444,43 @@
                                     %>
                                     <div class="form-group">
                                         <label>From <span class="text-danger">*</span></label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="from" id="from" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>">
+                                        <div class="">
+                                            <input class="form-control" onkeydown="event.preventDefault()" type="date" name="from" id="from" required="" readonly="" value="<%=now.getYear() + "-0" + now.getMonthValue() + "-" + now.getDayOfMonth()%>">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>To <span class="text-danger">*</span></label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" onkeydown="event.preventDefault()" type="text" name="to" id="to">
+                                        <div class="">
+                                            <input class="form-control" onchange="checkDay()" type="date" name="to" id="to" required="">
                                         </div>
                                     </div>
                                     <!--<a class="btn btn-success btn-block" onclick="checkDay()">Compare</a>-->
-                                    <div id="prepend"></div>
-                                    <div class="form-group" id="div_input">
-                                        <label>Number of days <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly type="text" name="number_of_days" id="number_of_days">
-                                    </div>
-                                    <div class="form-group" id="div_select">
-                                        <label>Number of days <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="number_of_days" id="number_of_days_select">
-                                            <option value="">Select leave slot</option>
-                                            <option value="1">slot 1</option>
-                                            <option value="2">slot 2</option>
-                                            <option value="3">slot 3</option>
-                                        </select>
-                                    </div>
+                                    <!--<span id="prepend"></span>-->
+                                    <!--<div class="form-group" id="div_input">-->
+                                    <label>Number of days <span class="text-danger">*</span></label>
+                                    <input class="form-control" readonly type="text" id="number_of_days">
+                                    <!--</div>-->
+                                    <!--<div class="form-group" id="div_select_1">-->
+                                    <!--<label>Number of days <span class="text-danger">*</span></label>-->
+                                    <select class="form-control" name="number_of_days" id="number_of_days_select" hidden required="">
+                                        <option value="">Select leave slot</option>
+                                        <option value="slot 1">slot 1</option>
+                                        <option value="slot 2">slot 2</option>
+                                        <option value="slot 3">slot 3</option>
+                                        <option value="slot 4">slot 4</option>
+                                        <option value="slot 5">slot 5</option>
+                                        <option value="slot 6">slot 6</option>
+                                        <option value="slot 7">slot 7</option>
+                                        <option value="slot 8">slot 8</option>
+                                    </select>
+                                    <!--</div>-->
                                     <div class="form-group">
                                         <!--<label>Remaining Leaves <span class="text-danger">*</span></label>-->
                                         <!--<input class="form-control" readonly value="12" type="hidden">-->
                                     </div>
                                     <div class="form-group">
                                         <label>Leave Reason <span class="text-danger">*</span></label>
-                                        <textarea rows="4" class="form-control" name="reason"></textarea>
+                                        <textarea rows="4" class="form-control" name="reason" required=""></textarea>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Submit</button>
@@ -428,7 +512,7 @@
                                     <input type="hidden" name="id" value="">
                                     <div class="form-group">
                                         <label>Leave Type <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="leave_type" id="leave_type">
+                                        <select class="form-control" name="leave_type" id="leave_type" required="">
                                             <option value="">Select Leave Type</option>
                                             <c:forEach items="${listLeaveType}" var="leaveType">
                                                 <option value="${leaveType.id}">${leaveType.name}</option>
@@ -437,19 +521,31 @@
                                     </div>
                                     <div class="form-group">
                                         <label>From <span class="text-danger">*</span></label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" name="from" onkeydown="event.preventDefault()" value="<%=now.getDayOfMonth() + "/" + now.getMonthValue() + "/" + now.getYear()%>" type="text">
+                                        <div class="">
+                                            <input class="form-control" name="from" onkeydown="event.preventDefault()" value="" type="date" id="from2" readonly="" required="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>To <span class="text-danger">*</span></label>
-                                        <div class="cal-icon">
-                                            <input class="form-control datetimepicker" name="to" onkeydown="event.preventDefault()" value="" type="text">
+                                        <div class="">
+                                            <input class="form-control" name="to" onkeydown="event.preventDefault()" onchange="checkDayEdit()" value="" type="date" id="to2" required="">
                                         </div>
                                     </div>
+                                    <label>Number of days <span class="text-danger">*</span></label>
+                                    <input class="form-control" readonly type="text" id="number_of_days2">
+                                    <select class="form-control" name="number_of_days" id="number_of_days_select2" hidden required="">
+                                        <option value="">Select leave slot</option>
+                                        <option value="slot 1">slot 1</option>
+                                        <option value="slot 2">slot 2</option>
+                                        <option value="slot 3">slot 3</option>
+                                        <option value="slot 4">slot 4</option>
+                                        <option value="slot 5">slot 5</option>
+                                        <option value="slot 6">slot 6</option>
+                                        <option value="slot 7">slot 7</option>
+                                        <option value="slot 8">slot 8</option>
+                                    </select>
                                     <div class="form-group">
-                                        <label>Number of days <span class="text-danger">*</span></label>
-                                        <input class="form-control" readonly name="number_of_days" type="text" value="">
+
                                     </div>
                                     <!--                                    <div class="form-group">
                                                                             <label>Remaining Leaves <span class="text-danger">*</span></label>
@@ -457,7 +553,7 @@
                                                                         </div>-->
                                     <div class="form-group">
                                         <label>Leave Reason <span class="text-danger">*</span></label>
-                                        <textarea rows="4" class="form-control" name="reason" id="reason"></textarea>
+                                        <textarea rows="4" class="form-control" name="reason" id="reason" required=""></textarea>
                                     </div>
                                     <div class="submit-section">
                                         <button class="btn btn-primary submit-btn">Save</button>

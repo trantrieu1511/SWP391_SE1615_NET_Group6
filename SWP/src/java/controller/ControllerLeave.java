@@ -12,10 +12,13 @@ import entity.LeaveType;
 import entity.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -121,11 +124,17 @@ public class ControllerLeave extends HttpServlet {
                     if (add != null && add.equals("failed")) {
                         alert = "Add new leave failed!";
                     }
+                    if (add != null && add.equals("error")) {
+                        alert = "Add new leave failed! From Date must before To Date";
+                    }
                     if (edit != null && edit.equals("success")) {
                         alert = "Edit leave successfully!";
                     }
                     if (edit != null && edit.equals("failed")) {
                         alert = "Edit leave failed!";
+                    }
+                    if (edit != null && edit.equals("error")) {
+                        alert = "Edit leave failed! From Date must before To Date";
                     }
                     if (delete != null && delete.equals("success")) {
                         alert = "Delete leave successfully!";
@@ -167,13 +176,79 @@ public class ControllerLeave extends HttpServlet {
                     RequestDispatcher dispath = request.getRequestDispatcher("leaves-employee.jsp");
                     dispath.forward(request, response);
                 }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+
                 if (service.equals("addLeave")) {
                     String profile_id = request.getParameter("profile_id");
                     int leave_type = Integer.parseInt(request.getParameter("leave_type"));
                     String from = request.getParameter("from");
                     String to = request.getParameter("to");
-                    String number_of_days = request.getParameter("number_of_days");
                     String reason = request.getParameter("reason");
+                    String number_of_days = "";
+                    boolean addLeave = false;
+                    boolean DecrementAL = false;
+
+                    int annual_leave = daoPf.getByID(profile_id).getAnnual_leave(); //remaining leave
+                    try {
+                        Date f_date = sdf.parse(from);
+                        Date t_date = sdf.parse(to);
+                        if (f_date.before(t_date)) {
+                            from = sdf2.format(f_date);
+                            to = sdf2.format(t_date);
+                            if (annual_leave > 0) {
+                                addLeave = daoLeave.addLeave(new Leave(profile_id,
+                                        leave_type, from, to, reason));
+                                if (addLeave) {
+                                    System.out.println("Add Leave for pf_id = " + profile_id + " successfully!");
+                                    DecrementAL = daoLeave.DecrementAnnualLeave(profile_id);
+                                    if (DecrementAL) {
+                                        System.out.println("Update annual leave for pf_id = " + profile_id + " successfully (-1 annual leave)!");
+                                    } else {
+                                        System.out.println("Fail to update annual leave!");
+                                    }
+                                    response.sendRedirect("leave?do=myLeave&add=success");
+                                } else {
+                                    System.out.println("Fail to add new leave!");
+                                    response.sendRedirect("leave?do=myLeave&add=failed");
+                                }
+                            } else {
+                                System.out.println("Cannot add more leave, your leave has extend the required amount of annual leave!");
+                                response.sendRedirect("leave?do=myLeave&add=failed");
+                            }
+                        } else if (f_date.after(t_date)) {
+                            System.out.println("Fail to add new leave! From date must before to date!");
+                            response.sendRedirect("leave?do=myLeave&add=error");
+                        } else {
+                            from = sdf2.format(f_date);
+                            to = sdf2.format(t_date);
+                            number_of_days = request.getParameter("number_of_days");
+                            if (annual_leave > 0) {
+                                addLeave = daoLeave.addLeave2(new Leave(profile_id,
+                                        leave_type, from, to, number_of_days, reason));
+                                if (addLeave) {
+                                    System.out.println("Add Leave for pf_id = " + profile_id + " successfully!");
+                                    DecrementAL = daoLeave.DecrementAnnualLeave(profile_id);
+                                    if (DecrementAL) {
+                                        System.out.println("Update annual leave for pf_id = " + profile_id + " successfully (-1 annual leave)!");
+                                    } else {
+                                        System.out.println("Fail to update annual leave!");
+                                    }
+                                    response.sendRedirect("leave?do=myLeave&add=success");
+                                } else {
+                                    System.out.println("Fail to add new leave!");
+                                    response.sendRedirect("leave?do=myLeave&add=failed");
+                                }
+                            } else {
+                                System.out.println("Cannot add more leave, your leave has extend the required amount of annual leave!");
+                                response.sendRedirect("leave?do=myLeave&add=failed");
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+
 //                    out.print(profile_id);
 //                    out.print("<br>");
 //                    out.print(leave_type);
@@ -184,28 +259,9 @@ public class ControllerLeave extends HttpServlet {
 //                    out.print("<br>");
 //                    out.print(number_of_days);
 //                    out.print("<br>");
+//                    out.print(number_of_days_select);
+//                    out.print("<br>");
 //                    out.print(reason);
-
-                    int annual_leave = daoPf.getByID(profile_id).getAnnual_leave(); //remaining leave
-                    if (annual_leave <= 0) {
-                        boolean addLeave = daoLeave.addLeave(new Leave(profile_id,
-                                leave_type, from, to, number_of_days, reason));
-                        if (addLeave) {
-                            System.out.println("Add Leave for pf_id = " + profile_id + " successfully!");
-                            boolean IncrementAL = daoLeave.IncrementAnnualLeave(profile_id);
-                            if (IncrementAL) {
-                                System.out.println("Update annual leave for pf_id = " + profile_id + " successfully (-1 annual leave)!");
-                            } else {
-                                System.out.println("Fail to update annual leave!");
-                            }
-                        } else {
-                            System.out.println("Fail to add new leave!");
-                        }
-                        response.sendRedirect("leave?do=myLeave&add=success");
-                    } else {
-                        System.out.println("Cannot add more leave, your leave has extend the required amount of annual leave!");
-                        response.sendRedirect("leave?do=myLeave&add=failed");
-                    }
                 }
                 if (service.equals("editLeave")) {
                     int id = Integer.parseInt(request.getParameter("id"));
@@ -213,17 +269,44 @@ public class ControllerLeave extends HttpServlet {
                     int leave_type = Integer.parseInt(request.getParameter("leave_type"));
                     String from = request.getParameter("from");
                     String to = request.getParameter("to");
-                    String number_of_days = request.getParameter("number_of_days");
                     String reason = request.getParameter("reason");
-
-                    boolean editLeave = daoLeave.editLeave(new Leave(id, profile_id,
-                            leave_type, from, to, number_of_days, reason));
-                    if (editLeave) {
-                        System.out.println("Edit Leave for pf_id = " + profile_id + " where id = " + id + " success!");
-                    } else {
-                        System.out.println("Fail to edit leave!");
+                    String number_of_days = "";
+                    boolean editLeave = false;
+                    try {
+                        Date f_date = sdf.parse(from);
+                        Date t_date = sdf.parse(to);
+                        if (f_date.before(t_date)) {
+                            from = sdf2.format(f_date);
+                            to = sdf2.format(t_date);
+                            editLeave = daoLeave.editLeave(new Leave(id, profile_id,
+                                    leave_type, from, to, reason));
+                            if (editLeave) {
+                                System.out.println("Edit Leave for pf_id = " + profile_id + " where id = " + id + " success!");
+                                response.sendRedirect("leave?do=myLeave&edit=success");
+                            } else {
+                                System.out.println("Fail to edit leave!");
+                                response.sendRedirect("leave?do=myLeave&edit=failed");
+                            }
+                        } else if (f_date.after(t_date)) {
+                            System.out.println("Fail to edit new leave! From date must before to date!");
+                            response.sendRedirect("leave?do=myLeave&edit=error");
+                        } else {
+                            from = sdf2.format(f_date);
+                            to = sdf2.format(t_date);
+                            number_of_days = request.getParameter("number_of_days");
+                            editLeave = daoLeave.editLeave2(new Leave(id, profile_id,
+                                    leave_type, from, to, number_of_days, reason));
+                            if (editLeave) {
+                                System.out.println("Edit Leave for pf_id = " + profile_id + " where id = " + id + " success!");
+                                response.sendRedirect("leave?do=myLeave&edit=success");
+                            } else {
+                                System.out.println("Fail to edit leave!");
+                                response.sendRedirect("leave?do=myLeave&edit=failed");
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
                     }
-                    response.sendRedirect("leave?do=myLeave");
                 }
                 if (service.equals("deleteLeave")) {
                     int id = Integer.parseInt(request.getParameter("id"));

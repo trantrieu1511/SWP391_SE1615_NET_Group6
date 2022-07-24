@@ -182,7 +182,7 @@
             function checkPasswordonpageshow() {
                 var password = document.getElementById('password2').value;
                 var confirm_password = document.getElementById('confirm_password2').value;
-                if ((password && confirm_password) != "") {
+//                if ((password && confirm_password) != "") {
                     if (confirm_password != password) {
                         document.getElementById('wrong_pass_alert2').style.color = 'red';
                         document.getElementById('wrong_pass_alert2').innerHTML
@@ -196,12 +196,12 @@
                         document.getElementById('create2').disabled = false;
                         document.getElementById('create2').style.opacity = (1);
                     }
-                } else {
-                    document.getElementById('wrong_pass_alert').innerHTML
-                            = '';
-                    document.getElementById('create').disabled = false;
-                    document.getElementById('create').style.opacity = (1);
-                }
+//                } else {
+//                    document.getElementById('wrong_pass_alert').innerHTML
+//                            = '';
+//                    document.getElementById('create').disabled = false;
+//                    document.getElementById('create').style.opacity = (1);
+//                }
 
             }
 

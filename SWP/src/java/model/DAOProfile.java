@@ -206,7 +206,8 @@ public class DAOProfile extends DBConnect {
                         rs.getString(7),
                         rs.getInt(8),
                         rs.getInt(9),
-                        rs.getString(10));
+                        rs.getString(10),
+                        rs.getInt(11));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -348,7 +348,7 @@
                                             <th>No of Days</th>
                                             <th>Reason</th>
                                             <th class="text-center">Status</th>
-                                            <th>Approved by</th>
+                                            <th>Approve by</th>
                                             <th class="text-right">Actions</th>
                                         </tr>
                                     </thead>
@@ -576,8 +576,8 @@
                                 </div>
                                 <form action="leave" method="post">
                                     <input type="hidden" name="do" value="deleteLeave">
-                                    <input type="text" name="id">
-                                    <input type="text" name="profile_id">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="profile_id">
                                     <div class="modal-btn delete-action">
                                         <div class="row">
                                             <div class="col-6">

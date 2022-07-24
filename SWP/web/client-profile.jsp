@@ -135,14 +135,14 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <c:choose>
-                                                <c:when test="${sessionScope.acc.isManager==true}">
-                                                    <div class="pro-edit"><a data-target="#client_profile_info" data-toggle="modal" class="edit-icon" href="#" ><i class="fa fa-pencil"></i></a></div>
-                                                        </c:when>
-                                                        <c:otherwise>
+                                            <%--<c:choose>--%>
+                                                <%--<c:when test="${sessionScope.acc.isManager==true}">--%>
+                                                    <!--<div class="pro-edit"><a data-target="#client_profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>-->
+                                                        <%--</c:when>--%>
+                                                        <%--<c:otherwise>--%>
 
-                                                </c:otherwise>
-                                            </c:choose>
+                                                <%--</c:otherwise>--%>
+                                            <%--</c:choose>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card tab-box">
+<!--                <div class="card tab-box">
                     <div class="row user-tabs">
                         <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                             <ul class="nav nav-tabs nav-tabs-bottom">
@@ -159,13 +159,13 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-lg-12"> 
                         <div class="tab-content profile-tab-content">
 
-                            <!-- Projects Tab -->
+                             Projects Tab 
                             <div id="myprojects" class="tab-pane fade show active">
                                 <div class="row">
                                     <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
@@ -617,9 +617,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Projects Tab -->
+                             /Projects Tab 
 
-                            <!-- Task Tab -->
+                             Task Tab 
                             <div id="tasks" class="tab-pane fade">
                                 <div class="project-task">
                                     <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
@@ -759,11 +759,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /Task Tab -->
+                             /Task Tab 
 
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <!-- /Page Content -->
 
@@ -817,8 +817,8 @@
                                                 <div class="form-group">
                                                     <label>Gender <span class="text-danger">*</span></label>
                                                     <select class="select form-control" name="gender">
-                                                        <option value="true" ${pd.gender==true ? "selected" : ''}>Male</option>
-                                                        <option value="false" ${pd.gender==false ? "selected" : ''}>Female</option>
+                                                        <option value="true">Male</option>
+                                                        <option value="false">Female</option>
                                                     </select>
                                                 </div>
                                             </div>

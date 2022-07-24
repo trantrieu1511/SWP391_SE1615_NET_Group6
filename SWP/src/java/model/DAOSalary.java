@@ -23,7 +23,7 @@ public class DAOSalary extends DBConnect {
     PreparedStatement state = null;
     ResultSet rs = null;
 
-    public List<Salary> listAllStaffAndManagerProfile() {
+    public List<Salary> listAllStaffAndManagerSalary() {
         String sql = "select p.id, p.profile_id,p.first_name,p.last_name,p.email,p.phone_number,p.hire_date,p.job_id,p.department_id,p.report_to, s.basic_salary, s.DA, s.HRA, s.conveyance, s.allowance, s.medical_allowance,\n"
                 + "s.TDS, s.ESI, s.PF, s.leave, s.loan, s.professional_tax, ((basic_salary+DA+HRA+conveyance+allowance+medical_allowance)-(TDS+ESI+PF+leave+loan+professional_tax)) as net_salary,\n"
                 + "s.create_date\n"

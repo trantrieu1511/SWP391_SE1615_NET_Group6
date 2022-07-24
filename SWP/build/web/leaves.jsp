@@ -277,10 +277,7 @@
                                                 <td>
                                                     <h2 class="table-avatar">
                                                         <c:choose>
-                                                            <c:when test="${(p.profile_id).equals('MA001')}">
-                                                                <a href="#" class="avatar"><img alt="" src="img/profiles/avatar-05.jpg"></a>
-                                                                </c:when>
-                                                                <c:when test="${p.reportto == null}">
+                                                            <c:when test="${sessionScope.acc.isAdmin == true}">
                                                                 <a href="#" class="avatar"><img alt="" src="img/profiles/avatar-21.jpg"></a>
                                                                 </c:when>
                                                                 <c:otherwise>

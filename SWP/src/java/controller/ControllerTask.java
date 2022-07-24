@@ -108,10 +108,10 @@ public class ControllerTask extends HttpServlet {
                 }
 
                 if (service.equals("updateStatus")) {
-                    String id = request.getParameter("id");
+                    int id = Integer.parseInt(request.getParameter("id"));
                     int status = Integer.parseInt(request.getParameter("status"));
-                    daoTask.updateStatus(status, Integer.parseInt(id));
-                    String project = daoTask.getTaskById(Integer.parseInt(id)).getProject();
+                    daoTask.updateStatus(status, id);
+                    String project = daoTask.getTaskById(id).getProject();
 
                     List<Task> list0 = daoTask.listProjectTask(0, project);
                     List<Task> list1 = daoTask.listProjectTask(1, project);

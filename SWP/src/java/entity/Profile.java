@@ -26,6 +26,7 @@ public class Profile {
     String ismanager_d;
     String status_d;
     int annual_leave;
+    String shiftStatus;
 
     public Profile() {
     }
@@ -297,6 +298,14 @@ public class Profile {
 
     public void setAnnual_leave(int annual_leave) {
         this.annual_leave = annual_leave;
+    }
+
+    public String getShiftStatus() {
+        return shiftStatus;
+    }
+
+    public void setShiftStatus(String shiftStatus) {
+        this.shiftStatus = shiftStatus;
     }
 
     @Override

@@ -190,7 +190,7 @@
                                                                 </span>
                                                             </c:if>
                                                             <c:if test="${sessionScope.acc.isManager == false}">
-                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=1">Accept</a>
+                                                                <a href="task?do=updateStatus&&id=${o.id}&&status=1">Accept</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -238,7 +238,7 @@
                                                                 </span>
                                                             </c:if>
                                                             <c:if test="${sessionScope.acc.isManager == false}">
-                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=2">Done</a>
+                                                                <a href="task?do=updateStatus&&id=${o.id}&&status=2">Done</a>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -279,7 +279,7 @@
                                                                 <span class="task-users">
                                                                     ${o.assigned}
                                                                 </span>
-                                                                <a href="task?do=updateStatus&&name=${o.id}&&status=3">Accept</a>
+                                                                <a href="task?do=updateStatus&&id=${o.id}&&status=3">Accept</a>
                                                             </c:if>
                                                         </div>
                                                     </div>

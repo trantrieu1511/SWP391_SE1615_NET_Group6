@@ -106,10 +106,11 @@
                     });
                 });
             });
+            // alert
             <c:if test="${alert != ''}">
-            window.onload = function () {
+            $(document).ready(function(){
                 alert("${alert}");
-            }
+            });
             </c:if>
         </script>       
 

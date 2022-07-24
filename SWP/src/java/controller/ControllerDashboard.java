@@ -106,9 +106,9 @@ public class ControllerDashboard extends HttpServlet {
                     });
                     List<Shift> listShift = daoShift.listShift();
                     Schedule sch = daoSch.getStaffSchedule(acc.getProfile_id());
-                    for (Shift s : listShift) {
-                        if (!sch.getShift().contains(s.getName())) {
-                            listShift.remove(s);
+                    for (int i = 0; i < listShift.size(); i++) {
+                        if(!sch.getShift().contains(listShift.get(i).getName())) {
+                            listShift.remove(i);
                         }
                     }
                     List<Projects> listProject = daoProject.listProject();

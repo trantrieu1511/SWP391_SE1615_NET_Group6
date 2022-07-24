@@ -204,7 +204,7 @@
                                                 <td>                                          
                                                     <h2><a href="profile?do=getothersProfile&profile_id=${o.profile_id}">${o.first_name} ${o.last_name}</a></h2>                                           
                                                 </td>     
-                                                <c:forEach items="${o.department_name.split(' ')}" var="p">
+                                                <c:forEach items="${o.shiftStatus.split(' ')}" var="p">
                                                     <c:if test="${p == 'true'}">
                                                         <td><i class="fa fa-check text-success"></i></td>
                                                         </c:if>

@@ -165,17 +165,17 @@
 
                     <!-- Search Filter -->
                     <form action="authentication" do="post">
-                        <input type="hidden" name="do" value="search">
+                        <input type="hidden" name="do" value="searchcompany">
                         <div class="row filter-row">
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="fname">
+                                    <input type="text" class="form-control floating" name="sname">
                                     <label class="focus-label">Company Name</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">  
                                 <div class="form-group form-focus">
-                                    <input type="text" class="form-control floating" name="lname">
+                                    <input type="text" class="form-control floating" name="surl">
                                     <label class="focus-label">Website</label>
                                 </div>
                             </div>
@@ -344,7 +344,7 @@
                                 <input type="hidden" name="do" value="deletecompany">
                                 <input type="hidden" name="aprofile_id">
                                 <div class="form-header">
-                                    <h3>Delete User</h3>
+                                    <h3>Delete Company</h3>
                                     <p>Are you sure want to delete?</p>
                                 </div>
                                 <div class="modal-btn delete-action">

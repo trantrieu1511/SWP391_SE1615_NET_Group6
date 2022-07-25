@@ -58,7 +58,7 @@ public class ControllerJob extends HttpServlet {
                     response.sendRedirect("home");
                 }
             }
-            
+
             if (service.equals("list")) {
                 DAOJob daoJ = new DAOJob();
                 List<Jobs> listJ = daoJ.listAllJob();
@@ -68,50 +68,66 @@ public class ControllerJob extends HttpServlet {
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("job-list.jsp").forward(request, response);
             }
-            
-            if (service.equals("add")){
+
+            if (service.equals("add")) {
                 String title = request.getParameter("title");
                 double min = Double.parseDouble(request.getParameter("min"));
                 double max = Double.parseDouble(request.getParameter("max"));
                 DAOJob daoJ = new DAOJob();
-                
-                if(daoJ.addJob(title, min, max)){
+
+                if (daoJ.addJob(title, min, max)) {
                     System.out.println("Add successfully job: " + title);
-                }else{
+                } else {
                     System.out.println("Add fail job: " + title);
                 }
-                
+
                 request.getRequestDispatcher("job?do=list").forward(request, response);
             }
-            
-            if (service.equals("edit")){
+
+            if (service.equals("edit")) {
                 String title = request.getParameter("etitle").trim();
                 double min = Double.parseDouble(request.getParameter("emin").trim());
                 double max = Double.parseDouble(request.getParameter("emax").trim());
                 int id = Integer.parseInt(request.getParameter("eid").trim());
                 DAOJob daoJ = new DAOJob();
-                
-                if(daoJ.editJob(id, title, min, max)){
+
+                if (daoJ.editJob(id, title, min, max)) {
                     System.out.println("Save successfully job_id: " + id);
-                }else{
+                } else {
                     System.out.println("Save fail job_id: " + id);
                 }
-                
+
                 request.getRequestDispatcher("job?do=list").forward(request, response);
             }
-            
-            if (service.equals("delete")){
-                int id = Integer.parseInt(request.getParameter("eid").trim());
+
+            if (service.equals("delete")) {
+                int id = Integer.parseInt(request.getParameter("aprofile_id").trim());
+                DAOJob daoJ = new DAOJob();
+                DAOProfile daoPf = new DAOProfile();
+                if (daoPf.editJob(id)) {
+                    if (daoJ.deleteJob(id)) {
+                        System.out.println("delete success");
+
+                        request.getRequestDispatcher("job?do=list").forward(request, response);
+                    } else {
+                        System.out.println("delete fail");
+
+                        request.getRequestDispatcher("job?do=list").forward(request, response);
+                    }
+                } else {
+                    System.out.println("delete fail");
+
+                    request.getRequestDispatcher("job?do=list").forward(request, response);
+                }
             }
-            
-            if (service.equals("search")){
+
+            if (service.equals("search")) {
                 double min = Double.parseDouble(request.getParameter("smin").trim());
                 double max = Double.parseDouble(request.getParameter("smax").trim());
                 DAOJob daoJ = new DAOJob();
-                
-                
+
             }
-        }catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             response.sendRedirect("error404.jsp");
         }

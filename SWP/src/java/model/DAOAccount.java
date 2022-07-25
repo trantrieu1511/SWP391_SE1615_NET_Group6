@@ -64,11 +64,16 @@ public class DAOAccount extends DBConnect {
 
     public boolean addAMAccount(String profile_id, String username, String password, int isA, int isM) {
         String sql = "insert into account(profile_id, username, password, isadmin, ismanager, status)"
-                + "values('" + profile_id + "', '" + username + "', '" + password
-                + "', " + isA + ", " + isM + ", " + 1 + ")";
+                + "values(?, ?, ?, ?, ?, ?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
+            state.setString(2, username);
+            state.setString(3, password);
+            state.setInt(4, isA);
+            state.setInt(5, isM);
+            state.setInt(6, 1);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

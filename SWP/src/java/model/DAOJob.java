@@ -97,10 +97,30 @@ public class DAOJob extends DBConnect {
 
     public boolean addJob(String title, double min, double max) {
         String sql = "insert into jobs(job_title, min_salary, max_salary)"
-                + "values('" + title + "', '" + min  + "', " + max + ")";
+                + "values(?, ?, ?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, title);
+            state.setDouble(2, min);
+            state.setDouble(2, max);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public boolean deleteJob(int id) {
+        String sql = "delete from jobs where job_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, id);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

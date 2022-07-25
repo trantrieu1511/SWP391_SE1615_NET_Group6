@@ -74,6 +74,33 @@ public class DAOCompany extends DBConnect {
         return list;
     }
 
+    public List<Company> GetCompany(String a, String b) {
+        List<Company> list = new ArrayList<>();
+        String sql = "select * from [company] where company_name = ? and website_url = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, a);
+            state.setString(2, b);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Company(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getString(12)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
     public List<Company> MyCompany(String id) {
         List<Company> list = new ArrayList<>();
         String sql = "select company.*, profile.first_name, profile.last_name, profile.phone_number"
@@ -121,8 +148,8 @@ public class DAOCompany extends DBConnect {
                 + "postal_code = ?, "
                 + "company_email = ?, "
                 + "company_pnumber = ?, "
-                + "fax = ? "
-                + "website_url = ?"
+                + "fax = ?, "
+                + "website_url = ? "
                 + "where profile_id = ?";
         try {
             conn = getConnection();
@@ -151,10 +178,21 @@ public class DAOCompany extends DBConnect {
     
     public boolean addCompany(Company com) {
         String sql = "insert into company(company_name, profile_id, company_address, company_country, company_province, company_city, postal_code, company_email, company_pnumber, fax, website_url)"
-                + "values('" + com.getName() + "', '" + com.getPro_id()  + "', " + com.getAddress() + "', " + com.getCountry() + "', " + com.getProvince() + "', " + com.getCity() + "', " + com.getPostal_code() + "', " + com.getEmail() + "', " + com.getPhone() + "', " + com.getFax() + "', " + com.getUrl() + ")";
+                + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, com.getName());
+            state.setString(2, com.getPro_id());
+            state.setString(3, com.getAddress());
+            state.setString(4, com.getCountry());
+            state.setString(5, com.getProvince());
+            state.setString(6, com.getCity());
+            state.setInt(7, com.getPostal_code());
+            state.setString(8, com.getEmail());
+            state.setInt(9, com.getPhone());
+            state.setInt(10, com.getFax());
+            state.setString(11, com.getUrl());
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

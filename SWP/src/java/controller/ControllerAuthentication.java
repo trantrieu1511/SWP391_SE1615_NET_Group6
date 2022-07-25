@@ -57,10 +57,10 @@ public class ControllerAuthentication extends HttpServlet {
                     dispath.forward(request, response);
                 } else {
                     Boolean status = dao.getStatus(username);
-                    if(status == true){
+                    if (status == true) {
                         session.setAttribute("acc", a);
                         response.sendRedirect("home");
-                    }else{
+                    } else {
                         request.setAttribute("mess", "Your account is disable. Please contact admin by phone number: 0976.475.638 for more details");
                         RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
                         dispath.forward(request, response);
@@ -82,7 +82,7 @@ public class ControllerAuthentication extends HttpServlet {
                 request.setAttribute("alert", alert);
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
-            
+
             if (service.equals("search")) {
                 String fname = request.getParameter("fname").trim();
                 String lname = request.getParameter("lname").trim();
@@ -111,15 +111,15 @@ public class ControllerAuthentication extends HttpServlet {
                 request.getRequestDispatcher("account-list.jsp").forward(request, response);
             }
             if (service.equals("addaccount")) {
-                String user = request.getParameter("user").trim();
+                String user = request.getParameter("auser").trim();
                 String pass = request.getParameter("pass").trim();
-                String isA = request.getParameter("isa").trim();
-                String isM = request.getParameter("ism").trim();
+                String isA = request.getParameter("isAdmin").trim();
+                String isM = request.getParameter("isManager").trim();
                 String fname = request.getParameter("fname").trim();
                 String lname = request.getParameter("lname").trim();
                 String date = request.getParameter("hiredate").trim();
                 String email = request.getParameter("email").trim();
-                String phone = request.getParameter("pnum").trim();
+                String phone = request.getParameter("pnumber").trim();
                 DAOAccount daoAcc = new DAOAccount();
                 DAOProfile daoPf = new DAOProfile();
                 int isAA = 0;
@@ -181,7 +181,7 @@ public class ControllerAuthentication extends HttpServlet {
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
             }
-            
+
             if (service.contains("delete")) {
                 String aid = request.getParameter("aprofile_id");
                 DAOAccount daoAcc = new DAOAccount();
@@ -200,25 +200,37 @@ public class ControllerAuthentication extends HttpServlet {
                     request.getRequestDispatcher("authentication?do=list").forward(request, response);
                 }
             }
-            
-            if (service.contains("allcompany")){
+
+            if (service.contains("allcompany")) {
                 DAOCompany daoCp = new DAOCompany();
                 DAOProfile daoPf = new DAOProfile();
                 List<Company> listC = daoCp.listCompany();
                 List<Profile> listP = daoPf.getMN();
-                
 
                 request.setAttribute("listC", listC);
                 request.setAttribute("listP", listP);
                 request.getRequestDispatcher("company.jsp").forward(request, response);
             }
-            
-            if (service.contains("company")){
+
+            if (service.contains("searchcompany")) {
+                DAOCompany daoCp = new DAOCompany();
+                DAOProfile daoPf = new DAOProfile();
+                String name = request.getParameter("sname");
+                String url = request.getParameter("surl");
+                List<Company> listC = daoCp.GetCompany(name, url);
+                List<Profile> listP = daoPf.getMN();
+
+                request.setAttribute("listC", listC);
+                request.setAttribute("listP", listP);
+                request.getRequestDispatcher("company.jsp").forward(request, response);
+            }
+
+            if (service.contains("company")) {
                 DAOCompany daoCp = new DAOCompany();
                 List<Company> listC = new ArrayList<>();
-                if(acc.isIsAdmin() == true || acc.isIsManager() == true){
+                if (acc.isIsAdmin() == true || acc.isIsManager() == true) {
                     listC = daoCp.MyCompany(acc.getProfile_id());
-                }else{
+                } else {
                     DAOProfile daoPf = new DAOProfile();
                     String pid = daoPf.getReportTo(acc.getProfile_id());
                     listC = daoCp.MyCompany(pid);
@@ -226,16 +238,16 @@ public class ControllerAuthentication extends HttpServlet {
                 request.setAttribute("listC", listC);
                 request.getRequestDispatcher("seting.jsp").forward(request, response);
             }
-            
-            if (service.contains("editcompany")){
-                String name = request.getParameter("name").trim();
+
+            if (service.contains("editcompany")) {
+                String name = request.getParameter("cname").trim();
                 String pnamed = request.getParameter("pname").trim();
                 String[] part = pnamed.split(" ");
                 String lname = part[0];
                 String fname = part[1];
                 String address = request.getParameter("caddress").trim();
                 String conutry = request.getParameter("country").trim();
-                String province = request.getParameter("province").trim();
+                String province = request.getParameter("prov").trim();
                 String city = request.getParameter("city").trim();
                 int pcode = Integer.parseInt(request.getParameter("pcode").trim());
                 String email = request.getParameter("cemail").trim();
@@ -247,15 +259,18 @@ public class ControllerAuthentication extends HttpServlet {
                 Company com = new Company(name, address, conutry, province, city, pcode, email, phone, fax, url);
                 DAOProfile daoPf = new DAOProfile();
                 Profile pro = new Profile(acc.getProfile_id(), fname, lname, pphone);
-                if(daoCP.editCompany(com, acc.getProfile_id()) && daoPf.editStaff(pro)){
+                if (daoCP.editCompany(com, acc.getProfile_id()) == true && daoPf.editCompanyCEO(pro) == true) {
                     System.out.println("Save successfully");
-                    request.getRequestDispatcher("authentication?do=company").forward(request, response);
+
+                    response.sendRedirect("authentication?do=company");
+                } else {
+                    System.out.println("Save fail");
+
+                    response.sendRedirect("authentication?do=company");
                 }
-                System.out.println("Save fail");
-                request.getRequestDispatcher("authentication?do=company").forward(request, response);
             }
-            
-            if (service.contains("addcompany")){
+
+            if (service.contains("addcompany")) {
                 String name = request.getParameter("acname").trim();
                 String user = request.getParameter("apuser").trim();
                 String[] part = user.split("-");
@@ -271,7 +286,7 @@ public class ControllerAuthentication extends HttpServlet {
                 String url = request.getParameter("aurl").trim();
                 DAOCompany daoCP = new DAOCompany();
                 Company com = new Company(name, pid, address, conutry, province, city, pcode, email, phone, fax, url);
-                if(daoCP.addCompany(com)){
+                if (daoCP.addCompany(com)) {
                     System.out.println("Add successfully");
                     request.getRequestDispatcher("authentication?do=company").forward(request, response);
                 }

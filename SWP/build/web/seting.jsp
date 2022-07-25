@@ -109,26 +109,19 @@
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="form-group">
                                                 <label>Country</label>
-                                                <select class="form-control select">
-                                                    <option>USA</option>
-                                                    <option>United Kingdom</option>
-                                                </select>
+                                                <input class="form-control " value="${c.country}" type="text" name="country">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-3">
+                                            <div class="form-group">
+                                                <label>Province</label>
+                                                <input class="form-control" value="${c.province}" type="text" name="prov">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">
                                             <div class="form-group">
                                                 <label>City</label>
-                                                <input class="form-control" value="${c.city}" type="text" name="city">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="form-group">
-                                                <label>State/Province</label>
-                                                <select class="form-control select">
-                                                    <option>California</option>
-                                                    <option>Alaska</option>
-                                                    <option>Alabama</option>
-                                                </select>
+                                                <input class="form-control " value="${c.city}" type="text" name="city">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-3">

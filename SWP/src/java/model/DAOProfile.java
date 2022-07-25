@@ -172,11 +172,30 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
+    public boolean editJob(int jobid) {
+        String sql = "update [profile] set "
+                + "job_id = null "
+                + "where job_id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, jobid);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
     public boolean editCompanyCEO(Profile pro) {
         String sql = "update [profile] set "
                 + "first_name = ?, "
                 + "last_name = ?, "
-                + "phone_number = ?, "
+                + "phone_number = ? "
                 + "where profile_id = ?";
         try {
             conn = getConnection();
@@ -446,11 +465,11 @@ public class DAOProfile extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(12),
                         rs.getString(13),
                         rs.getString(14),
                         rs.getString(15),
-                        rs.getString(16)));
+                        rs.getString(16),
+                        rs.getString(17)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -477,11 +496,11 @@ public class DAOProfile extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(12),
                         rs.getString(13),
                         rs.getString(14),
                         rs.getString(15),
-                        rs.getString(16)));
+                        rs.getString(16),
+                        rs.getString(17)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -495,13 +514,21 @@ public class DAOProfile extends DBConnect {
     
     public List<Profile> searchADandMN(String fname, String lname, String email, String pnumber, String user, int isa, int ism, int status) {
         String sql = "SELECT profile.*, account.* FROM [account], [profile] WHERE account.profile_id = profile.profile_id "
-                + "and profile.first_name like '%" + fname + "%' and profile.last_name like '%" + lname + "%' \n"
-                + "and email like '%" + email + "%' and profile.phone_number like '%" + pnumber + "%' and account.username like '%" + user + "%' "
-                + "and account.isadmin = " + isa + " and account.ismanager = " + ism + " and account.status = " + status + "";
+                + "and profile.first_name like %?% and profile.last_name like %?% \n"
+                + "and email like %?% and profile.phone_number like %?% and account.username like %?% "
+                + "and account.isadmin = ? and account.ismanager = ? and account.status = ?";
         List<Profile> list = new ArrayList<>();
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
+            state.setString(1, fname);
+            state.setString(2, lname);
+            state.setString(3, email);
+            state.setString(4, pnumber);
+            state.setString(5, user);
+            state.setInt(6, isa);
+            state.setInt(7, ism);
+            state.setInt(8, status);
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Profile(

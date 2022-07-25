@@ -335,8 +335,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ID</label>
-                                            <input class="form-control" type="text" name="id">
+                                            <label>First Name</label>
+                                            <input class="form-control" type="text" name="fname">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -353,8 +353,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>First Name</label>
-                                            <input class="form-control" type="text" name="fname">
+                                            <label>Last Name</label>
+                                            <input class="form-control" type="text" name="lname">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -371,22 +371,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Last Name</label>
-                                            <input class="form-control" type="text" name="lname">
+                                            <label>Phone Number</label>
+                                            <input type="text" class="form-control" name="pnumber">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>User</label>
-                                            <input class="form-control" type="user">
+                                            <input class="form-control" type="text" name="auser">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input type="text" class="form-control" name="pnumber">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -399,15 +399,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Type of Job</label>
-                                            <select class="select">
-                                                <option>Full Time</option>
-                                                <option>Part Time</option>
-                                                <option>Internship</option>
-                                                <option>Temporary</option>
-                                                <option>Remote</option>
-                                                <option>Others</option>
-                                            </select>
+                                            <label>Note</label>
+                                            <textarea class="form-control" name="note"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -424,22 +417,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" name="email">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>Hire Date</label>
                                             <input type="text" class="form-control datetimepicker" name="hiredate">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Note</label>
-                                            <textarea class="form-control" name="email"></textarea>
                                         </div>
                                     </div>
                                 </div>

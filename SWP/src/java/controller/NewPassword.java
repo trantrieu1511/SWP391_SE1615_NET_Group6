@@ -31,11 +31,11 @@ public class NewPassword extends HttpServlet {
             DAOAccount da = new DAOAccount();
             String pid = da.getProfileId(email).trim();
             if (da.GetNewPassword(newPassword, pid)) {
-                request.setAttribute("mess", "resetSuccess");
-                dispatcher = request.getRequestDispatcher("login.jsp");
+                request.setAttribute("alert", "resetSuccess");
+                dispatcher = request.getRequestDispatcher("newPassword.jsp");
             } else {
-                request.setAttribute("mess", "resetFailed");
-                dispatcher = request.getRequestDispatcher("login.jsp");
+                request.setAttribute("alert", "resetFailed");
+                dispatcher = request.getRequestDispatcher("newPassword.jsp");
             }
             dispatcher.forward(request, response);
         }else{

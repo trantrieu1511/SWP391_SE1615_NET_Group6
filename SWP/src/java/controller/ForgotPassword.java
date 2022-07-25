@@ -50,7 +50,8 @@ public class ForgotPassword extends HttpServlet {
             Session session = Session.getInstance(props, new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication("hieupthe141028@fpt.edu.vn", "dothiphuonganh0212ji");// Put your email
-                    // id and
+                    // id and                    return new PasswordAuthentication("hieupthe141028@fpt.edu.vn", "dothiphuonganh0212ji");// Put your email
+
                     // password here
                 }
             });

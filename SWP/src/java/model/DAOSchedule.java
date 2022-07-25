@@ -84,7 +84,7 @@ public class DAOSchedule extends DBConnect {
         }
         return list;
     }
-    
+
     public Schedule getStaffSchedule(String profile_id) {
         String sql = "select * from schedule where profile_id = ?";
         try {
@@ -113,6 +113,24 @@ public class DAOSchedule extends DBConnect {
             state = conn.prepareStatement(sql);
             state.setString(1, shift_status);
             state.setString(2, profile_id);
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    //delete the staff from schedule to delete him/her in All Staff list
+    public boolean deleteScheduleFromStaff(String profile_id) {
+        String sql = "delete from schedule where profile_id=?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, profile_id);
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

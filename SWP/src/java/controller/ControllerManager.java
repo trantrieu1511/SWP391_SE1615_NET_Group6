@@ -234,6 +234,7 @@ public class ControllerManager extends HttpServlet {
 
                 if (service.equals("deleteStaff")) {
                     String profile_id = request.getParameter("profile_id");
+                    daoSchedule.deleteScheduleFromStaff(profile_id);
                     daoAccount.deleteAccount(profile_id);
                     daoProfileDetail.deleteProfileDetail(profile_id);
                     daoFamilyInfo.deleteAllFamilyInfo(profile_id);

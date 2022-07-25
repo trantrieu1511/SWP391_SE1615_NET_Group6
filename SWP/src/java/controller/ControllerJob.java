@@ -125,7 +125,11 @@ public class ControllerJob extends HttpServlet {
                 double min = Double.parseDouble(request.getParameter("smin").trim());
                 double max = Double.parseDouble(request.getParameter("smax").trim());
                 DAOJob daoJ = new DAOJob();
-
+                List<Jobs> listJ = daoJ.getJobBySalary(min, max);
+                
+                request.setAttribute("listJ", listJ);
+                request.setAttribute("alert", "search complete");
+                request.getRequestDispatcher("job-list.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

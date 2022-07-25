@@ -71,22 +71,18 @@ public class DAOCompany extends DBConnect {
         return list;
     }
 
-    public List<Company> GetCompany(String a, String b) {
+    public List<Company> GetCompany(String a) {
         List<Company> list = new ArrayList<>();
-        String sql = "select * from [company] where company_name = ? and website_url = ?";
+        String sql = "select * from [company] where [company_name] like ?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, a);
-            state.setString(2, b);
+            state.setString(1, "%"+a+"%");
             rs = state.executeQuery();
             while (rs.next()) {
                 list.add(new Company(
                         rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(9),
-                        rs.getInt(10),
-                        rs.getString(12)));
+                        rs.getString(2)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

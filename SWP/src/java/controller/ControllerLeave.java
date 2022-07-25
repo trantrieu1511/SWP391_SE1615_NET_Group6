@@ -321,10 +321,12 @@ public class ControllerLeave extends HttpServlet {
                         } else {
                             System.out.println("Fail to update annual leave!");
                         }
+                        response.sendRedirect("leave?do=myLeave&delete=success");
                     } else {
                         System.out.println("Fail to delete leave!");
+                        response.sendRedirect("leave?do=myLeave&delete=failed");
                     }
-                    response.sendRedirect("leave?do=myLeave");
+
                 }
                 if (service.equals("updateStatus")) {
                     int status = Integer.parseInt(request.getParameter("status"));

@@ -80,7 +80,7 @@
                                     <div class="row justify-content-center">
                                         <h5>
                                             Don't have an Account?<span><a href="#"
-                                                                           class="text-danger"> Register Now!</a></span>
+                                                                           class="text-danger"> Register Now!</a><a href="login.jsp" class="text-blue"> Login </a></span>
                                         </h5>
                                     </div>
                                     <div

@@ -243,14 +243,42 @@ public class ControllerAuthentication extends HttpServlet {
 
             if (service.equals("searchcompany")) {
                 DAOCompany daoCp = new DAOCompany();
-                DAOProfile daoPf = new DAOProfile();
+                DAOClients daocClient = new DAOClients();
                 String name = request.getParameter("sname");
                 String url = request.getParameter("surl");
-                List<Company> listC = daoCp.GetCompany(name, url);
-                List<Profile> listP = daoPf.getMN();
+                List<Company> listComp = daoCp.GetCompany(name);
+                List<Clients> listClient = daocClient.listAllClients();
+                List<String[]> listS = new ArrayList<>();
+                for (Company co : listComp) {
+                    for (Clients cli : listClient) {
+                        if (co.getId() == cli.getCompany_id()) {
+                            String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = cli.getEmail();
+                            temp[3] = cli.getPhone_number();
+                            listS.add(temp);
+                        } 
+                    }
+                }
+                String allId = "";
+                    for (String[] str : listS ){
+                        allId += str[0];
+                    }
+                for (Company co : listComp) {
+                    if (!allId.contains(Integer.toString(co.getId()))){
+                        String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = "N/A";
+                            temp[3] = "N/A";
+                            listS.add(temp);
+                    }                   
+                }
 
-                request.setAttribute("listC", listC);
-                request.setAttribute("listP", listP);
+                request.setAttribute("listS", listS);
+                request.setAttribute("alert", "");
+
                 request.getRequestDispatcher("company.jsp").forward(request, response);
             }
 

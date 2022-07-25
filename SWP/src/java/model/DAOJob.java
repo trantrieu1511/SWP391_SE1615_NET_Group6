@@ -95,6 +95,33 @@ public class DAOJob extends DBConnect {
         return null;
     }
 
+    public List<Jobs> getJobBySalary(double min, double max) {
+        String sql = "select * from jobs where min_salary = ? and max_salary = ?";
+        List<Jobs> listJ = new ArrayList<>();
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql); 
+            state.setDouble(1, min);
+            state.setDouble(2, max);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                listJ.add(new Jobs(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getDouble(4)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return listJ;
+    }
+    
     public boolean addJob(String title, double min, double max) {
         String sql = "insert into jobs(job_title, min_salary, max_salary)"
                 + "values(?, ?, ?)";

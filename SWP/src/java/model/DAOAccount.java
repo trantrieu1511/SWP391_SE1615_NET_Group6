@@ -217,7 +217,7 @@ public class DAOAccount extends DBConnect {
         try {
             ResultSet rs = getData(sql);
             rs.next();
-            return rs.getString(1);
+            return rs.getString(2);
         } catch (Exception e) {
             e.printStackTrace();
         }

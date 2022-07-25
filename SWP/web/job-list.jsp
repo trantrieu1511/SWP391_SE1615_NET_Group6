@@ -158,13 +158,13 @@
                             <div class="row filter-row">
                                 <div class="col-sm-6 col-md-3">  
                                     <div class="form-group form-focus">
-                                        <input type="text" class="form-control floating" name="fname">
+                                        <input type="text" class="form-control floating" name="smin">
                                         <label class="focus-label">Min Salary</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-3">  
                                     <div class="form-group form-focus">
-                                        <input type="text" class="form-control floating" name="lname">
+                                        <input type="text" class="form-control floating" name="smax">
                                         <label class="focus-label">Max Salary</label>
                                     </div>
                                 </div>
@@ -233,14 +233,6 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>ID</label>
-                                                <input class="form-control" type="text" name="id">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
                                                 <label>Title</label>
                                                 <input class="form-control" type="text" name="title">
                                             </div>
@@ -290,7 +282,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>ID</label>
-                                                <input class="form-control" type="text" disabled="disabled" name="eid">
+                                                <input class="form-control" type="text" name="eid" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>

@@ -5,13 +5,22 @@
         <group>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOScheduleTest.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/company.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOAttendanceTest.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfile.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerProfile.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/ModelSuite.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOJobTest.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/account-list.jsp</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/menu.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfile.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOAccountTest.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/seting.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerJob.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/job-list.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOJob.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Company.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerAuthentication.java</file>
             <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOCompany.java</file>
+            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOAccount.java</file>
         </group>
     </open-files>
 </project-private>

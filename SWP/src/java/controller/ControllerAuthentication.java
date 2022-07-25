@@ -201,6 +201,18 @@ public class ControllerAuthentication extends HttpServlet {
                 }
             }
             
+            if (service.contains("allcompany")){
+                DAOCompany daoCp = new DAOCompany();
+                DAOProfile daoPf = new DAOProfile();
+                List<Company> listC = daoCp.listCompany();
+                List<Profile> listP = daoPf.getMN();
+                
+
+                request.setAttribute("listC", listC);
+                request.setAttribute("listP", listP);
+                request.getRequestDispatcher("company.jsp").forward(request, response);
+            }
+            
             if (service.contains("company")){
                 DAOCompany daoCp = new DAOCompany();
                 List<Company> listC = new ArrayList<>();
@@ -225,11 +237,11 @@ public class ControllerAuthentication extends HttpServlet {
                 String conutry = request.getParameter("country").trim();
                 String province = request.getParameter("province").trim();
                 String city = request.getParameter("city").trim();
-                int pcode = Integer.getInteger(request.getParameter("pcode").trim());
+                int pcode = Integer.parseInt(request.getParameter("pcode").trim());
                 String email = request.getParameter("cemail").trim();
-                int phone = Integer.getInteger(request.getParameter("cphone").trim());
+                int phone = Integer.parseInt(request.getParameter("cphone").trim());
                 String pphone = request.getParameter("pphone").trim();
-                int fax = Integer.getInteger(request.getParameter("fax").trim());
+                int fax = Integer.parseInt(request.getParameter("fax").trim());
                 String url = request.getParameter("url").trim();
                 DAOCompany daoCP = new DAOCompany();
                 Company com = new Company(name, address, conutry, province, city, pcode, email, phone, fax, url);
@@ -240,6 +252,30 @@ public class ControllerAuthentication extends HttpServlet {
                     request.getRequestDispatcher("authentication?do=company").forward(request, response);
                 }
                 System.out.println("Save fail");
+                request.getRequestDispatcher("authentication?do=company").forward(request, response);
+            }
+            
+            if (service.contains("addcompany")){
+                String name = request.getParameter("acname").trim();
+                String user = request.getParameter("apuser").trim();
+                String[] part = user.split("-");
+                String pid = part[0];
+                String address = request.getParameter("acaddress").trim();
+                String conutry = request.getParameter("acountry").trim();
+                String province = request.getParameter("apro").trim();
+                String city = request.getParameter("acity").trim();
+                int pcode = Integer.parseInt(request.getParameter("apcode").trim());
+                String email = request.getParameter("aemail").trim();
+                int phone = Integer.parseInt(request.getParameter("aphone").trim());
+                int fax = Integer.parseInt(request.getParameter("afax").trim());
+                String url = request.getParameter("aurl").trim();
+                DAOCompany daoCP = new DAOCompany();
+                Company com = new Company(name, pid, address, conutry, province, city, pcode, email, phone, fax, url);
+                if(daoCP.addCompany(com)){
+                    System.out.println("Add successfully");
+                    request.getRequestDispatcher("authentication?do=company").forward(request, response);
+                }
+                System.out.println("Add fail");
                 request.getRequestDispatcher("authentication?do=company").forward(request, response);
             }
         } catch (Exception ex) {

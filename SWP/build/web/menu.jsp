@@ -175,7 +175,7 @@
                                                     <a href="#" class=""><i class="la la-users"></i> <span> Company</span> <span class="menu-arrow"></span></a>
                                                     <ul style="display: none;">
                                                         <c:if test="${sessionScope.acc.isAdmin == true}">
-                                                            <li><a href="authentication?do=clist">All Company</a></li>
+                                                            <li><a href="authentication?do=allcompany">All Company</a></li>
                                                             </c:if>
                                                         <li><a href="authentication?do=company">My Company</a></li>
                                                     </ul>

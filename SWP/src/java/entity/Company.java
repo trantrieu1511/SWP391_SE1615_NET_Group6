@@ -53,6 +53,20 @@ public class Company {
         this.url = url;
     }
 
+    public Company(String name, String pro_id, String address, String country, String province, String city, int postal_code, String email, int phone, int fax, String url) {
+        this.name = name;
+        this.pro_id = pro_id;
+        this.address = address;
+        this.country = country;
+        this.province = province;
+        this.city = city;
+        this.postal_code = postal_code;
+        this.email = email;
+        this.phone = phone;
+        this.fax = fax;
+        this.url = url;
+    }
+    
     public Company(String name, String address, String country, String province, String city, int postal_code, String email, int phone, int fax, String url) {
         this.name = name;
         this.address = address;
@@ -63,6 +77,14 @@ public class Company {
         this.email = email;
         this.phone = phone;
         this.fax = fax;
+        this.url = url;
+    }
+    
+    public Company(int id, String name, String email, int phone, String url) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
         this.url = url;
     }
     

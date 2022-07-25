@@ -95,9 +95,9 @@ public class DAOJob extends DBConnect {
         return null;
     }
 
-    public boolean addJob(int id, String title, double min, double max) {
-        String sql = "insert into jobs(job_id, job_title, min_salary, max_salary)"
-                + "values('" + id + "', '" + title + "', '" + min  + "', " + max + ")";
+    public boolean addJob(String title, double min, double max) {
+        String sql = "insert into jobs(job_title, min_salary, max_salary)"
+                + "values('" + title + "', '" + min  + "', " + max + ")";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -119,7 +119,7 @@ public class DAOJob extends DBConnect {
     }
 
     public boolean editJob(int id, String title, double min, double max) {
-        String sql = "update account set job_title=?, min_salary=?, max_salary=? where job_id=?";
+        String sql = "update jobs set job_title=?, min_salary=?, max_salary=? where job_id=?";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);

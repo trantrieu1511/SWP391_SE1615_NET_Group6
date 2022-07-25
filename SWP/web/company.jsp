@@ -145,125 +145,230 @@
 
                     <!-- Page Content -->
                     <div class="content container-fluid">
-                        <div class="row">
-                            <div class="col-md-8 offset-md-2">
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="page-title">Company</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Company</li>
+                                    </ul>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_account"><i class="fa fa-plus"></i> Add Company</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Page Header -->
 
-                                <!-- Page Header -->
-                                <div class="page-header">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <h3 class="page-title">Company Settings</h3>
+                    <!-- Search Filter -->
+                    <form action="authentication" do="post">
+                        <input type="hidden" name="do" value="search">
+                        <div class="row filter-row">
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" name="fname">
+                                    <label class="focus-label">Company Name</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <div class="form-group form-focus">
+                                    <input type="text" class="form-control floating" name="lname">
+                                    <label class="focus-label">Website</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <input type="submit" class="btn btn-success btn-block" value="Search" style="padding: 0px">
+                            </div>
+                            <div class="col-sm-6 col-md-3">  
+                                <input type="submit" class="btn btn-success btn-block" value="Clear" style="padding: 0px">
+                            </div>  
+                        </div>
+                    </form>
+                    <!-- /Search Filter -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table mb-0 datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Name</th>
+                                            <th>Email</th>
+                                            <th>Hot line</th>
+                                            <th>Website</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${listC}" var="c">
+                                        <tr>
+                                            <td>${c.id}</td>
+                                            <td>${c.name}</td>
+                                            <td>${c.email}</td>
+                                            <td>${c.phone}</td>
+                                            <td>${c.url}</td>
+                                            <td class="text-right">
+                                                    <div class="dropdown dropdown-action">
+                                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_account" data-id="${c.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Content -->
+
+            <!-- Add Job Modal -->
+            <div id="add_account" class="modal custom-modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Company</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="authentication" do="post">
+                                <input type="hidden" name="do" value="addaccount">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Company Name</label>
+                                            <input class="form-control" type="text" name="acname">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Profile Usesr</label>
+                                            <select class="select" name="acuser">
+                                                <c:forEach items="${listP}" var="p">
+                                                    <option>${p.profile_id}-${p.last_name} ${p.first_name}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /Page Header -->
-
-                                <form action="authentication?do=editcompany" method="post">
-                                <c:forEach items="listC" var="c">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Company Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" value="${c.name}" name="cname">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Contact Person</label>
-                                                <input class="form-control " value="${c.lname_d} ${c.fname_d}" type="text" name="pname">
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Company Address</label>
+                                            <input class="form-control" type="text" name="acaddress">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input class="form-control " value="${c.address}" type="text" name="caddress">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="form-group">
-                                                <label>Country</label>
-                                                <select class="form-control select">
-                                                    <option>USA</option>
-                                                    <option>United Kingdom</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="form-group">
-                                                <label>City</label>
-                                                <input class="form-control" value="${c.city}" type="text" name="city">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="form-group">
-                                                <label>State/Province</label>
-                                                <select class="form-control select">
-                                                    <option>California</option>
-                                                    <option>Alaska</option>
-                                                    <option>Alabama</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-3">
-                                            <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input class="form-control" value="${c.postal_code}" type="text" name="pcode">
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            <input class="form-control" type="text" name="acountry">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Email</label>
-                                                <input class="form-control" value="${c.email}" type="email" name="cemail">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input class="form-control" value="${c.phone}" type="text" name="cphone">
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Province</label>
+                                            <input class="form-control" type="text" name="apro">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Mobile Number</label>
-                                                <input class="form-control" value="${c.pphone_d}" type="text" name="pphone">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Fax</label>
-                                                <input class="form-control" value="${c.fax}" type="text" name="fax">
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" name="acity">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Website Url</label>
-                                                <input class="form-control" value="${c.url}" type="text" name="url">
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Postal Code</label>
+                                            <input type="text" class="form-control" name="apcode">
                                         </div>
                                     </div>
-                                    <div class="submit-section">
-                                        <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="aemail">
+                                        </div>
                                     </div>
-                                </c:forEach>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone number</label>
+                                            <input type="text" class="form-control" name="aphone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Fax</label>
+                                            <input type="text" class="form-control" name="afax">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Website</label>
+                                            <textarea class="form-control" name="aurl"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- /Page Content -->
-
             </div>
-            <!-- /Page Wrapper -->
+            <!-- /Add Job Modal -->
+
+            <!-- Delete Job Modal -->
+            <div class="modal custom-modal fade" id="delete_account" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="authentication" do="post">
+                                <input type="hidden" name="do" value="deletecompany">
+                                <input type="hidden" name="aprofile_id">
+                                <div class="form-header">
+                                    <h3>Delete User</h3>
+                                    <p>Are you sure want to delete?</p>
+                                </div>
+                                <div class="modal-btn delete-action">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="submit" value="Delete" href="" class="btn btn-primary continue-btn" style="padding: 10px 75px;">
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>       
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Delete Job Modal -->
 
         </div>
-        <!-- /Main Wrapper -->
+        <!-- /Page Wrapper -->
 
-    </body>
+    </div>
+    <!-- /Main Wrapper -->
+
+</body>
 </html>

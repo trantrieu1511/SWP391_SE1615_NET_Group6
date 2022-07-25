@@ -5,18 +5,38 @@
  */
 package model;
 
+import entity.Jobs;
+import java.util.List;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Khanh
+ * @author DELL
  */
 public class DAOJobTest {
     
-    DAOJob dao = new DAOJob();
-    
     public DAOJobTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
     }
 
     /**
@@ -24,8 +44,13 @@ public class DAOJobTest {
      */
     @Test
     public void testListAllJob() {
-        assertEquals("[jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}]", 
-                dao.listAllJob().toString());
+        System.out.println("listAllJob");
+        DAOJob instance = new DAOJob();
+        List<Jobs> expResult = null;
+        List<Jobs> result = instance.listAllJob();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -33,8 +58,14 @@ public class DAOJobTest {
      */
     @Test
     public void testGetJobByTitle() {
-        assertEquals("jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}"
-                , dao.getJobByTitle("IOS Developer").toString());
+        System.out.println("getJobByTitle");
+        String title = "";
+        DAOJob instance = new DAOJob();
+        Jobs expResult = null;
+        Jobs result = instance.getJobByTitle(title);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -42,8 +73,45 @@ public class DAOJobTest {
      */
     @Test
     public void testGetJobById() {
-        assertEquals("jobs{id=1, title=IOS Developer, min=10000.0, max=15000.0}"
-                , dao.getJobById(1).toString());
+        System.out.println("getJobById");
+        int id = 0;
+        DAOJob instance = new DAOJob();
+        Jobs expResult = null;
+        Jobs result = instance.getJobById(id);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addJob method, of class DAOJob.
+     */
+    @Test
+    public void testAddJob() {
+        System.out.println("addJob");
+        String title = "AI";
+        double min = 0.0;
+        double max = 0.0;
+        DAOJob instance = new DAOJob();
+        boolean expResult = true;
+        boolean result = instance.addJob(title, min, max);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of editJob method, of class DAOJob.
+     */
+    @Test
+    public void testEditJob() {
+        System.out.println("editJob");
+        int id = 1;
+        String title = "Web Design";
+        double min = 1.0;
+        double max = 2.0;
+        DAOJob instance = new DAOJob();
+        boolean expResult = true;
+        boolean result = instance.editJob(id, title, min, max);
+        assertEquals(expResult, result);
     }
     
 }

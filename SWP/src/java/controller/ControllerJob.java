@@ -46,8 +46,8 @@ public class ControllerJob extends HttpServlet {
             if (service.equals("login")) {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
-                DAOAccount dao = new DAOAccount();
-                Account a = dao.login(username, password);
+                DAOAccount daoAcc = new DAOAccount();
+                Account a = daoAcc.login(username, password);
                 if (a == null) {
                     request.setAttribute("mess", "Wrong username or password");
                     RequestDispatcher dispath = request.getRequestDispatcher("login.jsp");
@@ -60,8 +60,8 @@ public class ControllerJob extends HttpServlet {
             }
             
             if (service.equals("list")) {
-                DAOJob j = new DAOJob();
-                List<Jobs> listJ = j.listAllJob();
+                DAOJob daoJ = new DAOJob();
+                List<Jobs> listJ = daoJ.listAllJob();
                 String alert = "";
 
                 request.setAttribute("listJ", listJ);
@@ -70,13 +70,12 @@ public class ControllerJob extends HttpServlet {
             }
             
             if (service.equals("add")){
-                int id = Integer.getInteger(request.getParameter("id"));
                 String title = request.getParameter("title");
                 double min = Double.parseDouble(request.getParameter("min"));
                 double max = Double.parseDouble(request.getParameter("max"));
-                DAOJob j = new DAOJob();
+                DAOJob daoJ = new DAOJob();
                 
-                if(j.addJob(id, title, min, max)){
+                if(daoJ.addJob(title, min, max)){
                     System.out.println("Add successfully job: " + title);
                 }else{
                     System.out.println("Add fail job: " + title);
@@ -86,13 +85,13 @@ public class ControllerJob extends HttpServlet {
             }
             
             if (service.equals("edit")){
-                int id = Integer.getInteger(request.getParameter("eid"));
-                String title = request.getParameter("etitle");
-                double min = Double.parseDouble(request.getParameter("emin"));
-                double max = Double.parseDouble(request.getParameter("emax"));
-                DAOJob j = new DAOJob();
+                String title = request.getParameter("etitle").trim();
+                double min = Double.parseDouble(request.getParameter("emin").trim());
+                double max = Double.parseDouble(request.getParameter("emax").trim());
+                int id = Integer.parseInt(request.getParameter("eid").trim());
+                DAOJob daoJ = new DAOJob();
                 
-                if(j.editJob(id, title, min, max)){
+                if(daoJ.editJob(id, title, min, max)){
                     System.out.println("Save successfully job_id: " + id);
                 }else{
                     System.out.println("Save fail job_id: " + id);
@@ -102,6 +101,14 @@ public class ControllerJob extends HttpServlet {
             }
             
             if (service.equals("delete")){
+                int id = Integer.parseInt(request.getParameter("eid").trim());
+            }
+            
+            if (service.equals("search")){
+                double min = Double.parseDouble(request.getParameter("smin").trim());
+                double max = Double.parseDouble(request.getParameter("smax").trim());
+                DAOJob daoJ = new DAOJob();
+                
                 
             }
         }catch(Exception ex) {

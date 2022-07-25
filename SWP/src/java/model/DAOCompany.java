@@ -12,6 +12,7 @@ import entity.Profile;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -37,6 +38,31 @@ public class DAOCompany extends DBConnect {
                 list.add(new Company(
                         rs.getInt(1),
                         rs.getString(2)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return list;
+    }
+    
+    public List<Company> listCompany() {
+        List<Company> list = new ArrayList<>();
+        String sql = "select * from [company]";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            rs = state.executeQuery();
+            while (rs.next()) {
+                list.add(new Company(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getString(12)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -114,6 +140,23 @@ public class DAOCompany extends DBConnect {
             state.setString(11, id);
             state.executeUpdate();
         } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+    
+    public boolean addCompany(Company com) {
+        String sql = "insert into company(company_name, profile_id, company_address, company_country, company_province, company_city, postal_code, company_email, company_pnumber, fax, website_url)"
+                + "values('" + com.getName() + "', '" + com.getPro_id()  + "', " + com.getAddress() + "', " + com.getCountry() + "', " + com.getProvince() + "', " + com.getCity() + "', " + com.getPostal_code() + "', " + com.getEmail() + "', " + com.getPhone() + "', " + com.getFax() + "', " + com.getUrl() + ")";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.executeUpdate();
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         } finally {

@@ -145,9 +145,6 @@
                         <div class="col-lg-12">
                             <div class="table-responsive">
                                 <table class="table table-striped custom-table datatable" id="table">
-                                    <c:if test="${filter == 'yes'}">
-                                        <h4><a href="manager?do=attendance" style="text-decoration: none; color: grey"> <-- back</a></h4>
-                                    </c:if>
                                     <thead>
                                         <tr>
                                             <th>Name</th>

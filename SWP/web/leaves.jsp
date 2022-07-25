@@ -79,8 +79,8 @@
                     var leave_name = $(e.relatedTarget).attr('data-leave_name');
                     var from = myArray[2];
                     var to = myArray[3];
-                    var number_of_days = myArray[4];
-                    var annual_leave = myArray[5];
+                    var number_of_days = $(e.relatedTarget).attr('data-number_of_days');
+                    var annual_leave = myArray[4];
                     var reason = $(e.relatedTarget).attr('data-reason');
 
                     $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
@@ -276,7 +276,15 @@
                                             <tr>
                                                 <td>
                                                     <h2 class="table-avatar">
-                                                        <!--<a href="profile.html" class="avatar"><img alt="" src="img/profiles/avatar-09.jpg"></a>-->
+                                                        <c:choose>
+                                                            <c:when test="${sessionScope.acc.isAdmin == true}">
+                                                                <a href="#" class="avatar"><img alt="" src="img/profiles/avatar-21.jpg"></a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                <a href="#" class="avatar"><img alt="" src="img/profiles/avatar-18.jpg"></a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        <!--<a href="#" class="avatar"><img alt="" src="img/profiles/avatar-09.jpg"></a>-->
                                                         <a href="profile?do=getothersProfile&profile_id=${leave.profile_id}">${leave.first_name} ${leave.last_name} <span>${leave.job_title}</span></a>
                                                     </h2>
                                                 </td>
@@ -313,7 +321,7 @@
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                            <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-leave_name="${leave.leave_name}" data-id="${leave.id} ${leave.profile_id} ${leave.from} ${leave.to} ${leave.number_of_days} ${leave.annual_leave}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Detail</a>
+                                                            <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-leave_name="${leave.leave_name}" data-number_of_days="${leave.number_of_days}" data-id="${leave.id} ${leave.profile_id} ${leave.from} ${leave.to} ${leave.annual_leave}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Detail</a>
                                                             <!--<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>-->
                                                         </div>
                                                     </div>

@@ -24,7 +24,7 @@ public class DAOProfile extends DBConnect {
     ResultSet rs = null;
 
     public String getPID(String fname) {
-        String sql = "SELECT profile.* FROM [profile] WHERE first_name = '"+fname+"'";
+        String sql = "SELECT profile.* FROM [profile] WHERE first_name = '" + fname + "'";
         String s = null;
         try {
             conn = getConnection();
@@ -41,11 +41,11 @@ public class DAOProfile extends DBConnect {
         }
         return s;
     }
-    
+
     public String getReportTo(String pid) {
         String id = "";
         String sql = "select report_to from [profile]\n"
-                + "where profile_id = '"+pid+"'";
+                + "where profile_id = '" + pid + "'";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
@@ -62,7 +62,7 @@ public class DAOProfile extends DBConnect {
         }
         return id;
     }
-    
+
     public boolean addManager(Profile pro) {
         String sql = "insert into [profile](first_name, last_name, "
                 + "email ,phone_number, hire_date)"
@@ -86,8 +86,6 @@ public class DAOProfile extends DBConnect {
         return true;
     }
 
-    
-    
     public boolean addMD(Profile pro) {
         String sql = "insert into [profile](profile_id,first_name,last_name,email,phone_number,hire_date,department_id,job_id,salary)\n"
                 + "values ("
@@ -197,7 +195,7 @@ public class DAOProfile extends DBConnect {
         }
         return true;
     }
-    
+
     public List<Profile> listAllStaff(String id) {
         String sql = "select * from [profile] where report_to = ? order by profile_id asc";
         List<Profile> list = new ArrayList<>();
@@ -269,7 +267,8 @@ public class DAOProfile extends DBConnect {
                         rs.getString(7),
                         rs.getInt(8),
                         rs.getInt(9),
-                        rs.getString(10));
+                        rs.getString(10),
+                        rs.getInt(11));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -527,7 +526,7 @@ public class DAOProfile extends DBConnect {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
         System.out.println(dao.getPID("Hieu"));

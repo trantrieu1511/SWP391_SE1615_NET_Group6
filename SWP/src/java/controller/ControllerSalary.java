@@ -85,7 +85,7 @@ public class ControllerSalary extends HttpServlet {
                     } else if (SalaryIsNA != null) { //Salary isn't available
                         alert = "Employee hasn't had a salary yet! You have to add employee's salary first to generate their payslip!";
                     }
-                    List<Salary> list = daoSalary.listAllStaffAndManagerProfile();
+                    List<Salary> list = daoSalary.listAllStaffAndManagerSalary();
                     List<Salary> listNeedSalary = daoSalary.listStaffNeedSalary();
                     List<Departments> listDp = daoDepartment.listAllDepartment();
                     List<Jobs> listJ = daoJob.listAllJob();

@@ -96,8 +96,7 @@ public class ControllerSchedule extends HttpServlet {
                         for (int j = 0; j < listBool.get(i).length; j++) {
                             temp += listBool.get(i)[j] + " ";
                         }
-                        // Department_name used as shiftStatus(true/false)
-                        listPf.get(i).setDepartment_name(temp);
+                        listPf.get(i).setShiftStatus(temp);
                     }
                     request.setAttribute("listS", listS);
                     request.setAttribute("listPf", listPf);

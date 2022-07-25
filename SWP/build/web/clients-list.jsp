@@ -187,7 +187,7 @@
                                     <%--</c:if>--%>
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>CompanyName</th>
                                             <th>Client ID</th>
                                             <th>Contact Person</th>
                                             <th>Email</th>
@@ -321,8 +321,8 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="col-form-label">Phone </label>
-                                                <input class="form-control" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number">
+                                                <label class="col-form-label">Phone <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number" required="">
                                             </div>
                                         </div>
                                         <!--                                    <div class="col-md-6">
@@ -432,8 +432,8 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="col-form-label">Phone </label>
-                                                <input class="form-control" value="" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number">
+                                                <label class="col-form-label">Phone <span class="text-danger">*</span></label>
+                                                <input class="form-control" value="" type="text" name="phone_number" pattern="[0-9]{10}" title="phone number must be 10-digit number" required="">
                                             </div>
                                         </div>
                                         <!--                                    <div class="col-md-6">

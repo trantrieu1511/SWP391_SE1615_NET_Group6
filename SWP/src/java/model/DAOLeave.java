@@ -198,6 +198,29 @@ public class DAOLeave extends DBConnect {
         return true;
     }
 
+    public boolean addLeave2(Leave leave) {
+        String sql = "insert into leave(profile_id, leave_type, [from], [to], number_of_days, reason)\n"
+                + "values(?, ?, ?, ?, ?, ?)";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setString(1, leave.getProfile_id());
+            state.setInt(2, leave.getLeave_type());
+            state.setString(3, leave.getFrom());
+            state.setString(4, leave.getTo());
+            state.setString(5, leave.getNumber_of_days());
+            state.setString(6, leave.getReason());
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
     public boolean editLeave(Leave leave) {
         String sql = "update leave\n"
                 + "set\n"
@@ -223,6 +246,35 @@ public class DAOLeave extends DBConnect {
             state.setString(5, to);
             state.setString(6, leave.getReason());
             state.setInt(7, leave.getId());
+            state.executeUpdate();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            closePrepareStatement(state);
+            closeConnection(conn);
+        }
+        return true;
+    }
+
+    public boolean editLeave2(Leave leave) {
+        String sql = "update leave\n"
+                + "set\n"
+                + "leave_type = ?,\n"
+                + "[from] = ?,\n"
+                + "[to] = ?,\n"
+                + "number_of_days = ?,\n"
+                + "reason = ?\n"
+                + "where id = ?";
+        try {
+            conn = getConnection();
+            state = conn.prepareStatement(sql);
+            state.setInt(1, leave.getLeave_type());
+            state.setString(2, leave.getFrom());
+            state.setString(3, leave.getTo());
+            state.setString(4, leave.getNumber_of_days());
+            state.setString(5, leave.getReason());
+            state.setInt(6, leave.getId());
             state.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -311,11 +363,24 @@ public class DAOLeave extends DBConnect {
 
     public static void main(String[] args) {
         DAOLeave dao = new DAOLeave();
+        DAOProfile daoPf = new DAOProfile();
+        boolean add = dao.DecrementAnnualLeave("TT002");
+//        boolean add2 = dao.IncrementAnnualLeave("TT002");
+        if (add) {
+            System.out.println("Current annual leave of that employee = " + daoPf.getByID("TT002").getAnnual_leave());
+        } else {
+            System.out.println("Failed!");
+        }
+//        if (add2) {
+//            System.out.println("Current annual leave of that employee = " + daoPf.getByID("TT002").getAnnual_leave());
+//        } else {
+//            System.out.println("Failed!");
+//        }
+
 //        List<Leave> list = dao.listAllCheckLeaveManager("TT002");
 //        for (Leave leave : list) {
 //            System.out.println(leave.toString());
 //        }
 //        System.out.println(dao.getLeaveByID("TT002"));
-
     }
 }

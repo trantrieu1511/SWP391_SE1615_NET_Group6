@@ -556,6 +556,6 @@ public class DAOProfile extends DBConnect {
 
     public static void main(String[] args) {
         DAOProfile dao = new DAOProfile();
-        System.out.println(dao.getPID("Hieu"));
+        System.out.println(dao.getByID("NK006"));
     }
 }

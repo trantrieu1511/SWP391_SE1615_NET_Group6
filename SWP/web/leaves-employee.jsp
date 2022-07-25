@@ -99,18 +99,30 @@
                     document.getElementById('number_of_days2').value = number_of_days;
 //                    $(e.currentTarget).find('input[name="number_of_days2"]').val(number_of_days);
 //                    }
-
-
+                    var myselect = document.getElementById('number_of_days_select2');
+                    if (from != to) {
+                        document.getElementById('number_of_days2').type = "text";
+                        myselect.setAttribute("hidden", "hidden");
+                        myselect.removeAttribute("required");
+                        $('select[id="number_of_days_select2"]').prop("disabled", true);
+                    } else {
+                        document.getElementById("number_of_days2").type = "hidden";
+                        myselect.removeAttribute("hidden");
+                        myselect.setAttribute("required", "");
+                        $('select[id="number_of_days_select2"]').prop("disabled", false);
+                    }
                     $('#reason').text(reason);
                     document.getElementById('leave_type').value = leave_type;
                 });
             });
+
             $(function () {
                 $("#add_leave").on("show.bs.modal", function (e) {
                     var profile_id = $(e.relatedTarget).attr('data-id');
                     $(e.currentTarget).find('input[name="profile_id"]').val(profile_id);
                 });
             });
+
             $(function () {
                 $("#delete_leave").on("show.bs.modal", function (e) {
                     var text = $(e.relatedTarget).attr('data-id');
@@ -134,7 +146,6 @@
 
 //            $(document).ready(function () {
             function checkDay2(to_date) {
-
                 var from_date = document.getElementById('from').value;
                 var mySelect = document.getElementById('div_select');
                 var myText = document.getElementById('div_input');
@@ -142,7 +153,6 @@
                 var cacheDom; //storing the value in dom
                 if (to_date.value != from_date) {
                     cacheDom = $('#number_of_days_select').detach();
-
 //                    mySelect.remove();
 //                        alert('khac');
                 } else {
@@ -217,27 +227,44 @@
                     document.getElementById('number_of_days2').type = "text";
                     myselect.setAttribute("hidden", "hidden");
                     myselect.removeAttribute("required");
+                    $('select[id="number_of_days_select2"]').prop("disabled", true);
                 } else {
                     document.getElementById("number_of_days2").type = "hidden";
                     myselect.removeAttribute("hidden");
                     myselect.setAttribute("required", "");
+                    $('select[id="number_of_days_select2"]').prop("disabled", false);
                 }
             }
-            function checkDayOnPageShow() {
-                var to_date = document.getElementById('to2').value;
-                var from_date = document.getElementById('from2').value;
 
-                var myselect = document.getElementById('number_of_days_select2');
-                if (to_date != from_date) {
-                    document.getElementById('number_of_days2').type = "text";
-                    myselect.setAttribute("hidden", "hidden");
-                    myselect.removeAttribute("required");
-                } else {
-                    document.getElementById("number_of_days2").type = "hidden";
-                    myselect.removeAttribute("hidden");
-                    myselect.setAttribute("required", "");
-                }
-            }
+//            function recheckDayEdit() {
+//                var to_date = document.getElementById('to3').value;
+//                var from_date = document.getElementById('from3').value;
+//                
+//                var myselect = document.getElementById('number_of_days_select2');
+//                if (to_date != from_date) {
+//                    myselect.removeAttribute("required");
+//                    $('select[id="number_of_days_select2"]').prop("disabled", true);
+//                } else {
+//                    myselect.setAttribute("required", "");
+//                    $('select[id="number_of_days_select2"]').prop("disabled", false);
+//                }
+//            }
+
+
+//            $("#document").ready(function () {
+//                var to_date = $('#to2');
+//                var from_date = $('#from2');
+//                var myselect = document.getElementById('number_of_days_select2');
+//                if (from_date != to_date) {
+////                    $('input[id="number_of_days2"]').prop("readonly", false);
+//                    myselect.removeAttribute("required");
+//                    $('select[id="number_of_days_select2"]').prop("disabled", true);
+//                } else {
+////                    $('input[id="number_of_days2"]').prop("readonly", true);
+//                    myselect.setAttribute("required", "");
+//                    $('select[id="number_of_days_select2"]').prop("disabled", false);
+//                }
+//            });
 
 //            let toggle = button => {
 //                let element = document.getElementById("number_of_days_select");
@@ -255,6 +282,21 @@
 //                    button.innerText = "Show Select";
 //                }
 //            }
+            function checkDayOnPageShow() {
+                var to_date = document.getElementById('to2').value;
+                var from_date = document.getElementById('from2').value;
+
+                var myselect = document.getElementById('number_of_days_select2');
+                if (to_date != from_date) {
+                    document.getElementById('number_of_days2').type = "text";
+                    myselect.setAttribute("hidden", "hidden");
+                    myselect.removeAttribute("required");
+                } else {
+                    document.getElementById("number_of_days2").type = "hidden";
+                    myselect.removeAttribute("hidden");
+                    myselect.setAttribute("required", "");
+                }
+            }
             // alert
             <c:if test="${alert != ''}">
             window.onload = function () {
@@ -391,11 +433,13 @@
                                                     </h2>
                                                 </td>
                                                 <td class="text-right">
+                                                    <!--<a onclick="recheckDayEdit()">edit</a>-->
                                                     <c:choose>
                                                         <c:when test="${leave.status == 1}">
                                                             <div class="dropdown dropdown-action">
                                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                                    <!--<a onclick="recheckDayEdit()">edit</a>-->
                                                                     <a class="dropdown-item" href="#" data-reason="${leave.reason}" data-number_of_days="${leave.number_of_days}" data-id="${leave.id} ${leave.profile_id} ${leave.leave_type} ${leave.from} ${leave.to}" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                                     <a class="dropdown-item" href="#" data-id="${leave.id} ${leave.profile_id}" data-toggle="modal" data-target="#delete_leave"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                                 </div>

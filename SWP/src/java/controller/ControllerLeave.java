@@ -75,6 +75,19 @@ public class ControllerLeave extends HttpServlet {
                     int present = 0;
                     int pending_request = 0;//count the pending request
                     List<Leave> listLeave = new ArrayList<>();
+
+                    //alert
+                    String update = request.getParameter("update");
+                    if (update != null && update.equals("approved")) {
+                        alert = "Successfully approved!";
+                    }
+                    if (update != null && update.equals("declined")) {
+                        alert = "Successfully declined!";
+                    }
+                    if (update != null && update.equals("pending")) {
+                        alert = "Successfully canceled status! Setted back to pending.";
+                    }
+
                     if (acc.isIsAdmin()) {
                         listLeave = daoLeave.listAllCheckLeaveAdmin();
                         for (Leave leave : listLeave) {
@@ -336,10 +349,17 @@ public class ControllerLeave extends HttpServlet {
                     boolean updateStatus = daoLeave.updateStatus(id, status);
                     if (updateStatus) {
                         System.out.println("Update status successfully to " + status + " for pf_id = " + profile_id + ", id = " + id);
+                        if (status == 1) {
+                            response.sendRedirect("leave?do=checkLeave&update=pending");
+                        } else if (status == 2) {
+                            response.sendRedirect("leave?do=checkLeave&update=approved");
+                        } else {
+                            response.sendRedirect("leave?do=checkLeave&update=declined");
+                        }
                     } else {
                         System.out.println("Fail to update status to " + status + " for pf_id = " + profile_id + ", id = " + id);
+                        response.sendRedirect("leave?do=checkLeave&update=failed");
                     }
-                    response.sendRedirect("leave?do=checkLeave");
                 }
             }
         } catch (Exception ex) {

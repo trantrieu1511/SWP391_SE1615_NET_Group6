@@ -38,6 +38,18 @@
         <!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 
+        <!-- jQuery -->
+        <script src="js/jquery-3.5.1.min.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- Slimscroll JS -->
+        <script src="js/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom JS -->
+        <script src="js/app.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
                 <script src="js/html5shiv.min.js"></script>
@@ -202,18 +214,7 @@
         </div>
         <!-- /Main Wrapper -->
 
-        <!-- jQuery -->
-        <script src="js/jquery-3.5.1.min.js"></script>
-
-        <!-- Bootstrap Core JS -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Slimscroll JS -->
-        <script src="js/jquery.slimscroll.min.js"></script>
-
-        <!-- Custom JS -->
-        <script src="js/app.js"></script>
+        
 
     </body>
 </html>

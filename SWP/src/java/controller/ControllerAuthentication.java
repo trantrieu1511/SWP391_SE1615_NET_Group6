@@ -6,6 +6,7 @@
 package controller;
 
 import entity.Account;
+import entity.Clients;
 import entity.Company;
 import entity.Profile;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.DAOAccount;
+import model.DAOClients;
 import model.DAOCompany;
 import model.DAOProfile;
 import model.DAOProfileDetail;
@@ -182,7 +184,7 @@ public class ControllerAuthentication extends HttpServlet {
                 }
             }
 
-            if (service.contains("delete")) {
+            if (service.equals("delete")) {
                 String aid = request.getParameter("aprofile_id");
                 DAOAccount daoAcc = new DAOAccount();
                 DAOProfile daoPf = new DAOProfile();
@@ -201,18 +203,45 @@ public class ControllerAuthentication extends HttpServlet {
                 }
             }
 
-            if (service.contains("allcompany")) {
+            if (service.equals("allcompany")) {
                 DAOCompany daoCp = new DAOCompany();
-                DAOProfile daoPf = new DAOProfile();
-                List<Company> listC = daoCp.listCompany();
-                List<Profile> listP = daoPf.getMN();
+                DAOClients daocClient = new DAOClients();
+                List<Clients> listClient = daocClient.listAllClients();
+                List<Company> listComp = daoCp.listCompany();
+                List<String[]> listS = new ArrayList<>();
+                for (Company co : listComp) {
+                    for (Clients cli : listClient) {
+                        if (co.getId() == cli.getCompany_id()) {
+                            String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = cli.getEmail();
+                            temp[3] = cli.getPhone_number();
+                            listS.add(temp);
+                        } 
+                    }
+                }
+                String allId = "";
+                    for (String[] str : listS ){
+                        allId += str[0];
+                    }
+                for (Company co : listComp) {
+                    if (!allId.contains(Integer.toString(co.getId()))){
+                        String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = "N/A";
+                            temp[3] = "N/A";
+                            listS.add(temp);
+                    }                   
+                }
 
-                request.setAttribute("listC", listC);
-                request.setAttribute("listP", listP);
+                request.setAttribute("listS", listS);
+                request.setAttribute("alert", "");
                 request.getRequestDispatcher("company.jsp").forward(request, response);
             }
 
-            if (service.contains("searchcompany")) {
+            if (service.equals("searchcompany")) {
                 DAOCompany daoCp = new DAOCompany();
                 DAOProfile daoPf = new DAOProfile();
                 String name = request.getParameter("sname");
@@ -225,21 +254,28 @@ public class ControllerAuthentication extends HttpServlet {
                 request.getRequestDispatcher("company.jsp").forward(request, response);
             }
 
-            if (service.contains("company")) {
+            if (service.equals("company")) {
                 DAOCompany daoCp = new DAOCompany();
-                List<Company> listC = new ArrayList<>();
-                if (acc.isIsAdmin() == true || acc.isIsManager() == true) {
-                    listC = daoCp.MyCompany(acc.getProfile_id());
-                } else {
-                    DAOProfile daoPf = new DAOProfile();
-                    String pid = daoPf.getReportTo(acc.getProfile_id());
-                    listC = daoCp.MyCompany(pid);
+                DAOAccount daoAcc = new DAOAccount();
+                List<Account> listA = daoAcc.getADandMNAccount();
+                Account admin = new Account();
+                for (Account a : listA) {
+                    if (a.isIsAdmin()) {
+                        admin = a;
+                    }
                 }
-                request.setAttribute("listC", listC);
-                request.getRequestDispatcher("seting.jsp").forward(request, response);
+                Company myComp = new Company();
+                List<Company> listC = daoCp.MyCompany(admin.getProfile_id());
+                for (Company c : listC) {
+                    myComp = c;
+                }
+                request.setAttribute("myComp", myComp);
+                request.setAttribute("alert", "");
+                RequestDispatcher dispatch = request.getRequestDispatcher("seting.jsp");
+                dispatch.forward(request, response);
             }
 
-            if (service.contains("editcompany")) {
+            if (service.equals("editcompany")) {
                 String name = request.getParameter("cname").trim();
                 String pnamed = request.getParameter("pname").trim();
                 String[] part = pnamed.split(" ");
@@ -259,39 +295,92 @@ public class ControllerAuthentication extends HttpServlet {
                 Company com = new Company(name, address, conutry, province, city, pcode, email, phone, fax, url);
                 DAOProfile daoPf = new DAOProfile();
                 Profile pro = new Profile(acc.getProfile_id(), fname, lname, pphone);
-                if (daoCP.editCompany(com, acc.getProfile_id()) == true && daoPf.editCompanyCEO(pro) == true) {
-                    System.out.println("Save successfully");
+                if ((daoCP.editCompany(com, acc.getProfile_id())) == true && (daoPf.editCompanyCEO(pro)) == true) {
+                    DAOCompany daoCp = new DAOCompany();
+                    DAOAccount daoAcc = new DAOAccount();
+                    List<Account> listA = daoAcc.getADandMNAccount();
+                    Account admin = new Account();
+                    for (Account a : listA) {
+                        if (a.isIsAdmin()) {
+                            admin = a;
+                        }
+                    }
+                    Company myComp = new Company();
+                    List<Company> listC = daoCp.MyCompany(admin.getProfile_id());
+                    for (Company c : listC) {
+                        myComp = c;
+                    }
+                    request.setAttribute("myComp", myComp);
+                    request.setAttribute("alert", "Save successfully!");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("seting.jsp");
+                    dispatch.forward(request, response);
 
-                    response.sendRedirect("authentication?do=company");
                 } else {
-                    System.out.println("Save fail");
+                    DAOCompany daoCp = new DAOCompany();
+                    DAOAccount daoAcc = new DAOAccount();
+                    List<Account> listA = daoAcc.getADandMNAccount();
+                    Account admin = new Account();
+                    for (Account a : listA) {
+                        if (a.isIsAdmin()) {
+                            admin = a;
+                        }
+                    }
+                    Company myComp = new Company();
+                    List<Company> listC = daoCp.MyCompany(admin.getProfile_id());
+                    for (Company c : listC) {
+                        myComp = c;
+                    }
+                    request.setAttribute("myComp", myComp);
+                    request.setAttribute("alert", "Save fail!");
+                    RequestDispatcher dispatch = request.getRequestDispatcher("seting.jsp");
+                    dispatch.forward(request, response);
 
-                    response.sendRedirect("authentication?do=company");
                 }
             }
 
-            if (service.contains("addcompany")) {
-                String name = request.getParameter("acname").trim();
-                String user = request.getParameter("apuser").trim();
-                String[] part = user.split("-");
-                String pid = part[0];
-                String address = request.getParameter("acaddress").trim();
-                String conutry = request.getParameter("acountry").trim();
-                String province = request.getParameter("apro").trim();
-                String city = request.getParameter("acity").trim();
-                int pcode = Integer.parseInt(request.getParameter("apcode").trim());
-                String email = request.getParameter("aemail").trim();
-                int phone = Integer.parseInt(request.getParameter("aphone").trim());
-                int fax = Integer.parseInt(request.getParameter("afax").trim());
-                String url = request.getParameter("aurl").trim();
+            if (service.equals("addcompany")) {
+                String name = request.getParameter("acname").trim();               
                 DAOCompany daoCP = new DAOCompany();
-                Company com = new Company(name, pid, address, conutry, province, city, pcode, email, phone, fax, url);
-                if (daoCP.addCompany(com)) {
-                    System.out.println("Add successfully");
-                    request.getRequestDispatcher("authentication?do=company").forward(request, response);
+                if (daoCP.addCompany(name)) {
+                    request.setAttribute("alert", "Add successfully");
+                } else {
+                    request.setAttribute("alert", "Add fail");
                 }
-                System.out.println("Add fail");
-                request.getRequestDispatcher("authentication?do=company").forward(request, response);
+                DAOCompany daoCp = new DAOCompany();
+                DAOClients daocClient = new DAOClients();
+                List<Clients> listClient = daocClient.listAllClients();
+                List<Company> listComp = daoCp.listCompany();
+                List<String[]> listS = new ArrayList<>();
+                for (Company co : listComp) {
+                    for (Clients cli : listClient) {
+                        if (co.getId() == cli.getCompany_id()) {
+                            String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = cli.getEmail();
+                            temp[3] = cli.getPhone_number();
+                            listS.add(temp);
+                        }
+                    }
+                }
+                String allId = "";
+                    for (String[] str : listS ){
+                        allId += str[0];
+                    }
+                for (Company co : listComp) {
+                    if (!allId.contains(Integer.toString(co.getId()))){
+                        String temp[] = new String[4];
+                            temp[0] = Integer.toString(co.getId());
+                            temp[1] = co.getName();
+                            temp[2] = "N/A";
+                            temp[3] = "N/A";
+                            listS.add(temp);
+                    }                   
+                }
+
+                request.setAttribute("listS", listS);
+                request.setAttribute("alert", "");
+                request.getRequestDispatcher("company.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

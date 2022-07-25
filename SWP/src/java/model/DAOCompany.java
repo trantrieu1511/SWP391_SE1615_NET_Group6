@@ -59,10 +59,7 @@ public class DAOCompany extends DBConnect {
             while (rs.next()) {
                 list.add(new Company(
                         rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(9),
-                        rs.getInt(10),
-                        rs.getString(12)));
+                        rs.getString(2)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -104,7 +101,7 @@ public class DAOCompany extends DBConnect {
     public List<Company> MyCompany(String id) {
         List<Company> list = new ArrayList<>();
         String sql = "select company.*, profile.first_name, profile.last_name, profile.phone_number"
-                + " from [company], [profile] where company.profile_id = profile.profile_id"
+                + " from [myCompany], [profile] where company.profile_id = profile.profile_id"
                 + " and profile.profile_id = '"+id+"' ";
         try {
             conn = getConnection();
@@ -139,7 +136,7 @@ public class DAOCompany extends DBConnect {
     }
     
     public boolean editCompany(Company com, String id) {
-        String sql = "update [company] set "
+        String sql = "update [myCompany] set "
                 + "company_name = ?, "
                 + "company_address = ?, "
                 + "company_country = ?, "
@@ -176,23 +173,13 @@ public class DAOCompany extends DBConnect {
         return true;
     }
     
-    public boolean addCompany(Company com) {
-        String sql = "insert into company(company_name, profile_id, company_address, company_country, company_province, company_city, postal_code, company_email, company_pnumber, fax, website_url)"
-                + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public boolean addCompany(String name) {
+        String sql = "insert into company(company_name)"
+                + "values(?)";
         try {
             conn = getConnection();
             state = conn.prepareStatement(sql);
-            state.setString(1, com.getName());
-            state.setString(2, com.getPro_id());
-            state.setString(3, com.getAddress());
-            state.setString(4, com.getCountry());
-            state.setString(5, com.getProvince());
-            state.setString(6, com.getCity());
-            state.setInt(7, com.getPostal_code());
-            state.setString(8, com.getEmail());
-            state.setInt(9, com.getPhone());
-            state.setInt(10, com.getFax());
-            state.setString(11, com.getUrl());
+            state.setString(1, name);
             state.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

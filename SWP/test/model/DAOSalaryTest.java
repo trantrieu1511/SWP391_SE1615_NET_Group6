@@ -21,7 +21,7 @@ public class DAOSalaryTest {
      * Test of listAllStaffAndManagerProfile method, of class DAOSalary.
      */
     @Test
-    public void testListAllStaffAndManagerProfile() {
+    public void testListAllStaffAndManagerSalary() {
     }
 
     /**

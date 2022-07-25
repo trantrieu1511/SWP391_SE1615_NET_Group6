@@ -106,30 +106,17 @@
                     $(e.currentTarget).find('input[name="aprofile_id"]').val(id);
                 });
             });
-        </script>
-
-        <c:choose>
-            <c:when test="${alert != ''}">
-                <script type="text/javascript">
-                    alert("${alert}");
-                </script>
-            </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
-
-        <script type="text/javascript">
             $(function () {
                 $('input[type="text"]').change(function () {
                     this.value = $.trim(this.value);
                 });
             })
+            <c:if test="${alert != ''}">
+            window.onload = function () {
+                alert("${alert}");
+            }
+            </c:if>
         </script>
-
-        <c:if test="${sessionScope.acc == null}">
-            <c:redirect url="login.jsp"></c:redirect>
-        </c:if>
 
     </head>
 
@@ -199,22 +186,21 @@
                                             <th>Company Name</th>
                                             <th>Email</th>
                                             <th>Hot line</th>
-                                            <th>Website</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${listC}" var="c">
+                                    <c:forEach items="${listS}" var="c">
                                         <tr>
-                                            <td>${c.id}</td>
-                                            <td>${c.name}</td>
-                                            <td>${c.email}</td>
-                                            <td>${c.phone}</td>
-                                            <td>${c.url}</td>
+                                            <td>${c[0]}</td>
+                                            <td>${c[1]}</td>
+                                            <td>${c[2]}</td>
+                                            <td>${c[3]}</td>
                                             <td class="text-right">
                                                     <div class="dropdown dropdown-action">
                                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                         <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_account" data-id="${c.id}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#delete_account" data-id="${c[0]}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -240,91 +226,15 @@
                         </div>
                         <div class="modal-body">
                             <form action="authentication" do="post">
-                                <input type="hidden" name="do" value="addaccount">
+                                <input type="hidden" name="do" value="addcompany">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Company Name</label>
                                             <input class="form-control" type="text" name="acname">
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Profile Usesr</label>
-                                            <select class="select" name="acuser">
-                                                <c:forEach items="${listP}" var="p">
-                                                    <option>${p.profile_id}-${p.last_name} ${p.first_name}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Company Address</label>
-                                            <input class="form-control" type="text" name="acaddress">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Country</label>
-                                            <input class="form-control" type="text" name="acountry">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Province</label>
-                                            <input class="form-control" type="text" name="apro">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>City</label>
-                                            <input type="text" class="form-control" name="acity">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Postal Code</label>
-                                            <input type="text" class="form-control" name="apcode">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" name="aemail">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Phone number</label>
-                                            <input type="text" class="form-control" name="aphone">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Fax</label>
-                                            <input type="text" class="form-control" name="afax">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Website</label>
-                                            <textarea class="form-control" name="aurl"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </div>                                  
+                                </div>                              
                                 <div class="submit-section">
                                     <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                 </div>

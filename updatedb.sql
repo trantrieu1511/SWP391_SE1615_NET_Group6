@@ -115,8 +115,14 @@ CREATE TABLE [experience] (
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 );
 
---drop table [company]
 CREATE TABLE [company] (
+    company_id INT IDENTITY(1,1) PRIMARY KEY,
+	company_name VARCHAR (25) NOT NULL,
+);
+
+
+--drop table [company]
+CREATE TABLE [myCompany] (
     company_id INT IDENTITY(1,1) PRIMARY KEY,
 	company_name VARCHAR (25) NOT NULL,
 	profile_id VARCHAR (8000) NOT NULL,
@@ -131,7 +137,6 @@ CREATE TABLE [company] (
 	website_url VARCHAR (50) NOT NULL,
 	FOREIGN KEY (profile_id) REFERENCES [profile] (profile_id)
 	);
-
 
 --drop table clients
 CREATE TABLE [clients] (

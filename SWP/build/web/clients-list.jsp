@@ -187,7 +187,7 @@
                                     <%--</c:if>--%>
                                     <thead>
                                         <tr>
-                                            <th>CompanyName</th>
+                                            <th>Company Name</th>
                                             <th>Client ID</th>
                                             <th>Contact Person</th>
                                             <th>Email</th>

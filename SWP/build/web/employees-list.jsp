@@ -582,6 +582,7 @@
                 <!-- /Add Employee Modal -->
 
                 <!-- Edit Employee Modal -->
+                <c:forEach items="${}" var="o">
                 <div id="edit_employee" class="modal custom-modal fade" role="dialog">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">

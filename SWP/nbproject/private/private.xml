@@ -3,24 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOScheduleTest.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/company.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOAttendanceTest.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfile.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerProfile.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/ModelSuite.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOJobTest.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/account-list.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/menu.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/test/model/DAOAccountTest.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/seting.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerJob.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/web/job-list.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOJob.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/entity/Company.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerAuthentication.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOCompany.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOAccount.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOCompany.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/salary-view.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOProfile.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerJob.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/employees-list.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOLeave.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/leaves-employee.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/salary.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ForgotPassword.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/payroll-items.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerManager.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerSchedule.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/company.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/controller/ControllerLeave.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/schedule.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/newPassword.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/leaves.jsp</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/src/java/model/DAOSchedule.java</file>
+            <file>file:/E:/SWP391_SE1615_NET_Group6/SWP/web/seting.jsp</file>
         </group>
     </open-files>
 </project-private>

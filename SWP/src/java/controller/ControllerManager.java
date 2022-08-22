@@ -105,19 +105,28 @@ public class ControllerManager extends HttpServlet {
                 }
 
                 if (service.equals("list")) {
-                    Object edit = request.getParameter("edit");
-                    Object add = request.getParameter("add");
-                    Object delete = request.getParameter("delete");
-                    Object addFail = request.getParameter("addFail");
+                    //Thong bao khi insert, update, delete
+                    String edit = request.getParameter("edit");
+                    String add = request.getParameter("add");
+                    String delete = request.getParameter("delete");
                     String alert = "";
-                    if (edit != null) { //edit
+                    if (edit != null && edit.equals("success")) { //edit
                         alert = "New staff information have been saved!";
-                    } else if (add != null) { //add
+                    }
+                    if (edit != null && edit.equals("fail")) { //edit
+                        alert = "Edit failed!";
+                    }
+                    if (add != null && add.equals("success")) { //add
                         alert = "Successfully added new staff information!";
-                    } else if (addFail != null) { //add failed
-                        alert = "ID has been used by another employee, please enter again!";
-                    } else if (delete != null) { //delete
+                    }
+                    if (add != null && add.equals("fail")) { //add
+                        alert = "Add failed!";
+                    }
+                    if (delete != null && delete.equals("success")) { //delete
                         alert = "Delete staff successfully!";
+                    }
+                    if (delete != null && delete.equals("fail")) { //delete
+                        alert = "Delete failed!";
                     }
                     List<Profile> list = daoProfile.listAllStaff(acc.getProfile_id());
                     List<Departments> listDp = daoDepartment.listAllDepartment();
@@ -207,9 +216,9 @@ public class ControllerManager extends HttpServlet {
 //                        Experience exp = new Experience(profile_id, "notAvailable", "01/01/1900",
 //                                "01/01/1900");
 //                        daoExperience.addExperience(exp);
-                        response.sendRedirect("manager?do=list&add=true");
+                        response.sendRedirect("manager?do=list&add=success");
                     } else {
-                        response.sendRedirect("manager?do=list&addFail=true");
+                        response.sendRedirect("manager?do=list&add=fail");
                     }
                 }
 
@@ -228,8 +237,14 @@ public class ControllerManager extends HttpServlet {
                     daoProfile.editStaff(new Profile(profile_id, first_name,
                             last_name, email, phone_number, hire_date, job_id,
                             department_id, ReportsTo));
-                    daoAccount.editAccount(profile_id, username, password);
-                    response.sendRedirect("manager?do=list&edit=true");
+                    boolean status = daoAccount.editAccount(profile_id, username, password);
+                    if (status) {
+                        response.sendRedirect("manager?do=list&edit=success");
+                    }
+                    else{
+                        response.sendRedirect("manager?do=list&edit=fail");
+                    }
+                    
                 }
 
                 if (service.equals("deleteStaff")) {
@@ -239,8 +254,12 @@ public class ControllerManager extends HttpServlet {
                     daoProfileDetail.deleteProfileDetail(profile_id);
                     daoFamilyInfo.deleteAllFamilyInfo(profile_id);
                     daoExperience.deleteAllExperience(profile_id);
-                    daoProfile.deleteProfile(profile_id);
-                    response.sendRedirect("manager?do=list&delete=true");
+                    boolean status = daoProfile.deleteProfile(profile_id);
+                    if (status) {
+                        response.sendRedirect("manager?do=list&delete=success");
+                    }else{
+                        response.sendRedirect("manager?do=list&delete=fail");
+                    }
                 }
 
                 if (service.equals("addTask")) {
